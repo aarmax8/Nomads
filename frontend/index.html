@@ -3,76 +3,881 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bridge Background Example</title>
+    <title>NOMADS</title>
+
+    <!-- === Full Screen Mobile App Settings === --><meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Nomad's">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/1a110a/f59e0b?text=N">
+    
+    <!-- === Styles and Fonts === --><script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Cinzel:wght@400;700&family=IM+Fell+DW+Pica&family=Roboto+Condensed:wght@700&family=Rye&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         body {
-            /* Remove default body margin for full coverage */
-            margin: 0; 
-            padding: 0;
-            /* Set body height to at least the viewport height */
-            min-height: 100vh;
-            /* Establish a stacking context for the children */
-            position: relative; 
-            z-index: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: #1a110a;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://raw.githubusercontent.com/aarmax8/Nomads/main/pittsburghbridge.jpg');
+            background-attachment: fixed;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+        }
+        .app-container { display: flex; flex-direction: column; height: 100vh; }
+        main { flex-grow: 1; overflow: hidden; position: relative; }
+        .font-rye { font-family: 'Rye', cursive; }
+        .font-black-ops { font-family: 'Black Ops One', cursive; }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+
+        #header-logo-container {
+            position: relative;
+            background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/c4d682dc66e5dfcdc664b5223d1e5c74fe704710/AI%20Title.jpg');
+            background-size: 115%; background-position: left top; background-repeat: no-repeat;
+            border-radius: 0.5rem; box-shadow: 0 8px 16px rgba(0,0,0,0.8); overflow: hidden;
+        }
+        #header-logo-container::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(to left, rgba(0, 0, 0, 0.85) 25%, transparent 75%); /* Smoother black fade */
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.9);
+            border: 2px solid #4b5563; border-radius: 0.5rem;
+        }
+        #header-logo-container h1 {
+            position: relative; font-family: 'Black Ops One', cursive; font-size: 2.5rem; color: #f59e0b;
+            text-shadow: 4px 4px 8px rgba(0,0,0,0.9), 0 0 15px #f59e0b; letter-spacing: 0.1em; z-index: 10; line-height: 1;
+        }
+        @media (max-width: 480px) { #header-logo-container h1 { font-size: 2rem; } }
+        
+        #menu-grid {
+            display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory;
+            scroll-padding: 1rem; -webkit-overflow-scrolling: touch; padding: 1.5rem 1rem; height: 100%;
+        }
+        #menu-grid::-webkit-scrollbar { display: none; }
+        #menu-grid { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .drink-card {
+            flex: 0 0 88%; scroll-snap-align: center; perspective: 1500px;
+            background-color: transparent; min-height: 490px; transition: opacity 0.3s;
+        }
+        @media (min-width: 640px) { .drink-card { flex-basis: 70%; } }
+        @media (min-width: 1024px) { .drink-card { flex-basis: 50%; } }
+        .drink-card-inner {
+            position: relative; width: 100%; height: 100%;
+            transition: transform 0.7s, box-shadow 0.4s ease-in-out, opacity 0.5s;
+            transform-style: preserve-3d; box-shadow: 0 8px 20px rgba(0,0,0,0.7); border-radius: 0.5rem;
+        }
+        .drink-card.is-flipped .drink-card-inner { transform: rotateY(180deg); }
+        .drink-card.is-highlighted .drink-card-inner {
+            box-shadow: 0 0 25px 8px rgba(245, 158, 11, 0.7); transform: scale(1.02);
         }
 
-        /* ------------------------------------------------------------------ */
-        /* CODE FOR THE BACKGROUND ELEMENT */
-        /* ------------------------------------------------------------------ */
-        .bridge-background {
-            /* 1. Allows z-index to work and takes it out of the normal flow */
-            position: fixed; 
-            
-            /* 2. Pushes the element behind everything else (z-index 0 or higher) */
-            z-index: -1; 
-            
-            /* 3. Ensures it covers the entire viewport */
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            
-            /* 4. Background styling (REPLACE with your actual image URL) */
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/b/b3/Brooklyn_Bridge_at_dusk_%28cropped%29.jpg');
-            background-size: cover; /* Ensures the image covers the area */
-            background-position: center; /* Centers the image */
+        .drink-card-front, .drink-card-back {
+            position: absolute; width: 100%; height: 100%;
+            -webkit-backface-visibility: hidden; backface-visibility: hidden;
+            display: flex; flex-direction: column; overflow: hidden; border-radius: 0.5rem;
+        }
+        .drink-card-front {
+             background-color: #262626;
+             background-image: radial-gradient(circle at center, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.2)), url('https://www.transparenttextures.com/patterns/dark-leather.png');
+             border: 2px solid;
+             border-image-slice: 1;
+             border-image-source: linear-gradient(to bottom right, #a855f7, #6b21a8);
+             box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+        }
+        
+        /* --- Tarot Card Back Styling --- */
+        .drink-card-back {
+            transform: rotateY(180deg); 
+            background-color: #1e1b4b; /* Deep Indigo */
+            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
+            border: 2px solid #a78bfa;
+            color: #e5e7eb;
+        }
+        .card-back-image {
+            width: 100%; height: 240px; 
+            background-size: contain;
+            background-position: center;
             background-repeat: no-repeat;
+            border-bottom: 2px solid #a78bfa;
+            padding: 4px; background-color: #312e81;
         }
-
-        /* ------------------------------------------------------------------ */
-        /* CODE FOR THE FOREGROUND CONTENT */
-        /* ------------------------------------------------------------------ */
-        .content {
-            /* Ensure the content is visible and readable */
-            color: #fff; /* White text for contrast */
-            padding: 50px;
+        .card-back-content {
+            padding: 0.75rem; flex-grow: 1; overflow-y: auto; text-align: center;
+        }
+        .tarot-card-name {
+            font-family: 'Cinzel', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
             text-align: center;
-            
-            /* Add a slightly opaque overlay to improve text readability over the background */
-            background-color: rgba(0, 0, 0, 0.4); 
-            
-            /* Ensure it sits on top (z-index is implicitly 0 or higher) */
-            position: relative; 
-            z-index: 1; 
+            color: #f59e0b;
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
+            margin-bottom: 0.25rem;
+        }
+        .drink-name-back {
+            font-family: 'Rye', cursive;
+            font-size: 0.9rem; /* Smaller font size */
+            color: #d1d5db;
+            margin-bottom: 0.75rem;
+            opacity: 0.8; /* Slightly less prominent */
+        }
+        .tarot-meaning {
+            margin-top: 0.75rem;
+            font-family: 'IM Fell DW Pica', serif;
+            font-style: italic;
+            text-align: center;
+            font-size: 0.95rem;
+            padding: 0.5rem;
+            border-top: 1px dashed #4c1d95;
+        }
+        .no-image .card-back-content {
+            display: flex; flex-direction: column; justify-content: center;
         }
 
-        h1 {
-            font-size: 3em;
+
+        .drink-card.is-unavailable { opacity: 0.4; pointer-events: none; }
+        .drink-card-title {
+            font-size: 1.8rem; line-height: 1.2; color: #f59e0b; text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+        .card-footer {
+            text-align: center; font-size: 0.75rem; color: #9ca3af; padding: 0.5rem;
+            font-family: 'Rye', cursive; letter-spacing: 0.05em; flex-shrink: 0;
+            background: rgba(0,0,0,0.3); border-top: 1px solid #4a2c2a;
+        }
+        .card-header-front {
+            padding: 0.75rem; background: rgba(0,0,0,0.3); border-bottom: 2px solid;
+            border-image-slice: 1; border-image-source: linear-gradient(to right, #c0842b, #854d0e);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.4); flex-shrink: 0;
+        }
+        .recipe-content { flex-grow: 1; overflow-y: auto; padding: 0.5rem 1rem; min-height: 0; }
+        .recipe-content-title {
+            font-family: 'Black Ops One', cursive; color: #c0842b; font-size: 0.875rem;
+            text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.75rem;
+            padding-bottom: 0.25rem; border-bottom: 1px dashed #4b5563; text-align: center;
+        }
+        .recipe-list-front { list-style: none; padding: 0; }
+        .recipe-list-front li {
+            display: flex; align-items: center; font-family: 'Roboto Condensed', sans-serif;
+            font-size: 0.95rem; letter-spacing: 0.02em; margin-bottom: 0.4rem; color: #d1d5db;
+        }
+        .recipe-list-front li i { width: 24px; text-align: center; margin-right: 0.75rem; font-size: 1rem; }
+        
+        .modal { transition: opacity 0.3s ease-in-out; }
+        .nav-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(17, 24, 39, 0.7);
+            color: #d1d5db; border: 2px solid #4b5563; border-radius: 50%; width: 44px; height: 44px;
+            font-size: 1.5rem; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s ease-in-out;
+        }
+        .nav-arrow:hover { background-color: rgba(245, 158, 11, 0.8); color: #111827; }
+        #arrow-left { left: 10px; } #arrow-right { right: 10px; }
+
+        #bottom-nav { box-shadow: 0 -4px 15px -5px rgba(0,0,0,0.7); }
+        .bottom-nav-btn {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 4px 0; border-radius: 0.5rem; color: #d1d5db; transition: all 0.2s ease-in-out;
+        }
+        .bottom-nav-btn:hover, .bottom-nav-btn.is-active {
+            background-color: rgba(55, 65, 81, 0.5); color: #f59e0b;
+            text-shadow: 0 0 6px rgba(245, 158, 11, 0.7);
+        }
+
+        /* --- TAROT MODAL STYLES --- */
+        #tarot-reading-content .drink-card {
+            /* Mobile First Styles */
+            flex: 1;
+            max-width: 31%; /* Fit 3 cards with gaps */
+            height: 230px;
+            min-height: 230px;
+            cursor: pointer;
+        }
+        #tarot-reading-content .card-back-image {
+            height: 100px;
+        }
+        #tarot-reading-content .tarot-card-name { font-size: 0.9rem; }
+        #tarot-reading-content .drink-name-back { display: none; } /* Hide on mobile */
+        #tarot-reading-content .tarot-meaning { display: none; } /* Hide on mobile */
+        #tarot-reading-content .card-footer { font-size: 0.65rem; padding: 0.3rem; }
+
+
+        #tarot-reading-content .drink-card-inner {
+            transition: transform 0.7s, opacity 0.5s;
+        }
+        #tarot-reading-content.selection-made .drink-card:not(.selected) .drink-card-inner {
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        /* Larger screens */
+        @media (min-width: 640px) {
+            #tarot-reading-content .drink-card {
+                flex-basis: 30%;
+                max-width: none;
+                height: 350px;
+                min-height: 350px;
+            }
+            #tarot-reading-content .card-back-image { height: 240px; }
+            #tarot-reading-content .tarot-card-name { font-size: 1.5rem; }
+            #tarot-reading-content .drink-name-back { display: block; }
+            #tarot-reading-content .tarot-meaning { display: block; }
+            #tarot-reading-content .card-footer { font-size: 0.75rem; padding: 0.5rem; }
+        }
+        
+        /* --- Drink Finder Modal Styling --- */
+        #drink-finder-content .finder-pill {
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.25rem;
+            background-image: linear-gradient(to bottom, #4a5568, #2d3748);
+            color: #e5e7eb;
+            font-family: 'Roboto Condensed', sans-serif;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid #6b7280;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4), inset 0 1px 1px rgba(255,255,255,0.1);
+            cursor: pointer;
+        }
+        #drink-finder-content .finder-pill:hover {
+            background-image: linear-gradient(to bottom, #5a6578, #3d4758);
+            border-color: #9ca3af;
+            transform: translateY(-2px);
+        }
+        #drink-finder-content .finder-pill.is-active {
+            background-image: linear-gradient(to bottom, #f59e0b, #b45309);
+            color: #111827;
+            border-color: #fcd34d;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.6), inset 0 2px 2px rgba(0,0,0,0.2);
+            text-shadow: 0 1px 1px rgba(255,255,255,0.3);
+            transform: translateY(0);
+        }
+        .finder-separator {
+            height: 2px;
+            background-image: linear-gradient(to right, transparent, #854d0e, transparent);
+            border: none;
+            margin: 1.5rem 0;
+        }
+        .finder-result-btn {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid #4b5563;
+            transition: all 0.2s ease-in-out;
+        }
+        .finder-result-btn:hover {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-color: #f59e0b;
+            transform: translateX(5px);
         }
     </style>
 </head>
-<body>
+<body class="antialiased text-gray-300">
 
-    <div class="bridge-background"></div>
+    <div class="app-container">
+        <header class="text-center pt-4 px-4 flex-shrink-0">
+            <div id="header-logo-container" class="h-32 md:h-40 w-full max-w-lg mx-auto flex items-center justify-center">
+               <h1 class="drop-shadow-lg">NOMADS</h1>
+            </div>
+        </header>
+        
+        <main>
+            <div id="menu-grid"></div>
+            <button id="arrow-left" class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
+            <button id="arrow-right" class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+        </main>
 
-    <div class="content">
-        <h1>Welcome to the City!</h1>
-        <p>This text is sitting *on top* of the bridge background image.</p>
-        <p>The **`.bridge-background`** element uses `position: fixed` and **`z-index: -1`** to ensure it stays in the very back and covers the entire screen, even when you scroll.</p>
-        <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-        <h2>Scroll Down!</h2>
-        <p>The background remains fixed behind all content.</p>
+        <footer id="bottom-nav" class="flex-shrink-0 bg-black/90 backdrop-blur-md border-t-2 border-amber-800 grid grid-cols-6 gap-1 p-2 z-20">
+            <button id="home-btn" class="bottom-nav-btn is-active">
+                <i class="fas fa-users text-xl"></i><span class="text-xs">Clubhouse</span>
+            </button>
+            <button id="menu-btn" class="bottom-nav-btn">
+                <i class="fas fa-book-open text-xl"></i><span class="text-xs">Menu</span>
+            </button>
+            <button id="drink-finder-btn" class="bottom-nav-btn">
+                <i class="fas fa-compass text-xl"></i><span class="text-xs">Finder</span>
+            </button>
+            <button id="flip-all-btn" class="bottom-nav-btn">
+                <i class="fas fa-retweet text-xl"></i><span class="text-xs">Flip All</span>
+            </button>
+            <button id="tarot-reading-btn" class="bottom-nav-btn">
+                <i class="fas fa-magic text-xl"></i><span class="text-xs">Reading</span>
+            </button>
+            <button id="bar-stock-btn" class="bottom-nav-btn">
+                <i class="fas fa-wine-bottle text-xl"></i><span class="text-xs">Stock</span>
+            </button>
+        </footer>
     </div>
 
+    <!-- Modals --><div id="category-menu-modal" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden opacity-0 z-50">
+        <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-sm flex flex-col border border-gray-600">
+            <div class="p-4 border-b border-gray-600 flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-white font-black-ops">Drink Menu</h2>
+                <button id="close-menu-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
+            </div>
+            <div id="category-menu-content" class="p-4 text-gray-300 grid grid-cols-1 gap-3">
+                <button data-category="all" class="category-btn text-lg bg-amber-600 hover:bg-amber-500 text-black font-bold py-3 px-4 rounded-lg transition-colors">The Full Deck</button>
+                <button data-category="Breakfast" class="category-btn text-lg bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg transition-colors">Breakfast</button>
+                <button data-category="Lunch" class="category-btn text-lg bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg transition-colors">Lunch</button>
+                <button data-category="Dinner" class="category-btn text-lg bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg transition-colors">Dinner</button>
+                <button data-category="Desert" class="category-btn text-lg bg-gray-700 hover:bg-gray-600 text-white py-3 px-4 rounded-lg transition-colors">Desert</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="tarot-reading-modal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 z-50">
+        <div class="bg-transparent w-full max-w-4xl flex flex-col">
+            <div class="p-4 flex justify-between items-center">
+                <h2 class="text-3xl font-bold text-white font-cinzel text-center w-full">Choose Your Path</h2>
+                <button id="close-tarot-btn" class="text-gray-400 hover:text-white text-4xl absolute top-4 right-4">&times;</button>
+            </div>
+            <div id="tarot-reading-content" class="p-6 text-gray-300 flex-grow flex items-center justify-center">
+                <!-- 3 cards will be injected here --></div>
+        </div>
+    </div>
+
+    <div id="bar-stock-modal" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden opacity-0 z-50">
+        <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[95vh] flex flex-col border border-gray-600">
+            <div class="p-6 border-b border-gray-600 flex justify-between items-center">
+                <h2 class="text-2xl font-bold text-white font-black-ops">Bar Stock</h2>
+                <button id="close-stock-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
+            </div>
+            <div id="bar-stock-content" class="p-6 text-gray-300 overflow-y-auto"></div>
+        </div>
+    </div>
+    
+    <div id="drink-finder-modal" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 hidden opacity-0 z-50">
+        <div class="bg-gray-800 rounded-lg shadow-xl w-full max-w-2xl max-h-[95vh] flex flex-col border border-gray-600">
+            <div class="p-6 border-b border-gray-600">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-white font-black-ops">Drink Finder</h2>
+                    <button id="close-finder-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
+                </div>
+                <p class="text-gray-400 mt-1">Select a filter to find your next drink.</p>
+            </div>
+            <div id="drink-finder-content" class="p-6 text-gray-300 overflow-y-auto"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- Data ---
+        let cocktails = []; // This will be populated by the setup function
+        const tarotDeck = [
+            "The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant", "The Lovers", "The Chariot", "Strength", "The Hermit", "Wheel of Fortune", "Justice", "The Hanged Man", "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World",
+            "Ace of Wands", "Two of Wands", "Three of Wands", "Four of Wands", "Five of Wands", "Six of Wands", "Seven of Wands", "Eight of Wands", "Nine of Wands", "Ten of Wands", "Page of Wands", "Knight of Wands", "Queen of Wands", "King of Wands",
+            "Ace of Cups", "Two of Cups", "Three of Cups", "Four of Cups", "Five of Cups", "Six of Cups", "Seven of Cups", "Eight of Cups", "Nine of Cups", "Ten of Cups", "Page of Cups", "Knight of Cups", "Queen of Cups", "King of Cups",
+            "Ace of Swords", "Two of Swords", "Three of Swords", "Four of Swords", "Five of Swords", "Six of Swords", "Seven of Swords", "Eight of Swords", "Nine of Swords", "Ten of Swords", "Page of Swords", "Knight of Swords", "Queen of Swords", "King of Swords",
+            "Ace of Pentacles", "Two of Pentacles", "Three of Pentacles", "Four of Pentacles", "Five of Pentacles", "Six of Pentacles", "Seven of Pentacles", "Eight of Pentacles", "Nine of Pentacles", "Ten of Pentacles", "Page of Pentacles", "Knight of Pentacles", "Queen of Pentacles", "King of Pentacles"
+        ];
+
+        function setupCocktailData() {
+            const initialCocktails = [
+                { name: "Redheaded Trouble", type: "Signature", flavorProfile: "Herbal & Peach", recipe: ["1 oz Jägermeister", "1 oz Peach Schnapps", "Fill a tall glass with Orange Juice"], tarotMeaning: "For the one who takes that first leap. This drink is for the start of a journey with no map, fueled by pure, reckless faith in the road ahead.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8294.jpg" },
+                { name: "Caramel Apple Cruiser", type: "Signature", flavorProfile: "Sweet & Tart", recipe: ["1 oz Butterscotch Schnapps", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the rider who commands all the tools in the garage. This drink is about having the skill, the power, and the will to turn a pile of spare parts into a legend.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(10).png" },
+                { name: "Irish Russian", type: "Signature", flavorProfile: "Creamy Coffee", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream", "0.25 oz Simple Syrup", "Fill a tall glass with Club Soda"], tarotMeaning: "For the secrets the road keeps. This drink is for the intuition that tells you to check your oil, or to avoid that detour. It's for the wisdom that can't be taught.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/chill.png" },
+                { name: "Purple Hooter", type: "Signature", flavorProfile: "Raspberry & Floral", recipe: ["1 oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash Lime Juice", "Fill a tall glass with Club Soda"], tarotMeaning: "For the Road Queen, the mother of the club. This drink is about abundance, growth, and the fierce, nurturing power that holds the whole damn thing together.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(17).png" },
+                { name: "The Ghost Rider", type: "Signature", flavorProfile: "Herbal & Anise", recipe: ["1 oz Pernod", "2 oz Jose Cuervo Silver Tequila", "Fill a tall glass with Club Soda", "Splash of Lime Juice"], tarotMeaning: "For the Club President. This is the drink of structure, authority, and the unwritten laws of the road. It's for the one who builds the empire and defends it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(18).png" },
+                { name: "The Phantom Shift", type: "Signature", flavorProfile: "Anise & Crisp", recipe: ["1 oz Pernod", "1 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass"], tarotMeaning: "For the old-timer who knows every story. This drink is for tradition, for the wisdom passed down from one generation of riders to the next.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(19).png" },
+                { name: "The White Liner", type: "Signature", flavorProfile: "Crisp & Floral", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.75 oz Lemon Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the partnership of two riders, a perfect union. This is for the ride-or-die friend, the one who always has your back.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7994.jpg" },
+                { name: "The Junk Drawer", type: "Signature", flavorProfile: "Very Sweet", recipe: ["0.75 oz Raspberry Schnapps", "0.75 oz Butterscotch Schnapps", "0.75 oz Root Beer Schnapps", "Fill a tall glass with Club Soda"], tarotMeaning: "For the ride that can't be stopped. This is the taste of momentum, of determination, of pushing forward no matter what the road throws at you.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(21).png" },
+                { name: "The Blue Lagoon's Ghost", type: "Signature", flavorProfile: "Tropical Cherry", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice"], tarotMeaning: "For the courage it takes to face a storm head-on. This drink is for the inner fire, the grit that tames the beast under the fuel tank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(22).png" },
+                { name: "The Lone Wolf", type: "Signature", flavorProfile: "Bold & Smooth", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "Top with Club Soda in a tall glass"], tarotMeaning: "For the long, solo ride. This drink is for looking inward, for finding your own way when the pack is far behind and the only sound is your engine.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(23).png" },
+                { name: "The Double Cross", type: "Signature", flavorProfile: "Bitter & Salty", recipe: ["2 oz Bulleit Bourbon", "1 oz Campari", "Half Salt, Half Sugar Rim"], tarotMeaning: "For the unpredictable nature of the road. This is for the lucky breaks and the sudden breakdowns. A reminder that you can't control the ride, only how you handle it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(3).png" },
+                { name: "The Blacktop Sunset", type: "Signature", flavorProfile: "Sweet & Spicy", recipe: ["1 oz Jameson Irish Whiskey", "1 oz Southern Comfort", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the law of the road. This drink is about balance, about karma, about getting what you deserve, good or bad. Every action has a reaction.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(30).png" },
+                { name: "The Elderflower Nomad", type: "Signature", flavorProfile: "Floral & Herbal", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.5 oz Lime Juice", "2 dashes Rosemary Lavender Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For when you're stuck on the side of the road, waiting for a tow. This drink is about surrender, about seeing the world from a new angle while you wait for the path to clear.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(39).png" },
+                { name: "Finn's Orchard Kick", type: "Signature", flavorProfile: "Tart & Spicy", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], tarotMeaning: "For the end of an era. This is for selling the old bike, for letting go of a chapter to make room for the next. It's the taste of necessary change.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(4).png" },
+                { name: "The Apparition", type: "Signature", flavorProfile: "Floral & Spicy", recipe: ["2 oz Ketel One Vodka", "0.75 oz St-Germain", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the art of the perfect build. This is for the rider who knows how to balance power and style, who can mix and match parts to create something truly harmonious.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8003.jpg" },
+                { name: "Black-Top Burner", type: "Signature", flavorProfile: "Bold & Herbal", recipe: ["1.5 oz Grey Goose Vodka", "0.5 oz Jägermeister", "Fill a tall glass with Cola"], tarotMeaning: "For the temptations of the road. The extra drink, the questionable shortcut, the race you know you shouldn't accept. This is the taste of breaking your own rules.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(41).png" },
+                { name: "The Mechanic", type: "Signature", flavorProfile: "Citrus & Sour", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "2 dashes Orange Bitters", "Fill a tall glass with Sour Mix"], tarotMeaning: "For the day the engine blows. This drink is for sudden, catastrophic failure. The moment everything you built comes crashing down. A hard lesson, but a clean slate.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(43).png" },
+                { name: "Redline Riot", type: "Signature", flavorProfile: "Sweet Cherry & Sour", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sour Mix", "Splash of Lime Juice"], tarotMeaning: "For the calm after the storm. This is for finding hope after a breakdown, for seeing a path forward when you thought the ride was over.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(5).png" },
+                { name: "The Kickstart", type: "Signature", flavorProfile: "Spiced Ginger", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the illusions of a night ride. This drink is for the shadows that look like deer, for the uncertainty of what lies beyond your headlight.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(6).png" },
+                { name: "The Castaway", type: "Signature", flavorProfile: "Tropical & Spiced", recipe: ["2 oz Captain Morgan Spiced Rum", "1 oz Pineapple Juice", "0.5 oz Orange Juice", "2 dashes Angostura Bitters", "Splash of Grenadine", "Top with Club Soda in a tall glass"], tarotMeaning: "For that perfect day on the road. This is for the ride where everything goes right—the weather, the bike, the company. The taste of pure, unadulterated joy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(8).png" },
+                { name: "Storm Rider", type: "Signature", flavorProfile: "Dark & Spiced", recipe: ["2 oz Kraken Black Spiced Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the day you get your patch. This drink is for answering the call, for being judged by the club and found worthy. The taste of reckoning.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/godfather%204.jpg" },
+                { name: "The Kraken's Grip", type: "Signature", flavorProfile: "Dark & Nutty", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], tarotMeaning: "For the end of the long road. This is for completing the journey, for seeing the world and returning home. The taste of a ride well-ridden.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/godfather.JPG" },
+                { name: "The Siren's Call", type: "Signature", flavorProfile: "Tropical & Bitter", recipe: ["1.5 oz Kraken Black Spiced Rum", "0.75 oz Campari", "1.5 oz Pineapple Juice", "0.5 oz Lime Juice"], tarotMeaning: "For the spark of a new idea—a new route, a new custom build. This is the taste of raw, untamed creative energy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/godfather3.JPG" },
+                { name: "The Island Hopper", type: "Signature", flavorProfile: "Tropical Coconut", recipe: ["1 oz Malibu Rum", "1 oz Bacardi Rum", "Fill with Pineapple Juice", "Splash of Lime Juice"], tarotMeaning: "For the moment you decide which road to take. This is for the rider who stands at a crossroads, planning their next move with confidence.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/good%20plan.jpg" },
+                { name: "The Switchback", type: "Signature", flavorProfile: "Sharp & Clean", recipe: ["2 oz Tanqueray Gin", "1 oz Lime Juice", "Fill a tall glass with Club Soda"], tarotMeaning: "For the first leg of a long journey. This is for the rider who has set out, full of ambition, watching the world unfold before them.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/heavy%20stuff.jpg" },
+                { name: "The Long Haul", type: "Signature", flavorProfile: "Crisp & Herbal", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], tarotMeaning: "For the celebration after a successful ride. This is for the bond of the club, the shared victory, and the party at the clubhouse.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/inspirational-sports-quotes-1.jpg" },
+                { name: "The Barbed Wire", type: "Signature", flavorProfile: "Herbal & Prickly", recipe: ["1.5 oz Tanqueray Gin", "0.5 oz Jägermeister", "Fill a tall glass with Tonic Water"], tarotMeaning: "For the inevitable rivalry. This drink is for the clash of egos, the friendly (and unfriendly) competition between riders.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/life-quotes-13.jpg" },
+                { name: "The Rattlesnake", type: "Signature", flavorProfile: "Sweet Cherry & Sharp", recipe: ["2 oz El Mayor Tequila", "0.5 oz Cherry Schnapps", "0.5 oz Lime Juice", "Top with Club Soda in a tall glass"], tarotMeaning: "For the triumphant return. This is for the rider who comes home with a story to tell, recognized and respected by all.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_10206519941893447.jpg" },
+                { name: "Dust Devil", type: "Signature", flavorProfile: "Tropical & Bitter", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Pineapple Juice", "0.5 oz Maraschino Liqueur", "Dash of Orange Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the one who defends their patch, their bike, their honor. This is the taste of standing your ground, no matter the odds.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_1621518493996.jpg" },
+                { name: "Desert Sunrise", type: "Signature", flavorProfile: "Sweet Citrus", recipe: ["2 oz El Mayor Tequila", "Fill a tall glass with Orange Juice", "2 dashes Orange Bitters", "0.5 oz Grenadine"], tarotMeaning: "For the speed of a well-tuned engine. This is for a swift journey, for news arriving faster than expected.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_4A302B9D-BC28-4544-9FE6-BC0F720F46C3.jpg" },
+                { name: "The Gilded Serpent", type: "Signature", flavorProfile: "Floral & Sharp", recipe: ["1.5 oz El Mayor Tequila", "0.75 oz St-Germain", "1 oz Pineapple Juice", "0.5 oz Lime Juice"], tarotMeaning: "For the rider who is always prepared. This is for the one who has their tools, their wits, and the resilience to handle any breakdown.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_0704.jpg" },
+                { name: "Mad Dog", type: "Signature", flavorProfile: "Tart & Salty", recipe: ["2 oz Grey Goose Vodka", "Fill a tall glass with Cranberry Juice", "Salt Rim"], tarotMeaning: "For the rider who carries the weight of the club. This is for the burdens of leadership, the heavy responsibility of the long road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_4683.jpg" },
+                { name: "The Switchblade", type: "Signature", flavorProfile: "Intensely Sour", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "Sugar Rim"], tarotMeaning: "For the prospect, the eager learner. This drink is for the one who is full of passion but still needs guidance from the old-timers.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7163.jpg" },
+                { name: "The Junkyard Dog", type: "Signature", flavorProfile: "Herbal & Sweet", recipe: ["1 oz Jägermeister", "1 oz Southern Comfort", "0.5 oz Lime Juice", "Serve on the rocks"], tarotMeaning: "For the Enforcer, the one who takes bold, decisive action. This is the taste of fiery passion and a rebellious spirit.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7989.jpg" },
+                { name: "The Wrench's Sidecar", type: "Signature", flavorProfile: "Strong & Citrus", recipe: ["2 oz E&J Brandy", "1 oz Cointreau", "0.75 oz Lemon Juice", "Sugar Rim"], tarotMeaning: "For the matriarch of the club, the one who leads with warmth and charisma. This drink is for confident, inspiring leadership.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7991.jpg" },
+                { name: "The Blackout", type: "Signature", flavorProfile: "Herbal & Dark", recipe: ["1.5 oz Jägermeister", "Fill a tall glass with Cola"], tarotMeaning: "For the patriarch, the seasoned leader who has seen it all. This is the taste of authority, vision, and command.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7992.jpg" },
+                { name: "Peaches 'n' Scream", type: "Signature", flavorProfile: "Sweet Peach & Bold", recipe: ["1.5 oz Peach Schnapps", "0.5 oz Southern Comfort", "Fill a tall glass with Orange Juice"], tarotMeaning: "For the first taste of true brotherhood. This is for the emotional connection, the spark of a new friendship forged on the road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7993.jpg" },
+                { name: "The Outlaw's Peach", type: "Signature", flavorProfile: "Creamy Peach", recipe: ["1 oz Peach Schnapps", "1 oz Baileys Irish Cream", "Top with Cola in a tall glass"], tarotMeaning: "For the choice between the open road and the promises you made back home. This drink is for the partnerships, the alliances, and the bonds that define the ride.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(2).png" },
+                { name: "The Apricot Ambush", type: "Signature", flavorProfile: "Fruity & Tart", recipe: ["1.5 oz E&J Brandy", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice", "Top with Club Soda"], tarotMeaning: "For the whole crew, riding together. This is the taste of community, of celebration, of shared joy in the clubhouse.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7995.jpg" },
+                { name: "The Crimson Guard", type: "Signature", flavorProfile: "Fruity & Sharp", recipe: ["1.5 oz Sloe Gin", "0.5 oz Tanqueray Gin", "Fill a tall glass with Club Soda", "Splash of Lime Juice"], tarotMeaning: "For the rider who's grown bored of the usual routes. This drink is for apathy, for missed opportunities, for dreaming of other roads.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7996.jpg" },
+                { name: "The Road Rash", type: "Signature", flavorProfile: "Sweet & Sour", recipe: ["1 oz Sloe Gin", "1 oz Southern Comfort", "0.5 oz Lemon Juice", "Fill a tall glass with Club Soda"], tarotMeaning: "For the memory of a fallen brother. This drink is for loss, for grief, but also for the legacy that remains.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7997.jpg" },
+                { name: "The Ruby Rider", type: "Signature", flavorProfile: "Deep & Fruity", recipe: ["2 oz Sloe Gin", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the kindness of a stranger on the road. This drink is for nostalgia, for the innocence of past rides and the simple joys.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7998.jpg" },
+                { name: "Cowboy's Hard Root Beer", type: "Signature", flavorProfile: "Creamy & Bold", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Club Soda in a tall glass"], tarotMeaning: "For the daydreams during a long, straight ride. This is for the illusion of choice, for the temptation of a thousand different paths.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_7999.jpg" },
+                { name: "Knob Creek Kentucky Smash", type: "Signature", flavorProfile: "Strong & Sour", recipe: ["2 oz Knob Creek", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the decision to leave the past behind. This is for the rider who walks away from a bad situation to find a better road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8001.jpg" },
+                { name: "The Gilded Cage", type: "Signature", flavorProfile: "Rich & Nutty", recipe: ["1.5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the wish granted at a lonely crossroads. This is the taste of satisfaction, of having everything you've worked for.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8002.jpg" },
+                { name: "Bulleit Frontier Punch", type: "Signature", flavorProfile: "Fruity & Bold", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], tarotMeaning: "For the rider who has it all—the best bike, the best crew, the best stories. This is the taste of emotional fulfillment and true happiness.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8004.jpg" },
+                { name: "Seagram's Stone Sour", type: "Classic", flavorProfile: "Classic Sour", recipe: ["2 oz Seagram's 7", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the prospect with a dream. This is for the one who is open to new paths, new friendships, and the emotional journey of the ride.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8005.jpg" },
+                { name: "Jim Beam Black Cherry Bomb", type: "Signature", flavorProfile: "Bold Cherry", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], tarotMeaning: "For the romantic rider, the dreamer. This is for the one who follows their heart, even when it doesn't make sense.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8220.jpg" },
+                { name: "Southern Crossroads", type: "Signature", flavorProfile: "Sweet & Fruity", recipe: ["1.5 oz Southern Comfort", "0.5 oz Sloe Gin", "Fill a tall glass with Orange Juice"], tarotMeaning: "For the old soul of the club, the one who balances emotion with wisdom. This drink is for compassion and control.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8221.jpg" },
+                { name: "The Red Label Rider", type: "Signature", flavorProfile: "Smoky & Sharp", recipe: ["2 oz Johnnie Walker Red Label", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the leader of the pack, the one who commands emotional respect. This drink is for mastery of the heart and the road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8239.jpg" },
+                { name: "The Bitter End", type: "Signature", flavorProfile: "Bitter & Spiced", recipe: ["1.5 oz Four Roses Whiskey", "0.75 oz Campari", "2 dashes Angostura Bitters", "Fill a tall glass with Club Soda"], tarotMeaning: "For the hard truth learned on a lonely highway. This is for clarity that cuts like a knife, a breakthrough of understanding.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_true%20character%20quotes%20-%20Google%20Search%20(1).png" },
+                { name: "Old Fashioned", type: "Classic", flavorProfile: "Bold & Bitter", recipe: ["2 oz Maker's Mark", "0.5 oz Simple Syrup", "2 dashes Orange Bitters", "Cherry Garnish", "Top with Club Soda in a tall glass"], tarotMeaning: "For the truce between rival clubs. This is for the calm after the conflict, for a moment of peace before the next ride.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8266.jpg" },
+                { name: "Margarita", type: "Classic", flavorProfile: "Salty & Sour", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Cointreau", "1 oz Lime Juice", "2 dashes Orange Bitters", "Salt Rim", "Top with Club Soda in a tall glass"], tarotMeaning: "For the painful lesson, the sting of betrayal. This is for the heartbreak that comes from a brother's deception.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8267.jpg" },
+                { name: "Moscow Mule", type: "Classic", flavorProfile: "Spicy Ginger", recipe: ["2 oz Ketel One Vodka", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the need to rest and recover. This is for the rider who knows when to pull over, to step back from the conflict and heal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8269.jpg" },
+                { name: "Gin and Tonic", type: "Classic", flavorProfile: "Crisp & Bitter", recipe: ["2 oz Tanqueray Gin", "Fill a tall glass with Tonic Water"], tarotMeaning: "For the dirty tricks and underhanded tactics. This drink is for the victory that feels hollow, the win that wasn't honorable.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8296.jpg" },
+                { name: "Screwdriver", type: "Classic", flavorProfile: "Simple Citrus", recipe: ["2 oz Stolichnaya Citros Vodka", "2 dashes Orange Bitters", "Fill a tall glass with Orange Juice"], tarotMeaning: "For leaving a bad situation in the rearview mirror. This is for moving on, for a quiet retreat toward a better horizon.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8297.jpg" },
+                { name: "Whiskey Sour", type: "Classic", flavorProfile: "Sour & Sweet", recipe: ["2 oz Jim Beam Bourbon", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the paranoia of a late-night ride. This is for the feeling of being watched, for the anxiety of the unknown.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8298.jpg" },
+                { name: "Cuba Libre", type: "Classic", flavorProfile: "Spiced Lime", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], tarotMeaning: "For the restless nights before a long haul. This drink is for insomnia, for the fears that keep a rider awake.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_Screenshot%202023-02-25%20at%2010.39.37.png" },
+                { name: "The Oath", type: "Signature", flavorProfile: "Bold & Almond", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Amaretto", "Serve on the rocks"], tarotMeaning: "For hitting rock bottom. This is the taste of total defeat, of a breakdown so bad you have no choice but to start over from scratch.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/thumbnail_IMG_8263.jpg" },
+                { name: "White Russian", type: "Classic", flavorProfile: "Creamy Coffee", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream", "Top with Cola in a tall glass"], tarotMeaning: "For the young gun with a sharp mind. This is for the prospect who is quick-witted, curious, and eager to prove their intelligence.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/vince%20finest%20hour.jpg" },
+                { name: "Long Island Iced Tea", type: "Classic", flavorProfile: "Strong & Sour", recipe: ["0.5 oz Grey Goose Vodka", "0.5 oz Tanqueray Gin", "0.5 oz Bacardi Rum", "0.5 oz Jose Cuervo Silver Tequila", "0.5 oz Cointreau", "1 oz Lemon Juice", "Fill a tall glass with Cola"], tarotMeaning: "For the cold, logical strategist. This is for the rider who plans every route, who uses their mind as their greatest weapon.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/wellness.png" },
+                { name: "Shayla Temple", type: "Classic", flavorProfile: "Sweet & Innocent", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry Garnish"], tarotMeaning: "For the sharp-tongued queen of the scene. This drink is for the woman whose words are as cutting as her wit, honest and independent.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/Screenshot%202022-12-27%20101031.jpg" },
+                { name: "The Alchemist's Brew", type: "Signature", flavorProfile: "Herbal & Complex", recipe: ["1.5 oz Jägermeister", "0.5 oz St-Germain", "Fill with Tonic Water"], tarotMeaning: "For the intellectual leader, the master tactician. This is for the rider who outthinks every opponent, the king of the mental chess game.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/5182yB36XPL._SY580_.jpg" },
+                { name: "The Morning Haze", type: "Signature", flavorProfile: "Citrus & Sharp", recipe: ["2 oz Tanqueray Gin", "Fill with Pineapple Juice", "Splash of Lime Juice"], tarotMeaning: "For the seed of a new venture. This is for the first dollar earned, the tangible start of a new business on the side.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/51T5di0sAPL._AC_.jpg" },
+                { name: "The Nightcap", type: "Signature", flavorProfile: "Rich & Smooth", recipe: ["2 oz Baileys Irish Cream", "1 oz Amaretto", "Serve on the rocks"], tarotMeaning: "For the rider who juggles it all. This is for balancing the club, the job, and the family, adapting to whatever life throws at you.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/8nm4otu2g0x51.jpg" },
+                { name: "The Gear Jammer", type: "Signature", flavorProfile: "Spicy & Sweet", recipe: ["2 oz Captain Morgan Spiced Rum", "Fill with Cola", "2 dashes Orange Bitters"], tarotMeaning: "For the master mechanic, the skilled artisan. This drink is for the one whose hard work and dedication creates something of true value.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/Best-Daily-Inspirational-quotes-Quotes-463x650.jpg" },
+                { name: "The Sunstone", type: "Signature", flavorProfile: "Bright & Sweet", recipe: ["1.5 oz Malibu Rum", "Fill with Orange Juice", "Splash of Grenadine"], tarotMeaning: "For the joy of a charitable act. This is for the rider who helps a stranded stranger, for the generosity that defines the code of the road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/Picture1.png" },
+                { name: "The Soothsayer", type: "Signature", flavorProfile: "Herbal & Bitter", recipe: ["1.5 oz Campari", "1 oz Tanqueray Gin", "Fill with Club Soda"], tarotMeaning: "For the hustler, the one who clings too tightly to what they have. This is a warning against greed, a reminder not to be controlled by your possessions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/Quotation-Abraham-Lincoln-Nearly-all-men-can-stand-adversity-but-if-you-want-17-60-77.jpg" },
+                { name: "The Crossroads Deal", type: "Signature", flavorProfile: "Smoky & Sweet", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], tarotMeaning: "For the rider who appreciates the finer things. This is for the one who has worked hard and now enjoys the luxury and security they've earned.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/Quotation-Daniel-J-Boorstin-The-greatest-obstacle-to-discovery-is-not-ignorance-it-is-3-21-44.jpg" },
+                { name: "The Iron Horse", type: "Signature", flavorProfile: "Bold & Uncompromising", recipe: ["2 oz Maker's Mark", "Fill with Cola", "2 dashes Angostura Bitters"], tarotMeaning: "For the long, patient work. This is for the rider who spends a whole winter rebuilding their engine, knowing the reward will be worth the wait.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/Quotation-John-Wooden-Be-more-concerned-with-your-character-than-your-reputation-because-32-2-0224.jpg" },
+                { name: "The High Noon", type: "Signature", flavorProfile: "Sharp & Ready", recipe: ["2 oz El Mayor Tequila", "Fill with Tonic Water", "Splash of Lime Juice"], tarotMeaning: "For the harvest, the moment all the hard work pays off. This is the taste of a successful run, a profitable venture.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/Screenshot-2018-07-16-07.webp" },
+                { name: "The Midnight Oil", type: "Signature", flavorProfile: "Coffee & Cream", recipe: ["1.5 oz Kahlúa", "1 oz Baileys Irish Cream", "Fill with Cola"], tarotMeaning: "For the legacy that is passed down. This is for the family business, the inheritance of a beloved bike, the wealth of generations.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/a.png" },
+                { name: "The Desert Wind", type: "Signature", flavorProfile: "Dry & Spiced", recipe: ["2 oz Bulleit Bourbon", "Fill with Ginger Soda", "2 dashes Orange Bitters"], tarotMeaning: "For the beginning of a life of prosperity. This is for the young rider who is ambitious, dependable, and on the path to success.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/bob%20ross%202.JPG" },
+                { name: "The Oracle's Kiss", type: "Signature", flavorProfile: "Sweet & Floral", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], tarotMeaning: "For the practical, hardworking problem-solver. This is for the rider who can fix anything, who brings order out of mechanical chaos.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/burgndy.jpeg" },
+                { name: "The Twin Spar", type: "Signature", flavorProfile: "Simple & Strong", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], tarotMeaning: "For the woman who has built her own empire. This drink is for the self-made, prosperous, and nurturing leader.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/deflecting.JPG" },
+                { name: "The Catalyst", type: "Signature", flavorProfile: "Tart & Energetic", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sour Mix", "Splash of Lime Juice"], tarotMeaning: "For the man who has earned his throne. This is for the rider who is dependable, successful, and a pillar of the community.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(1).jpg" },
+                { name: "The Grim Reaper", type: "Signature", flavorProfile: "Dark & Potent", recipe: ["1.5 oz Jägermeister", "1 oz Kraken Black Spiced Rum", "Fill with Cola"], tarotMeaning: "For the hard times, the financial ruin. This drink is for the rider who has lost it all, a stark reminder of insecurity and struggle.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(11).png" },
+                { name: "The Mudslide", type: "Classic", flavorProfile: "Creamy & Decadent", recipe: ["1 oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], tarotMeaning: "For the rider who has achieved everything. This is the taste of completion, of wealth, and the security of a legacy that will last.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/a1fb7ba9d63bc7313fa553aad83016e3984b0fe2/download%20(15).png" }
+            ];
+
+            const categorizedCocktails = initialCocktails.map(cocktail => {
+                const categories = new Set();
+                const recipeString = cocktail.recipe.join(' ').toLowerCase();
+                
+                if (recipeString.includes('juice') || recipeString.includes('sour mix')) {
+                    categories.add('Breakfast');
+                }
+                if (recipeString.includes('club soda') || recipeString.includes('tonic water')) {
+                    categories.add('Lunch');
+                }
+                if (recipeString.includes('cola') || recipeString.includes('ginger soda')) {
+                    categories.add('Dinner');
+                }
+                if (recipeString.includes('baileys irish cream') || recipeString.includes('kahlúa')) {
+                    categories.add('Desert');
+                }
+                
+                if (categories.size === 0) {
+                    categories.add('Lunch'); 
+                }
+
+                return {
+                     ...cocktail,
+                     name: cocktail.name.startsWith('The ') ? cocktail.name.substring(4) : cocktail.name,
+                     category: Array.from(categories)
+                };
+            });
+
+            cocktails = categorizedCocktails.map((cocktail, index) => {
+                return { ...cocktail, tarot: tarotDeck[index] };
+            });
+            
+            cocktails.sort((a, b) => a.name.localeCompare(b.name));
+        }
+
+        // --- Config & Global State ---
+        let barStock = {};
+        const STOCK_STORAGE_KEY = 'nomads_bar_stock_v2';
+        const titleFonts = ['Rye', 'Cinzel', 'IM Fell DW Pica', 'Black Ops One'];
+        const ingredientCategories = {
+            'Spirits': {
+                'Whiskey & Bourbon': ['Bulleit Bourbon', 'Crown Royal', 'Four Roses Whiskey', 'Jameson Irish Whiskey', 'Jim Beam Bourbon', 'Johnnie Walker Red Label', 'Knob Creek', 'Maker\'s Mark', 'Seagram\'s 7', 'Southern Comfort'],
+                'Vodka': ['Grey Goose Vodka', 'Ketel One Vodka', 'Stolichnaya Citros Vodka'], 'Gin': ['Tanqueray Gin', 'Sloe Gin'],
+                'Rum': ['Bacardi Rum', 'Captain Morgan Spiced Rum', 'Kraken Black Spiced Rum', 'Malibu Rum'],
+                'Tequila': ['El Mayor Tequila', 'Jose Cuervo Silver Tequila'], 'Brandy': ['E&J Brandy', 'Apricot Brandy'],
+            },
+            'Liqueurs & Schnapps': {
+                'Fruit': ['Apple Pucker', 'Blue Curacao', 'Cherry Schnapps', 'Cointreau', 'Maraschino Liqueur', 'Peach Schnapps', 'Raspberry Schnapps'],
+                'Herbal & Spiced': ['Campari', 'Jägermeister', 'Pernod', 'St-Germain'],
+                'Cream, Nut & Coffee': ['Amaretto', 'Baileys Irish Cream', 'Kahlúa'],
+                'Other Schnapps': ['Butterscotch Schnapps', 'Root Beer Schnapps']
+            },
+            'Mixers & Bitters': {
+                'Sodas & Juices': ['Club Soda', 'Cola', 'Cranberry Juice', 'Ginger Soda', 'Lemon Juice', 'Lime Juice', 'Orange Juice', 'Pineapple Juice', 'Sour Mix', 'Tonic Water'],
+                'Bitters': ['Angostura Bitters', 'Orange Bitters', 'Peychaud\'s Bitters', 'Rosemary Lavender Bitters'],
+                'Syrups': ['Grenadine', 'Simple Syrup'],
+            },
+            'Other': { 'Garnish & Rims': ['Cherry Garnish', 'Half Salt, Half Sugar Rim', 'Salt Rim', 'Sugar Rim'] }
+        };
+
+        // --- DOM Elements ---
+        const menuGrid = document.getElementById('menu-grid');
+        const barStockModal = document.getElementById('bar-stock-modal');
+        const drinkFinderModal = document.getElementById('drink-finder-modal');
+        const categoryMenuModal = document.getElementById('category-menu-modal');
+        const tarotReadingModal = document.getElementById('tarot-reading-modal');
+
+        // --- Helper Functions ---
+        function parseIngredientName(ingStr) {
+            let name = ingStr.replace(/^[\d./\s-]+(oz|dashes|dash|garnish)\s*/i, '');
+            const instructionalPhrases = [ 'Fill a tall glass with ', 'Fill with ', 'Top with ', 'Splash of ', 'Splash '];
+            for (const phrase of instructionalPhrases) {
+                if (name.toLowerCase().startsWith(phrase.toLowerCase())) {
+                    name = name.substring(phrase.length);
+                    const inIndex = name.toLowerCase().indexOf(' in a');
+                    if (inIndex > -1) name = name.substring(0, inIndex);
+                    break;
+                }
+            }
+            const pureInstructions = ['serve on the rocks'];
+            if(pureInstructions.includes(name.toLowerCase().trim())) return null;
+            return name.trim();
+        }
+
+        function getIconForIngredient(ingredientName) {
+            const lowerIng = ingredientName.toLowerCase();
+            if (['whiskey', 'bourbon', 'southern comfort', 'maker\'s mark', 'seagram\'s 7', 'knob creek', 'crown royal', 'bulleit', 'jim beam', 'johnnie walker', 'four roses'].some(s => lowerIng.includes(s))) return { icon: 'fa-whiskey-glass', color: 'text-orange-400' };
+            if (['vodka'].some(s => lowerIng.includes(s))) return { icon: 'fa-skull-crossbones', color: 'text-blue-300' };
+            if (['gin'].some(s => lowerIng.includes(s))) return { icon: 'fa-leaf', color: 'text-green-400' };
+            if (['rum', 'malibu'].some(s => lowerIng.includes(s))) return { icon: 'fa-anchor', color: 'text-yellow-800' };
+            if (['tequila'].some(s => lowerIng.includes(s))) return { icon: 'fa-hat-cowboy-side', color: 'text-yellow-600' };
+            if (['brandy'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-wine-glass', color: 'text-purple-400'};
+            if (['schnapps', 'pucker', 'jägermeister', 'liqueur', 'baileys', 'pernod', 'kahlúa', 'st-germain', 'cointreau', 'amaretto', 'campari', 'blue curacao'].some(l => lowerIng.includes(l))) return { icon: 'fa-mortar-pestle', color: 'text-purple-400' };
+            if (lowerIng.includes('bitters')) return { icon: 'fa-eye-dropper', color: 'text-red-500' };
+            if (['juice', 'sour mix'].some(j => lowerIng.includes(j))) return { icon: 'fa-lemon', color: 'text-yellow-400' };
+            if (['soda', 'tonic', 'cola'].some(m => lowerIng.includes(m))) return { icon: 'fa-faucet-drip', color: 'text-gray-400' };
+            if (['syrup', 'grenadine'].some(s => lowerIng.includes(s))) return { icon: 'fa-prescription-bottle', color: 'text-pink-400' };
+            if (lowerIng.includes('rim')) return { icon: 'fa-solid fa-circle-notch', color: 'text-gray-300'};
+            if (lowerIng.includes('garnish')) return { icon: 'fa-solid fa-star', color: 'text-yellow-300'};
+            return { icon: 'fa-cube', color: 'text-gray-400' };
+        }
+        
+        function renderMenu(itemsToRender) {
+            menuGrid.innerHTML = '';
+            itemsToRender.forEach((item, index) => {
+                const isUnavailable = !isDrinkMakeable(item);
+                const titleFont = titleFonts[index % titleFonts.length];
+                
+                const cardHtml = `
+                    <div class="drink-card ${isUnavailable ? 'is-unavailable' : ''}" data-name="${item.name}">
+                        <div class="drink-card-inner">
+                            <div class="drink-card-front">
+                                <div class="card-header-front"><h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1;">${item.name}</h3></div>
+                                <div class="px-4 pt-4 text-center"><h4 class="recipe-content-title">Flavor Profile</h4><p class="font-rye text-amber-300 text-lg">${item.flavorProfile}</p></div>
+                                <div class="recipe-content">
+                                    <h4 class="recipe-content-title mt-2">The Recipe</h4>
+                                    <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIconForIngredient(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.color}"></i><span>${r}</span></li>`; }).join('')}</ul>
+                                </div>
+                                <div class="card-footer">Tap for The Arcana</div>
+                            </div>
+                            <div class="drink-card-back ${!item.image ? 'no-image' : ''}">
+                               <div class="card-back-image" ${item.image ? `style="background-image: url('${item.image}')"` : ''}></div>
+                               <div class="card-back-content">
+                                   <h3 class="tarot-card-name">${item.tarot}</h3>
+                                   <h4 class="drink-name-back">${item.name}</h4>
+                                   <div class="tarot-meaning">"${item.tarotMeaning}"</div>
+                                </div>
+                                <div class="card-footer" style="color: #a78bfa; border-color: #a78bfa; background: rgba(0,0,0,0.3);">Tap for Recipe</div>
+                            </div>
+                        </div>
+                    </div>`;
+                menuGrid.insertAdjacentHTML('beforeend', cardHtml);
+            });
+        }
+
+        function filterMenu(category) {
+            const itemsToRender = category === 'all' ? cocktails : cocktails.filter(item => item.category.includes(category));
+            renderMenu(itemsToRender);
+        }
+
+        function initializeBarStock() {
+            const allIngredients = Object.values(ingredientCategories).flatMap(mainCat => Object.values(mainCat).flat()).sort();
+            const savedStock = localStorage.getItem(STOCK_STORAGE_KEY);
+            if (savedStock) {
+                barStock = JSON.parse(savedStock);
+                allIngredients.forEach(ing => { if (barStock[ing] === undefined) barStock[ing] = true; });
+            } else {
+                allIngredients.forEach(ing => barStock[ing] = true);
+            }
+            localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(barStock));
+        }
+
+        function renderBarStockModal() {
+            const contentContainer = document.getElementById('bar-stock-content');
+            contentContainer.innerHTML = '';
+            const renderButtonsForStatus = (status) => {
+                let html = `<h3 class="text-xl ${status ? 'text-green-400' : 'text-red-400'} mb-4 font-black-ops">${status ? 'IN STOCK' : 'OUT OF STOCK'}</h3>`;
+                let hasAnyContent = false;
+                Object.keys(ingredientCategories).forEach(mainCategoryName => {
+                    let mainCategoryHtml = ''; let hasContentInMainCategory = false;
+                    Object.keys(ingredientCategories[mainCategoryName]).forEach(subCategoryName => {
+                        const subCategoryIngredients = ingredientCategories[mainCategoryName][subCategoryName].filter(ing => barStock[ing] === status).map(ing => `<button data-ingredient="${ing}" class="ingredient-btn text-sm bg-gray-700 hover:bg-gray-600 text-white py-1 px-4 rounded-lg transition-colors">${ing}</button>`).join('');
+                        if (subCategoryIngredients.length > 0) {
+                            hasContentInMainCategory = true;
+                            hasAnyContent = true;
+                            mainCategoryHtml += `<div class="mb-3"><h5 class="text-md font-bold text-gray-400 mb-2">${subCategoryName}</h5><div class="flex flex-wrap gap-2">${subCategoryIngredients}</div></div>`;
+                        }
+                    });
+                    if (hasContentInMainCategory) html += `<div class="mb-6"><h4 class="text-xl font-rye text-amber-500 mb-3 border-b-2 border-gray-600 pb-2">${mainCategoryName}</h4>${mainCategoryHtml}</div>`;
+                });
+                if (!hasAnyContent) { html += `<p class="text-gray-500 italic">Nothing to show here.</p>`; }
+                return html;
+            };
+            contentContainer.innerHTML = renderButtonsForStatus(true) + '<div class="border-t-2 border-dashed border-gray-600 my-6"></div>' + renderButtonsForStatus(false);
+            contentContainer.querySelectorAll('.ingredient-btn').forEach(btn => btn.addEventListener('click', () => toggleStock(btn.dataset.ingredient)));
+        }
+        
+        function isDrinkMakeable(drink) {
+            return drink.recipe.every(ingStr => {
+                const ingName = parseIngredientName(ingStr);
+                return ingName === null || barStock[ingName] !== false;
+            });
+        }
+
+        function toggleStock(ingredient) {
+            barStock[ingredient] = !barStock[ingredient];
+            localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(barStock));
+            renderBarStockModal();
+            const activeCategory = document.querySelector('#category-menu-content .is-active')?.dataset.category || 'all';
+            filterMenu(activeCategory);
+        }
+        
+        function initializeDrinkFinder() {
+            const drinkFinderContent = document.getElementById('drink-finder-content');
+            
+            const typeFilters = `
+                <div class="mb-6">
+                    <h3 class="text-xl text-amber-500 mb-4 font-rye tracking-wider">Category</h3>
+                    <div id="finder-type-tags" class="flex flex-wrap gap-3">
+                        <button data-type="All" class="finder-pill is-active">All</button>
+                        <button data-type="Signature" class="finder-pill">Signature</button>
+                        <button data-type="Classic" class="finder-pill">Classic</button>
+                    </div>
+                </div>`;
+            
+            const spiritCategories = Object.keys(ingredientCategories.Spirits);
+            const spiritFilters = `
+                <div>
+                    <h3 class="text-xl text-amber-500 mb-4 font-rye tracking-wider">Spirit</h3>
+                    <div id="finder-spirit-tags" class="flex flex-wrap gap-3">
+                        ${spiritCategories.map(spirit => `<button data-spirit="${spirit}" class="finder-pill">${spirit}</button>`).join('')}
+                    </div>
+                </div>`;
+
+            drinkFinderContent.innerHTML = `
+                ${typeFilters}
+                ${spiritFilters}
+                <div class="finder-separator"></div>
+                <div><h3 class="text-xl text-green-400 mb-4 font-rye tracking-wider">Matching Drinks</h3><div id="finder-results" class="space-y-3"><p class="text-gray-500 italic">Select a filter to see results...</p></div></div>`;
+            
+            updateFinderResults(); // Initial render
+        }
+        
+        function updateFinderResults() {
+            const resultsContainer = document.getElementById('finder-results');
+            const selectedButton = document.querySelector('.finder-pill.is-active');
+            
+            let matches = [];
+
+            if (!selectedButton || selectedButton.dataset.type === 'All') {
+                matches = [...cocktails];
+            } else if (selectedButton.dataset.type) {
+                const selectedType = selectedButton.dataset.type;
+                matches = cocktails.filter(drink => drink.type === selectedType);
+            } else if (selectedButton.dataset.spirit) {
+                const selectedSpiritCategory = selectedButton.dataset.spirit;
+                const spiritsInFamily = ingredientCategories.Spirits[selectedSpiritCategory] || [];
+                matches = cocktails.filter(drink => 
+                    drink.recipe.some(recipeLine => {
+                        const ingredientName = parseIngredientName(recipeLine);
+                        return ingredientName && spiritsInFamily.includes(ingredientName);
+                    })
+                );
+            }
+
+            if (matches.length > 0) {
+                resultsContainer.innerHTML = `<div class="space-y-3">${matches.map(drink => `<button data-drink-name="${drink.name}" class="finder-result-btn w-full text-left p-3 bg-gray-700 hover:bg-amber-800 rounded-lg transition-colors flex justify-between items-center"><span class="font-bold text-lg text-amber-400">${drink.name}</span><span class="text-xs text-gray-400">${drink.flavorProfile}</span></button>`).join('')}</div>`;
+            } else {
+                resultsContainer.innerHTML = '<p class="text-red-400 font-semibold">No drinks found for this filter.</p>';
+            }
+        }
+        
+        function highlightAndScrollToCard(card) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            document.querySelectorAll('.is-highlighted').forEach(c => c.classList.remove('is-highlighted'));
+            card.classList.add('is-highlighted');
+            setTimeout(() => card.classList.remove('is-highlighted'), 2500);
+        }
+
+        function handleTarotReading() {
+            const content = document.getElementById('tarot-reading-content');
+            content.innerHTML = ''; // Clear previous reading
+            content.classList.remove('selection-made');
+
+            let potentialDrinks = [...cocktails];
+
+            if (potentialDrinks.length < 3) {
+                content.innerHTML = `<p class="text-center text-red-400">Not enough cards in the deck for a reading.</p>`;
+                return;
+            }
+
+            const shuffled = potentialDrinks.sort(() => 0.5 - Math.random());
+            const selectedDrinks = shuffled.slice(0, 3);
+
+            const cardsContainer = document.createElement('div');
+            cardsContainer.className = "flex justify-center items-center gap-2 md:gap-8 w-full";
+            content.appendChild(cardsContainer);
+
+            selectedDrinks.forEach(item => {
+                const cardHtml = `
+                    <div class="drink-card-inner">
+                        <div class="drink-card-front">
+                            <div class="card-header-front"><h3 class="drink-card-title text-base" style="font-family: 'Rye', cursive;">${item.name}</h3></div>
+                            <div class="recipe-content text-xs p-2">
+                                <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIconForIngredient(ingName); return `<li class="text-xs"><i class="fas ${ingInfo.icon} ${ingInfo.color}"></i><span>${r}</span></li>`; }).join('')}</ul>
+                            </div>
+                            <div class="card-footer text-xs" style="background:rgba(0,0,0,0.5); border-color: #854d0e;">Find in Deck</div>
+                        </div>
+                        <div class="drink-card-back">
+                            <div class="card-back-image" ${item.image ? `style="background-image: url('${item.image}'); background-size: cover; background-position: center;"` : ''}></div>
+                            <div class="card-back-content p-2 flex flex-col justify-center">
+                               <h3 class="tarot-card-name text-lg">${item.tarot}</h3>
+                               <h4 class="drink-name-back">${item.name}</h4>
+                            </div>
+                            <div class="card-footer" style="color: #a78bfa; border-color: #a78bfa;">Select Your Fate</div>
+                        </div>
+                    </div>`;
+                const cardEl = document.createElement('div');
+                cardEl.className = "drink-card tarot-pick is-flipped";
+                cardEl.dataset.name = item.name;
+                cardEl.innerHTML = cardHtml;
+                cardsContainer.appendChild(cardEl);
+
+                cardEl.addEventListener('click', () => {
+                    if (content.classList.contains('selection-made')) {
+                        if (cardEl.classList.contains('selected')) {
+                            const cardInDeck = document.querySelector(`#menu-grid .drink-card[data-name="${item.name}"]`);
+                            if (cardInDeck) {
+                                highlightAndScrollToCard(cardInDeck);
+                                if (!cardInDeck.classList.contains('is-flipped')) {
+                                    cardInDeck.classList.add('is-flipped');
+                                }
+                            }
+                            tarotReadingModal.classList.add('opacity-0');
+                            setTimeout(() => tarotReadingModal.classList.add('hidden'), 300);
+                        }
+                        return;
+                    }
+                    content.classList.add('selection-made');
+                    cardEl.classList.add('selected');
+                    cardEl.querySelector('.drink-card-back .card-footer').textContent = 'Find in Deck';
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            setupCocktailData();
+            initializeBarStock();
+            initializeDrinkFinder();
+            filterMenu('all');
+            
+            // --- Event Listeners ---
+            menuGrid.addEventListener('click', e => {
+                const card = e.target.closest('.drink-card');
+                if (card) card.classList.toggle('is-flipped');
+            });
+
+            document.getElementById('arrow-left').addEventListener('click', () => menuGrid.scrollBy({ left: -(menuGrid.clientWidth * 0.9), behavior: 'smooth' }));
+            document.getElementById('arrow-right').addEventListener('click', () => menuGrid.scrollBy({ left: menuGrid.clientWidth * 0.9, behavior: 'smooth' }));
+            
+            document.querySelectorAll('.bottom-nav-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                 document.querySelectorAll('.bottom-nav-btn').forEach(b => b.classList.remove('is-active'));
+                 e.currentTarget.classList.add('is-active');
+            }));
+
+            document.getElementById('home-btn').addEventListener('click', () => {
+                filterMenu('all');
+                document.querySelector('#menu-btn').classList.remove('is-active');
+            });
+            
+            document.getElementById('flip-all-btn').addEventListener('click', () => {
+                 document.querySelectorAll('#menu-grid .drink-card').forEach(card => card.classList.toggle('is-flipped'));
+            });
+
+            // Tarot Reading Listeners
+            document.getElementById('tarot-reading-btn').addEventListener('click', () => {
+                handleTarotReading();
+                tarotReadingModal.classList.remove('hidden');
+                setTimeout(() => tarotReadingModal.classList.remove('opacity-0'), 10);
+            });
+            document.getElementById('close-tarot-btn').addEventListener('click', () => {
+                tarotReadingModal.classList.add('opacity-0');
+                setTimeout(() => tarotReadingModal.classList.add('hidden'), 300);
+            });
+
+
+            // Menu Modal Listeners
+            document.getElementById('menu-btn').addEventListener('click', () => {
+                categoryMenuModal.classList.remove('hidden');
+                setTimeout(() => categoryMenuModal.classList.remove('opacity-0'), 10);
+            });
+            document.getElementById('close-menu-btn').addEventListener('click', () => {
+                categoryMenuModal.classList.add('opacity-0');
+                setTimeout(() => categoryMenuModal.classList.add('hidden'), 300);
+            });
+            document.getElementById('category-menu-content').addEventListener('click', e => {
+                if(e.target.matches('.category-btn')) {
+                    filterMenu(e.target.dataset.category);
+                    categoryMenuModal.classList.add('opacity-0');
+                    setTimeout(() => categoryMenuModal.classList.add('hidden'), 300);
+                }
+            });
+
+            // Stock Modal Listeners
+            document.getElementById('bar-stock-btn').addEventListener('click', () => {
+                renderBarStockModal();
+                barStockModal.classList.remove('hidden');
+                setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
+            });
+            document.getElementById('close-stock-btn').addEventListener('click', () => {
+                barStockModal.classList.add('opacity-0');
+                setTimeout(() => barStockModal.classList.add('hidden'), 300);
+            });
+
+            // Finder Modal Listeners
+            document.getElementById('drink-finder-btn').addEventListener('click', () => {
+                drinkFinderModal.classList.remove('hidden');
+                setTimeout(() => drinkFinderModal.classList.remove('opacity-0'), 10);
+            });
+            document.getElementById('close-finder-btn').addEventListener('click', () => {
+                drinkFinderModal.classList.add('opacity-0');
+                setTimeout(() => drinkFinderModal.classList.add('hidden'), 300);
+            });
+            drinkFinderModal.addEventListener('click', e => {
+                if (e.target.matches('.finder-pill')) {
+                    const targetButton = e.target;
+                    // Deselect all pills first
+                    document.querySelectorAll('.finder-pill').forEach(btn => btn.classList.remove('is-active'));
+                    // Activate the clicked one
+                    targetButton.classList.add('is-active');
+                    updateFinderResults();
+                } else if (e.target.closest('.finder-result-btn')) {
+                    const resultBtn = e.target.closest('.finder-result-btn');
+                    const card = document.querySelector(`.drink-card[data-name="${resultBtn.dataset.drinkName}"]`);
+                    if (card) {
+                        highlightAndScrollToCard(card);
+                        drinkFinderModal.classList.add('opacity-0');
+                        setTimeout(() => drinkFinderModal.classList.add('hidden'), 300);
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+
+
+
+
+
+
