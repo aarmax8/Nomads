@@ -6,9 +6,9 @@
     <title>DILLIGAF</title>
 
     <!-- === Full Screen Mobile App Settings === --><meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-title" content="Nomad's">
+    <meta name="apple-mobile-wbe-app-title" content="Nomad's">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://placehold.co/180x180/1a110a/f59e0b?text=N">
+    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/aarmax8/Nomads@e123ef2a538873eb4ccbb54625e131b0b9d52ee7/Icon.jpg">
     
     <!-- === Styles and Fonts === --><script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -240,6 +240,75 @@
             color: #f59e0b;
             background-color: rgba(245, 158, 11, 0.1);
         }
+
+        /* --- Tarot Reading Modal Styles --- */
+        #tarot-hand-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .tarot-card-wrapper {
+            position: relative;
+            transition: transform 0.4s ease;
+        }
+
+        .tarot-card-wrapper:nth-child(1) { transform: rotate(-8deg) translateY(15px); z-index: 1; }
+        .tarot-card-wrapper:nth-child(2) { z-index: 3; margin: 0 -50px; transform: translateY(-10px) scale(1.05); }
+        .tarot-card-wrapper:nth-child(3) { transform: rotate(8deg) translateY(15px); z-index: 2; }
+
+        .tarot-card-wrapper:hover {
+            transform: translateY(-20px) scale(1.08) !important;
+            z-index: 10;
+        }
+        
+        .tarot-card-wrapper.is-selected {
+            transform: translateY(-25px) scale(1.1) !important;
+            z-index: 9;
+        }
+        
+        .tarot-pick {
+            width: 220px;
+            height: 380px;
+            min-height: 380px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        }
+
+        @media (max-width: 768px) {
+            .tarot-pick {
+                width: 180px;
+                height: 310px;
+                min-height: 310px;
+            }
+            .tarot-card-wrapper:nth-child(2) { margin: 0 -40px; }
+        }
+         @media (max-width: 600px) {
+            .tarot-pick {
+                width: 150px;
+                height: 260px;
+                min-height: 260px;
+            }
+            .tarot-card-wrapper:nth-child(2) { margin: 0 -30px; }
+            #tarot-reading-modal .drink-card-title { font-size: 1rem; }
+            #tarot-reading-modal .recipe-list-front li { font-size: 0.7rem; }
+        }
+
+        .tarot-position-label {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: #f59e0b;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 0 5px rgba(245, 158, 11, 0.7);
+        }
+        
+        #reading-explanation {
+            transition: opacity 0.3s ease;
+        }
+
 
         .ingredient-btn {
             background-color: rgba(255, 255, 255, 0.07) !important;
@@ -1038,4 +1107,6 @@
 
 
 " with my request.
+
+
 
