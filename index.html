@@ -222,6 +222,7 @@
             transition: all 0.2s ease-in-out;
         }
         #arrow-left { left: 1rem; }
+        #arrow-left i { transform: scaleX(-1); }
         #arrow-right { right: 1rem; }
         .nav-arrow:hover { background-color: rgba(245, 158, 11, 0.8); color: #111827; }
         
@@ -394,8 +395,8 @@
                 <button id="view-reset-btn" class="text-gray-400 hover:text-white transition-colors text-xs font-sans uppercase tracking-wider">Reset View</button>
             </div>
             <div id="menu-grid"></div>
-            <button id="arrow-left" class="nav-arrow"><i class="fas fa-chevron-left"></i></button>
-            <button id="arrow-right" class="nav-arrow"><i class="fas fa-chevron-right"></i></button>
+            <button id="arrow-left" class="nav-arrow"><i class="fas fa-motorcycle"></i></button>
+            <button id="arrow-right" class="nav-arrow"><i class="fas fa-motorcycle"></i></button>
         </main>
 
         <footer id="bottom-nav" class="fixed bottom-4 left-1/2 -translate-x-1/2 w-auto max-w-xs mx-auto bg-black/80 backdrop-blur-lg border-2 border-amber-800/50 rounded-full shadow-2xl shadow-black/50 z-20 flex justify-around items-center gap-2 p-1">
@@ -683,6 +684,25 @@
             const pureInstructions = ['serve on the rocks'];
             if(pureInstructions.includes(name.toLowerCase().trim())) return null;
             return name.trim();
+        }
+
+        function findCurrentCard() {
+            const container = menuGrid;
+            const containerRect = container.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+            let closestCard = null;
+            let minDistance = Infinity;
+
+            container.querySelectorAll('.drink-card').forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const distance = Math.abs(containerCenter - cardCenter);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = card;
+                }
+            });
+            return closestCard;
         }
 
         function getIngredientInfo(ingredientName) {
@@ -1071,8 +1091,22 @@
             });
 
 
-            document.getElementById('arrow-left').addEventListener('click', () => menuGrid.scrollBy({ left: -(menuGrid.clientWidth * 0.9), behavior: 'smooth' }));
-            document.getElementById('arrow-right').addEventListener('click', () => menuGrid.scrollBy({ left: menuGrid.clientWidth * 0.9, behavior: 'smooth' }));
+            document.getElementById('arrow-left').addEventListener('click', () => {
+                const currentCard = findCurrentCard();
+                if (!currentCard) return;
+                const prevCard = currentCard.previousElementSibling;
+                if (prevCard && prevCard.matches('.drink-card')) {
+                    prevCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
+            document.getElementById('arrow-right').addEventListener('click', () => {
+                const currentCard = findCurrentCard();
+                if (!currentCard) return;
+                const nextCard = currentCard.nextElementSibling;
+                if (nextCard && nextCard.matches('.drink-card')) {
+                    nextCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                }
+            });
             
             // --- Bottom Nav Listeners ---
             document.getElementById('browse-btn').addEventListener('click', () => {
@@ -1152,6 +1186,7 @@
     </script>
 </body>
 </html>
+
 
 
 
