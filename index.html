@@ -603,7 +603,7 @@
                                 <div class="card-header-front"><h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3></div>
                                 <div class="px-4 pt-4 text-center"><h4 class="recipe-content-title">Flavor Profile</h4><p class="font-rye text-amber-300 text-base leading-relaxed">${item.flavorProfile}</p></div>
                                 <div class="recipe-content">
-                                    <h4 class="recipe-content-title mt-2">The Recipe</h4>
+                                    
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
                                 </div>
                                 <div class="card-footer">${item.cardHook}</div>
@@ -1036,4 +1036,6 @@
 </html>
 
 
+
+" with my request.
 
