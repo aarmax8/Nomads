@@ -117,7 +117,7 @@
             pointer-events: none;
         }
         .card-back-image {
-            width: 100%; height: 280px; 
+            width: 100%; height: 310px; 
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
@@ -131,11 +131,12 @@
             bottom: -1px;
             left: 0;
             right: 0;
-            height: 40%;
-            background: linear-gradient(to top, #1e1b4b 5%, transparent);
+            height: 30%;
+            background: linear-gradient(to top, #1e1b4b 20%, transparent);
         }
         .card-back-content {
-            padding: 0.5rem 0.75rem; flex-grow: 1; overflow-y: auto; text-align: center;
+            padding: 0.25rem 0.75rem 0.5rem; flex-grow: 1; overflow-y: hidden; text-align: center;
+            display: flex; flex-direction: column;
         }
         .tarot-card-name {
             font-family: 'Cinzel', serif;
@@ -144,14 +145,16 @@
             text-align: center;
             color: #f59e0b;
             text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
-            margin-bottom: 0;
+            margin-bottom: 0.25rem;
         }
         .drink-name-back {
             font-family: 'Rye', cursive;
             font-size: 0.8rem; /* Smaller font size */
             color: #d1d5db;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0;
             opacity: 0.8; /* Slightly less prominent */
+            padding-top: 0.25rem;
+            flex-shrink: 0;
         }
         .tarot-meaning {
             margin-top: 0.5rem;
@@ -712,9 +715,11 @@
                             <div class="drink-card-back ${!item.image ? 'no-image' : ''}">
                                <div class="card-back-image lazy-bg" ${item.image ? `data-bg="url('${item.image}')"` : ''}></div>
                                <div class="card-back-content">
-                                   <h3 class="tarot-card-name">${item.tarot}</h3>
+                                   <div class="flex-grow min-h-0 overflow-y-auto">
+                                       <h3 class="tarot-card-name">${item.tarot}</h3>
+                                       <div class="tarot-meaning">"${item.tarotMeaning}"</div>
+                                   </div>
                                    <h4 class="drink-name-back">${item.name}</h4>
-                                   <div class="tarot-meaning">"${item.tarotMeaning}"</div>
                                 </div>
                                 <div class="card-footer" style="color: #a78bfa; border-color: #a78bfa; background: rgba(0,0,0,0.3);">Tap for Recipe</div>
                             </div>
@@ -1133,6 +1138,7 @@
     </script>
 </body>
 </html>
+
 
 
 
