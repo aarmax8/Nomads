@@ -39,27 +39,62 @@
             position: relative;
             background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/118b725a287a34af3f3742289ea14bdd0f7e25c0/Nomads%20title%20pic.jpg');
             background-size: cover; background-position: 0% 0%; background-repeat: no-repeat;
-            border-radius: 0.5rem; box-shadow: 0 8px 16px rgba(0,0,0,0.8); overflow: hidden;
-            border: 2px solid #4b5563;
+            border-radius: 0.5rem;
+            overflow: hidden;
+            /* New polished border is handled by the animation's box-shadow */
+            animation: pulse-glow 4s infinite ease-in-out;
         }
+
+        /* 1. Intensified Shine */
         #header-logo-container::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -150%;
-            width: 70%;
+            left: -100%; /* Start off-screen to the left */
+            width: 40%;
             height: 100%;
-            background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
-            transform: skewX(25deg);
-            animation: shine-effect 6s infinite ease-in-out;
-            animation-delay: 2s;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
+            transform: skewX(25deg); /* Flipped Angle so bottom leads */
+            animation: shine-effect 5s infinite ease-in-out;
+            animation-delay: 1.5s;
         }
+
         @keyframes shine-effect {
-            0% { left: -150%; }
-            50% { left: 150%; }
-            100% { left: 150%; }
+            0% {
+                left: -100%;
+            }
+            50% {
+                left: 150%;
+            }
+            100% {
+                left: 150%;
+            }
         }
         
+        /* 3. Inner Glow Animation */
+        @keyframes pulse-glow {
+            0%, 100% {
+                box-shadow: 
+                    /* Polished Border Effect */
+                    0 0 0 1px rgba(245, 158, 11, 0.7), /* Outer amber highlight */
+                    0 0 0 3px rgba(0, 0, 0, 0.8),      /* Dark separator */
+                    /* Depth & Glow */
+                    0 8px 16px rgba(0,0,0,0.8),
+                    inset 0 0 8px rgba(245, 158, 11, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    /* Pulsing Border Effect */
+                    0 0 0 2px rgba(245, 158, 11, 1),   /* Brighter highlight */
+                    0 0 0 4px rgba(0, 0, 0, 0.9),      /* Darker separator */
+                    /* Enhanced Depth & Glow */
+                    0 10px 20px rgba(0,0,0,0.9),
+                    inset 0 0 20px rgba(245, 158, 11, 0.6);
+            }
+        }
+        
+        /* 4. Corner Brackets - REMOVED */
+
         #menu-grid {
             display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory;
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; padding: 1.5rem 1rem 6rem; 
@@ -364,7 +399,7 @@
     <div class="app-container">
         <header class="text-center pt-4 px-4 flex-shrink-0">
             <div id="header-logo-container" class="h-32 md:h-40 w-full max-w-lg mx-auto flex items-center justify-center">
-               
+                <!-- Corner brackets removed -->
             </div>
         </header>
         
@@ -1203,6 +1238,12 @@
 </body>
 </html>
 "
+
+
+
+
+
+
 
 
 
