@@ -8,7 +8,7 @@
     <!-- === Full Screen Mobile App Settings === --><meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Nomad's">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/aarmax8/Nomads@0b5492dff5f95ae17f30ee8ecb6f05f339ee2be6/maple%20icon.png">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/aarmax8/Nomads/da1cd73bbe99b545558a76f94da21fea666e3010/splash%20screen%20maple%20with%20maples%20face%20no%20backgroundpng2.png">
     
     <!-- === Styles and Fonts === --><script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,7 +30,7 @@
         #splash-screen {
             position: fixed;
             inset: 0;
-            background-color: #1a110a;
+            background-color: transparent; /* Changed from solid color */
             z-index: 100;
             display: flex;
             justify-content: center;
@@ -38,10 +38,15 @@
             transition: opacity 1s ease-in-out;
         }
         #splash-logo {
-            width: 400px;
-            max-width: 90vw;
-            height: auto;
-            aspect-ratio: 1 / 1;
+            width: 85vw; /* Fill 85% of the screen width */
+            height: 85vw; /* Keep it square */
+            max-width: 450px; /* Set a max size for larger screens */
+            max-height: 450px; /* Keep the max size square */
+            background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/da1cd73bbe99b545558a76f94da21fea666e3010/splash%20screen%20maple%20with%20maples%20face%20no%20backgroundpng2.png');
+            background-size: contain; /* Changed to show the whole logo */
+            background-position: center; /* Centered the logo */
+            background-repeat: no-repeat;
+            /* Removed border and shadow for the transparent logo */
             transition: all 1.2s ease-in-out;
         }
 
@@ -54,7 +59,7 @@
             pointer-events: none;
         }
         body.loaded #splash-logo {
-            transform: scale(0.5);
+            transform: translateY(-200px);
             opacity: 0;
         }
 
@@ -434,7 +439,7 @@
 <body class="antialiased text-gray-300 loading">
 
     <div id="splash-screen">
-        <img id="splash-logo" src="https://raw.githack.com/aarmax8/Nomads/9bf172f1e3173503994354619f8f566fd58a7487/splash%20screen%20maple%20icon%20no%20background.png" alt="Nomads Arcana Splash Logo">
+        <div id="splash-logo"></div>
     </div>
 
     <div class="app-container">
@@ -1286,4 +1291,25 @@
     </script>
 </body>
 </html>
+"
+"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
