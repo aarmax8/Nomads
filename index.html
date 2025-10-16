@@ -620,7 +620,8 @@
         let activeFilters = {
             category: 'all',
             arcana: 'All',
-            spirit: null
+            spirit: null,
+            ingredient: null
         };
         let isGlobalTarotView = false;
         const titleFonts = ['Rye', 'Cinzel', 'IM Fell DW Pica', 'Black Ops One'];
@@ -652,6 +653,38 @@
         const tarotReadingModal = document.getElementById('tarot-reading-modal');
 
         // --- Helper Functions ---
+        function snapToCard(direction) {
+            const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
+            if (cards.length === 0) return;
+
+            const containerRect = menuGrid.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+
+            let closestCardIndex = -1;
+            let minDistance = Infinity;
+
+            // Find the card currently closest to the center
+            cards.forEach((card, index) => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const distance = Math.abs(containerCenter - cardCenter);
+                
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCardIndex = index;
+                }
+            });
+
+            let targetIndex = closestCardIndex + direction;
+
+            // Clamp the target index to be within the bounds of the array
+            targetIndex = Math.max(0, Math.min(cards.length - 1, targetIndex));
+            
+            const targetCard = cards[targetIndex];
+            if (targetCard) {
+                targetCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+        }
         function parseIngredientName(ingStr) {
             let name = ingStr.replace(/^[\d./\s-]+(oz|dashes|dash|garnish)\s*/i, '');
             const instructionalPhrases = [ 'Fill a tall glass with ', 'Fill with ', 'Top with ', 'Splash of ', 'Splash '];
@@ -766,6 +799,16 @@
                     })
                 );
             }
+
+            // Ingredient Filter
+            if (activeFilters.ingredient) {
+                 filteredCocktails = filteredCocktails.filter(drink =>
+                    drink.recipe.some(recipeLine => {
+                        const ingredientName = parseIngredientName(recipeLine);
+                        return ingredientName === activeFilters.ingredient;
+                    })
+                );
+            }
             
             renderMenu(filteredCocktails);
             setupLazyLoading();
@@ -860,12 +903,28 @@
                     </div>
                 </div>`;
 
+            const allIngredients = Object.values(ingredientCategories)
+                .flatMap(mainCat => Object.values(mainCat).flat())
+                .sort();
+            
+            const ingredientFilter = `
+                <div>
+                    <h3 class="text-xl text-amber-500 mb-4 font-rye tracking-wider">Contains Ingredient</h3>
+                     <select id="ingredient-filter-select" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        <option value="">Any Ingredient</option>
+                        ${allIngredients.map(ing => `<option value="${ing}">${ing}</option>`).join('')}
+                    </select>
+                </div>
+            `;
+
             filterModalContent.innerHTML = `
                 ${categoryFilters}
                 <div class="filter-separator"></div>
                 ${typeFilters}
                 <div class="filter-separator"></div>
-                ${spiritFilters}`;
+                ${spiritFilters}
+                <div class="filter-separator"></div>
+                ${ingredientFilter}`;
             
             updatePillsFromState();
         }
@@ -878,6 +937,10 @@
             document.querySelector(`#filter-group-arcana .filter-pill[data-type="${activeFilters.arcana}"]`)?.classList.add('is-active');
             if(activeFilters.spirit) {
                 document.querySelector(`#filter-group-spirit .filter-pill[data-spirit="${activeFilters.spirit}"]`)?.classList.add('is-active');
+            }
+            const ingredientSelect = document.getElementById('ingredient-filter-select');
+            if (ingredientSelect) {
+                ingredientSelect.value = activeFilters.ingredient || '';
             }
         }
         
@@ -1057,8 +1120,8 @@
         });
 
 
-        document.getElementById('arrow-left').addEventListener('click', () => menuGrid.scrollBy({ left: -(menuGrid.clientWidth * 0.9), behavior: 'smooth' }));
-        document.getElementById('arrow-right').addEventListener('click', () => menuGrid.scrollBy({ left: menuGrid.clientWidth * 0.9, behavior: 'smooth' }));
+        document.getElementById('arrow-left').addEventListener('click', () => snapToCard(-1));
+        document.getElementById('arrow-right').addEventListener('click', () => snapToCard(1));
         
         // --- Bottom Nav Listeners ---
         document.getElementById('browse-btn').addEventListener('click', () => {
@@ -1118,7 +1181,7 @@
             });
 
             document.getElementById('reset-filters-btn').addEventListener('click', () => {
-                activeFilters = { category: 'all', arcana: 'All', spirit: null };
+                activeFilters = { category: 'all', arcana: 'All', spirit: null, ingredient: null };
                 updatePillsFromState();
                 setCardView(false); // Also reset the card view
             });
@@ -1128,6 +1191,7 @@
                 activeFilters.category = document.querySelector('#filter-group-category .is-active')?.dataset.category || 'all';
                 activeFilters.arcana = document.querySelector('#filter-group-arcana .is-active')?.dataset.type || 'All';
                 activeFilters.spirit = document.querySelector('#filter-group-spirit .is-active')?.dataset.spirit || null;
+                activeFilters.ingredient = document.getElementById('ingredient-filter-select').value || null;
                 
                 applyAndRenderFilters();
 
@@ -1139,5 +1203,7 @@
 </body>
 </html>
 "
+
+
 
 
