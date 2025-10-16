@@ -25,7 +25,44 @@
             background-size: cover;
             background-position: center;
         }
-        .app-container { display: flex; flex-direction: column; height: 100vh; }
+        
+        /* --- Splash Screen --- */
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background-color: #1a110a;
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s ease-in-out;
+        }
+        #splash-logo {
+            width: 400px;
+            max-width: 90vw;
+            height: auto;
+            aspect-ratio: 1 / 1;
+            transition: all 1.2s ease-in-out;
+        }
+
+        /* Animation State */
+        body.loading #app-container {
+            opacity: 0;
+        }
+        body.loaded #splash-screen {
+            opacity: 0;
+            pointer-events: none;
+        }
+        body.loaded #splash-logo {
+            transform: scale(0.5);
+            opacity: 0;
+        }
+
+
+        .app-container { 
+            display: flex; flex-direction: column; height: 100vh;
+            transition: opacity 1s ease-in-out;
+        }
         main { flex-grow: 1; overflow: hidden; position: relative; }
         .font-rye { font-family: 'Rye', cursive; }
         .font-black-ops { font-family: 'Black Ops One', cursive; }
@@ -394,7 +431,11 @@
 
     </style>
 </head>
-<body class="antialiased text-gray-300">
+<body class="antialiased text-gray-300 loading">
+
+    <div id="splash-screen">
+        <img id="splash-logo" src="https://raw.githack.com/aarmax8/Nomads/9bf172f1e3173503994354619f8f566fd58a7487/splash%20screen%20maple%20icon%20no%20background.png" alt="Nomads Arcana Splash Logo">
+    </div>
 
     <div class="app-container">
         <header class="text-center pt-4 px-4 flex-shrink-0">
@@ -1139,6 +1180,14 @@
         initializeFilterModal();
         applyAndRenderFilters();
         
+        // --- Splash Screen Logic ---
+        // Switched from window.onload to run after initial setup for a faster perceived load time.
+        setTimeout(() => {
+            document.body.classList.remove('loading');
+            document.body.classList.add('loaded');
+        }, 1500); // Wait 1.5s before starting the animation
+        
+
         // --- Event Listeners ---
         menuGrid.addEventListener('click', e => {
             const card = e.target.closest('.drink-card');
@@ -1237,14 +1286,4 @@
     </script>
 </body>
 </html>
-"
-
-
-
-
-
-
-
-
-
 
