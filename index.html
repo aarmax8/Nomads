@@ -280,11 +280,21 @@
             font-size: 1.8rem; line-height: 1.2; color: #f59e0b; text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(245, 158, 11, 0.5);
         }
+        .drink-card[data-is-barcode="true"] .drink-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.75rem;
+        }
+
         .card-footer {
             text-align: center; font-size: 0.9rem; color: #d1d5db; padding: 0.75rem;
             font-family: 'IM Fell DW Pica', serif; letter-spacing: 0.03em; flex-shrink: 0;
             background: rgba(0,0,0,0.3); border-top: 1px solid #4a2c2a;
             font-style: italic;
+        }
+        .drink-card[data-is-barcode="true"] .card-footer {
+            background: transparent;
+            border: none;
+            font-style: normal;
         }
         .card-header-front {
             padding: 0.75rem; background: rgba(0,0,0,0.3); border-bottom: 2px solid #525252;
@@ -452,6 +462,45 @@
             transform: scale(1.03);
         }
 
+        /* --- NEW BRIGHTER MODAL STYLES --- */
+        .modal-panel {
+            background-image: radial-gradient(circle at top, rgba(41, 37, 36, 0.4), rgba(28, 25, 23, 0.7)), url('https://www.transparenttextures.com/patterns/leather.png');
+            border: 2px solid #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), inset 0 0 20px rgba(245, 158, 11, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .modal-header {
+            border-bottom: 1px solid rgba(245, 158, 11, 0.4);
+        }
+        .modal-header h2 {
+             text-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+        }
+        #bar-stock-content .ingredient-btn {
+             background-color: rgba(245, 158, 11, 0.1) !important;
+            border: 1px solid rgba(245, 158, 11, 0.3) !important;
+            color: #e2e8f0; /* Off-white */
+        }
+        #bar-stock-content .ingredient-btn:hover {
+            background-color: rgba(245, 158, 11, 0.25) !important;
+            border-color: rgba(245, 158, 11, 0.6) !important;
+            color: #fff;
+        }
+        #reset-filters-btn {
+            background-color: transparent;
+            border-color: #6b7280;
+        }
+         #reset-filters-btn:hover {
+            background-color: #374151;
+            border-color: #9ca3af;
+        }
+         #apply-filters-btn {
+            background-color: #d97706; /* Dark Amber */
+            border: 1px solid transparent;
+        }
+        #apply-filters-btn:hover {
+            background-color: #f59e0b;
+        }
     </style>
 </head>
 <body class="antialiased text-gray-300 loading">
@@ -505,9 +554,9 @@
     </div>
 
     <div id="bar-stock-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="bg-gray-900/70 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 w-full max-w-2xl max-h-[95vh] flex flex-col border border-white/10">
-            <div class="p-6 flex justify-between items-center flex-shrink-0">
-                <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider" style="text-shadow: 0 0 8px rgba(245, 158, 11, 0.5)">Bar Stock</h2>
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+            <div class="modal-header p-6 flex justify-between items-center flex-shrink-0">
+                <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Bar Stock</h2>
                 <button id="close-stock-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
             </div>
             <div id="bar-stock-content" class="p-6 text-gray-300 overflow-y-auto"></div>
@@ -515,10 +564,10 @@
     </div>
     
     <div id="filter-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="bg-gray-900/70 backdrop-blur-xl rounded-2xl shadow-2xl shadow-black/50 w-full max-w-2xl max-h-[95vh] flex flex-col border border-white/10">
-            <div class="p-6 flex-shrink-0">
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+            <div class="modal-header p-6 flex-shrink-0">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider" style="text-shadow: 0 0 8px rgba(245, 158, 11, 0.5)">Browse The Deck</h2>
+                    <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Browse The Deck</h2>
                     <button id="close-filter-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
                 </div>
                 <p class="text-gray-400 mt-2">Combine filters to find your next drink.</p>
@@ -795,6 +844,21 @@
                 }
             });
             cocktails.sort((a, b) => a.name.localeCompare(b.name));
+
+            const barcodeCard = {
+                name: "Scan to Connect",
+                isBarcode: true,
+                image: 'https://raw.githubusercontent.com/aarmax8/Nomads/e4ef12fb2bff260fe0d7de78741a3ec2307e381d/3dbarcode.JPG?raw=true',
+                recipe: [],
+                flavorProfile: "A gateway to the digital road.",
+                cardHook: "Point your camera here.",
+                type: 'Utility',
+                category: [],
+                tarot: 'The Network',
+                simpleMeaning: '',
+                titleColor: '#f59e0b'
+            };
+            cocktails.unshift(barcodeCard);
         }
 
         // --- Config & Global State ---
@@ -912,6 +976,20 @@
                 return;
             }
             itemsToRender.forEach((item, index) => {
+                if (item.isBarcode) {
+                    const cardHtml = `
+                    <div class="drink-card" data-is-barcode="true">
+                        <div class="drink-card-inner p-4" style="background-color: #111; border: 3px double #525252; box-shadow: 0 8px 20px rgba(0,0,0,0.7); display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
+                            <img src="${item.image}" alt="3D Barcode" class="w-full rounded-lg object-contain" style="max-height: 70%;">
+                            <div class="text-center mt-4">
+                                 <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
+                                 <p class="card-footer">${item.cardHook}</p>
+                            </div>
+                        </div>
+                    </div>`;
+                    menuGrid.insertAdjacentHTML('beforeend', cardHtml);
+                    return; // Skip normal card rendering
+                }
                 const isUnavailable = !isDrinkMakeable(item);
                 const titleFont = titleFonts[index % titleFonts.length];
                 const bgPosStyle = item.imagePosition ? `background-position: ${item.imagePosition};` : '';
@@ -943,12 +1021,39 @@
                 menuGrid.insertAdjacentHTML('beforeend', cardHtml);
             });
         }
+        
+        function setupLazyLoading() {
+            const lazyImages = document.querySelectorAll('.lazy-bg');
+            if ("IntersectionObserver" in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const imageContainer = entry.target;
+                        const imageUrl = imageContainer.dataset.bg;
+                        if (imageUrl) {
+                            imageContainer.style.backgroundImage = imageUrl;
+                        }
+                        imageObserver.unobserve(imageContainer);
+                    }
+                });
+                }, { rootMargin: "0px 0px 300px 0px" }); // Start loading when 300px away from viewport
+                lazyImages.forEach(img => imageObserver.observe(img));
+            } else {
+                // Fallback for older browsers
+                lazyImages.forEach(img => {
+                    const imageUrl = img.dataset.bg;
+                    if (imageUrl) img.style.backgroundImage = imageUrl;
+                });
+            }
+        }
 
         function setCardView(isTarot) {
             const cards = document.querySelectorAll('#menu-grid .drink-card');
             const viewToggleButton = document.getElementById('view-toggle-btn');
             if (isTarot) {
-                cards.forEach(card => card.classList.add('is-flipped'));
+                cards.forEach(card => {
+                    if (!card.dataset.isBarcode) card.classList.add('is-flipped');
+                });
                 viewToggleButton.textContent = 'Show All Recipes';
                 isGlobalTarotView = true;
             } else {
@@ -959,22 +1064,23 @@
         }
 
         function applyAndRenderFilters() {
-            let filteredCocktails = [...cocktails];
+            const barcodeCard = cocktails.find(c => c.isBarcode);
+            let drinkableCocktails = cocktails.filter(c => !c.isBarcode);
 
             // Category Filter
             if (activeFilters.category && activeFilters.category !== 'all') {
-                filteredCocktails = filteredCocktails.filter(item => item.category.includes(activeFilters.category));
+                drinkableCocktails = drinkableCocktails.filter(item => item.category.includes(activeFilters.category));
             }
 
             // Arcana Filter
             if (activeFilters.arcana && activeFilters.arcana !== 'All') {
-                filteredCocktails = filteredCocktails.filter(drink => drink.type === activeFilters.arcana);
+                drinkableCocktails = drinkableCocktails.filter(drink => drink.type === activeFilters.arcana);
             }
 
             // Spirit Filter
             if (activeFilters.spirit) {
                 const spiritsInFamily = ingredientCategories.Spirits[activeFilters.spirit] || [];
-                filteredCocktails = filteredCocktails.filter(drink =>
+                drinkableCocktails = drinkableCocktails.filter(drink =>
                     drink.recipe.some(recipeLine => {
                         const ingredientName = parseIngredientName(recipeLine);
                         return ingredientName && spiritsInFamily.includes(ingredientName);
@@ -984,7 +1090,7 @@
 
             // Ingredient Filter
             if (activeFilters.ingredient) {
-                 filteredCocktails = filteredCocktails.filter(drink =>
+                 drinkableCocktails = drinkableCocktails.filter(drink =>
                     drink.recipe.some(recipeLine => {
                         const ingredientName = parseIngredientName(recipeLine);
                         return ingredientName === activeFilters.ingredient;
@@ -992,7 +1098,9 @@
                 );
             }
             
-            renderMenu(filteredCocktails);
+            const itemsToRender = barcodeCard ? [barcodeCard, ...drinkableCocktails] : drinkableCocktails;
+
+            renderMenu(itemsToRender);
             setupLazyLoading();
             // Re-apply the global view state to the newly rendered cards
             if (isGlobalTarotView) {
@@ -1139,12 +1247,14 @@
             content.innerHTML = '';
             modalTitle.textContent = "Choose Your Journey";
 
-            if (cocktails.length < 3) {
+            const drawableCards = cocktails.filter(c => !c.isBarcode);
+
+            if (drawableCards.length < 3) {
                 content.innerHTML = `<p class="text-center text-red-400">Not enough cards in the deck for a reading.</p>`;
                 return;
             }
 
-            const shuffled = [...cocktails].sort(() => 0.5 - Math.random());
+            const shuffled = [...drawableCards].sort(() => 0.5 - Math.random());
             const [pastCard, presentCard, futureCard] = shuffled.slice(0, 3);
 
             const readingText = `Your path has been shaped by the lesson of the <strong>${pastCard.tarot}</strong>: <em>${pastCard.tarotMeaning}</em><br><br>You are currently navigating the challenge of the <strong>${presentCard.tarot}</strong>: <em>${presentCard.tarotMeaning}</em><br><br>The road ahead points towards the wisdom of the <strong>${futureCard.tarot}</strong>: <em>${futureCard.tarotMeaning}</em>`;
@@ -1255,138 +1365,115 @@
             });
         }
 
-        function setupLazyLoading() {
-            const lazyImages = document.querySelectorAll('.lazy-bg');
-            if ("IntersectionObserver" in window) {
-                const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const imageContainer = entry.target;
-                        const imageUrl = imageContainer.dataset.bg;
-                        if (imageUrl) {
-                            imageContainer.style.backgroundImage = imageUrl;
-                        }
-                        imageObserver.unobserve(imageContainer);
-                    }
-                });
-                }, { rootMargin: "0px 0px 300px 0px" }); // Start loading when 300px away from viewport
-                lazyImages.forEach(img => imageObserver.observe(img));
-            } else {
-                // Fallback for older browsers
-                lazyImages.forEach(img => {
-                    const imageUrl = img.dataset.bg;
-                    if (imageUrl) img.style.backgroundImage = imageUrl;
-                });
-            }
-        }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        setupCocktailData();
-        initializeBarStock();
-        initializeFilterModal();
-        applyAndRenderFilters();
-        
-        // --- Splash Screen Logic ---
-        // Switched from window.onload to run after initial setup for a faster perceived load time.
-        setTimeout(() => {
-            document.body.classList.remove('loading');
-            document.body.classList.add('loaded');
-        }, 2500); // Wait 2.5s before starting the animation
-        
-
-        // --- Event Listeners ---
-        menuGrid.addEventListener('click', e => {
-            const card = e.target.closest('.drink-card');
-            if (card) card.classList.toggle('is-flipped');
-        });
-
-        // --- View Controls ---
-        document.getElementById('view-toggle-btn').addEventListener('click', () => {
-            setCardView(!isGlobalTarotView);
-        });
-
-        document.getElementById('view-reset-btn').addEventListener('click', () => {
-            setCardView(false);
-        });
-
-
-        // --- Bottom Nav Listeners ---
-        document.getElementById('browse-btn').addEventListener('click', () => {
-            updatePillsFromState();
-            filterModal.classList.remove('hidden');
-            setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
-        });
-
-        document.getElementById('tarot-reading-btn').addEventListener('click', () => {
-            handleTarotReading();
-            tarotReadingModal.classList.remove('hidden');
-            setTimeout(() => tarotReadingModal.classList.remove('opacity-0'), 10);
-        });
-
-        document.getElementById('bar-stock-btn').addEventListener('click', () => {
-            renderBarStockModal();
-            barStockModal.classList.remove('hidden');
-            setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
-        });
-
-        // Tarot Reading Listeners
-        document.getElementById('close-tarot-btn').addEventListener('click', () => {
-            tarotReadingModal.classList.add('opacity-0');
-                setTimeout(() => tarotReadingModal.classList.add('hidden'), 300);
-            });
-
-            // Stock Modal Listeners
-            document.getElementById('close-stock-btn').addEventListener('click', () => {
-                barStockModal.classList.add('opacity-0');
-                setTimeout(() => barStockModal.classList.add('hidden'), 300);
-            });
-
-            // Filter Modal Listeners
-            document.getElementById('close-filter-btn').addEventListener('click', () => {
-                filterModal.classList.add('opacity-0');
-                setTimeout(() => filterModal.classList.add('hidden'), 300);
-            });
+        document.addEventListener('DOMContentLoaded', () => {
+            setupCocktailData();
+            initializeBarStock();
+            initializeFilterModal();
+            applyAndRenderFilters();
             
-            document.getElementById('filter-modal-content').addEventListener('click', e => {
-                if(e.target.matches('.filter-pill')) {
-                    const pill = e.target;
-                    const groupContainer = pill.parentElement;
-
-                    // Handle spirit toggle separately
-                    if (groupContainer.id === 'filter-group-spirit') {
-                         if (pill.classList.contains('is-active')) {
-                            pill.classList.remove('is-active'); // Deselect if already active
-                        } else {
-                            groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
-                            pill.classList.add('is-active');
-                        }
-                    } else { // Handle other groups (radio button behavior)
-                        groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
-                        pill.classList.add('is-active');
-                    }
+            // --- Splash Screen Logic ---
+            setTimeout(() => {
+                document.body.classList.remove('loading');
+                document.body.classList.add('loaded');
+            }, 2500);
+        
+            // --- Event Listeners ---
+            menuGrid.addEventListener('click', e => {
+                const card = e.target.closest('.drink-card');
+                if (card && !card.dataset.isBarcode) {
+                    card.classList.toggle('is-flipped');
                 }
             });
 
-            document.getElementById('reset-filters-btn').addEventListener('click', () => {
-                activeFilters = { category: 'all', arcana: 'All', spirit: null, ingredient: null };
+            // --- View Controls ---
+            document.getElementById('view-toggle-btn').addEventListener('click', () => {
+                setCardView(!isGlobalTarotView);
+            });
+
+            document.getElementById('view-reset-btn').addEventListener('click', () => {
+                setCardView(false);
+            });
+
+
+            // --- Bottom Nav Listeners ---
+            document.getElementById('browse-btn').addEventListener('click', () => {
                 updatePillsFromState();
-                setCardView(false); // Also reset the card view
+                filterModal.classList.remove('hidden');
+                setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
             });
 
-            document.getElementById('apply-filters-btn').addEventListener('click', () => {
-                // Read state from pills into activeFilters object
-                activeFilters.category = document.querySelector('#filter-group-category .is-active')?.dataset.category || 'all';
-                activeFilters.arcana = document.querySelector('#filter-group-arcana .is-active')?.dataset.type || 'All';
-                activeFilters.spirit = document.querySelector('#filter-group-spirit .is-active')?.dataset.spirit || null;
-                activeFilters.ingredient = document.getElementById('ingredient-filter-select').value || null;
+            document.getElementById('tarot-reading-btn').addEventListener('click', () => {
+                handleTarotReading();
+                tarotReadingModal.classList.remove('hidden');
+                setTimeout(() => tarotReadingModal.classList.remove('opacity-0'), 10);
+            });
+
+            document.getElementById('bar-stock-btn').addEventListener('click', () => {
+                renderBarStockModal();
+                barStockModal.classList.remove('hidden');
+                setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
+            });
+
+            // Tarot Reading Listeners
+            document.getElementById('close-tarot-btn').addEventListener('click', () => {
+                tarotReadingModal.classList.add('opacity-0');
+                    setTimeout(() => tarotReadingModal.classList.add('hidden'), 300);
+                });
+
+                // Stock Modal Listeners
+                document.getElementById('close-stock-btn').addEventListener('click', () => {
+                    barStockModal.classList.add('opacity-0');
+                    setTimeout(() => barStockModal.classList.add('hidden'), 300);
+                });
+
+                // Filter Modal Listeners
+                document.getElementById('close-filter-btn').addEventListener('click', () => {
+                    filterModal.classList.add('opacity-0');
+                    setTimeout(() => filterModal.classList.add('hidden'), 300);
+                });
                 
-                applyAndRenderFilters();
+                document.getElementById('filter-modal-content').addEventListener('click', e => {
+                    if(e.target.matches('.filter-pill')) {
+                        const pill = e.target;
+                        const groupContainer = pill.parentElement;
 
-                filterModal.classList.add('opacity-0');
-                setTimeout(() => filterModal.classList.add('hidden'), 300);
-            });
-    });
+                        // Handle spirit toggle separately
+                        if (groupContainer.id === 'filter-group-spirit') {
+                             if (pill.classList.contains('is-active')) {
+                                pill.classList.remove('is-active'); // Deselect if already active
+                            } else {
+                                groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
+                                pill.classList.add('is-active');
+                            }
+                        } else { // Handle other groups (radio button behavior)
+                            groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
+                            pill.classList.add('is-active');
+                        }
+                    }
+                });
+
+                document.getElementById('reset-filters-btn').addEventListener('click', () => {
+                    activeFilters = { category: 'all', arcana: 'All', spirit: null, ingredient: null };
+                    updatePillsFromState();
+                    setCardView(false); // Also reset the card view
+                });
+
+                document.getElementById('apply-filters-btn').addEventListener('click', () => {
+                    // Read state from pills into activeFilters object
+                    activeFilters.category = document.querySelector('#filter-group-category .is-active')?.dataset.category || 'all';
+                    activeFilters.arcana = document.querySelector('#filter-group-arcana .is-active')?.dataset.type || 'All';
+                    activeFilters.spirit = document.querySelector('#filter-group-spirit .is-active')?.dataset.spirit || null;
+                    activeFilters.ingredient = document.getElementById('ingredient-filter-select').value || null;
+                    
+                    applyAndRenderFilters();
+
+                    filterModal.classList.add('opacity-0');
+                    setTimeout(() => filterModal.classList.add('hidden'), 300);
+                });
+        });
     </script>
 </body>
 </html>
+
+
 
