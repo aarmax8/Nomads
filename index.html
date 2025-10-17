@@ -18,24 +18,22 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #1a110a;
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://raw.githubusercontent.com/aarmax8/Nomads/main/pittsburghbridge.jpg');
+            background-color: #0c0c0c;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://www.transparenttextures.com/patterns/brick-wall.png');
             background-attachment: fixed;
             overflow: hidden;
-            background-size: cover;
-            background-position: center;
         }
         
         /* --- Splash Screen --- */
         #splash-screen {
             position: fixed;
             inset: 0;
-            background-color: transparent; /* Changed from solid color */
+            background-color: #1a110a; /* Solid dark background that will fade */
             z-index: 100;
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: opacity 1.2s ease-in-out;
+            transition: background-color 1.5s ease-in-out, opacity 1.5s ease-in-out;
         }
         #splash-logo {
             width: 85vw; /* Fill 85% of the screen width */
@@ -49,7 +47,7 @@
             border-radius: 50%;
             border: 4px solid #f59e0b;
             box-shadow: 0 0 30px rgba(245, 158, 11, 0.6);
-            transition: all 1.2s ease-in-out;
+            transition: all 1.5s cubic-bezier(0.4, 0, 0.2, 1); /* Smoother ease for movement */
         }
 
         /* Animation State */
@@ -58,17 +56,18 @@
         }
         body.loaded #splash-screen {
             opacity: 0;
+            background-color: transparent; /* Fade background to reveal bricks */
             pointer-events: none;
         }
         body.loaded #splash-logo {
-            transform: scale(0.9); /* Recede and fade */
+            transform: translateY(-40vh) scale(0.4); /* Move up and shrink */
             opacity: 0;
         }
 
 
         .app-container { 
             display: flex; flex-direction: column; height: 100vh;
-            transition: opacity 1.2s ease-in-out;
+            transition: opacity 1.5s ease-in-out;
         }
         main { flex-grow: 1; overflow: hidden; position: relative; }
         .font-rye { font-family: 'Rye', cursive; }
@@ -1292,7 +1291,7 @@
         setTimeout(() => {
             document.body.classList.remove('loading');
             document.body.classList.add('loaded');
-        }, 1500); // Wait 1.5s before starting the animation
+        }, 2500); // Wait 2.5s before starting the animation
         
 
         // --- Event Listeners ---
@@ -1390,12 +1389,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
 
