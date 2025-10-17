@@ -194,13 +194,14 @@
             pointer-events: none;
         }
         .card-back-image {
-            width: 100%; height: 310px; 
+            width: 100%; height: 400px; 
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
             padding: 4px; background-color: #312e81;
             position: relative;
             transition: background-image 0.4s ease-in-out;
+            margin-bottom: -100px; /* Pull the content up over the image */
         }
         .card-back-image::after {
             content: '';
@@ -208,42 +209,68 @@
             bottom: -1px;
             left: 0;
             right: 0;
-            height: 30%;
-            background: linear-gradient(to top, #1e1b4b 20%, transparent);
+            height: 60%;
+            background: linear-gradient(to top, #1e1b4b 35%, transparent);
         }
         .card-back-content {
             padding: 0.25rem 0.75rem 0.5rem; flex-grow: 1; overflow-y: hidden; text-align: center;
             display: flex; flex-direction: column;
+            justify-content: flex-end; /* Push content to the bottom */
+            position: relative; /* Ensure content is on top of the image fade */
+            z-index: 2;
         }
         .tarot-card-name {
             font-family: 'Cinzel', serif;
-            font-size: 1.5rem;
+            font-size: 1.4rem; /* Adjusted */
             font-weight: 700;
             text-align: center;
             color: #f59e0b;
             text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
             margin-bottom: 0.25rem;
         }
-        .drink-name-back {
-            font-family: 'Rye', cursive;
-            font-size: 0.8rem; /* Smaller font size */
-            color: #d1d5db;
-            margin-bottom: 0;
-            opacity: 0.8; /* Slightly less prominent */
-            padding-top: 0.25rem;
-            flex-shrink: 0;
+        .tarot-simple-meaning {
+            font-family: 'Cinzel', serif;
+            font-size: 1rem;
+            color: #d8b4fe;
+            text-shadow: 0 0 5px rgba(216, 180, 254, 0.4);
+            margin: 0.5rem 0;
+            padding: 0.5rem 0.25rem;
+            border-top: 1px dashed #4c1d95;
+            border-bottom: 1px dashed #4c1d95;
+            font-weight: 600;
         }
-        .tarot-meaning {
-            margin-top: 0.5rem;
+        .tarot-story {
             font-family: 'IM Fell DW Pica', serif;
             font-style: italic;
-            text-align: center;
-            font-size: 0.9rem;
-            padding: 0.5rem;
-            border-top: 1px dashed #4c1d95;
+            text-align: justify;
+            font-size: 0.95rem;
+            line-height: 1.4;
+            color: #d1d5db;
+            padding-right: 0.25rem; /* Space for scrollbar */
         }
+        .card-back-content .overflow-y-auto::-webkit-scrollbar { width: 4px; }
+        .card-back-content .overflow-y-auto::-webkit-scrollbar-track { background: transparent; }
+        .card-back-content .overflow-y-auto::-webkit-scrollbar-thumb { background-color: #a78bfa; border-radius: 4px; }
+        
         .no-image .card-back-content {
             display: flex; flex-direction: column; justify-content: center;
+        }
+
+        #menu-grid .drink-card-back .card-footer {
+            padding: 0.5rem;
+            background: transparent;
+            border-top: 2px double rgba(167, 139, 250, 0.5);
+            font-style: normal;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 50px;
+        }
+
+        .card-footer .tarot-card-name {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            line-height: 1;
         }
 
 
@@ -276,16 +303,6 @@
         .recipe-list-front li i { width: 24px; text-align: center; margin-right: 0.75rem; font-size: 1rem; }
         
         .modal { transition: opacity 0.3s ease-in-out; }
-        .nav-arrow {
-            position: absolute; top: 50%; transform: translateY(-50%); background-color: rgba(17, 24, 39, 0.7);
-            color: #d1d5db; border: 2px solid #4b5563; border-radius: 50%; width: 44px; height: 44px;
-            font-size: 1.5rem; cursor: pointer; z-index: 20; display: flex; align-items: center; justify-content: center;
-            transition: all 0.2s ease-in-out;
-        }
-        #arrow-left { left: 1rem; }
-        #arrow-left i { transform: scaleX(-1); } /* Flip the motorcycle icon */
-        #arrow-right { right: 1rem; }
-        .nav-arrow:hover { background-color: rgba(245, 158, 11, 0.8); color: #111827; }
         
         /* --- Bottom Nav Bar --- */
         #bottom-nav {
@@ -455,14 +472,12 @@
                 <button id="view-reset-btn" class="text-gray-400 hover:text-white transition-colors text-xs font-sans uppercase tracking-wider">Reset View</button>
             </div>
             <div id="menu-grid"></div>
-            <button id="arrow-left" class="nav-arrow"><i class="fas fa-motorcycle"></i></button>
-            <button id="arrow-right" class="nav-arrow"><i class="fas fa-motorcycle"></i></button>
         </main>
 
         <footer id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-20 flex justify-around items-center">
             <button id="browse-btn" class="bottom-nav-btn">
-                <i class="fas fa-filter text-2xl"></i>
-                <span class="text-xs mt-1">Browse</span>
+                <i class="fas fa-bars text-2xl"></i>
+                <span class="text-xs mt-1">Menu</span>
             </button>
             <button id="tarot-reading-btn" class="bottom-nav-btn">
                 <i class="fas fa-motorcycle text-2xl"></i>
@@ -525,6 +540,87 @@
             "Ace of Swords", "Two of Swords", "Three of Swords", "Four of Swords", "Five of Swords", "Six of Swords", "Seven of Swords", "Eight of Swords", "Nine of Swords", "Ten of Swords", "Page of Swords", "Knight of Swords", "Queen of Swords", "King of Swords",
             "Ace of Pentacles", "Two of Pentacles", "Three of Pentacles", "Four of Pentacles", "Five of Pentacles", "Six of Pentacles", "Seven of Pentacles", "Eight of Pentacles", "Nine of Pentacles", "Ten of Pentacles", "Page of Pentacles", "Knight of Pentacles", "Queen of Pentacles", "King of Pentacles"
         ];
+
+        const simpleTarotMeanings = {
+            "The Fool": "New beginnings, innocence, spontaneity.",
+            "The Magician": "Manifestation, resourcefulness, power.",
+            "The High Priestess": "Intuition, sacred knowledge, the subconscious.",
+            "The Empress": "Femininity, beauty, nature, nurturing.",
+            "The Emperor": "Authority, structure, a father figure.",
+            "The Hierophant": "Tradition, conformity, spiritual wisdom.",
+            "The Lovers": "Love, harmony, relationships, choices.",
+            "The Chariot": "Control, willpower, victory, determination.",
+            "Strength": "Courage, compassion, focus, patience.",
+            "The Hermit": "Soul-searching, introspection, inner guidance.",
+            "Wheel of Fortune": "Good luck, karma, a turning point.",
+            "Justice": "Fairness, truth, cause and effect.",
+            "The Hanged Man": "Surrender, letting go, new perspectives.",
+            "Death": "Endings, change, transformation.",
+            "Temperance": "Balance, moderation, patience.",
+            "The Devil": "Attachment, addiction, restriction.",
+            "The Tower": "Sudden change, upheaval, revelation.",
+            "The Star": "Hope, faith, renewal, spirituality.",
+            "The Moon": "Illusion, fear, anxiety, intuition.",
+            "The Sun": "Positivity, fun, warmth, success.",
+            "Judgement": "Rebirth, inner calling, absolution.",
+            "The World": "Completion, integration, accomplishment.",
+            "Ace of Wands": "Inspiration, new opportunities, growth.",
+            "Two of Wands": "Future planning, making decisions, discovery.",
+            "Three of Wands": "Expansion, foresight, looking ahead.",
+            "Four of Wands": "Celebration, joy, harmony, homecoming.",
+            "Five of Wands": "Conflict, competition, tension.",
+            "Six of Wands": "Public recognition, victory, self-confidence.",
+            "Seven of Wands": "Challenge, perseverance, protection.",
+            "Eight of Wands": "Movement, action, quick decisions.",
+            "Nine of Wands": "Resilience, courage, persistence.",
+            "Ten of Wands": "Burden, responsibility, hard work.",
+            "Page of Wands": "Enthusiasm, exploration, free spirit.",
+            "Knight of Wands": "Energy, passion, adventure, impulsiveness.",
+            "Queen of Wands": "Courage, confidence, independence.",
+            "King of Wands": "Natural-born leader, vision, honor.",
+            "Ace of Cups": "New love, compassion, creativity.",
+            "Two of Cups": "Unified love, partnership, attraction.",
+            "Three of Cups": "Celebration, friendship, collaboration.",
+            "Four of Cups": "Apathy, contemplation, re-evaluation.",
+            "Five of Cups": "Regret, failure, disappointment.",
+            "Six of Cups": "Nostalgia, childhood memories, joy.",
+            "Seven of Cups": "Opportunities, choices, wishful thinking.",
+            "Eight of Cups": "Withdrawal, escapism, walking away.",
+            "Nine of Cups": "Contentment, satisfaction, wish come true.",
+            "Ten of Cups": "Blissful relationships, harmony, alignment.",
+            "Page of Cups": "Creative opportunities, intuitive messages.",
+            "Knight of Cups": "Romance, charm, imagination.",
+            "Queen of Cups": "Compassion, emotional stability, intuition.",
+            "King of Cups": "Emotional balance, compassion, diplomacy.",
+            "Ace of Swords": "Breakthroughs, new ideas, mental clarity.",
+            "Two of Swords": "Difficult choices, indecision, stalemate.",
+            "Three of Swords": "Heartbreak, emotional pain, sorrow.",
+            "Four of Swords": "Rest, relaxation, recuperation.",
+            "Five of Swords": "Conflict, tension, loss, defeat.",
+            "Six of Swords": "Transition, change, releasing baggage.",
+            "Seven of Swords": "Betrayal, deception, strategy.",
+            "Eight of Swords": "Self-imposed restriction, imprisonment.",
+            "Nine of Swords": "Anxiety, worry, fear, nightmares.",
+            "Ten of Swords": "Painful endings, betrayal, crisis.",
+            "Page of Swords": "New ideas, curiosity, thirst for knowledge.",
+            "Knight of Swords": "Ambitious, action-oriented, fast-thinking.",
+            "Queen of Swords": "Independent, clear boundaries, direct.",
+            "King of Swords": "Mental clarity, intellectual power, authority.",
+            "Ace of Pentacles": "New opportunity, manifestation, prosperity.",
+            "Two of Pentacles": "Juggling priorities, adaptability.",
+            "Three of Pentacles": "Teamwork, collaboration, learning.",
+            "Four of Pentacles": "Saving money, security, control.",
+            "Five of Pentacles": "Financial loss, poverty, isolation.",
+            "Six of Pentacles": "Generosity, charity, giving and receiving.",
+            "Seven of Pentacles": "Long-term view, perseverance, investment.",
+            "Eight of Pentacles": "Skill development, mastery, quality.",
+            "Nine of Pentacles": "Abundance, luxury, self-sufficiency.",
+            "Ten of Pentacles": "Wealth, family, long-term success.",
+            "Page of Pentacles": "Financial opportunity, skill development.",
+            "Knight of Pentacles": "Hard work, productivity, routine.",
+            "Queen of Pentacles": "Nurturing, practical, providing financially.",
+            "King of Pentacles": "Wealth, business, leadership, abundance."
+        };
 
         function setupCocktailData() {
             const initialCocktails = [
@@ -683,7 +779,12 @@
             });
 
             cocktails = processedCocktails.map((cocktail, index) => {
-                return { ...cocktail, tarot: tarotDeck[index] };
+                const cardName = tarotDeck[index];
+                return { 
+                    ...cocktail, 
+                    tarot: cardName,
+                    simpleMeaning: simpleTarotMeanings[cardName] || "A mystery of the road."
+                };
             });
 
             // Remove "The " from names and sort alphabetically
@@ -829,13 +930,12 @@
                             <div class="drink-card-back ${!item.image ? 'no-image' : ''}">
                                <div class="card-back-image lazy-bg" ${item.image ? `data-bg="url('${item.image}')"` : ''} style="${bgPosStyle}"></div>
                                <div class="card-back-content">
-                                   <div class="flex-grow min-h-0 overflow-y-auto">
-                                       <h3 class="tarot-card-name">${item.tarot}</h3>
-                                       <div class="tarot-meaning">"${item.tarotMeaning}"</div>
+                                   <p class="tarot-simple-meaning">${item.simpleMeaning}</p>
+                                   <div class="flex-grow min-h-0 overflow-y-auto pr-1">
+                                      <p class="tarot-story">${item.tarotMeaning}</p>
                                    </div>
-                                   <h4 class="drink-name-back">${item.name}</h4>
                                 </div>
-                                <div class="card-footer" style="color: #a78bfa; border-color: #a78bfa; background: rgba(0,0,0,0.3);">Tap for Recipe</div>
+                                <div class="card-footer"><h3 class="tarot-card-name">${item.tarot}</h3></div>
                             </div>
                         </div>
                     </div>`;
@@ -1209,9 +1309,6 @@
         });
 
 
-        document.getElementById('arrow-left').addEventListener('click', () => snapToCard(-1));
-        document.getElementById('arrow-right').addEventListener('click', () => snapToCard(1));
-        
         // --- Bottom Nav Listeners ---
         document.getElementById('browse-btn').addEventListener('click', () => {
             updatePillsFromState();
@@ -1291,6 +1388,12 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
