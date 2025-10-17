@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Nomad's">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/aarmax8/Nomads/b53062c5c4df05bb1e97d801e7fe558fa5a615ce/icon%20realistic%20maple%20side%20shot2.jpg">
+    <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/aarmax8/Nomads/648c5ecadf96f0377b4bbd418bcee70fcbcf0a3e/maple%20on%20motorcycle.jpg">
     
     <!-- === Styles and Fonts === --><script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -119,7 +119,7 @@
                 box-shadow: 
                     /* Polished Border Effect */
                     0 0 0 1px rgba(245, 158, 11, 0.7), /* Outer amber highlight */
-                    0 0 0 3px rgba(0, 0, 0, 0.8),      /* Dark separator */
+                    0 0 0 3px rgba(0, 0, 0, 0.8),     /* Dark separator */
                     /* Depth & Glow */
                     0 8px 16px rgba(0,0,0,0.8),
                     inset 0 0 8px rgba(245, 158, 11, 0.3);
@@ -128,7 +128,7 @@
                 box-shadow: 
                     /* Pulsing Border Effect */
                     0 0 0 2px rgba(245, 158, 11, 1),   /* Brighter highlight */
-                    0 0 0 4px rgba(0, 0, 0, 0.9),      /* Darker separator */
+                    0 0 0 4px rgba(0, 0, 0, 0.9),     /* Darker separator */
                     /* Enhanced Depth & Glow */
                     0 10px 20px rgba(0,0,0,0.9),
                     inset 0 0 20px rgba(245, 158, 11, 0.6);
@@ -1168,16 +1168,16 @@
                         imageObserver.unobserve(imageContainer);
                     }
                 });
-            }, { rootMargin: "0px 0px 300px 0px" }); // Start loading when 300px away from viewport
-            lazyImages.forEach(img => imageObserver.observe(img));
-        } else {
-            // Fallback for older browsers
-            lazyImages.forEach(img => {
-                const imageUrl = img.dataset.bg;
-                if (imageUrl) img.style.backgroundImage = imageUrl;
-            });
+                }, { rootMargin: "0px 0px 300px 0px" }); // Start loading when 300px away from viewport
+                lazyImages.forEach(img => imageObserver.observe(img));
+            } else {
+                // Fallback for older browsers
+                lazyImages.forEach(img => {
+                    const imageUrl = img.dataset.bg;
+                    if (imageUrl) img.style.backgroundImage = imageUrl;
+                });
+            }
         }
-    }
 
     document.addEventListener('DOMContentLoaded', () => {
         setupCocktailData();
@@ -1258,10 +1258,10 @@
                     if (groupContainer.id === 'filter-group-spirit') {
                          if (pill.classList.contains('is-active')) {
                             pill.classList.remove('is-active'); // Deselect if already active
-                         } else {
+                        } else {
                             groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
                             pill.classList.add('is-active');
-                         }
+                        }
                     } else { // Handle other groups (radio button behavior)
                         groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
                         pill.classList.add('is-active');
@@ -1287,7 +1287,7 @@
                 filterModal.classList.add('opacity-0');
                 setTimeout(() => filterModal.classList.add('hidden'), 300);
             });
-        });
+    });
     </script>
 </body>
 </html>
