@@ -114,6 +114,7 @@
         .app-container { 
             display: flex; flex-direction: column; height: 100vh;
             transition: opacity 1.5s ease-in-out;
+            opacity: 0; /* Start invisible to prevent flash */
         }
         main { flex-grow: 1; overflow: hidden; position: relative; }
         .font-rye { font-family: 'Rye', cursive; }
@@ -126,59 +127,61 @@
 
         #header-logo-container {
             position: relative;
-            background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/b22ab3ec525be43491d6add9b1a5b6ca1a034f82/damotorcycle6title.jpg?raw=true');
-            background-size: 100% 100%; background-position: center; background-repeat: no-repeat;
-            border-radius: 0.5rem;
+            background-image: url('https://github.com/aarmax8/Nomads/blob/1dd0941a46505a0ead96a1453e99500d675cff97/damotorcycle7.jpg?raw=true');
+            background-size: 100% 100%; /* Changed to fill the container exactly */
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 0.75rem; 
             overflow: hidden;
-            /* New polished border is handled by the animation's box-shadow */
-            animation: pulse-glow 4s infinite ease-in-out;
+            /* New polished metal border effect - NOW TURQUOISE */
+            border: 2px solid;
+            border-color: #5eead4 #115e59 #115e59 #5eead4; /* Light turquoise top/left, Dark turquoise bottom/right */
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 0 10px rgba(0,0,0,0.5);
         }
-
-        /* 1. Intensified Shine */
+        
+        /* NEW SPARKLE EFFECT */
         #header-logo-container::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%; /* Start off-screen to the left */
-            width: 40%;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.6) 50%, transparent 100%);
-            transform: skewX(25deg); /* Flipped Angle so bottom leads */
-            animation: shine-effect 5s infinite ease-in-out;
-            animation-delay: 1.5s;
+            background: transparent;
+            pointer-events: none;
+            border-radius: inherit;
+            animation: sparkle-effect 6s infinite ease-in-out;
+            animation-delay: 1s; /* Start after a small delay */
         }
 
-        @keyframes shine-effect {
-            0% {
-                left: -100%;
-            }
-            50% {
-                left: 150%;
-            }
-            100% {
-                left: 150%;
-            }
-        }
-        
-        /* 3. Inner Glow Animation */
-        @keyframes pulse-glow {
+        @keyframes sparkle-effect {
             0%, 100% {
                 box-shadow: 
-                    /* Polished Border Effect */
-                    0 0 0 1px rgba(245, 158, 11, 0.7), /* Outer amber highlight */
-                    0 0 0 3px rgba(0, 0, 0, 0.8),   /* Dark separator */
-                    /* Depth & Glow */
-                    0 8px 16px rgba(0,0,0,0.8),
-                    inset 0 0 8px rgba(245, 158, 11, 0.3);
+                    15% 75% 10px 2px rgba(255, 220, 150, 0),
+                    85% 25% 12px 2px rgba(255, 220, 150, 0),
+                    50% 50% 15px 3px rgba(255, 220, 150, 0);
+                opacity: 0.5;
+            }
+            25% {
+                box-shadow: 
+                    15% 75% 10px 2px rgba(255, 220, 150, 0.8),
+                    85% 25% 12px 2px rgba(255, 220, 150, 0),
+                    50% 50% 15px 3px rgba(255, 220, 150, 0);
+                opacity: 1;
             }
             50% {
-                box-shadow: 
-                    /* Pulsing Border Effect */
-                    0 0 0 2px rgba(245, 158, 11, 1),   /* Brighter highlight */
-                    0 0 0 4px rgba(0, 0, 0, 0.9),   /* Darker separator */
-                    /* Enhanced Depth & Glow */
-                    0 10px 20px rgba(0,0,0,0.9),
-                    inset 0 0 20px rgba(245, 158, 11, 0.6);
+                 box-shadow: 
+                    15% 75% 10px 2px rgba(255, 220, 150, 0),
+                    85% 25% 12px 2px rgba(255, 220, 150, 0.8),
+                    50% 50% 15px 3px rgba(255, 220, 150, 0);
+                opacity: 1;
+            }
+            75% {
+                 box-shadow: 
+                    15% 75% 10px 2px rgba(255, 220, 150, 0),
+                    85% 25% 12px 2px rgba(255, 220, 150, 0),
+                    50% 50% 15px 3px rgba(255, 220, 150, 0.8);
+                opacity: 1;
             }
         }
         
@@ -617,7 +620,7 @@
         <div id="splash-logo"></div>
     </div>
 
-    <div class="app-container">
+    <div id="app" class="app-container">
         <header class="text-center pt-4 px-4 flex-shrink-0">
             <div id="header-logo-container" class="h-28 md:h-36 w-full max-w-lg mx-auto flex items-center justify-center">
                 <!-- Corner brackets removed -->
@@ -865,7 +868,7 @@
                 { name: "Whiskey Sour", type: "Classic", flavorProfile: "A perfect balance of bold whiskey, tart lemon, and sweet sugar.", recipe: ["2 oz Jim Beam Bourbon", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the paranoia of a late-night ride. This is for the feeling of being watched, for the anxiety of the unknown.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "The things you see in the dark..." },
                 { name: "Cuba Libre", type: "Classic", flavorProfile: "A classic combination of smooth rum, sweet cola, and a sharp lime kick.", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], tarotMeaning: "For the restless nights before a long haul. This drink is for insomnia, for the fears that keep a rider awake.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d9a9ffbd510d7ea900f31195d5e857f6.jpg", cardHook: "What keeps you up at night?" },
                 { name: "The Oath", type: "Signature", flavorProfile: "A simple, powerful duo of bold bourbon and sweet, nutty amaretto.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Amaretto", "Serve on the rocks"], tarotMeaning: "For hitting rock bottom. This is the taste of total defeat, of a breakdown so bad you have no choice but to start over from scratch.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/dbb93ea76cfc2d6585f379c8bac90910--bike-art-motorcycle-art.jpg", cardHook: "The only way from the bottom is up." },
-                { name: "White Russian", type: "Classic", flavorProfile: "A rich and creamy classic with vodka, coffee liqueur, and a touch of cola.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream", "Top with Cola in a tall glass"], tarotMeaning: "For the young gun with a sharp mind. This is for the prospect who is quick-witted, curious, and eager to prove their intelligence.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/e5a7f5bfc3b2c200266b6df05a132e17.jpg", cardHook: "A sharp mind is more dangerous than a sharp knife.", imagePosition: 'right' },
+                { name: "White Russian", type: "Classic", flavorProfile: "A rich and creamy classic with vodka and coffee liqueur.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], tarotMeaning: "For the young gun with a sharp mind. This is for the prospect who is quick-witted, curious, and eager to prove their intelligence.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/e5a7f5bfc3b2c200266b6df05a132e17.jpg", cardHook: "A sharp mind is more dangerous than a sharp knife.", imagePosition: 'right' },
                 { name: "Long Island Iced Tea", type: "Classic", flavorProfile: "A potent and deceptive blend of five different spirits with a sour, cola finish.", recipe: ["0.5 oz Grey Goose Vodka", "0.5 oz Tanqueray Gin", "0.5 oz Bacardi Rum", "0.5 oz Jose Cuervo Silver Tequila", "0.5 oz Cointreau", "1 oz Lemon Juice", "Fill a tall glass with Cola"], tarotMeaning: "For the cold, logical strategist. This is for the rider who plans every route, who uses their mind as their greatest weapon.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/ed9d1453cc5561fb3049f8f6d3a7e145.jpg", cardHook: "For the strategist who's always three turns ahead." },
                 { name: "The Sunstone", type: "Signature", flavorProfile: "A bright and sweet tropical mix of coconut rum and orange juice.", recipe: ["1.5 oz Malibu Rum", "Fill with Orange Juice", "Splash of Grenadine"], tarotMeaning: "For the joy of a charitable act. This is for the rider who helps a stranded stranger, for the generosity that defines the code of the road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/yWMhLC.jpg", cardHook: "Help a stranger. It's the code." },
                 { name: "The Alchemist's Brew", type: "Signature", flavorProfile: "A complex, intellectual blend of herbal Jägermeister and floral St-Germain.", recipe: ["1.5 oz Jägermeister", "0.5 oz St-Germain", "Fill with Tonic Water"], tarotMeaning: "For the intellectual leader, the master tactician. This is for the rider who outthinks every opponent, the king of the mental chess game.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/f2a6114d2d00087a3f9192fc5cc74614.jpg", cardHook: "For the king of the mental chess game." },
@@ -1156,7 +1159,7 @@
                                <div class="card-back-content">
                                    <p class="tarot-simple-meaning">${item.simpleMeaning}</p>
                                    <div class="flex-grow min-h-0 overflow-y-auto pr-1">
-                                      <p class="tarot-story">${item.tarotMeaning}</p>
+                                       <p class="tarot-story">${item.tarotMeaning}</p>
                                    </div>
                                 </div>
                                 <div class="card-footer"><h3 class="tarot-card-name">${item.tarot}</h3></div>
@@ -1683,6 +1686,7 @@
             setTimeout(() => {
                 document.body.classList.remove('loading');
                 document.body.classList.add('loaded');
+                document.getElementById('app').style.opacity = '1';
             }, 2500);
         
             // --- Event Listeners ---
@@ -1702,7 +1706,7 @@
             });
 
             // --- View Controls ---
-            document.getElementById('view-toggle-btn').addEventListener('click', () => {
+            document.getElementById('view-toggle-btn').addEventListener('click', (e) => {
                 setCardView(!isGlobalTarotView);
             });
 
@@ -1829,6 +1833,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
