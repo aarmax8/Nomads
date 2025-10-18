@@ -19,8 +19,8 @@
         body {
             font-family: 'Inter', sans-serif;
             background-color: #210505; /* Fallback dark red-brown */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://www.myfreetextures.com/wp-content/uploads/2011/06/seamless-red-brick-wall.jpg');
-            background-size: 400px;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://github.com/aarmax8/Nomads/blob/92eae62255724668fcff4ad3d751057ee9055eba/pittsburghbridge.jpg?raw=true');
+            background-size: cover;
             background-attachment: fixed;
             overflow: hidden;
         }
@@ -30,8 +30,8 @@
             position: fixed;
             inset: 0;
             /* Removed background-color and overlay to show pure brick */
-            background-image: url('https://www.myfreetextures.com/wp-content/uploads/2011/06/seamless-red-brick-wall.jpg');
-            background-size: 400px;
+            background-image: url('https://github.com/aarmax8/Nomads/blob/92eae62255724668fcff4ad3d751057ee9055eba/pittsburghbridge.jpg?raw=true');
+            background-size: cover;
             z-index: 100;
             display: flex;
             justify-content: center;
@@ -317,6 +317,12 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
+        }
+        /* Reposition favorite button on the front of the card */
+        .drink-card-front .favorite-btn {
+            top: 1rem; /* 16px */
+            left: 1rem; /* 16px */
+            right: auto; /* Unset right positioning */
         }
         .favorite-btn:hover {
             transform: scale(1.1);
@@ -1130,9 +1136,12 @@
                     <div class="drink-card ${isUnavailable ? 'is-unavailable' : ''}" data-name="${item.name}">
                         <div class="drink-card-inner">
                             <div class="drink-card-front">
-                                <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-star"></i></button>
                                 <div class="card-header-front"><h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3></div>
-                                <div class="px-4 pt-4 text-center"><h4 class="recipe-content-title">Flavor Profile</h4><p class="font-rye text-amber-300 text-base leading-relaxed">${item.flavorProfile}</p></div>
+                                <div class="px-4 pt-4 text-center relative">
+                                    <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-star"></i></button>
+                                    <h4 class="recipe-content-title">Flavor Profile</h4>
+                                    <p class="font-rye text-amber-300 text-base leading-relaxed">${item.flavorProfile}</p>
+                                </div>
                                 <div class="recipe-content">
                                     
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
@@ -1818,4 +1827,8 @@
     </script>
 </body>
 </html>
+
+
+
+
 
