@@ -21,7 +21,7 @@
             background-color: #210505; /* Fallback dark red-brown */
             background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://github.com/aarmax8/Nomads/blob/92eae62255724668fcff4ad3d751057ee9055eba/pittsburghbridge.jpg?raw=true');
             background-size: cover;
-            background-position: center; /* <-- Added this */
+            background-position: center; /* This centers the main background image */
             background-attachment: fixed;
             overflow: hidden;
         }
@@ -30,10 +30,9 @@
         #splash-screen {
             position: fixed;
             inset: 0;
-            /* Removed background-color and overlay to show pure brick */
             background-image: url('https://github.com/aarmax8/Nomads/blob/92eae62255724668fcff4ad3d751057ee9055eba/pittsburghbridge.jpg?raw=true');
             background-size: cover;
-            background-position: center; /* <-- And added this */
+            background-position: center; /* This centers the splash screen image */
             z-index: 100;
             display: flex;
             justify-content: center;
@@ -1119,10 +1118,13 @@
                     const cardHtml = `
                     <div class="drink-card" data-is-barcode="true">
                         <div class="drink-card-inner p-4" style="background-color: #111; border: 3px double #525252; box-shadow: 0 8px 20px rgba(0,0,0,0.7); display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
-                            <img src="${item.image}" alt="3D Barcode" class="w-full rounded-lg object-contain" style="max-height: 70%;">
-                            <div class="text-center mt-4">
+                            <img src="${item.image}" alt="3D Barcode" class="w-full rounded-lg object-contain" style="max-height: 65%;">
+                            <div class="text-center mt-2">
                                  <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
-                                 <p class="card-footer">${item.cardHook}</p>
+                                 <div class="card-footer text-xs">
+                                     <p class="mb-2">${item.cardHook}</p>
+                                     <p class="font-normal not-italic leading-tight text-gray-400"><strong class="text-gray-300">To Install for Full Screen:</strong><br><i class="fab fa-apple"></i> iOS: Tap Share then 'Add to Home Screen'.<br><i class="fab fa-android"></i> Android: Tap Menu then 'Install App'.</p>
+                                 </div>
                             </div>
                         </div>
                     </div>`;
@@ -1832,6 +1834,6 @@
         });
     </script>
 </body>
-</html>" which is the entire content of the "Mobile App Preview" document I have selected.
-ok, tone down the turqiose a tad bit.  use this as the background pic.   https://github.com/aarmax8/Nomads/blob/2dc97463d231616f1b22780b24db192d58e80621/damotorcycle8.jpg
+</html>
+
 
