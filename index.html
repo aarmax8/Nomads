@@ -256,7 +256,7 @@
                 /* Actual Image */
                 var(--bg-image);
 
-            background-position: center, center, center;
+            background-position: center, center, top;
             background-repeat: no-repeat;
             background-size: 100% 100%, 100% 100%, contain;
         }
@@ -315,8 +315,6 @@
         /* --- FAVORITES STYLES --- */
         .favorite-btn {
             position: absolute;
-            top: 12px;
-            right: 12px;
             z-index: 10;
             background: rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.2);
@@ -331,9 +329,8 @@
         }
         /* Reposition favorite button on the front of the card */
         .drink-card-front .favorite-btn {
-            top: 1rem; /* 16px */
-            left: 1rem; /* 16px */
-            right: auto; /* Unset right positioning */
+            bottom: 4.5rem; /* Positioned above the footer */
+            right: 1rem;
         }
         .favorite-btn:hover {
             transform: scale(1.1);
@@ -432,6 +429,49 @@
             color: #2dd4bf; /* Changed to turquoise */
             background-color: rgba(45, 212, 191, 0.1); /* Changed to turquoise glow */
         }
+
+        /* --- New Arrow Navigation --- */
+        #card-nav-controls {
+            position: absolute;
+            bottom: 90px; /* Position above the bottom nav bar */
+            left: 0;
+            right: 0;
+            padding: 0 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none; /* Parent container doesn't block clicks */
+            z-index: 5;
+        }
+        @media (min-width: 640px) {
+            #card-nav-controls {
+                padding: 0 1rem;
+            }
+        }
+        .nav-arrow-btn {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #d1d5db;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: auto; /* Buttons are clickable */
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+            backdrop-filter: blur(4px);
+        }
+        .nav-arrow-btn:hover {
+            background: rgba(45, 212, 191, 0.2);
+            border-color: rgba(45, 212, 191, 0.4);
+            color: #2dd4bf;
+            transform: scale(1.05);
+        }
+        .nav-arrow-btn i {
+            font-size: 1.25rem;
+        }
+
 
         /* --- Journey Modal Styles --- */
         #journey-modal #journey-hand-container {
@@ -612,8 +652,12 @@
         </header>
         
         <main>
-            <!-- REMOVED the entire view-controls div that was here -->
             <div id="menu-grid"></div>
+             <!-- Arrow Navigation Controls -->
+            <div id="card-nav-controls">
+                <button id="prev-card-btn" class="nav-arrow-btn"><i class="fas fa-chevron-left"></i></button>
+                <button id="next-card-btn" class="nav-arrow-btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
         </main>
 
         <footer id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-20 flex justify-around items-center">
@@ -646,10 +690,7 @@
                     <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Favorites</h2>
                     <button id="close-favorites-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
                 </div>
-                 <div class="mt-4 border-b-2 border-white/10">
-                    <button id="fav-drinks-tab" class="fav-tab-btn is-active py-2 px-4 text-sm font-bold border-b-2 border-amber-500 text-amber-400">Recipes</button>
-                    <button id="fav-stories-tab" class="fav-tab-btn py-2 px-4 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white">Stories</button>
-                </div>
+                 <!-- REMOVED Stories Tab -->
             </div>
             <div id="favorites-list-container" class="p-6 text-gray-300 overflow-y-auto">
                 <!-- Favorite items will be injected here -->
@@ -987,17 +1028,16 @@
                             <div class="drink-card-front">
                                 <div class="card-header-front"><h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3></div>
                                 <div class="px-4 pt-4 text-center relative">
-                                    <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-star"></i></button>
                                     <p class="text-xl mb-3 leading-relaxed text-teal-500" style="font-family: 'IM Fell DW Pica', serif; font-style: italic;">${item.flavorProfile}</p>
                                 </div>
                                 <div class="recipe-content">
-                                    
+                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-star"></i></button>
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
                                 </div>
                                 <div class="card-footer">${item.cardHook}</div>
                             </div>
                             <div class="drink-card-back lazy-bg ${!item.image ? 'no-image' : ''}" ${item.image ? `data-bg="url('${item.image}')"` : ''} style="${bgPosStyle}">
-                               <button class="favorite-btn ${storyFavoriteClass}" data-type="story"><i class="fas fa-star"></i></button>
+                               <!-- REMOVED Favorite button from story side -->
                                <div class="card-back-content">
                                     <p class="story-text">${item.story}</p>
                                 </div>
@@ -1154,13 +1194,10 @@
         
         function renderFavoritesModal(type = 'drink') {
             const container = document.getElementById('favorites-list-container');
-            const favoritesList = type === 'drink' ? favoriteDrinks : favoriteStories;
-            
-            document.getElementById('fav-drinks-tab').classList.toggle('is-active', type === 'drink');
-            document.getElementById('fav-stories-tab').classList.toggle('is-active', type === 'story');
+            const favoritesList = favoriteDrinks; // Simplified to only show drinks
             
             if (favoritesList.length === 0) {
-                container.innerHTML = `<p class="text-gray-400 italic text-center">You haven't selected any favorites yet. Tap the star icon on a card to add it here.</p>`;
+                container.innerHTML = `<p class="text-gray-400 italic text-center">You haven't selected any favorite recipes yet. Tap the star icon on a card to add it here.</p>`;
                 return;
             }
 
@@ -1169,11 +1206,11 @@
                 if (!cardData) return '';
                 const iconInfo = getIngredientInfo(parseIngredientName(cardData.recipe[0] || ''));
                 return `
-                    <div class="favorite-item" data-name="${cardData.name}" data-view="${type}">
-                        <i class="fas ${type === 'drink' ? iconInfo.icon : 'fa-scroll'} text-xl w-10 text-center ${type === 'drink' ? iconInfo.colorClass : 'text-purple-400'}"></i>
+                    <div class="favorite-item" data-name="${cardData.name}" data-view="drink">
+                        <i class="fas ${iconInfo.icon} text-xl w-10 text-center ${iconInfo.colorClass}"></i>
                         <div class="ml-4">
                             <h4 class="font-bold text-lg text-white">${cardData.name}</h4>
-                            <p class="text-sm text-gray-400">${type === 'drink' ? cardData.flavorProfile.substring(0, 40) + '...' : cardData.story.substring(0, 40) + '...'}</p>
+                            <p class="text-sm text-gray-400">${cardData.flavorProfile.substring(0, 40) + '...'}</p>
                         </div>
                     </div>`;
             }).join('<div class="h-3"></div>');
@@ -1434,7 +1471,9 @@
                 }
             });
 
-            // --- REMOVED View Controls Listeners ---
+            // Arrow navigation listeners
+            document.getElementById('prev-card-btn').addEventListener('click', () => snapToCard(-1));
+            document.getElementById('next-card-btn').addEventListener('click', () => snapToCard(1));
 
 
             // --- Bottom Nav Listeners ---
@@ -1468,8 +1507,7 @@
                 favoritesModal.classList.add('opacity-0');
                 setTimeout(() => favoritesModal.classList.add('hidden'), 300);
             });
-            document.getElementById('fav-drinks-tab').addEventListener('click', () => renderFavoritesModal('drink'));
-            document.getElementById('fav-stories-tab').addEventListener('click', () => renderFavoritesModal('story'));
+            // REMOVED tab click listeners as they are no longer needed
 
             document.getElementById('favorites-list-container').addEventListener('click', (e) => {
                 const favItem = e.target.closest('.favorite-item');
@@ -1551,10 +1589,5 @@
 
 
 "
-
-
-
-
-
 
 
