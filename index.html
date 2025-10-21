@@ -140,16 +140,19 @@
 
         #header-logo-container {
             position: relative;
-            background-image: url('https://github.com/aarmax8/Nomads/blob/a2558333329155a2cedbf688fbe2250950f56d40/nomadstitle7.jpg?raw=true');
+            /* Adjusted the gradient to be stronger on the right side for legibility */
+            background-image: 
+                linear-gradient(to right, transparent 55%, rgba(0,0,0,0.6) 95%),
+                url('https://github.com/aarmax8/Nomads/blob/a2558333329155a2cedbf688fbe2250950f56d40/nomadstitle7.jpg?raw=true');
             background-size: cover; 
-            background-position: center; 
+            background-position: top; /* This will prioritize the top of the image */
             background-repeat: no-repeat;
             border-radius: 0.75rem; 
             overflow: hidden;
-            aspect-ratio: 1024 / 250; /* Adjusted aspect ratio to be wider to fit the image */
-            border: 3px solid;
-            border-color: #9c4221 #7c3a1a #5c2a0a #7c3a1a; /* Rusted Metal Colors */
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 40px rgba(245, 158, 11, 0.4), inset 0 0 15px rgba(0,0,0,0.6);
+            aspect-ratio: 1024 / 350; /* Made the container taller */
+            /* --- Simplified Turquoise Border --- */
+            border: 3px solid #2dd4bf;
+            box-shadow: 0 0 20px rgba(45, 212, 191, 0.5); /* Matching glow */
         }
         
         /* NEW CHROME GLINT EFFECT */
@@ -1561,5 +1564,10 @@
     </script>
 </body>
 </html>
+
+
+
+
+
 
 
