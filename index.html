@@ -140,16 +140,16 @@
 
         #header-logo-container {
             position: relative;
-            background-image: url('https://github.com/aarmax8/Nomads/blob/62ab1ca44d21a0125fb1e6fb50edd707c52a8e01/nomads%20title%20pic1.png?raw=true');
-            background-size: contain; 
+            background-image: url('https://github.com/aarmax8/Nomads/blob/a2558333329155a2cedbf688fbe2250950f56d40/nomadstitle7.jpg?raw=true');
+            background-size: cover; 
             background-position: center; 
             background-repeat: no-repeat;
             border-radius: 0.75rem; 
             overflow: hidden;
-            aspect-ratio: 1024 / 380; /* Restored original container aspect ratio */
-            border: 2px solid;
-            border-color: #2dd4bf #0d9488 #0d9488 #2dd4bf; 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 40px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(0,0,0,0.5);
+            aspect-ratio: 1024 / 250; /* Adjusted aspect ratio to be wider to fit the image */
+            border: 3px solid;
+            border-color: #9c4221 #7c3a1a #5c2a0a #7c3a1a; /* Rusted Metal Colors */
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 40px rgba(245, 158, 11, 0.4), inset 0 0 15px rgba(0,0,0,0.6);
         }
         
         /* NEW CHROME GLINT EFFECT */
@@ -955,18 +955,18 @@
             itemsToRender.forEach((item, index) => {
                 if (item.isBarcode) {
                     const cardHtml = `
-                    <div class="drink-card" data-is-barcode="true">
-                        <div class="drink-card-inner p-4" style="background-color: #111; border: 3px double #525252; box-shadow: 0 8px 20px rgba(0,0,0,0.7); display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
-                            <img src="${item.image}" alt="3D Barcode" class="w-full rounded-lg object-contain" style="max-height: 65%;">
-                            <div class="text-center mt-2">
-                                 <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
-                                 <div class="card-footer text-xs">
-                                     <p class="mb-2">${item.cardHook}</p>
-                                     <p class="font-normal not-italic leading-tight text-gray-400"><strong class="text-gray-300">To Install for Full Screen:</strong><br><i class="fab fa-apple"></i> iOS: Tap Share then 'Add to Home Screen'.<br><i class="fab fa-android"></i> Android: Tap Menu then 'Install App'.</p>
-                                 </div>
+                        <div class="drink-card" data-is-barcode="true">
+                            <div class="drink-card-inner p-4" style="background-color: #111; border: 3px double #525252; box-shadow: 0 8px 20px rgba(0,0,0,0.7); display: flex; flex-direction: column; align-items: center; justify-content: space-around;">
+                                <img src="${item.image}" alt="3D Barcode" class="w-full rounded-lg object-contain" style="max-height: 65%;">
+                                <div class="text-center mt-2">
+                                     <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
+                                     <div class="card-footer text-xs">
+                                         <p class="mb-2">${item.cardHook}</p>
+                                         <p class="font-normal not-italic leading-tight text-gray-400"><strong class="text-gray-300">To Install for Full Screen:</strong><br><i class="fab fa-apple"></i> iOS: Tap Share then 'Add to Home Screen'.<br><i class="fab fa-android"></i> Android: Tap Menu then 'Install App'.</p>
+                                     </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>`;
+                        </div>`;
                     menuGrid.insertAdjacentHTML('beforeend', cardHtml);
                     return; // Skip normal card rendering
                 }
@@ -1369,7 +1369,7 @@
             content.innerHTML = `
                 <div class="flex flex-col items-center w-full">
                      <div id="journey-explanation" class="p-4 text-center text-gray-300 font-serif text-base leading-relaxed max-w-2xl mx-auto">
-                       Every ride needs a destination. Pick a drink, see where the night takes you.
+                        Every ride needs a destination. Pick a drink, see where the night takes you.
                     </div>
                     <div id="journey-hand-container">
                         ${cardsHtml}
@@ -1561,10 +1561,5 @@
     </script>
 </body>
 </html>
-
-
-
-
-
 
 
