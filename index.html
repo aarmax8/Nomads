@@ -331,6 +331,10 @@
             transition: all 0.2s ease;
             transform: translateZ(0); /* Fix for mobile rendering bug */
         }
+        /* NEW RULE: Explicitly hide the button when the card is flipped */
+        .is-flipped .drink-card-front .favorite-btn {
+            display: none;
+        }
         /* Reposition favorite button on the front of the card */
         .drink-card-front .favorite-btn {
             bottom: 4.5rem; /* Positioned above the footer */
@@ -1541,5 +1545,6 @@
 
 
 "
+
 
 
