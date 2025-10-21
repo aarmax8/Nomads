@@ -140,16 +140,15 @@
 
         #header-logo-container {
             position: relative;
-            background-image: url('https://github.com/aarmax8/Nomads/blob/79abffaa53de515302d982384b0d5236f628f799/nomadstitle5.jpg?raw=true');
-            background-size: cover; /* Use cover for better scaling */
-            background-position: top; /* Aligned to the top to show the building sign */
+            background-image: url('https://github.com/aarmax8/Nomads/blob/f4003a73a3901087b90e6ceeb7f98bcc3804f61c/IMG_0161.jpeg?raw=true');
+            background-size: cover; 
+            background-position: center top; /* Align to top, crop bottom */
             background-repeat: no-repeat;
             border-radius: 0.75rem; 
             overflow: hidden;
-            aspect-ratio: 1024 / 426; /* Matched to new image aspect ratio */
-            /* New polished metal border effect - NOW with toned-down TURQUOISE */
+            aspect-ratio: 1024 / 380; /* Restored original container aspect ratio */
             border: 2px solid;
-            border-color: #2dd4bf #0d9488 #0d9488 #2dd4bf; /* Light turquoise top/left, Dark turquoise bottom/right */
+            border-color: #2dd4bf #0d9488 #0d9488 #2dd4bf; 
             box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 40px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(0,0,0,0.5);
         }
         
@@ -609,7 +608,7 @@
     <div id="app" class="app-container">
         <header class="text-center pt-4 px-4 flex-shrink-0">
             <div id="header-logo-container" class="w-full max-w-lg mx-auto flex items-center justify-center">
-                <!-- REMOVED the H1 element that was here -->
+                <!-- REMOVED height classes -->
             </div>
         </header>
         
@@ -1562,5 +1561,8 @@
     </script>
 </body>
 </html>
+
+
+
 
 
