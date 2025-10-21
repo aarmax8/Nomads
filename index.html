@@ -96,7 +96,7 @@
             height: 85vw; /* Keep it square */
             max-width: 450px; /* Set a max size for larger screens */
             max-height: 450px; /* Keep the max size square */
-            background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/1225dac45d24850b98be3941a984892581c96bd7/icon1.jpg');
+            background-image: url('https://github.com/aarmax8/Nomads/blob/01f9b22d486e761de968bad74f43f405ee563fab/maple%20on%20motorcycle.jpg?raw=true');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -137,12 +137,13 @@
 
         #header-logo-container {
             position: relative;
-            background-image: url('https://github.com/aarmax8/Nomads/blob/2dc97463d231616f1b22780b24db192d58e80621/damotorcycle8.jpg?raw=true');
-            background-size: 100% 100%; /* Changed to fill the container exactly */
-            background-position: center;
+            background-image: url('https://github.com/aarmax8/Nomads/blob/01f9b22d486e761de968bad74f43f405ee563fab/nomadstitle4.jpg?raw=true');
+            background-size: cover; /* Use cover for better scaling */
+            background-position: top; /* CHANGED: Aligned to the top to show the building sign */
             background-repeat: no-repeat;
             border-radius: 0.75rem; 
             overflow: hidden;
+            aspect-ratio: 1024 / 341; /* Force container to match image aspect ratio */
             /* New polished metal border effect - NOW with toned-down TURQUOISE */
             border: 2px solid;
             border-color: #2dd4bf #0d9488 #0d9488 #2dd4bf; /* Light turquoise top/left, Dark turquoise bottom/right */
@@ -237,90 +238,81 @@
             box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
         }
         
-        /* --- Tarot Card Back Styling --- */
+        /* --- Story Card Back Styling --- */
         .drink-card-back {
             transform: rotateY(180deg); 
-            background-color: #1e1b4b; /* Deep Indigo */
-            background-image: url('https://www.transparenttextures.com/patterns/stardust.png');
-            border: 2px solid #a78bfa;
+            background-color: #111; /* Fallback for no image */
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #854d0e; /* Dark amber border */
             color: #e5e7eb;
-            position: relative; /* Required for pseudo-element positioning */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end; /* Pushes content to the bottom */
         }
+        /* New overlay for text readability */
         .drink-card-back::before {
             content: '';
             position: absolute;
-            top: 10px;
-            left: 10px;
-            right: 10px;
-            bottom: 10px;
-            border: 2px double rgba(167, 139, 250, 0.5);
-            border-radius: 2px;
-            pointer-events: none;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.95) 35%, rgba(0,0,0,0.5) 65%, transparent 100%);
+            z-index: 1;
+            border-radius: 0.375rem; /* Match parent's border-radius */
         }
-        .card-back-image {
-            width: 100%; height: 400px; 
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-            padding: 4px; background-color: #312e81;
-            position: relative;
-            transition: background-image 0.4s ease-in-out;
-            margin-bottom: -100px; /* Pull the content up over the image */
-        }
-        .card-back-image::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            right: 0;
-            height: 60%;
-            background: linear-gradient(to top, #1e1b4b 35%, transparent);
-        }
+        
+        /* Removed .card-back-image and .card-back-image::after styles */
+
         .card-back-content {
-            padding: 0.25rem 0.75rem 0.5rem; flex-grow: 1; overflow-y: hidden; text-align: center;
+            padding: 0 1.25rem 1rem;
+            flex-grow: 0; /* Don't let it grow, just take space it needs */
             display: flex; flex-direction: column;
-            justify-content: flex-end; /* Push content to the bottom */
-            position: relative; /* Ensure content is on top of the image fade */
+            overflow-y: auto;
+            max-height: 50%; /* Content takes up bottom half at most */
+            position: relative;
             z-index: 2;
         }
-        .tarot-card-name {
-            font-family: 'Cinzel', serif;
-            font-size: 1.4rem; /* Adjusted */
-            font-weight: 700;
-            text-align: center;
-            color: #f59e0b;
-            text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
-            margin-bottom: 0.25rem;
-        }
-        .tarot-simple-meaning {
-            font-family: 'Cinzel', serif;
-            font-size: 1rem;
-            color: #d8b4fe;
-            text-shadow: 0 0 5px rgba(216, 180, 254, 0.4);
-            margin: 0.5rem 0;
-            padding: 0.5rem 0.25rem;
-            border-top: 1px dashed #4c1d95;
-            border-bottom: 1px dashed #4c1d95;
-            font-weight: 600;
-        }
-        .tarot-story {
+
+        .story-text {
             font-family: 'IM Fell DW Pica', serif;
             font-style: italic;
             text-align: justify;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            color: #d1d5db;
-            padding-right: 0.25rem; /* Space for scrollbar */
-        }
-        .card-back-content .overflow-y-auto::-webkit-scrollbar { width: 4px; }
-        .card-back-content .overflow-y-auto::-webkit-scrollbar-track { background: transparent; }
-        .card-back-content .overflow-y-auto::-webkit-scrollbar-thumb { background-color: #a78bfa; border-radius: 4px; }
-        
-        .no-image .card-back-content {
-            display: flex; flex-direction: column; justify-content: center;
+            font-size: 1.15rem;
+            line-height: 1.5;
+            color: #e5e7eb; /* Brightened text for contrast */
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Stronger shadow */
         }
 
-        /* --- NEW FAVORITES STYLES --- */
+        .card-back-content::-webkit-scrollbar { width: 4px; }
+        .card-back-content::-webkit-scrollbar-track { background: transparent; }
+        .card-back-content::-webkit-scrollbar-thumb { background-color: #854d0e; border-radius: 4px; }
+        
+        .no-image .card-back-content {
+            margin-top: 0;
+            justify-content: center;
+            max-height: 100%;
+        }
+         .no-image::before {
+            background: none; /* No overlay if no image */
+        }
+        .card-footer-back {
+             padding: 0.75rem;
+            background: rgba(0,0,0,0.3);
+            border-top: 2px double rgba(133, 77, 14, 0.5);
+            font-style: normal;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 60px;
+            font-family: 'Cinzel', serif;
+            font-size: 1.2rem;
+            color: #f59e0b;
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
+            z-index: 2; /* Ensure it's above the overlay */
+        }
+
+
+        /* --- FAVORITES STYLES --- */
         .favorite-btn {
             position: absolute;
             top: 12px;
@@ -369,26 +361,7 @@
         #favorites-list-container .favorite-item:hover {
             background: rgba(245, 158, 11, 0.15);
         }
-        /* --- END FAVORITES STYLES --- */
-
-        #menu-grid .drink-card-back .card-footer {
-            padding: 0.5rem;
-            background: transparent;
-            border-top: 2px double rgba(167, 139, 250, 0.5);
-            font-style: normal;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 50px;
-        }
-
-        .card-footer .tarot-card-name {
-            font-size: 1.2rem;
-            margin-bottom: 0;
-            line-height: 1;
-        }
-
-
+        
         .drink-card.is-unavailable { opacity: 0.4; pointer-events: none; }
         .drink-card-title {
             font-size: 1.8rem; line-height: 1.2; color: #f59e0b; text-align: center;
@@ -470,8 +443,8 @@
             background-color: rgba(45, 212, 191, 0.1); /* Changed to turquoise glow */
         }
 
-        /* --- Tarot Reading Modal Styles --- */
-        #tarot-hand-container {
+        /* --- Journey Modal Styles --- */
+        #journey-modal #journey-hand-container {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -480,26 +453,26 @@
             flex-wrap: nowrap;
         }
 
-        .tarot-card-wrapper {
+        #journey-modal .journey-card-wrapper {
             position: relative;
             transition: transform 0.4s ease;
         }
 
-        .tarot-card-wrapper:nth-child(1) { transform: rotate(-8deg) translateY(15px); z-index: 1; }
-        .tarot-card-wrapper:nth-child(2) { z-index: 3; margin: 0 -50px; transform: translateY(-10px) scale(1.05); }
-        .tarot-card-wrapper:nth-child(3) { transform: rotate(8deg) translateY(15px); z-index: 2; }
+        #journey-modal .journey-card-wrapper:nth-child(1) { transform: rotate(-8deg) translateY(15px); z-index: 1; }
+        #journey-modal .journey-card-wrapper:nth-child(2) { z-index: 3; margin: 0 -50px; transform: translateY(-10px) scale(1.05); }
+        #journey-modal .journey-card-wrapper:nth-child(3) { transform: rotate(8deg) translateY(15px); z-index: 2; }
 
-        .tarot-card-wrapper:hover {
+        #journey-modal .journey-card-wrapper:hover {
             transform: translateY(-20px) scale(1.08) !important;
             z-index: 10;
         }
         
-        .tarot-card-wrapper.is-selected {
+        #journey-modal .journey-card-wrapper.is-selected {
             transform: translateY(-25px) scale(1.1) !important;
             z-index: 9;
         }
         
-        .tarot-pick {
+        #journey-modal .journey-pick {
             width: 220px;
             height: 380px;
             min-height: 380px;
@@ -507,32 +480,28 @@
         }
 
         @media (max-width: 768px) {
-            .tarot-pick {
+            #journey-modal .journey-pick {
                 width: 180px;
                 height: 310px;
                 min-height: 310px;
             }
-            .tarot-card-wrapper:nth-child(2) { margin: 0 -40px; }
-            #tarot-reading-modal .drink-card-title { font-size: 1rem; }
-            #tarot-reading-modal .recipe-list-front li { font-size: 0.75rem; }
-            #tarot-reading-modal .tarot-card-name { font-size: 1.1rem; }
-            #tarot-reading-modal .drink-name-back { font-size: 0.7rem; }
+            #journey-modal .journey-card-wrapper:nth-child(2) { margin: 0 -40px; }
+            #journey-modal .drink-card-title { font-size: 1rem; }
+            #journey-modal .recipe-list-front li { font-size: 0.75rem; }
         }
          @media (max-width: 600px) {
-            .tarot-pick {
+            #journey-modal .journey-pick {
                 width: 140px;
                 height: 245px;
                 min-height: 245px;
             }
-            .tarot-card-wrapper:nth-child(2) { margin: 0 -50px; }
-            #tarot-reading-modal .drink-card-title { font-size: 0.8rem; }
-            #tarot-reading-modal .recipe-list-front li { font-size: 0.65rem; }
-            #tarot-reading-modal .tarot-card-name { font-size: 0.9rem; }
-            #tarot-reading-modal .drink-name-back { font-size: 0.6rem; }
-            #tarot-reading-modal .card-footer { padding: 0.4rem; font-size: 0.6rem; }
+            #journey-modal .journey-card-wrapper:nth-child(2) { margin: 0 -50px; }
+            #journey-modal .drink-card-title { font-size: 0.8rem; }
+            #journey-modal .recipe-list-front li { font-size: 0.65rem; }
+            #journey-modal .card-footer { padding: 0.4rem; font-size: 0.6rem; }
         }
 
-        .tarot-position-label {
+        #journey-modal .position-label {
             text-align: center;
             font-family: 'Cinzel', serif;
             font-size: 1.1rem;
@@ -541,7 +510,7 @@
             text-shadow: 0 0 5px rgba(245, 158, 11, 0.7);
         }
         
-        #reading-explanation {
+        #journey-modal #journey-explanation {
             transition: opacity 0.3s ease;
         }
 
@@ -647,16 +616,13 @@
 
     <div id="app" class="app-container">
         <header class="text-center pt-4 px-4 flex-shrink-0">
-            <div id="header-logo-container" class="h-28 md:h-36 w-full max-w-lg mx-auto flex items-center justify-center">
-                <!-- Corner brackets removed -->
+            <div id="header-logo-container" class="w-full max-w-lg mx-auto flex items-center justify-center">
+                <!-- REMOVED the H1 element that was here -->
             </div>
         </header>
         
         <main>
-            <div id="view-controls" class="px-4 flex justify-center items-center gap-4">
-                <button id="view-toggle-btn" class="filter-pill text-sm py-2 px-4 rounded-md">Show All Tarot</button>
-                <button id="view-reset-btn" class="text-gray-400 hover:text-white transition-colors text-xs font-sans uppercase tracking-wider">Reset View</button>
-            </div>
+            <!-- REMOVED the entire view-controls div that was here -->
             <div id="menu-grid"></div>
         </main>
 
@@ -665,9 +631,10 @@
                 <i class="fas fa-bars text-2xl"></i>
                 <span class="text-xs mt-1">Menu</span>
             </button>
-            <button id="tarot-reading-btn" class="bottom-nav-btn">
-                <i class="fas fa-motorcycle text-2xl"></i>
-                <span class="text-xs mt-1">Reading</span>
+            <!-- REPLACED Journey button with Stories button -->
+            <button id="stories-nav-btn" class="bottom-nav-btn">
+                <i class="fas fa-book-open text-2xl"></i>
+                <span class="text-xs mt-1">Stories</span>
             </button>
             <button id="favorites-btn" class="bottom-nav-btn">
                 <i class="fas fa-star text-2xl"></i>
@@ -691,7 +658,7 @@
                 </div>
                  <div class="mt-4 border-b-2 border-white/10">
                     <button id="fav-drinks-tab" class="fav-tab-btn is-active py-2 px-4 text-sm font-bold border-b-2 border-amber-500 text-amber-400">Recipes</button>
-                    <button id="fav-tarot-tab" class="fav-tab-btn py-2 px-4 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white">Tarot</button>
+                    <button id="fav-stories-tab" class="fav-tab-btn py-2 px-4 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-white">Stories</button>
                 </div>
             </div>
             <div id="favorites-list-container" class="p-6 text-gray-300 overflow-y-auto">
@@ -700,13 +667,13 @@
         </div>
     </div>
 
-    <div id="tarot-reading-modal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 z-50">
+    <div id="journey-modal" class="modal fixed inset-0 bg-black bg-opacity-90 backdrop-blur-sm flex items-center justify-center p-4 hidden opacity-0 z-50">
         <div class="bg-transparent w-full max-w-4xl flex flex-col max-h-[95vh]">
             <div class="p-4 flex justify-between items-center flex-shrink-0">
-                <h2 class="text-3xl font-bold text-white font-cinzel text-center w-full">Choose Your Journey</h2>
-                <button id="close-tarot-btn" class="text-gray-400 hover:text-white text-4xl absolute top-4 right-4">&times;</button>
+                <h2 class="text-3xl font-bold text-white font-cinzel text-center w-full">Where to Next?</h2>
+                <button id="close-journey-btn" class="text-gray-400 hover:text-white text-4xl absolute top-4 right-4">&times;</button>
             </div>
-            <div id="tarot-reading-content" class="p-6 text-gray-300 overflow-y-auto">
+            <div id="journey-content" class="p-6 text-gray-300 overflow-y-auto">
                 <!-- 3 cards will be injected here --></div>
         </div>
     </div>
@@ -742,183 +709,92 @@
         // --- Data ---
         let cocktails = []; // This will be populated by the setup function
         let favoriteDrinks = [];
-        let favoriteTarot = [];
-        const tarotDeck = [
-            "The Fool", "The Magician", "The High Priestess", "The Empress", "The Emperor", "The Hierophant", "The Lovers", "The Chariot", "Strength", "The Hermit", "Wheel of Fortune", "Justice", "The Hanged Man", "Death", "Temperance", "The Devil", "The Tower", "The Star", "The Moon", "The Sun", "Judgement", "The World",
-            "Ace of Wands", "Two of Wands", "Three of Wands", "Four of Wands", "Five of Wands", "Six of Wands", "Seven of Wands", "Eight of Wands", "Nine of Wands", "Ten of Wands", "Page of Wands", "Knight of Wands", "Queen of Wands", "King of Wands",
-            "Ace of Cups", "Two of Cups", "Three of Cups", "Four of Cups", "Five of Cups", "Six of Cups", "Seven of Cups", "Eight of Cups", "Nine of Cups", "Ten of Cups", "Page of Cups", "Knight of Cups", "Queen of Cups", "King of Cups",
-            "Ace of Swords", "Two of Swords", "Three of Swords", "Four of Swords", "Five of Swords", "Six of Swords", "Seven of Swords", "Eight of Swords", "Nine of Swords", "Ten of Swords", "Page of Swords", "Knight of Swords", "Queen of Swords", "King of Swords",
-            "Ace of Pentacles", "Two of Pentacles", "Three of Pentacles", "Four of Pentacles", "Five of Pentacles", "Six of Pentacles", "Seven of Pentacles", "Eight of Pentacles", "Nine of Pentacles", "Ten of Pentacles", "Page of Pentacles", "Knight of Pentacles", "Queen of Pentacles", "King of Pentacles"
-        ];
-
-        const simpleTarotMeanings = {
-            "The Fool": "New beginnings, innocence, spontaneity.",
-            "The Magician": "Manifestation, resourcefulness, power.",
-            "The High Priestess": "Intuition, sacred knowledge, the subconscious.",
-            "The Empress": "Femininity, beauty, nature, nurturing.",
-            "The Emperor": "Authority, structure, a father figure.",
-            "The Hierophant": "Tradition, conformity, spiritual wisdom.",
-            "The Lovers": "Love, harmony, relationships, choices.",
-            "The Chariot": "Control, willpower, victory, determination.",
-            "Strength": "Courage, compassion, focus, patience.",
-            "The Hermit": "Soul-searching, introspection, inner guidance.",
-            "Wheel of Fortune": "Good luck, karma, a turning point.",
-            "Justice": "Fairness, truth, cause and effect.",
-            "The Hanged Man": "Surrender, letting go, new perspectives.",
-            "Death": "Endings, change, transformation.",
-            "Temperance": "Balance, moderation, patience.",
-            "The Devil": "Attachment, addiction, restriction.",
-            "The Tower": "Sudden change, upheaval, revelation.",
-            "The Star": "Hope, faith, renewal, spirituality.",
-            "The Moon": "Illusion, fear, anxiety, intuition.",
-            "The Sun": "Positivity, fun, warmth, success.",
-            "Judgement": "Rebirth, inner calling, absolution.",
-            "The World": "Completion, integration, accomplishment.",
-            "Ace of Wands": "Inspiration, new opportunities, growth.",
-            "Two of Wands": "Future planning, making decisions, discovery.",
-            "Three of Wands": "Expansion, foresight, looking ahead.",
-            "Four of Wands": "Celebration, joy, harmony, homecoming.",
-            "Five of Wands": "Conflict, competition, tension.",
-            "Six of Wands": "Public recognition, victory, self-confidence.",
-            "Seven of Wands": "Challenge, perseverance, protection.",
-            "Eight of Wands": "Movement, action, quick decisions.",
-            "Nine of Wands": "Resilience, courage, persistence.",
-            "Ten of Wands": "Burden, responsibility, hard work.",
-            "Page of Wands": "Enthusiasm, exploration, free spirit.",
-            "Knight of Wands": "Energy, passion, adventure, impulsiveness.",
-            "Queen of Wands": "Courage, confidence, independence.",
-            "King of Wands": "Natural-born leader, vision, honor.",
-            "Ace of Cups": "New love, compassion, creativity.",
-            "Two of Cups": "Unified love, partnership, attraction.",
-            "Three of Cups": "Celebration, friendship, collaboration.",
-            "Four of Cups": "Apathy, contemplation, re-evaluation.",
-            "Five of Cups": "Regret, failure, disappointment.",
-            "Six of Cups": "Nostalgia, childhood memories, joy.",
-            "Seven of Cups": "Opportunities, choices, wishful thinking.",
-            "Eight of Cups": "Withdrawal, escapism, walking away.",
-            "Nine of Cups": "Contentment, satisfaction, wish come true.",
-            "Ten of Cups": "Blissful relationships, harmony, alignment.",
-            "Page of Cups": "Creative opportunities, intuitive messages.",
-            "Knight of Cups": "Romance, charm, imagination.",
-            "Queen of Cups": "Compassion, emotional stability, intuition.",
-            "King of Cups": "Emotional balance, compassion, diplomacy.",
-            "Ace of Swords": "Breakthroughs, new ideas, mental clarity.",
-            "Two of Swords": "Difficult choices, indecision, stalemate.",
-            "Three of Swords": "Heartbreak, emotional pain, sorrow.",
-            "Four of Swords": "Rest, relaxation, recuperation.",
-            "Five of Swords": "Conflict, tension, loss, defeat.",
-            "Six of Swords": "Transition, change, releasing baggage.",
-            "Seven of Swords": "Betrayal, deception, strategy.",
-            "Eight of Swords": "Self-imposed restriction, imprisonment.",
-            "Nine of Swords": "Anxiety, worry, fear, nightmares.",
-            "Ten of Swords": "Painful endings, betrayal, crisis.",
-            "Page of Swords": "New ideas, curiosity, thirst for knowledge.",
-            "Knight of Swords": "Ambitious, action-oriented, fast-thinking.",
-            "Queen of Swords": "Independent, clear boundaries, direct.",
-            "King of Swords": "Mental clarity, intellectual power, authority.",
-            "Ace of Pentacles": "New opportunity, manifestation, prosperity.",
-            "Two of Pentacles": "Juggling priorities, adaptability.",
-            "Three of Pentacles": "Teamwork, collaboration, learning.",
-            "Four of Pentacles": "Saving money, security, control.",
-            "Five of Pentacles": "Financial loss, poverty, isolation.",
-            "Six of Pentacles": "Generosity, charity, giving and receiving.",
-            "Seven of Pentacles": "Long-term view, perseverance, investment.",
-            "Eight of Pentacles": "Skill development, mastery, quality.",
-            "Nine of Pentacles": "Abundance, luxury, self-sufficiency.",
-            "Ten of Pentacles": "Wealth, family, long-term success.",
-            "Page of Pentacles": "Financial opportunity, skill development.",
-            "Knight of Pentacles": "Hard work, productivity, routine.",
-            "Queen of Pentacles": "Nurturing, practical, providing financially.",
-            "King of Pentacles": "Wealth, business, leadership, abundance."
-        };
-
+        let favoriteStories = [];
+        
         function setupCocktailData() {
             const initialCocktails = [
-                // MAJOR ARCANA (0-21) - Thematically Re-arranged
-                /* 0: The Fool */ { name: "Redheaded Trouble", flavorProfile: "A rebellious blend where dark, herbal notes meet sweet peach, finished with a bright citrus kick.", recipe: ["1 oz Jägermeister", "1 oz Peach Schnapps", "Fill a tall glass with Orange Juice"], tarotMeaning: "For the one who takes that first leap. This drink is for the start of a journey with no map, fueled by pure, reckless faith in the road ahead.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8296.jpg", cardHook: "For the journey that begins with a dare." },
-                /* 1: The Magician */ { name: "Caramel Apple Cruiser", flavorProfile: "Sweet butterscotch collides with the sharp tang of green apple, balanced by a whisper of spice.", recipe: ["1.5 oz Butterscotch Schnapps", "1.5 oz Apple Pucker", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the rider who commands all the tools in the garage. This drink is about having the skill, the power, and the will to turn a pile of spare parts into a legend.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8294.jpg", cardHook: "A drink for the builder, the tinkerer, the master of their own machine." },
-                /* 2: High Priestess */ { name: "The Alchemist's Brew", flavorProfile: "A complex, intellectual blend of herbal Jägermeister and floral St-Germain.", recipe: ["1.5 oz Jägermeister", "0.5 oz St-Germain", "Fill with Tonic Water"], tarotMeaning: "For the secrets the road keeps. This drink is for the intuition that tells you to check your oil, or to avoid that detour. It's for the wisdom that can't be taught.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8239.jpg", cardHook: "For the secrets only the road knows.", imagePosition: 'bottom' },
-                /* 3: The Empress */ { name: "The Sunstone", flavorProfile: "A bright and sweet tropical mix of coconut rum and orange juice.", recipe: ["1.5 oz Malibu Rum", "Fill with Orange Juice", "Splash of Grenadine"], tarotMeaning: "For the Road Queen, the mother of the club. This drink is about abundance, growth, and the fierce, nurturing power that holds the whole damn thing together.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8221.jpg", cardHook: "A tribute to the one who holds the whole damn thing together." },
-                /* 4: The Emperor */ { name: "The Iron Horse", flavorProfile: "A bold, uncompromising, and classic mix of bourbon, cola, and bitters.", recipe: ["2 oz Maker's Mark", "Fill with Cola", "2 dashes Angostura Bitters"], tarotMeaning: "For the Club President. This is the drink of structure, authority, and the unwritten laws of the road. It's for the one who builds the empire and defends it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8220.jpg", cardHook: "Some laws are written in chrome, not ink.", imagePosition: 'bottom' },
-                /* 5: The Hierophant */ { name: "Old Fashioned", flavorProfile: "The timeless, bold flavor of bourbon, mellowed by sweet sugar and aromatic bitters.", recipe: ["2 oz Maker's Mark", "0.5 oz Simple Syrup", "2 dashes Orange Bitters", "Cherry Garnish", "Top with Club Soda in a tall glass"], tarotMeaning: "For the old-timer who knows every story. This drink is for tradition, for the wisdom passed down from one generation of riders to the next.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8005.jpg", cardHook: "To the stories that pave the road." },
-                /* 6: The Lovers */ { name: "The Outlaw's Peach", flavorProfile: "A surprisingly smooth mix of sweet peach, creamy Baileys, and dark cola.", recipe: ["1 oz Peach Schnapps", "1 oz Baileys Irish Cream", "Top with Cola in a tall glass"], tarotMeaning: "For the choice between the open road and the promises you made back home. This drink is for the partnerships, the alliances, and the bonds that define the ride.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8004.jpg", cardHook: "Some choices are made at a crossroads with no signs." },
-                /* 7: The Chariot */ { name: "The Junk Drawer", flavorProfile: "An unapologetically sweet concoction of raspberry, butterscotch, and classic root beer.", recipe: ["0.75 oz Raspberry Schnapps", "0.75 oz Butterscotch Schnapps", "0.75 oz Root Beer Schnapps", "Fill a tall glass with Club Soda"], tarotMeaning: "For the ride that can't be stopped. This is the taste of momentum, of determination, of pushing forward no matter what the road throws at you.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/08030c3d25616df982816261406e2c08.png", cardHook: "Just twist the throttle and don't look back." },
-                /* 8: Strength */ { name: "The Blue Lagoon's Ghost", flavorProfile: "Tropical orange and sweet cherry flavors ride on a clean rum backbone.", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice"], tarotMeaning: "For the courage it takes to face a storm head-on. This drink is for the inner fire, the grit that tames the beast under the fuel tank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", cardHook: "The only thing to tame is the fear inside." },
-                /* 9: The Hermit */ { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "Top with Club Soda in a tall glass"], tarotMeaning: "For the long, solo ride. This drink is for looking inward, for finding your own way when the pack is far behind and the only sound is your engine.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/0ac5da1e71c995f58d75335fffabd844.jpg", cardHook: "Sometimes, the best company is the sound of your own engine." },
-                /* 10: Wheel of Fortune */ { name: "The Double Cross", flavorProfile: "An aggressive clash of bitter Campari and bold bourbon, with a sweet and salty edge.", recipe: ["2 oz Bulleit Bourbon", "1 oz Campari", "Half Salt, Half Sugar Rim"], tarotMeaning: "For the unpredictable nature of the road. This is for the lucky breaks and the sudden breakdowns. A reminder that you can't control the ride, only how you handle it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/19071808632f94b0b81d595f74f700f0.jpg", cardHook: "Luck is just what you call a near miss." },
-                /* 11: Justice */ { name: "The Blacktop Sunset", flavorProfile: "Smooth Irish whiskey and sweet Southern Comfort are brightened by lime and spiced ginger.", recipe: ["1 oz Jameson Irish Whiskey", "1 oz Southern Comfort", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the law of the road. This drink is about balance, about karma, about getting what you deserve, good or bad. Every action has a reaction.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/192b194c611aafb0934b83ec0cd7474c.jpg", cardHook: "The road always collects its debts." },
-                /* 12: The Hanged Man */ { name: "The Elderflower Nomad", flavorProfile: "Delicate elderflower and botanical gin meet a hint of lavender and rosemary.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.5 oz Lime Juice", "2 dashes Rosemary Lavender Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For when you're stuck on the side of the road, waiting for a tow. This drink is about surrender, about seeing the world from a new angle while you wait for the path to clear.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1bf52dfc1aad553db68333418c40d848.jpg", cardHook: "Sometimes, the best view comes after the breakdown.", imagePosition: 'bottom' },
-                /* 13: Death */ { name: "The Grim Reaper", flavorProfile: "A dark and potent combination of herbal Jägermeister and spiced black rum.", recipe: ["1.5 oz Jägermeister", "1 oz Kraken Black Spiced Rum", "Fill with Cola"], tarotMeaning: "For the end of an era. This is for selling the old bike, for letting go of a chapter to make room for the next. It's the taste of necessary change.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1f512d08cccf12ad8dc389d42f5fcceb.jpg", cardHook: "Every last ride makes way for the next first one." },
-                /* 14: Temperance */ { name: "The Apparition", flavorProfile: "Clean vodka and floral St-Germain are lifted by the bright spice of ginger.", recipe: ["2 oz Ketel One Vodka", "0.75 oz St-Germain", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the art of the perfect build. This is for the rider who knows how to balance power and style, who can mix and match parts to create something truly harmonious.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/206S17.jpg", cardHook: "A perfect machine is a delicate balance." },
-                /* 15: The Devil */ { name: "The Devil's Bargain", flavorProfile: "A timeless and potent blend of smoky Scotch whisky sweetened by the honeyed, herbal spice of Drambuie.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Drambuie", "Serve on the rocks", "Lemon Twist Garnish"], tarotMeaning: "For the temptations of the road. The extra drink, the questionable shortcut, the race you know you shouldn't accept. This is the taste of a deal that's too good to be true.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "Every deal has its price." },
-                /* 16: The Tower */ { name: "The Mechanic", flavorProfile: "A blast of bright citrus and sweet orange liqueur, carried by a wave of sour mix.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "2 dashes Orange Bitters", "Fill a tall glass with Sour Mix"], tarotMeaning: "For the day the engine blows. This drink is for sudden, catastrophic failure. The moment everything you built comes crashing down. A hard lesson, but a clean slate.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/39cd9a9b372af2c86cb7189c2f929463.png", cardHook: "Sometimes you have to tear it all down to build it back right." },
-                /* 17: The Star */ { name: "Redline Riot", flavorProfile: "Sweet cherry and sharp sour mix create a vibrant, rebellious flavor.", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sour Mix", "Splash of Lime Juice"], tarotMeaning: "For the calm after the storm. This is for finding hope after a breakdown, for seeing a path forward when you thought the ride was over.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3a506b28b91e0e5d031cedbeca489a14.jpg", cardHook: "There's always a road forward." },
-                /* 18: The Moon */ { name: "The Kickstart", flavorProfile: "Warm spiced rum gets a sharp, clean kick from lime and ginger.", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the illusions of a night ride. This drink is for the shadows that look like deer, for the uncertainty of what lies beyond your headlight.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3df099091d9acb596f9d54e4ed858c8f.jpg", cardHook: "Trust your headlights, but not the shadows." },
-                /* 19: The Sun */ { name: "Shayla Temple", flavorProfile: "The classic sweet and spicy ginger soda, kissed with a touch of cherry.", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry Garnish"], tarotMeaning: "For that perfect day on the road. This is for the ride where everything goes right—the weather, the bike, the company. The taste of pure, unadulterated joy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/temple.jpg", cardHook: "For the days the sun shines just for you.", imagePosition: 'bottom' },
-                /* 20: Judgement */ { name: "Storm Rider", flavorProfile: "Deep, dark spiced rum with a bite of lime and a spicy ginger finish.", recipe: ["2 oz Kraken Black Spiced Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the day you get your patch. This is for answering the call, for being judged by the club and found worthy. The taste of reckoning.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "This is the taste of being judged and found worthy." },
-                /* 21: The World */ { name: "The Kraken's Grip", flavorProfile: "Dark rum and sweet almond create a rich, cola-based concoction.", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], tarotMeaning: "For the end of the long road. This is for completing the journey, for seeing the world and returning home. The taste of a ride well-ridden.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/555331b7961b7c0880f3b2842529bcd8.jpg", cardHook: "To the last mile of a long journey." },
-
-                // MINOR ARCANA (22-77)
-                /* Ace of Wands */ { name: "The Siren's Call", flavorProfile: "Bitter Campari is tamed by tropical pineapple and dark spiced rum.", recipe: ["1.5 oz Kraken Black Spiced Rum", "0.75 oz Campari", "1.5 oz Pineapple Juice", "0.5 oz Lime Juice"], tarotMeaning: "For the spark of a new idea—a new route, a new custom build. This is the taste of raw, untamed creative energy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5638f66d00401c933df787eb50253fc8.jpg", cardHook: "Every legend starts with a single spark." },
-                /* Two of Wands */ { name: "The Island Hopper", flavorProfile: "A sweet, tropical escape with creamy coconut and bright pineapple.", recipe: ["1 oz Malibu Rum", "1 oz Bacardi Rum", "Fill with Pineapple Juice", "Splash of Lime Juice"], tarotMeaning: "For the moment you decide which road to take. This is for the rider who stands at a crossroads, planning their next move with confidence.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5a6b0379f72b6c8fb2751409d48ac8fa.jpg", cardHook: "When the map ends, the ride begins." },
-                /* Three of Wands */ { name: "The Switchback", flavorProfile: "A clean and bracing mix of botanical gin and sharp lime, mellowed by club soda.", recipe: ["2 oz Tanqueray Gin", "1 oz Lime Juice", "Fill a tall glass with Club Soda"], tarotMeaning: "For the first leg of a long journey. This is for the rider who has set out, full of ambition, watching the world unfold before them.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "For that first mile out of town." },
-                /* Four of Wands */ { name: "The Long Haul", flavorProfile: "Crisp gin and tonic gets a complex, herbal twist from rosemary and lavender.", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], tarotMeaning: "For the celebration after a successful ride. This is for the bond of the club, the shared victory, and the party at the clubhouse.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/608bdca2cf73d693c4e80d1723cd59b8.jpg", cardHook: "To the bonds forged in the clubhouse." },
-                /* Five of Wands */ { name: "Country and Western", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], tarotMeaning: "For the inevitable rivalry. This drink is for the clash of egos, the friendly (and unfriendly) competition between riders.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/62a04e5b236c0659fec18c5f76651953.jpg", cardHook: "For the kind of night that ends with a song." },
-                /* Six of Wands */ { name: "The Rattlesnake", flavorProfile: "Earthy tequila gets a surprising bite from sweet cherry and sharp lime.", recipe: ["2 oz El Mayor Tequila", "0.5 oz Cherry Schnapps", "0.5 oz Lime Juice", "Top with Club Soda in a tall glass"], tarotMeaning: "For the triumphant return. This is for the rider who comes home with a story to tell, recognized and respected by all.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6418051b93b83a2239400213863d22a1.jpg", cardHook: "Respect is earned one mile at a time." },
-                /* Seven of Wands */ { name: "Dust Devil", flavorProfile: "A whirlwind of tropical pineapple, sweet cherry, and earthy tequila.", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Pineapple Juice", "0.5 oz Maraschino Liqueur", "Dash of Orange Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the one who defends their patch, their bike, their honor. This is the taste of standing your ground, no matter the odds.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/64c7af61b8476938a0b6bc9e8462ef3f--motorcycle-posters-motorcycle-art.jpg", cardHook: "Stand your ground, even when the dust settles." },
-                /* Eight of Wands */ { name: "Desert Sunrise", flavorProfile: "Sweet and vibrant, this is a classic tequila sunrise with an extra bitter orange kick.", recipe: ["2 oz El Mayor Tequila", "Fill a tall glass with Orange Juice", "2 dashes Orange Bitters", "0.5 oz Grenadine"], tarotMeaning: "For the speed of a well-tuned engine. This is for a swift journey, for news arriving faster than expected.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "Some news travels at 100 mph." },
-                /* Nine of Wands */ { name: "The Gilded Serpent", flavorProfile: "A luxurious mix of floral elderflower, bright pineapple, and smooth tequila.", recipe: ["1.5 oz El Mayor Tequila", "0.75 oz St-Germain", "1 oz Pineapple Juice", "0.5 oz Lime Juice"], tarotMeaning: "For the rider who is always prepared. This is for the one who has their tools, their wits, and the resilience to handle any breakdown.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/67bab4c8460e76ee5bd5fe757150ef26--bike-art-motorcycle-art.jpg", cardHook: "The best tool is the one you have with you." },
-                /* Ten of Wands */ { name: "The Long Road Home", flavorProfile: "The sweet, herbal notes of Drambuie are lifted by the crisp, spicy kick of ginger soda, creating a refreshing and enduring companion for any journey.", recipe: ["2 oz Drambuie", "Fill a tall glass with Ginger Soda", "Lime Wedge Garnish"], tarotMeaning: "For the rider who carries the weight of the club. This is for shouldering the heavy responsibility, but finding the strength to see the journey through to the end.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/69070319cd6333061bdbb34ed7dee0c1.jpg", cardHook: "For the last mile of a heavy journey." },
-                /* Page of Wands */ { name: "The Switchblade", flavorProfile: "Intensely sour lemon is balanced by a sweet sugar rim and a clean vodka finish.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "Sugar Rim"], tarotMeaning: "For the prospect, the eager learner. This drink is for the one who is full of passion but still needs guidance from the old-timers.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6a73cec9f46d798d4ba58ec29f5623f2.jpg", cardHook: "Passion is a good engine, but it needs a skilled driver." },
-                /* Knight of Wands */ { name: "Buckeye Cider", flavorProfile: "Sweet and spicy Southern Comfort with a classic bitter backbone, lifted by a crisp soda finish.", recipe: ["2 oz Southern Comfort", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the Enforcer, the one who takes bold, decisive action. This is the taste of fiery passion and a rebellious spirit.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6f4b4abfdb2960439899879869c480e7.jpg", cardHook: "Action speaks louder than chrome." },
-                /* Queen of Wands */ { name: "The Wrench's Sidecar", flavorProfile: "A powerful and classic combination of strong brandy and bright, citrusy orange.", recipe: ["2 oz E&J Brandy", "1 oz Cointreau", "0.75 oz Lemon Juice", "Sugar Rim"], tarotMeaning: "For the matriarch of the club, the one who leads with warmth and charisma. This drink is for confident, inspiring leadership.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/724b49e9a385815706ed2dbc9d7ca6f3.jpg", cardHook: "Lead with fire in your heart." },
-                /* King of Wands */ { name: "The Blackout", flavorProfile: "A simple, dark, and potent mix of herbal Jägermeister and sweet cola.", recipe: ["1.5 oz Jägermeister", "Fill a tall glass with Cola"], tarotMeaning: "For the patriarch, the seasoned leader who has seen it all. This is the taste of authority, vision, and command.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7645bbca2888163b21bf0d193ad3fb21.jpg", cardHook: "Vision is seeing the road before it's paved." },
-                /* Ace of Cups */ { name: "Peaches 'n' Scream", flavorProfile: "A sweet and juicy blend of peach and orange, with a hint of Southern Comfort's spice.", recipe: ["1.5 oz Peach Schnapps", "0.5 oz Southern Comfort", "Fill a tall glass with Orange Juice"], tarotMeaning: "For the first taste of true brotherhood. This is for the emotional connection, the spark of a new friendship forged on the road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7f8779686c19c3de763ad13c03fee127.jpg", cardHook: "To the friendships forged in gasoline." },
-                /* Two of Cups */ { name: "The White Liner", flavorProfile: "A sophisticated ride of bright floral notes, sharp citrus, and a clean, bubbly finish.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.75 oz Lemon Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the partnership of two riders, a perfect union. This is for the ride-or-die friend, the one who always has your back.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/83c048414249b2ffaf2cef7f5cdc5590.jpg", cardHook: "For the one who always rides by your side." },
-                /* Three of Cups */ { name: "The Apricot Ambush", flavorProfile: "Sweet apricot brandy gets a tart lemon kick, smoothed out with a bubbly finish.", recipe: ["1.5 oz E&J Brandy", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice", "Top with Club Soda"], tarotMeaning: "For the whole crew, riding together. This is the taste of community, of celebration, of shared joy in the clubhouse.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/95ae7009ba144fc3dd9fc68d14b5f929.jpg", cardHook: "To the family you choose." },
-                /* Four of Cups */ { name: "The Crimson Guard", flavorProfile: "A sharp and fruity blend of sloe gin and lime with a clean soda finish.", recipe: ["1.5 oz Sloe Gin", "0.5 oz Tanqueray Gin", "Fill a tall glass with Club Soda", "Splash of Lime Juice"], tarotMeaning: "For the rider who's grown bored of the usual routes. This drink is for apathy, for missed opportunities, for dreaming of other roads.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/CuHwaf.jpg", cardHook: "The longest journeys are the ones we never start." },
-                /* Five of Cups */ { name: "The Road Rash", flavorProfile: "Sweet and sour collide in this blend of fruity sloe gin and smooth Southern Comfort.", recipe: ["1 oz Sloe Gin", "1 oz Southern Comfort", "0.5 oz Lemon Juice", "Fill a tall glass with Club Soda"], tarotMeaning: "For the memory of a fallen brother. This drink is for loss, for grief, but also for the legacy that remains.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/David-Mann-Art-2.jpg", cardHook: "To the brothers we lost to the road." },
-                /* Six of Cups */ { name: "The Ruby Rider", flavorProfile: "Deep, rich sloe gin is perfectly complemented by the spicy kick of ginger soda.", recipe: ["2 oz Sloe Gin", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the kindness of a stranger on the road. This drink is for nostalgia, for the innocence of past rides and the simple joys.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/PcZieI.jpg", cardHook: "Sometimes, the best memories are of the rides we've already taken.", imagePosition: 'bottom' },
-                /* Seven of Cups */ { name: "Cowboy's Hard Root Beer", flavorProfile: "A creamy and bold mix of classic root beer and smooth Irish whiskey.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], tarotMeaning: "For the daydreams during a long, straight ride. This is for the illusion of choice, for the temptation of a thousand different paths.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/R.jpg", cardHook: "Careful what you wish for on a lonely highway." },
-                /* Eight of Cups */ { name: "Knob Creek Kentucky Smash", flavorProfile: "A powerful, sour punch of strong bourbon and fresh lemon, with a hint of orange.", recipe: ["2 oz Knob Creek", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the decision to leave the past behind. This is for the rider who walks away from a bad situation to find a better road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/USq6nI.jpg", cardHook: "The best direction is forward." },
-                /* Nine of Cups */ { name: "The Gilded Cage", flavorProfile: "Rich Canadian whiskey and nutty amaretto create a smooth, sophisticated flavor.", recipe: ["1.5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the wish granted at a lonely crossroads. This is the taste of satisfaction, of having everything you've worked for.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/YDZaH0.jpg", cardHook: "The taste of getting exactly what you wished for.", imagePosition: 'right' },
-                /* Ten of Cups */ { name: "Bulleit Frontier Punch", flavorProfile: "A bold and fruity mix of bourbon, orange, and lemon, with a sweet grenadine finish.", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], tarotMeaning: "For the rider who has it all—the best bike, the best crew, the best stories. This is the taste of emotional fulfillment and true happiness.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/a401737bafe60d0edc1c1ea7ddb18508.jpg", cardHook: "Happiness is a full tank and an open road." },
-                /* Page of Cups */ { name: "Seagram's Stone Sour", flavorProfile: "A classic, balanced sour with smooth whiskey, tart lemon, and a hint of bitters.", recipe: ["2 oz Seagram's 7", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the prospect with a dream. This is for the one who is open to new paths, new friendships, and the emotional journey of the ride.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/af6e2eb912193594dcd36d644ed6dfee.jpg", cardHook: "Every ride starts with a single turn of the key." },
-                /* Knight of Cups */ { name: "Jim Beam Black Cherry Bomb", flavorProfile: "Bold bourbon meets its match with sweet black cherry and classic cola.", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], tarotMeaning: "For the romantic rider, the dreamer. This is for the one who follows their heart, even when it doesn't make sense.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b3ca1c20f8245c41dabb7020eb5794f7.jpg", cardHook: "Follow your heart, but take a map." },
-                /* Queen of Cups */ { name: "Southern Crossroads", flavorProfile: "Sweet Southern Comfort is paired with the fruity, tart flavor of sloe gin and orange.", recipe: ["1.5 oz Southern Comfort", "0.5 oz Sloe Gin", "Fill a tall glass with Orange Juice"], tarotMeaning: "For the old soul of the club, the one who balances emotion with wisdom. This drink is for compassion and control.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6965a50f47b1326012bfbd8404c7c28.jpg", cardHook: "Wisdom is knowing which road to take." },
-                /* King of Cups */ { name: "The Red Label Rider", flavorProfile: "A smoky and sharp blend of scotch, lime, and spicy ginger.", recipe: ["2 oz Johnnie Walker Red Label", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the leader of the pack, the one who commands emotional respect. This drink is for mastery of the heart and the road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg", cardHook: "Master your heart, and you'll master the road." },
-                /* Ace of Swords */ { name: "The Bitter End", flavorProfile: "A stark, uncompromising mix of bitter Campari and straightforward whiskey.", recipe: ["1.5 oz Four Roses Whiskey", "0.75 oz Campari", "2 dashes Angostura Bitters", "Fill a tall glass with Club Soda"], tarotMeaning: "For the hard truth learned on a lonely highway. This is for clarity that cuts like a knife, a breakthrough of understanding.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd0bc33e2c84ea33e265900701fa8331.jpg", cardHook: "The truth can be a bitter drink." },
-                /* Two of Swords */ { name: "Irish Russian", flavorProfile: "Rich coffee and smooth cream, with a clean vodka backbone and a hint of bubbly lift.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream", "0.25 oz Simple Syrup", "Fill a tall glass with Club Soda"], tarotMeaning: "For the truce between rival clubs. This is for the calm after the conflict, for a moment of peace before the next ride.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd2c7d94ce4111f6235a52c8cf70e89e.jpg", cardHook: "Even rivals need a place to rest." },
-                /* Three of Swords */ { name: "Margarita", flavorProfile: "The perfect balance of salty, sour, and sweet, with a tequila kick.", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Cointreau", "1 oz Lime Juice", "2 dashes Orange Bitters", "Salt Rim", "Top with Club Soda in a tall glass"], tarotMeaning: "For the painful lesson, the sting of betrayal. This is for the heartbreak that comes from a brother's deception.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bf416561f8d8149ef32b24470425c08d--you-never-know-salute.jpg", cardHook: "The deepest cuts don't come from the road." },
-                /* Four of Swords */ { name: "Moscow Mule", flavorProfile: "A crisp and spicy classic, with clean vodka, sharp lime, and fiery ginger.", recipe: ["2 oz Ketel One Vodka", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], tarotMeaning: "For the need to rest and recover. This is for the rider who knows when to pull over, to step back from the conflict and heal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/c143359dbf62f9ce9349aa42e3bfe8aa.jpg", cardHook: "Sometimes, the smartest move is to hit the brakes." },
-                /* Five of Swords */ { name: "Gin and Tonic", flavorProfile: "A simple, refreshing, and timeless blend of botanical gin and bitter tonic.", recipe: ["2 oz Tanqueray Gin", "Fill a tall glass with Tonic Water"], tarotMeaning: "For the dirty tricks and underhanded tactics. This drink is for the victory that feels hollow, the win that wasn't honorable.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/c61eaadff60806a69c150a08e6873c08.jpg", cardHook: "A hollow victory is still a victory. Isn't it?" },
-                /* Six of Swords */ { name: "Screwdriver", flavorProfile: "A straightforward and bright classic, with clean vodka and sweet orange juice.", recipe: ["2 oz Stolichnaya Citros Vodka", "2 dashes Orange Bitters", "Fill a tall glass with Orange Juice"], tarotMeaning: "For leaving a bad situation in the rearview mirror. This is for moving on, for a quiet retreat toward a better horizon.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/cfff51feaf6082d29a37912a44bfedc3.jpg", cardHook: "The rearview mirror is smaller for a reason." },
-                /* Seven of Swords */ { name: "The Rusty Blade", flavorProfile: "Bold bourbon gets a sophisticated edge from honeyed, herbal Drambuie, sharpened with a dash of bitters.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Drambuie", "2 dashes Angostura Bitters", "Serve on the rocks"], tarotMeaning: "For defending your ground with more than just brute force. This is for the cunning strategy, the sharp wit, the blade you never see coming.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "The sharpest blade is a sharp mind." },
-                /* Eight of Swords */ { name: "Whiskey Sour", flavorProfile: "A perfect balance of bold whiskey, tart lemon, and sweet sugar.", recipe: ["2 oz Jim Beam Bourbon", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], tarotMeaning: "For the paranoia of a late-night ride. This is for the feeling of being watched, for the anxiety of the unknown.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "The things you see in the dark..." },
-                /* Nine of Swords */ { name: "Cuba Libre", flavorProfile: "A classic combination of smooth rum, sweet cola, and a sharp lime kick.", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], tarotMeaning: "For the restless nights before a long haul. This drink is for insomnia, for the fears that keep a rider awake.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d9a9ffbd510d7ea900f31195d5e857f6.jpg", cardHook: "What keeps you up at night?" },
-                /* Ten of Swords */ { name: "The Oath", flavorProfile: "A simple, powerful duo of bold bourbon and sweet, nutty amaretto.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Amaretto", "Serve on the rocks"], tarotMeaning: "For hitting rock bottom. This is the taste of total defeat, of a breakdown so bad you have no choice but to start over from scratch.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/dbb93ea76cfc2d6585f379c8bac90910--bike-art-motorcycle-art.jpg", cardHook: "The only way from the bottom is up." },
-                /* Page of Swords */ { name: "White Russian", flavorProfile: "A rich and creamy classic with vodka and coffee liqueur.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], tarotMeaning: "For the young gun with a sharp mind. This is for the prospect who is quick-witted, curious, and eager to prove their intelligence.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/e5a7f5bfc3b2c200266b6df05a132e17.jpg", cardHook: "A sharp mind is more dangerous than a sharp knife.", imagePosition: 'right' },
-                /* Knight of Swords */ { name: "Long Island Iced Tea", flavorProfile: "A potent and deceptive blend of five different spirits with a sour, cola finish.", recipe: ["0.5 oz Grey Goose Vodka", "0.5 oz Tanqueray Gin", "0.5 oz Bacardi Rum", "0.5 oz Jose Cuervo Silver Tequila", "0.5 oz Cointreau", "1 oz Lemon Juice", "Fill a tall glass with Cola"], tarotMeaning: "For the cold, logical strategist. This is for the rider who plans every route, who uses their mind as their greatest weapon.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/ed9d1453cc5561fb3049f8f6d3a7e145.jpg", cardHook: "For the strategist who's always three turns ahead." },
-                /* Queen of Swords */ { name: "The Castaway", flavorProfile: "A complex tropical punch with spiced rum, mixed juices, and a sweet finish.", recipe: ["2 oz Captain Morgan Spiced Rum", "1 oz Pineapple Juice", "0.5 oz Orange Juice", "2 dashes Angostura Bitters", "Splash of Grenadine", "Top with Club Soda in a tall glass"], tarotMeaning: "For the sharp-tongued queen of the scene. This drink is for the woman whose words are as cutting as her wit, honest and independent.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/441483b6d15034c2d40abfb21566aba1.jpg", cardHook: "For the queen with a sharp tongue and a sharper mind." },
-                /* King of Swords */ { name: "The Phantom Shift", flavorProfile: "Sharp anise and botanical gin create a crisp, clean flavor with a bitter, tonic finish.", recipe: ["1 oz Pernod", "1 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass"], tarotMeaning: "For the intellectual leader, the master tactician. This is for the rider who outthinks every opponent, the king of the mental chess game.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/f2a6114d2d00087a3f9192fc5cc74614.jpg", cardHook: "For the king of the mental chess game." },
-                /* Ace of Pentacles */ { name: "The Morning Haze", flavorProfile: "A bright and sharp mix of botanical gin and tropical pineapple juice.", recipe: ["2 oz Tanqueray Gin", "Fill with Pineapple Juice", "Splash of Lime Juice"], tarotMeaning: "For the seed of a new venture. This is for the first dollar earned, the tangible start of a new business on the side.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1268185178_a000.webp", cardHook: "To the first dollar of a new empire." },
-                /* Two of Pentacles */ { name: "The Nightcap", flavorProfile: "A rich, smooth, and simple pairing of creamy Baileys and nutty amaretto.", recipe: ["2 oz Baileys Irish Cream", "1 oz Amaretto", "Serve on the rocks"], tarotMeaning: "For the rider who juggles it all. This is for balancing the club, the job, and the family, adapting to whatever life throws at you.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "To the art of juggling gasoline and dynamite." },
-                /* Three of Pentacles */ { name: "The Gear Jammer", flavorProfile: "A sweet and spicy mix of spiced rum, cola, and a hint of orange.", recipe: ["2 oz Captain Morgan Spiced Rum", "Fill with Cola", "2 dashes Orange Bitters"], tarotMeaning: "For the master mechanic, the skilled artisan. This is for the one whose hard work and dedication creates something of true value.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.850190414_gb43.webp", cardHook: "For the master of their craft." },
-                /* Four of Pentacles */ { name: "The Catalyst", flavorProfile: "An energetic and tart blend of vodka, sour mix, and lime.", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sour Mix", "Splash of Lime Juice"], tarotMeaning: "For the man who has earned his throne. This is for the rider who is dependable, successful, and a pillar of the community.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7999.jpg", cardHook: "For the king who earned his crown." },
-                /* Five of Pentacles */ { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], tarotMeaning: "For the hard times, the financial ruin. This drink is for the rider who has lost it all, a stark reminder of insecurity and struggle.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7991.jpg", cardHook: "To the lessons learned in the lean times.", imagePosition: 'bottom' },
-                /* Six of Pentacles */ { name: "The Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], tarotMeaning: "For the rider who helps a stranded stranger, for the generosity that defines the code of the road.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "Generosity is its own reward." },
-                /* Seven of Pentacles */ { name: "Purple Hooter", flavorProfile: "Bright, sweet raspberry balanced by a floral bitterness and a sharp citrus finish.", recipe: ["1 oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash Lime Juice", "Fill a tall glass with Club Soda"], tarotMeaning: "For the long, patient work. This is for the rider who spends a whole winter rebuilding their engine, knowing the reward will be worth the wait.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7993.jpg", cardHook: "Patience, persistence, and a well-stocked garage.", imagePosition: 'bottom' },
-                /* Eight of Pentacles */ { name: "The High Noon", flavorProfile: "A sharp and ready blend of tequila, lime, and bitter tonic.", recipe: ["2 oz El Mayor Tequila", "Fill with Tonic Water", "Splash of Lime Juice"], tarotMeaning: "For the harvest, the moment all the hard work pays off. This is the taste of a successful run, a profitable venture.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7994.jpg", cardHook: "To the spoils of a long ride.", imagePosition: 'bottom' },
-                /* Nine of Pentacles */ { name: "The Midnight Oil", flavorProfile: "A rich and creamy blend of coffee liqueur, Baileys, and cola.", recipe: ["1.5 oz Kahlúa", "1 oz Baileys Irish Cream", "Fill with Cola"], tarotMeaning: "For the legacy that is passed down. This is for the family business, the inheritance of a beloved bike, the wealth of generations.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7989.jpg", cardHook: "Some legacies are written in chrome and steel." },
-                /* Ten of Pentacles */ { name: "The Mudslide", flavorProfile: "A rich, creamy, and decadent dessert drink with vodka, coffee, and Irish cream.", recipe: ["1 oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], tarotMeaning: "For the rider who has achieved everything. This is the taste of completion, of wealth, and the security of a legacy that will last.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8297.jpg", cardHook: "The taste of a legacy that will outlast the chrome." },
-                /* Page of Pentacles */ { name: "The Desert Wind", flavorProfile: "A dry and spiced mix of bourbon, ginger soda, and orange bitters.", recipe: ["2 oz Bulleit Bourbon", "Fill with Ginger Soda", "2 dashes Orange Bitters"], tarotMeaning: "For the beginning of a life of prosperity. This is for the young rider who is ambitious, dependable, and on the path to success.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7996.jpg", cardHook: "For the ambitious rider on the path to success." },
-                /* Knight of Pentacles */ { name: "The Oracle's Kiss", flavorProfile: "A sweet and floral blend of citrus vodka, elderflower, and cranberry.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], tarotMeaning: "For the practical, hardworking problem-solver. This is for the rider who can fix anything, who brings order out of mechanical chaos.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "For the one who brings order out of chaos." },
-                /* Queen of Pentacles */ { name: "The Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], tarotMeaning: "For the woman who has built her own empire. This drink is for the self-made, prosperous, and nurturing leader.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "To the queen of her own empire." },
-                /* King of Pentacles */ { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], tarotMeaning: "For the temptations of the road. The extra drink, the questionable shortcut, the race you know you shouldn't accept. This is the taste of breaking your own rules.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "Find your oasis." }
+                // Replaced tarotMeaning with story
+                { name: "Redheaded Trouble", flavorProfile: "A rebellious blend where dark, herbal notes meet sweet peach, finished with a bright citrus kick.", recipe: ["1 oz Jägermeister", "1 oz Peach Schnapps", "Fill a tall glass with Orange Juice"], story: "Old Man Hemlock swore he saw a redheaded ghost out on Route 66. Turns out it was just his ex-wife, a bottle of peach schnapps, and a very stolen motorcycle. We named this drink after the ensuing chaos.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8296.jpg", cardHook: "Some ghosts just want to party." },
+                { name: "Caramel Apple Cruiser", flavorProfile: "Sweet butterscotch collides with the sharp tang of green apple, balanced by a whisper of spice.", recipe: ["1.5 oz Butterscotch Schnapps", "1.5 oz Apple Pucker", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "Our prospect, Pip, tried to impress us by juggling apples while riding his bike. He failed spectacularly, crashing into a butterscotch stand at the county fair. This is way better than the hospital food he got.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8294.jpg", cardHook: "The taste of a glorious failure." },
+                { name: "The Alchemist's Brew", flavorProfile: "A complex, intellectual blend of herbal Jägermeister and floral St-Germain.", recipe: ["1.5 oz Jägermeister", "0.5 oz St-Germain", "Fill with Tonic Water"], story: "Our mechanic, 'Doc', claims he can turn motor oil into whiskey. He can't. But after a few nights of 'experiments' in the garage with whatever he could find, he accidentally made this. We call it a happy accident.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8239.jpg", cardHook: "For the genius hiding in the garage.", imagePosition: 'bottom' },
+                { name: "The Sunstone", flavorProfile: "A bright and sweet tropical mix of coconut rum and orange juice.", recipe: ["1.5 oz Malibu Rum", "Fill with Orange Juice", "Splash of Grenadine"], story: "Named for the only piece of 'treasure' Duke ever found on a cross-country trip. Turns out the mystical 'sunstone' was just a piece of orange sea glass. He traded it for a bottle of Malibu. He won that deal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8221.jpg", cardHook: "Some treasures are found at the bottom of a glass." },
+                { name: "The Iron Horse", flavorProfile: "A bold, uncompromising, and classic mix of bourbon, cola, and bitters.", recipe: ["2 oz Maker's Mark", "Fill with Cola", "2 dashes Angostura Bitters"], story: "This ain't named after the bike. It's named after what happened to 'Iron' Joe's stomach after he tried to out-drink the club president on his anniversary. Some say you can still hear the rumbling.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8220.jpg", cardHook: "Some legends are harder to stomach than others.", imagePosition: 'bottom' },
+                { name: "Old Fashioned", flavorProfile: "The timeless, bold flavor of bourbon, mellowed by sweet sugar and aromatic bitters.", recipe: ["2 oz Maker's Mark", "0.5 oz Simple Syrup", "2 dashes Orange Bitters", "Cherry Garnish", "Top with Club Soda in a tall glass"], story: "Every old-timer in the club claims to have invented this drink. They didn't. But we let them think they did. It makes their stories better, and honestly, the drink is good enough to fight over.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8005.jpg", cardHook: "A drink worth lying about." },
+                { name: "The Outlaw's Peach", flavorProfile: "A surprisingly smooth mix of sweet peach, creamy Baileys, and dark cola.", recipe: ["1 oz Peach Schnapps", "1 oz Baileys Irish Cream", "Top with Cola in a tall glass"], story: "We were hiding out in Georgia when we invented this one. It tastes as sweet and confusing as the alibi we had to come up with. Don't ask what happened. Just enjoy the drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8004.jpg", cardHook: "It tastes like a good alibi." },
+                { name: "The Junk Drawer", flavorProfile: "An unapologetically sweet concoction of raspberry, butterscotch, and classic root beer.", recipe: ["0.75 oz Raspberry Schnapps", "0.75 oz Butterscotch Schnapps", "0.75 oz Root Beer Schnapps", "Fill a tall glass with Club Soda"], story: "This is what happens when you let the prospect clean out the liquor cabinet after a long run. We were gonna fire him, but damn if it didn't taste good. He's still a prospect, though.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/08030c3d25616df982816261406e2c08.png", cardHook: "Sometimes, genius comes from just mixing stuff." },
+                { name: "The Blue Lagoon's Ghost", flavorProfile: "Tropical orange and sweet cherry flavors ride on a clean rum backbone.", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice"], story: "A rival club dared us to a race at the old quarry, a place they called the 'Blue Lagoon.' We won, but our prize was just a case of rum and some weird liqueurs. We made this to toast to their ghost... of a chance.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", cardHook: "To the losers go the spoils." },
+                { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "Top with Club Soda in a tall glass"], story: "Named for the time our President and the head of the local chapter had a 'disagreement.' They settled it the old way: a staring contest. Lasted two hours. This is what they drank. No one remembers who won.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/0ac5da1e71c995f58d75335fffabd844.jpg", cardHook: "The official drink of stubborn arguments." },
+                { name: "The Double Cross", flavorProfile: "An aggressive clash of bitter Campari and bold bourbon, with a sweet and salty edge.", recipe: ["2 oz Bulleit Bourbon", "1 oz Campari", "Half Salt, Half Sugar Rim"], story: "This drink tastes sweet, then bitter, then salty. Just like our ex-treasurer, 'Smiley' Pete. He left with the club's funds and a truck full of Campari. We miss the Campari.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/19071808632f94b0b81d595f74f700f0.jpg", cardHook: "Here's to friends you can't trust." },
+                { name: "The Blacktop Sunset", flavorProfile: "Smooth Irish whiskey and sweet Southern Comfort are brightened by lime and spiced ginger.", recipe: ["1 oz Jameson Irish Whiskey", "1 oz Southern Comfort", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "We mixed this after riding 500 miles through Texas. It’s the exact color of the sky right before it gets too dark to see the potholes. It's a drink of relief and questionable road conditions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/192b194c611aafb0934b83ec0cd7474c.jpg", cardHook: "To the potholes you can't see." },
+                { name: "The Elderflower Nomad", flavorProfile: "Delicate elderflower and botanical gin meet a hint of lavender and rosemary.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.5 oz Lime Juice", "2 dashes Rosemary Lavender Bitters", "Top with Club Soda in a tall glass"], story: "Tiny brought this back from a trip 'out east.' He said it was sophisticated. We made fun of him for a week. Then we tried it. Now we just make fun of him for his tiny helmet.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1bf52dfc1aad553db68333418c40d848.jpg", cardHook: "Even a nomad can be sophisticated.", imagePosition: 'bottom' },
+                { name: "The Grim Reaper", flavorProfile: "A dark and potent combination of herbal Jägermeister and spiced black rum.", recipe: ["1.5 oz Jägermeister", "1 oz Kraken Black Spiced Rum", "Fill with Cola"], story: "We had a bottle of Jäger and a bottle of Kraken. We had a choice. We made the wrong one. Or the right one. The night's a little fuzzy. This drink is what we remember of the aftermath.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1f512d08cccf12ad8dc389d42f5fcceb.jpg", cardHook: "For nights you'd rather forget." },
+                { name: "The Apparition", flavorProfile: "Clean vodka and floral St-Germain are lifted by the bright spice of ginger.", recipe: ["2 oz Ketel One Vodka", "0.75 oz St-Germain", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "After three of these, old Gus swore he saw the ghost of his first motorcycle floating over the bar. We don't see the ghost, but we do see a good reason to have another.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/206S17.jpg", cardHook: "To the spirits that haunt the bar." },
+                { name: "The Devil's Bargain", flavorProfile: "A timeless and potent blend of smoky Scotch whisky sweetened by the honeyed, herbal spice of Drambuie.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Drambuie", "Serve on the rocks", "Lemon Twist Garnish"], story: "Legend says a rider broke down in the desert and traded his soul for a drink this smooth. Looking at the price of Scotch these days, he probably got a good deal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "Every deal has its price." },
+                { name: "The Mechanic", flavorProfile: "A blast of bright citrus and sweet orange liqueur, carried by a wave of sour mix.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "2 dashes Orange Bitters", "Fill a tall glass with Sour Mix"], story: "This drink is the color of the stuff our mechanic, Sal, uses to clean engine parts. One night, we dared him to drink it. He wisely refused and made this instead. Close enough.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/39cd9a9b372af2c86cb7189c2f929463.png", cardHook: "Tastes better than degreaser. Probably." },
+                { name: "Redline Riot", flavorProfile: "Sweet cherry and sharp sour mix create a vibrant, rebellious flavor.", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sour Mix", "Splash of Lime Juice"], story: "This was invented during the great 'Cherry Bomb' incident of '03. We're not legally allowed to talk about it, but this drink is a tribute to the chaos. And the cherries. So many cherries.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3a506b28b91e0e5d031cedbeca489a14.jpg", cardHook: "Here's to things we can't talk about." },
+                { name: "The Kickstart", flavorProfile: "Warm spiced rum gets a sharp, clean kick from lime and ginger.", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "Named for that feeling when your bike won't start on a cold morning. It's a mix of spicy anger, a sharp kick of panic, and the eventual relief when the engine finally turns over. This is faster.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3df099091d9acb596f9d54e4ed858c8f.jpg", cardHook: "A more reliable way to get started." },
+                { name: "Shayla Temple", flavorProfile: "The classic sweet and spicy ginger soda, kissed with a touch of cherry.", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry Garnish"], story: "Our toughest member, Crusher, has a five-year-old daughter named Shayla. This is her favorite 'fancy drink' at the clubhouse. If you make fun of it, he will crush you. Politely.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/temple.jpg", cardHook: "The toughest drink in the bar.", imagePosition: 'bottom' },
+                { name: "Storm Rider", flavorProfile: "Deep, dark spiced rum with a bite of lime and a spicy ginger finish.", recipe: ["2 oz Kraken Black Spiced Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "We created this during a week-long ride through a hurricane. We figured if we were going to be stupid enough to ride in a storm, we might as well have a drink that tasted like one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "To making bad weather worse." },
+                { name: "The Kraken's Grip", flavorProfile: "Dark rum and sweet almond create a rich, cola-based concoction.", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], story: "After trying this, our biggest member, 'Fingers', couldn't open his hand for an hour. Said it was like the Kraken had him. Turns out it was just a sugar rush, but the name stuck.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/555331b7961b7c0880f3b2842529bcd8.jpg", cardHook: "It'll get a hold on you." },
+                { name: "The Siren's Call", flavorProfile: "Bitter Campari is tamed by tropical pineapple and dark spiced rum.", recipe: ["1.5 oz Kraken Black Spiced Rum", "0.75 oz Campari", "1.5 oz Pineapple Juice", "0.5 oz Lime Juice"], story: "This drink is beautiful, tempting, and will lure you onto the rocks if you're not careful. Much like the bartender who invented it. We've all crashed and burned. No regrets.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5638f66d00401c933df787eb50253fc8.jpg", cardHook: "Some bad ideas are worth it." },
+                { name: "The Island Hopper", flavorProfile: "A sweet, tropical escape with creamy coconut and bright pineapple.", recipe: ["1 oz Malibu Rum", "1 oz Bacardi Rum", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "This is for when you talk a big game about riding to Key West, but you only make it to the tiki bar down the street. It's the thought that counts. And the rum.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5a6b0379f72b6c8fb2751409d48ac8fa.jpg", cardHook: "A vacation in a glass." },
+                { name: "The Switchback", flavorProfile: "A clean and bracing mix of botanical gin and sharp lime, mellowed by club soda.", recipe: ["2 oz Tanqueray Gin", "1 oz Lime Juice", "Fill a tall glass with Club Soda"], story: "Named after that mountain road that almost killed half the club. It's sharp, unforgiving, and makes your head spin. But the view from the top is worth it. We think.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "For roads that go back and forth." },
+                { name: "The Long Haul", flavorProfile: "Crisp gin and tonic gets a complex, herbal twist from rosemary and lavender.", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], story: "A drink that's surprisingly complex, just like a 10-hour ride. It starts out simple, but by the end, you're noticing all sorts of weird things. Like lavender. Where'd that come from?", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/608bdca2cf73d693c4e80d1723cd59b8.jpg", cardHook: "For when you're in it for the long haul." },
+                { name: "Country and Western", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "Because sometimes you want a drink that's as simple and reliable as a good country song. No surprises, no fancy stuff, just a damn good ride from start to finish.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/62a04e5b236c0659fec18c5f76651953.jpg", cardHook: "Simple, honest, and a little bit sad." },
+                { name: "The Rattlesnake", flavorProfile: "Earthy tequila gets a surprising bite from sweet cherry and sharp lime.", recipe: ["2 oz El Mayor Tequila", "0.5 oz Cherry Schnapps", "0.5 oz Lime Juice", "Top with Club Soda in a tall glass"], story: "Looks sweet and harmless, but it's got a bite you won't see coming. Named in honor of the snake that lived in the clubhouse jukebox for a month. We miss him. The music was better when he was in there.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6418051b93b83a2239400213863d22a1.jpg", cardHook: "Sweet, with a venomous bite." },
+                { name: "Dust Devil", flavorProfile: "A whirlwind of tropical pineapple, sweet cherry, and earthy tequila.", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Pineapple Juice", "0.5 oz Maraschino Liqueur", "Dash of Orange Bitters", "Top with Club Soda in a tall glass"], story: "We got caught in a dust devil outside of Reno. It was terrifying, and we lost a good hat. This drink is our attempt to recreate the beautiful, chaotic mess of that moment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/64c7af61b8476938a0b6bc9e8462ef3f--motorcycle-posters-motorcycle-art.jpg", cardHook: "A beautiful, chaotic mess." },
+                { name: "Desert Sunrise", flavorProfile: "Sweet and vibrant, this is a classic tequila sunrise with an extra bitter orange kick.", recipe: ["2 oz El Mayor Tequila", "Fill a tall glass with Orange Juice", "2 dashes Orange Bitters", "0.5 oz Grenadine"], story: "Nothing beats a desert sunrise after an all-night ride. Except maybe this. It's got all the pretty colors, but you don't have to wake up early to enjoy it. A definite improvement.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "All the beauty, none of the early morning." },
+                { name: "The Gilded Serpent", flavorProfile: "A luxurious mix of floral elderflower, bright pineapple, and smooth tequila.", recipe: ["1.5 oz El Mayor Tequila", "0.75 oz St-Germain", "1 oz Pineapple Juice", "0.5 oz Lime Juice"], story: "We won a bottle of St-Germain in a poker game from some rich guy in a fancy car. We didn't know what to do with it, so we mixed it with tequila. We call it the Gilded Serpent, 'cause it's fancy on the outside, but it'll still bite you.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/67bab4c8460e76ee5bd5fe757150ef26--bike-art-motorcycle-art.jpg", cardHook: "Fancy on the outside, dangerous on the inside." },
+                { name: "The Long Road Home", flavorProfile: "The sweet, herbal notes of Drambuie are lifted by the crisp, spicy kick of ginger soda, creating a refreshing and enduring companion for any journey.", recipe: ["2 oz Drambuie", "Fill a tall glass with Ginger Soda", "Lime Wedge Garnish"], story: "This is the drink you have when you finally pull into your own driveway after a week on the road. It's smooth, comforting, and just a little bit spicy, like the stories you're about to tell.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/69070319cd6333061bdbb34ed7dee0c1.jpg", cardHook: "For the last mile of a heavy journey." },
+                { name: "The Switchblade", flavorProfile: "Intensely sour lemon is balanced by a sweet sugar rim and a clean vodka finish.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "Sugar Rim"], story: "It's sharp, it's quick, and it's a little bit dangerous. Just like our sergeant-at-arms, who once used a lemon to win a bar fight. Don't ask how. Just respect the lemon.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6a73cec9f46d798d4ba58ec29f5623f2.jpg", cardHook: "Respect the lemon." },
+                { name: "Buckeye Cider", flavorProfile: "Sweet and spicy Southern Comfort with a classic bitter backbone, lifted by a crisp soda finish.", recipe: ["2 oz Southern Comfort", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "We had a run-in with a rival club from Ohio. Things got tense. Then their leader offered us a sip of this. We still don't like them, but we stole their drink recipe. So we won.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6f4b4abfdb2960439899879869c480e7.jpg", cardHook: "The spoils of a very polite war." },
+                { name: "The Wrench's Sidecar", flavorProfile: "A powerful and classic combination of strong brandy and bright, citrusy orange.", recipe: ["2 oz E&J Brandy", "1 oz Cointreau", "0.75 oz Lemon Juice", "Sugar Rim"], story: "Our mechanic only drinks two things: motor oil and this. Since we can't legally serve you motor oil, here's the next best thing. It's strong enough to strip rust.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/724b49e9a385815706ed2dbc9d7ca6f3.jpg", cardHook: "Strong enough to strip rust." },
+                { name: "The Blackout", flavorProfile: "A simple, dark, and potent mix of herbal Jägermeister and sweet cola.", recipe: ["1.5 oz Jägermeister", "Fill a tall glass with Cola"], story: "The name is both an ingredient suggestion and a warning. We recommend you treat it as the latter. A tribute to the night we lost power and decided Jäger was a good substitute for light.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7645bbca2888163b21bf0d193ad3fb21.jpg", cardHook: "A suggestion and a warning." },
+                { name: "Peaches 'n' Scream", flavorProfile: "A sweet and juicy blend of peach and orange, with a hint of Southern Comfort's spice.", recipe: ["1.5 oz Peach Schnapps", "0.5 oz Southern Comfort", "Fill a tall glass with Orange Juice"], story: "This is what happens when you try to make a 'healthy' smoothie at the clubhouse. It quickly became less about the fruit and more about the 'scream' you let out after your third one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7f8779686c19c3de763ad13c03fee127.jpg", cardHook: "Our version of a smoothie." },
+                { name: "The White Liner", flavorProfile: "A sophisticated ride of bright floral notes, sharp citrus, and a clean, bubbly finish.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.75 oz Lemon Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "Named for the one time our road captain tried to follow the GPS perfectly. He was so focused on the white line that he ended up in a field of daisies. The bike smelled great for a week.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/83c048414249b2ffaf2cef7f5cdc5590.jpg", cardHook: "For when you follow the rules too closely." },
+                { name: "The Apricot Ambush", flavorProfile: "Sweet apricot brandy gets a tart lemon kick, smoothed out with a bubbly finish.", recipe: ["1.5 oz E&J Brandy", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice", "Top with Club Soda"], story: "We thought we were buying a case of regular brandy. Turns out it was apricot. The club was furious for a day, then we started mixing. It was the tastiest ambush we've ever faced.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/95ae7009ba144fc3dd9fc68d14b5f929.jpg", cardHook: "The tastiest ambush you'll ever face." },
+                { name: "The Crimson Guard", flavorProfile: "A sharp and fruity blend of sloe gin and lime with a clean soda finish.", recipe: ["1.5 oz Sloe Gin", "0.5 oz Tanqueray Gin", "Fill a tall glass with Club Soda", "Splash of Lime Juice"], story: "Named after the 'guard rail' on Dead Man's Curve, which is painted a lovely crimson color. Not with paint. This drink is safer, and tastes much better.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/CuHwaf.jpg", cardHook: "Safer than Dead Man's Curve." },
+                { name: "The Road Rash", flavorProfile: "Sweet and sour collide in this blend of fruity sloe gin and smooth Southern Comfort.", recipe: ["1 oz Sloe Gin", "1 oz Southern Comfort", "0.5 oz Lemon Juice", "Fill a tall glass with Club Soda"], story: "It's red, it stings a little at first, and it's surprisingly sweet once you get used to it. The drink, that is. Not actual road rash. That's just awful.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/David-Mann-Art-2.jpg", cardHook: "Much better than the real thing." },
+                { name: "The Ruby Rider", flavorProfile: "Deep, rich sloe gin is perfectly complemented by the spicy kick of ginger soda.", recipe: ["2 oz Sloe Gin", "Fill a tall glass with Ginger Soda"], story: "There's a legend of a ghost rider with ruby-red taillights who only appears on the longest nights. This is what we drink while we wait for her. We haven't seen her yet, but we're very patient.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/PcZieI.jpg", cardHook: "To the ghosts we haven't met yet.", imagePosition: 'bottom' },
+                { name: "Cowboy's Hard Root Beer", flavorProfile: "A creamy and bold mix of classic root beer and smooth Irish whiskey.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "We dared a real-life rodeo cowboy he couldn't handle our bikes. He dared us we couldn't handle his drink. We're not sure who won, but our heads hurt for a week.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/R.jpg", cardHook: "This drink has spurs." },
+                { name: "Knob Creek Kentucky Smash", flavorProfile: "A powerful, sour punch of strong bourbon and fresh lemon, with a hint of orange.", recipe: ["2 oz Knob Creek", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This drink hits you like a Kentucky thunderstorm: sudden, powerful, and you're not quite sure what just happened. But you know you want to experience it again.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/USq6nI.jpg", cardHook: "As subtle as a thunderstorm." },
+                { name: "The Gilded Cage", flavorProfile: "Rich Canadian whiskey and nutty amaretto create a smooth, sophisticated flavor.", recipe: ["1.5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "This is for the rider who finally gets that cushy office job. It's smooth, it's rich, and it's a little bit trapped. Tastes like a promotion and a long commute.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/YDZaH0.jpg", cardHook: "The taste of selling out.", imagePosition: 'right' },
+                { name: "Bulleit Frontier Punch", flavorProfile: "A bold and fruity mix of bourbon, orange, and lemon, with a sweet grenadine finish.", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what we imagine the old pioneers drank. Probably not, since they didn't have grenadine. But it makes for a better story, and a much, much better drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/a401737bafe60d0edc1c1ea7ddb18508.jpg", cardHook: "History, but with more sugar." },
+                { name: "Seagram's Stone Sour", flavorProfile: "A classic, balanced sour with smooth whiskey, tart lemon, and a hint of bitters.", recipe: ["2 oz Seagram's 7", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters", "Top with Club Soda in a tall glass"], story: "Named after our first clubhouse, which was made of stone and had a perpetually sour septic system. The drink is a significant improvement on the memory.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/af6e2eb912193594dcd36d644ed6dfee.jpg", cardHook: "Better than the memories." },
+                { name: "Jim Beam Black Cherry Bomb", flavorProfile: "Bold bourbon meets its match with sweet black cherry and classic cola.", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], story: "This isn't just a drink, it's a sound. It's the 'thump-thump-BOOM' of a cherry bomb in a tin can, followed by the sweet taste of victory and minor property damage.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b3ca1c20f8245c41dabb7020eb5794f7.jpg", cardHook: "Tastes like minor property damage." },
+                { name: "Southern Crossroads", flavorProfile: "Sweet Southern Comfort is paired with the fruity, tart flavor of sloe gin and orange.", recipe: ["1.5 oz Southern Comfort", "0.5 oz Sloe Gin", "Fill a tall glass with Orange Juice"], story: "This is what you drink when you're at a crossroads in life. Or just a literal crossroads in Alabama. Either way, it's sweet, confusing, and points you in a direction. Probably the wrong one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6965a50f47b1326012bfbd8404c7c28.jpg", cardHook: "For making the wrong choices." },
+                { name: "The Red Label Rider", flavorProfile: "A smoky and sharp blend of scotch, lime, and spicy ginger.", recipe: ["2 oz Johnnie Walker Red Label", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "A tribute to 'Red,' our oldest member. He's smoky, he's sharp, and he's got a bit of a kick. Just like this drink. Don't tell him we named a drink after him. He'll get emotional.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg", cardHook: "To the legends in the club." },
+                { name: "The Bitter End", flavorProfile: "A stark, uncompromising mix of bitter Campari and straightforward whiskey.", recipe: ["1.5 oz Four Roses Whiskey", "0.75 oz Campari", "2 dashes Angostura Bitters", "Fill a tall glass with Club Soda"], story: "This is the drink you have after a bad breakup. Or after your bike fails inspection. It's bitter, it's harsh, and it's exactly what you deserve. Kidding. Mostly.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd0bc33e2c84ea33e265900701fa8331.jpg", cardHook: "For when you reach the bitter end." },
+                { name: "Irish Russian", flavorProfile: "Rich coffee and smooth cream, with a clean vodka backbone and a hint of bubbly lift.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream", "0.25 oz Simple Syrup", "Fill a tall glass with Club Soda"], story: "Our Irish road captain and our Russian mechanic got into a debate. It ended with them mixing their national drinks together. It was a weird truce, but it tasted great.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd2c7d94ce4111f6235a52c8cf70e89e.jpg", cardHook: "The taste of a weird truce." },
+                { name: "Margarita", flavorProfile: "The perfect balance of salty, sour, and sweet, with a tequila kick.", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Cointreau", "1 oz Lime Juice", "2 dashes Orange Bitters", "Salt Rim", "Top with Club Soda in a tall glass"], story: "We don't know who Rita is, but after a few of these, we're willing to ride to Mexico to find her. A classic for a reason: it's a party that's worth the hangover.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bf416561f8d8149ef32b24470425c08d--you-never-know-salute.jpg", cardHook: "¡Vámonos!" },
+                { name: "Moscow Mule", flavorProfile: "A crisp and spicy classic, with clean vodka, sharp lime, and fiery ginger.", recipe: ["2 oz Ketel One Vodka", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "It's got a kick like a stubborn mule. We learned that the hard way on a farm in Idaho. The drink is a lot more pleasant than the actual mule, which we are no longer allowed to be near.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/c143359dbf62f9ce9349aa42e3bfe8aa.jpg", cardHook: "It's got a kick." },
+                { name: "Gin and Tonic", flavorProfile: "A simple, refreshing, and timeless blend of botanical gin and bitter tonic.", recipe: ["2 oz Tanqueray Gin", "Fill a tall glass with Tonic Water"], story: "For when you want a drink, not a story. It's simple, it's clean, and it does the job. It's the reliable old bike in the back of the garage. It just works.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/c61eaadff60806a69c150a08e6873c08.jpg", cardHook: "No fuss. No frills. Just a good drink." },
+                { name: "Screwdriver", flavorProfile: "A straightforward and bright classic, with clean vodka and sweet orange juice.", recipe: ["2 oz Stolichnaya Citros Vodka", "2 dashes Orange Bitters", "Fill a tall glass with Orange Juice"], story: "The only tool our mechanic ever seems to use. We're pretty sure he just hits things with it. But it's also the first drink he ever made for us. One of his two creations that actually works.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/cfff51feaf6082d29a37912a44bfedc3.jpg", cardHook: "The second-best use for a screwdriver." },
+                { name: "The Rusty Blade", flavorProfile: "Bold bourbon gets a sophisticated edge from honeyed, herbal Drambuie, sharpened with a dash of bitters.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Drambuie", "2 dashes Angostura Bitters", "Serve on the rocks"], story: "This is for defending your ground with more than just brute force. It’s for the cunning strategy, the sharp wit—the blade you never see coming until it’s too late.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "The sharpest blade is a sharp mind." },
+                { name: "Whiskey Sour", flavorProfile: "A perfect balance of bold whiskey, tart lemon, and sweet sugar.", recipe: ["2 oz Jim Beam Bourbon", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "For our perpetually grumpy Sergeant-at-Arms, 'Sour' Sam. He hates the nickname, and he hates this drink. Which is, of course, why we named it after him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "To 'Sour' Sam. He'd hate this." },
+                { name: "Cuba Libre", flavorProfile: "A classic combination of smooth rum, sweet cola, and a sharp lime kick.", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], story: "We've never been to Cuba, but this drink makes us feel like we could ride there. It's the taste of freedom, rebellion, and a complete disregard for geography.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d9a9ffbd510d7ea900f31195d5e857f6.jpg", cardHook: "Tastes like a good road trip." },
+                { name: "The Oath", flavorProfile: "A simple, powerful duo of bold bourbon and sweet, nutty amaretto.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Amaretto", "Serve on the rocks"], story: "This is the drink you share when a prospect gets their patch. It's strong, it's serious, and it's a little bit sweet, like the promises you're about to break. Kidding. Mostly.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/dbb93ea76cfc2d6585f379c8bac90910--bike-art-motorcycle-art.jpg", cardHook: "To promises you'll try to keep." },
+                { name: "White Russian", flavorProfile: "A rich and creamy classic with vodka and coffee liqueur.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "Our president insists on calling this 'The Dude,' but the rest of us know it as the only drink that can calm down our Russian mechanic after he 'fixes' a bike into a new, abstract shape.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/e5a7f5bfc3b2c200266b6df05a132e17.jpg", cardHook: "It really ties the room together.", imagePosition: 'right' },
+                { name: "Long Island Iced Tea", flavorProfile: "A potent and deceptive blend of five different spirits with a sour, cola finish.", recipe: ["0.5 oz Grey Goose Vodka", "0.5 oz Tanqueray Gin", "0.5 oz Bacardi Rum", "0.5 oz Jose Cuervo Silver Tequila", "0.5 oz Cointreau", "1 oz Lemon Juice", "Fill a tall glass with Cola"], story: "This drink contains the entire liquor cabinet and the bad decisions to match. It's not from Long Island, and there's no tea. It's a beautiful, delicious lie. Just like your excuse for being late.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/ed9d1453cc5561fb3049f8f6d3a7e145.jpg", cardHook: "A beautiful, delicious lie." },
+                { name: "The Castaway", flavorProfile: "A complex tropical punch with spiced rum, mixed juices, and a sweet finish.", recipe: ["2 oz Captain Morgan Spiced Rum", "1 oz Pineapple Juice", "0.5 oz Orange Juice", "2 dashes Angostura Bitters", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "For the rider who gets 'lost' on a trip and ends up at a beach bar for three days. It's the taste of being stranded, but in a really, really good way.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/441483b6d15034c2d40abfb21566aba1.jpg", cardHook: "Here's to getting lost." },
+                { name: "The Phantom Shift", flavorProfile: "Sharp anise and botanical gin create a crisp, clean flavor with a bitter, tonic finish.", recipe: ["1 oz Pernod", "1 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass"], story: "You ever feel a gear shift that isn't there? That's a phantom shift. This drink is for that feeling—it's strange, it's surprising, and it makes you question reality. But in a good way.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/f2a6114d2d00087a3f9192fc5cc74614.jpg", cardHook: "For the gears that aren't there." },
+                { name: "The Morning Haze", flavorProfile: "A bright and sharp mix of botanical gin and tropical pineapple juice.", recipe: ["2 oz Tanqueray Gin", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "This is for the morning after a very, very long night. Your head is hazy, your memories are fuzzy, but this drink is bright and clear. It's a lie, but it's a helpful lie.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1268185178_a000.webp", cardHook: "A helpful lie for a hazy morning." },
+                { name: "The Nightcap", flavorProfile: "A rich, smooth, and simple pairing of creamy Baileys and nutty amaretto.", recipe: ["2 oz Baileys Irish Cream", "1 oz Amaretto", "Serve on the rocks"], story: "The perfect end to a long day's ride. It's smooth, it's comforting, and it won't talk back to you. Unlike everyone else at this bar.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "The perfect end to the day." },
+                { name: "The Gear Jammer", flavorProfile: "A sweet and spicy mix of spiced rum, cola, and a hint of orange.", recipe: ["2 oz Captain Morgan Spiced Rum", "Fill with Cola", "2 dashes Orange Bitters"], story: "For when you miss a gear and the whole bike screams at you. This drink is a lot smoother than that feeling. It's our way of apologizing to our transmissions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.850190414_gb43.webp", cardHook: "An apology to our transmissions." },
+                { name: "The Catalyst", flavorProfile: "An energetic and tart blend of vodka, sour mix, and lime.", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sour Mix", "Splash of Lime Juice"], story: "This drink is the catalyst for a lot of things: bad decisions, great stories, and usually, a terrible hangover. Drink responsibly. Or don't. We're not your mom.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7999.jpg", cardHook: "The start of a great story." },
+                { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn swears he can knock apples out of a tree by kicking it. He can't. But one time he tried so hard he fell over, and this is the drink we made to celebrate his failure.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7991.jpg", cardHook: "A tribute to spectacular failures.", imagePosition: 'bottom' },
+                { name: "The Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], story: "You meet the most interesting people at the crossroads at midnight. Or so they say. We just met a guy who traded us a case of scotch for our spare tire. We think we got the better deal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
+                { name: "Purple Hooter", flavorProfile: "Bright, sweet raspberry balanced by a floral bitterness and a sharp citrus finish.", recipe: ["1 oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash Lime Juice", "Fill a tall glass with Club Soda"], story: "We have an old owl that lives in the rafters. One night, a bottle of raspberry schnapps broke and he got into it. He hooted all night. He's fine now, but we named this after him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7993.jpg", cardHook: "To our drunk owl.", imagePosition: 'bottom' },
+                { name: "The High Noon", flavorProfile: "A sharp and ready blend of tequila, lime, and bitter tonic.", recipe: ["2 oz El Mayor Tequila", "Fill with Tonic Water", "Splash of Lime Juice"], story: "For when you have to settle things the old way: an arm-wrestling match at noon. The loser buys a round of these. We all win.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7994.jpg", cardHook: "The drink of champions. And losers.", imagePosition: 'bottom' },
+                { name: "The Midnight Oil", flavorProfile: "A rich and creamy blend of coffee liqueur, Baileys, and cola.", recipe: ["1.5 oz Kahlúa", "1 oz Baileys Irish Cream", "Fill with Cola"], story: "For those nights in the garage when you're working late, trying to get the bike ready for the morning. This is better than coffee. And it makes you care less if you strip a bolt.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7989.jpg", cardHook: "For getting the job done." },
+                { name: "The Mudslide", flavorProfile: "A rich, creamy, and decadent dessert drink with vodka, coffee, and Irish cream.", recipe: ["1 oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "A tribute to that one time we tried to take a shortcut through a farmer's field after a rainstorm. The bikes were a mess, but we made it. This is our delicious, boozy trophy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8297.jpg", cardHook: "To the shortcuts that weren't." },
+                { name: "The Desert Wind", flavorProfile: "A dry and spiced mix of bourbon, ginger soda, and orange bitters.", recipe: ["2 oz Bulleit Bourbon", "Fill with Ginger Soda", "2 dashes Orange Bitters"], story: "It's dry, it's got a bit of a bite, and it seems to go on forever. Just like the conversations with our old road captain, 'Windy' Bill. The drink is better.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7996.jpg", cardHook: "For stories that go on too long." },
+                { name: "The Oracle's Kiss", flavorProfile: "A sweet and floral blend of citrus vodka, elderflower, and cranberry.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], story: "A psychic once told our president he'd have a 'sweet and flowery' future. He was furious. We made this drink to mock him. Now it's his favorite. The future is weird.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "The future is sweet and flowery." },
+                { name: "The Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the two pillars of our club: being tough and having good taste. This drink is simple, strong, and surprisingly smooth. Just like us. On a good day.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth." },
+                { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We needed a drink that matched the color of the cheap motel pool we spent a week at in Florida. The pool was questionable, but the drink is a certified classic.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "Find your oasis." }
             ];
 
-            const processedCocktails = initialCocktails.map((cocktail, index) => {
-                const type = index < 22 ? 'Major Arcana' : 'Minor Arcana';
+            const processedCocktails = initialCocktails.map((cocktail) => {
                 const categories = new Set();
                 const recipeString = cocktail.recipe.join(' ').toLowerCase();
                 
@@ -953,19 +829,10 @@
                 if (!mainIngredient) mainIngredient = parseIngredientName(cocktail.recipe[0]);
                 if (mainIngredient) titleColor = getIngredientInfo(mainIngredient).colorHex;
 
-                return { ...cocktail, type, category: Array.from(categories), titleColor };
+                return { ...cocktail, category: Array.from(categories), titleColor };
             });
 
-            cocktails = processedCocktails.map((cocktail, index) => {
-                const cardName = tarotDeck[index];
-                return { 
-                    ...cocktail, 
-                    tarot: cardName,
-                    simpleMeaning: simpleTarotMeanings[cardName] || "A mystery of the road."
-                };
-            });
-
-            // This sort is now applied AFTER the thematic tarot mapping
+            cocktails = processedCocktails;
             cocktails.sort((a, b) => a.name.localeCompare(b.name));
 
             const barcodeCard = {
@@ -975,10 +842,7 @@
                 recipe: [],
                 flavorProfile: "A gateway to the digital road.",
                 cardHook: "Point your camera here.",
-                type: 'Utility',
                 category: [],
-                tarot: 'The Network',
-                simpleMeaning: '',
                 titleColor: '#f59e0b'
             };
             cocktails.unshift(barcodeCard);
@@ -988,10 +852,9 @@
         let barStock = {};
         const STOCK_STORAGE_KEY = 'nomads_bar_stock_v2';
         const DRINKS_FAVORITES_KEY = 'nomads_favorite_drinks_v1';
-        const TAROT_FAVORITES_KEY = 'nomads_favorite_tarot_v1';
+        const STORIES_FAVORITES_KEY = 'nomads_favorite_stories_v1';
         let activeFilters = {
             category: 'all',
-            arcana: 'All',
             spirit: null,
             ingredient: null,
             showFavoritesOnly: false
@@ -1024,7 +887,7 @@
         const barStockModal = document.getElementById('bar-stock-modal');
         const filterModal = document.getElementById('filter-modal');
         const favoritesModal = document.getElementById('favorites-modal');
-        const tarotReadingModal = document.getElementById('tarot-reading-modal');
+        const journeyModal = document.getElementById('journey-modal');
 
         // --- Helper Functions ---
         function snapToCard(direction) {
@@ -1085,7 +948,7 @@
             if (['rum', 'malibu'].some(s => lowerIng.includes(s))) return { icon: 'fa-anchor', colorClass: 'text-amber-500', colorHex: '#f59e0b' };
             if (['tequila'].some(s => lowerIng.includes(s))) return { icon: 'fa-hat-cowboy-side', colorClass: 'text-amber-400', colorHex: '#fbbf24' };
             if (['brandy'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-wine-glass', colorClass: 'text-purple-400', colorHex: '#d8b4fe' };
-            if (['schnapps', 'pucker', 'jägermeister', 'liqueur', 'baileys', 'pernod', 'kahlúa', 'st-germain', 'cointreau', 'amaretto', 'campari', 'blue curacao'].some(l => lowerIng.includes(l))) return { icon: 'fa-mortar-pestle', colorClass: 'text-purple-400', colorHex: '#c084fc' };
+            if (['schnapps', 'pucker', 'drambuie', 'jägermeister', 'liqueur', 'baileys', 'pernod', 'kahlúa', 'st-germain', 'cointreau', 'amaretto', 'campari', 'blue curacao'].some(l => lowerIng.includes(l))) return { icon: 'fa-mortar-pestle', colorClass: 'text-purple-400', colorHex: '#c084fc' };
             if (lowerIng.includes('bitters')) return { icon: 'fa-eye-dropper', colorClass: 'text-red-500', colorHex: '#ef4444' };
             if (['juice', 'sour mix'].some(j => lowerIng.includes(j))) return { icon: 'fa-lemon', colorClass: 'text-yellow-400', colorHex: '#facc15' };
             if (['soda', 'tonic', 'cola'].some(m => lowerIng.includes(m))) return { icon: 'fa-faucet-drip', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
@@ -1126,7 +989,7 @@
                 const bgPosStyle = item.imagePosition ? `background-position: ${item.imagePosition};` : '';
 
                 const drinkFavoriteClass = favoriteDrinks.includes(item.name) ? 'is-favorite' : '';
-                const tarotFavoriteClass = favoriteTarot.includes(item.name) ? 'is-favorite' : '';
+                const storyFavoriteClass = favoriteStories.includes(item.name) ? 'is-favorite' : '';
 
                 const cardHtml = `
                     <div class="drink-card ${isUnavailable ? 'is-unavailable' : ''}" data-name="${item.name}">
@@ -1144,16 +1007,12 @@
                                 </div>
                                 <div class="card-footer">${item.cardHook}</div>
                             </div>
-                            <div class="drink-card-back ${!item.image ? 'no-image' : ''}">
-                               <button class="favorite-btn ${tarotFavoriteClass}" data-type="tarot"><i class="fas fa-star"></i></button>
-                               <div class="card-back-image lazy-bg" ${item.image ? `data-bg="url('${item.image}')"` : ''} style="${bgPosStyle}"></div>
+                            <div class="drink-card-back lazy-bg ${!item.image ? 'no-image' : ''}" ${item.image ? `data-bg="url('${item.image}')"` : ''} style="${bgPosStyle}">
+                               <button class="favorite-btn ${storyFavoriteClass}" data-type="story"><i class="fas fa-star"></i></button>
                                <div class="card-back-content">
-                                   <p class="tarot-simple-meaning">${item.simpleMeaning}</p>
-                                   <div class="flex-grow min-h-0 overflow-y-auto pr-1">
-                                       <p class="tarot-story">${item.tarotMeaning}</p>
-                                   </div>
+                                    <p class="story-text">${item.story}</p>
                                 </div>
-                                <div class="card-footer"><h3 class="tarot-card-name">${item.tarot}</h3></div>
+                                <div class="card-footer-back">The Story of ${item.name}</div>
                             </div>
                         </div>
                     </div>`;
@@ -1186,13 +1045,13 @@
             }
         }
 
-        function setCardView(isTarot) {
+        function setCardView(isStoryView) {
             const cards = document.querySelectorAll('#menu-grid .drink-card');
             const viewToggleButton = document.getElementById('view-toggle-btn');
             
             if (!viewToggleButton) return;
 
-            isGlobalTarotView = isTarot; // Set state
+            isGlobalTarotView = isStoryView; // Set state
 
             if (isGlobalTarotView) {
                 viewToggleButton.textContent = 'Show All Recipes';
@@ -1202,7 +1061,29 @@
                     }
                 });
             } else {
-                viewToggleButton.textContent = 'Show All Tarot';
+                viewToggleButton.textContent = 'Show All Stories';
+                cards.forEach(card => {
+                    card.classList.remove('is-flipped');
+                });
+            }
+        }
+        function setCardView(isStoryView) {
+            const cards = document.querySelectorAll('#menu-grid .drink-card');
+            const storiesNavButtonSpan = document.querySelector('#stories-nav-btn span');
+            
+            if (!storiesNavButtonSpan) return;
+
+            isGlobalTarotView = isStoryView; // Set state
+
+            if (isGlobalTarotView) {
+                storiesNavButtonSpan.textContent = 'Recipes';
+                cards.forEach(card => {
+                    if (card.dataset && !card.dataset.isBarcode) {
+                        card.classList.add('is-flipped');
+                    }
+                });
+            } else {
+                storiesNavButtonSpan.textContent = 'Stories';
                 cards.forEach(card => {
                     card.classList.remove('is-flipped');
                 });
@@ -1216,11 +1097,6 @@
             // Category Filter
             if (activeFilters.category && activeFilters.category !== 'all') {
                 drinkableCocktails = drinkableCocktails.filter(item => item.category.includes(activeFilters.category));
-            }
-
-            // Arcana Filter
-            if (activeFilters.arcana && activeFilters.arcana !== 'All') {
-                drinkableCocktails = drinkableCocktails.filter(drink => drink.type === activeFilters.arcana);
             }
 
             // Spirit Filter
@@ -1246,8 +1122,8 @@
             
             // Favorites Filter
             if (activeFilters.showFavoritesOnly) {
-                if (isGlobalTarotView) {
-                    drinkableCocktails = drinkableCocktails.filter(drink => favoriteTarot.includes(drink.name));
+                if (isGlobalTarotView) { // if flipped to story view
+                    drinkableCocktails = drinkableCocktails.filter(drink => favoriteStories.includes(drink.name));
                 } else {
                     drinkableCocktails = drinkableCocktails.filter(drink => favoriteDrinks.includes(drink.name));
                 }
@@ -1265,14 +1141,14 @@
 
         function initializeFavorites() {
             const savedDrinkFavs = localStorage.getItem(DRINKS_FAVORITES_KEY);
-            const savedTarotFavs = localStorage.getItem(TAROT_FAVORITES_KEY);
+            const savedStoryFavs = localStorage.getItem(STORIES_FAVORITES_KEY);
             if (savedDrinkFavs) favoriteDrinks = JSON.parse(savedDrinkFavs);
-            if (savedTarotFavs) favoriteTarot = JSON.parse(savedTarotFavs);
+            if (savedStoryFavs) favoriteStories = JSON.parse(savedStoryFavs);
         }
 
         function toggleFavorite(cardName, type, starButton) {
-            let favoritesList = type === 'drink' ? favoriteDrinks : favoriteTarot;
-            const storageKey = type === 'drink' ? DRINKS_FAVORITES_KEY : TAROT_FAVORITES_KEY;
+            let favoritesList = type === 'drink' ? favoriteDrinks : favoriteStories;
+            const storageKey = type === 'drink' ? DRINKS_FAVORITES_KEY : STORIES_FAVORITES_KEY;
             
             const index = favoritesList.indexOf(cardName);
             if (index > -1) {
@@ -1287,11 +1163,10 @@
         
         function renderFavoritesModal(type = 'drink') {
             const container = document.getElementById('favorites-list-container');
-            const favoritesList = type === 'drink' ? favoriteDrinks : favoriteTarot;
-            const title = type === 'drink' ? 'Favorite Recipes' : 'Favorite Tarot Cards';
+            const favoritesList = type === 'drink' ? favoriteDrinks : favoriteStories;
             
             document.getElementById('fav-drinks-tab').classList.toggle('is-active', type === 'drink');
-            document.getElementById('fav-tarot-tab').classList.toggle('is-active', type === 'tarot');
+            document.getElementById('fav-stories-tab').classList.toggle('is-active', type === 'story');
             
             if (favoritesList.length === 0) {
                 container.innerHTML = `<p class="text-gray-400 italic text-center">You haven't selected any favorites yet. Tap the star icon on a card to add it here.</p>`;
@@ -1304,10 +1179,10 @@
                 const iconInfo = getIngredientInfo(parseIngredientName(cardData.recipe[0] || ''));
                 return `
                     <div class="favorite-item" data-name="${cardData.name}" data-view="${type}">
-                        <i class="fas ${type === 'drink' ? iconInfo.icon : 'fa-motorcycle'} text-xl w-10 text-center ${type === 'drink' ? iconInfo.colorClass : 'text-purple-400'}"></i>
+                        <i class="fas ${type === 'drink' ? iconInfo.icon : 'fa-scroll'} text-xl w-10 text-center ${type === 'drink' ? iconInfo.colorClass : 'text-purple-400'}"></i>
                         <div class="ml-4">
                             <h4 class="font-bold text-lg text-white">${cardData.name}</h4>
-                            <p class="text-sm text-gray-400">${type === 'drink' ? cardData.flavorProfile.substring(0, 40) + '...' : cardData.tarot}</p>
+                            <p class="text-sm text-gray-400">${type === 'drink' ? cardData.flavorProfile.substring(0, 40) + '...' : cardData.story.substring(0, 40) + '...'}</p>
                         </div>
                     </div>`;
             }).join('<div class="h-3"></div>');
@@ -1399,16 +1274,6 @@
                         <button data-category="Desert" class="filter-pill">Desert</button>
                     </div>
                 </div>`;
-
-            const typeFilters = `
-                <div>
-                    <h3 class="text-lg text-amber-500 mb-2 font-rye tracking-wider">Arcana</h3>
-                    <div id="filter-group-arcana" class="flex flex-wrap gap-3">
-                        <button data-type="All" class="filter-pill">All</button>
-                        <button data-type="Major Arcana" class="filter-pill">Major Arcana</button>
-                        <button data-type="Minor Arcana" class="filter-pill">Minor Arcana</button>
-                    </div>
-                </div>`;
             
             const spiritCategories = Object.keys(ingredientCategories.Spirits);
             const spiritFilters = `
@@ -1440,7 +1305,6 @@
                     ${goToCardSection}
                     <div class="filter-separator"></div>
                     ${categoryFilters}
-                    ${typeFilters}
                     ${spiritFilters}
                     ${ingredientFilter}
                 </div>`;
@@ -1454,7 +1318,6 @@
             document.querySelectorAll('#filter-modal .filter-pill').forEach(p => p.classList.remove('is-active'));
             // Set active from state
             document.querySelector(`#filter-group-category .filter-pill[data-category="${activeFilters.category}"]`)?.classList.add('is-active');
-            document.querySelector(`#filter-group-arcana .filter-pill[data-type="${activeFilters.arcana}"]`)?.classList.add('is-active');
             if(activeFilters.spirit) {
                 document.querySelector(`#filter-group-spirit .filter-pill[data-spirit="${activeFilters.spirit}"]`)?.classList.add('is-active');
             }
@@ -1470,25 +1333,18 @@
 
         function getCardsByGroup(groupName) {
             const deck = cocktails.filter(c => !c.isBarcode);
-            switch(groupName) {
-                case 'Major Arcana':
-                    return deck.filter(c => c.type === 'Major Arcana');
-                case 'Wands':
-                    return deck.filter(c => c.tarot.includes('Wands'));
-                case 'Cups':
-                    return deck.filter(c => c.tarot.includes('Cups'));
-                case 'Swords':
-                    return deck.filter(c => c.tarot.includes('Swords'));
-                case 'Pentacles':
-                    return deck.filter(c => c.tarot.includes('Pentacles'));
-                default:
-                    return [];
-            }
+            const spiritsInFamily = ingredientCategories.Spirits[groupName] || [];
+            return deck.filter(drink => 
+                drink.recipe.some(recipeLine => {
+                    const ingName = parseIngredientName(recipeLine);
+                    return ingName && spiritsInFamily.includes(ingName);
+                })
+            );
         }
 
         function renderCardGroups() {
             const goToCardContainer = document.getElementById('go-to-card-container');
-            const groups = ['Major Arcana', 'Wands', 'Cups', 'Swords', 'Pentacles'];
+            const groups = Object.keys(ingredientCategories.Spirits);
             goToCardContainer.innerHTML = `
                 <div id="card-group-selector" class="flex flex-wrap gap-3">
                     ${groups.map(group => `<button data-group="${group}" class="filter-pill">${group}</button>`).join('')}
@@ -1498,25 +1354,13 @@
 
         function renderCardListForGroup(groupName) {
             const goToCardContainer = document.getElementById('go-to-card-container');
-            const cardsInGroup = getCardsByGroup(groupName);
-            
-            const tarotRank = ["Ace", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Page", "Knight", "Queen", "King"];
-            
-            cardsInGroup.sort((a, b) => {
-                if (groupName === 'Major Arcana') {
-                    return tarotDeck.indexOf(a.tarot) - tarotDeck.indexOf(b.tarot);
-                } else {
-                    const rankA = a.tarot.split(' ')[0];
-                    const rankB = b.tarot.split(' ')[0];
-                    return tarotRank.indexOf(rankA) - tarotRank.indexOf(rankB);
-                }
-            });
+            const cardsInGroup = getCardsByGroup(groupName).sort((a,b) => a.name.localeCompare(b.name));
 
             goToCardContainer.innerHTML = `
                 <div>
-                    <button id="back-to-groups-btn" class="text-amber-400 hover:text-amber-300 mb-3 text-sm"><i class="fas fa-arrow-left mr-2"></i>Back to Groups</button>
+                    <button id="back-to-groups-btn" class="text-amber-400 hover:text-amber-300 mb-3 text-sm"><i class="fas fa-arrow-left mr-2"></i>Back to Spirit Types</button>
                     <ul id="card-list" class="space-y-1 max-h-40 overflow-y-auto">
-                        ${cardsInGroup.map(card => `<li><button data-name="${card.name}" class="go-to-card-btn w-full text-left p-2 rounded-md hover:bg-white/10 transition-colors">${card.tarot} <span class="text-xs text-gray-400">(${card.name})</span></button></li>`).join('')}
+                        ${cardsInGroup.map(card => `<li><button data-name="${card.name}" class="go-to-card-btn w-full text-left p-2 rounded-md hover:bg-white/10 transition-colors">${card.name}</button></li>`).join('')}
                     </ul>
                 </div>
             `;
@@ -1549,29 +1393,22 @@
             setTimeout(() => card.classList.remove('is-highlighted'), 2500);
         }
 
-        function handleTarotReading() {
-            const content = document.getElementById('tarot-reading-content');
-            const modalTitle = document.querySelector('#tarot-reading-modal h2');
+        function handleJourney() {
+            const content = document.getElementById('journey-content');
             content.innerHTML = '';
-            modalTitle.textContent = "Choose Your Journey";
 
-            const drawableCards = cocktails.filter(c => !c.isBarcode);
+            const drawableCards = cocktails.filter(c => !c.isBarcode && isDrinkMakeable(c));
 
             if (drawableCards.length < 3) {
-                content.innerHTML = `<p class="text-center text-red-400">Not enough cards in the deck for a reading.</p>`;
+                content.innerHTML = `<p class="text-center text-red-400">Not enough available drinks in your bar stock for a journey. Add more ingredients!</p>`;
                 return;
             }
 
             const shuffled = [...drawableCards].sort(() => 0.5 - Math.random());
-            const [pastCard, presentCard, futureCard] = shuffled.slice(0, 3);
+            const journeyOptions = shuffled.slice(0, 3);
+            const journeyLabels = ['The Scenic Route', 'The Shortcut', 'The Road Less Traveled'];
 
-            const readingText = `Your path has been shaped by the lesson of the <strong>${pastCard.tarot}</strong>: <em>${pastCard.tarotMeaning}</em><br><br>You are currently navigating the challenge of the <strong>${presentCard.tarot}</strong>: <em>${presentCard.tarotMeaning}</em><br><br>The road ahead points towards the wisdom of the <strong>${futureCard.tarot}</strong>: <em>${futureCard.tarotMeaning}</em>`;
-            
-            const positions = ['Past', 'Present', 'Future'];
-            const cards = [pastCard, presentCard, futureCard];
-
-            const cardsHtml = cards.map((item, index) => {
-                const positionLabel = positions[index];
+            const cardsHtml = journeyOptions.map((item, index) => {
                 const cardInnerHtml = `
                     <div class="drink-card-inner">
                         <div class="drink-card-front">
@@ -1581,20 +1418,12 @@
                             </div>
                             <div class="card-footer" style="background:rgba(0,0,0,0.5); border-color: #854d0e;">Find in Deck</div>
                         </div>
-                        <div class="drink-card-back">
-                            <div class="card-back-image" ${item.image ? `style="background-image: url('${item.image}'); background-size: cover; background-position: center;"` : ''}></div>
-                            <div class="card-back-content p-2 flex flex-col justify-center">
-                               <h3 class="tarot-card-name">${item.tarot}</h3>
-                               <h4 class="drink-name-back">${item.name}</h4>
-                            </div>
-                            <div class="card-footer" style="color: #a78bfa; border-color: #a78bfa;">View Recipe</div>
-                        </div>
                     </div>`;
 
                 return `
-                    <div class="tarot-card-wrapper">
-                        <h3 class="tarot-position-label">${positionLabel}</h3>
-                        <div class="drink-card tarot-pick is-flipped" data-name="${item.name}">
+                    <div class="journey-card-wrapper">
+                        <h3 class="position-label">${journeyLabels[index]}</h3>
+                        <div class="drink-card journey-pick" data-name="${item.name}">
                             ${cardInnerHtml}
                         </div>
                     </div>
@@ -1603,15 +1432,14 @@
 
             content.innerHTML = `
                 <div class="flex flex-col items-center w-full">
-                    <div id="tarot-hand-container">
+                     <div id="journey-explanation" class="p-4 text-center text-gray-300 font-serif text-base leading-relaxed max-w-2xl mx-auto">
+                       Every ride needs a destination. Pick a drink, see where the night takes you.
+                    </div>
+                    <div id="journey-hand-container">
                         ${cardsHtml}
                     </div>
-                    <div id="reading-explanation" class="mt-6 md:mt-8 p-4 border-2 border-dashed border-purple-400/50 rounded-lg bg-black/30 text-center text-gray-300 font-serif text-sm md:text-base leading-relaxed max-w-2xl mx-auto">
-                        ${readingText}
-                    </div>
                     <div class="mt-6 text-center">
-                        <p class="text-center text-gray-400 text-xs md:text-sm mb-4 font-cinzel">Click a card to explore, then confirm your journey.</p>
-                        <button id="select-journey-btn" class="py-3 px-8 rounded-lg bg-amber-600 hover:bg-amber-500 text-black font-bold transition-all disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed" disabled>Confirm Journey</button>
+                        <button id="select-journey-btn" class="py-3 px-8 rounded-lg bg-amber-600 hover:bg-amber-500 text-black font-bold transition-all disabled:bg-gray-600 disabled:text-gray-400 disabled:cursor-not-allowed" disabled>Start My Journey</button>
                    </div>
                 </div>
             `;
@@ -1619,43 +1447,21 @@
             const selectJourneyBtn = document.getElementById('select-journey-btn');
             let selectedJourneyCardName = null;
 
-            content.querySelectorAll('.tarot-card-wrapper').forEach(cardWrapper => {
-                const cardEl = cardWrapper.querySelector('.drink-card');
+            content.querySelectorAll('.journey-card-wrapper').forEach(cardWrapper => {
                 cardWrapper.addEventListener('click', (e) => {
-                    const footerClicked = e.target.closest('.card-footer');
+                    const cardEl = cardWrapper.querySelector('.drink-card');
+                    
+                    const wasAlreadySelected = cardWrapper.classList.contains('is-selected');
 
-                    if (footerClicked) {
-                        const isFindButton = !cardEl.classList.contains('is-flipped');
-                        if (isFindButton) {
-                            const cardName = cardEl.dataset.name;
-                            const cardInDeck = document.querySelector(`#menu-grid .drink-card[data-name="${cardName}"]`);
-                            if (cardInDeck) {
-                                highlightAndScrollToCard(cardInDeck);
-                                cardInDeck.classList.remove('is-flipped');
-                            }
-                            tarotReadingModal.classList.add('opacity-0');
-                            setTimeout(() => tarotReadingModal.classList.add('hidden'), 300);
-                        } else {
-                            cardEl.classList.toggle('is-flipped');
-                        }
+                    if (wasAlreadySelected) {
+                        cardWrapper.classList.remove('is-selected');
+                        selectedJourneyCardName = null;
+                        selectJourneyBtn.disabled = true;
                     } else {
-                        const wasAlreadySelected = cardWrapper.classList.contains('is-selected');
-                        
-                        // Always flip the card on a body click for exploration
-                        cardEl.classList.toggle('is-flipped');
-
-                        if (wasAlreadySelected) {
-                            // Clicking an already selected card de-selects it
-                            cardWrapper.classList.remove('is-selected');
-                            selectedJourneyCardName = null;
-                            selectJourneyBtn.disabled = true;
-                        } else {
-                            // Clicking a new card de-selects others and selects this one
-                            document.querySelectorAll('.tarot-card-wrapper.is-selected').forEach(selected => selected.classList.remove('is-selected'));
-                            cardWrapper.classList.add('is-selected');
-                            selectedJourneyCardName = cardEl.dataset.name;
-                            selectJourneyBtn.disabled = false;
-                        }
+                        document.querySelectorAll('.journey-card-wrapper.is-selected').forEach(selected => selected.classList.remove('is-selected'));
+                        cardWrapper.classList.add('is-selected');
+                        selectedJourneyCardName = cardEl.dataset.name;
+                        selectJourneyBtn.disabled = false;
                     }
                 });
             });
@@ -1665,10 +1471,10 @@
                     const cardInDeck = document.querySelector(`#menu-grid .drink-card[data-name="${selectedJourneyCardName}"]`);
                     if (cardInDeck) {
                         highlightAndScrollToCard(cardInDeck);
-                        cardInDeck.classList.remove('is-flipped'); // Ensure it shows the recipe
+                        cardInDeck.classList.remove('is-flipped');
                     }
-                    tarotReadingModal.classList.add('opacity-0');
-                    setTimeout(() => tarotReadingModal.classList.add('hidden'), 300);
+                    journeyModal.classList.add('opacity-0');
+                    setTimeout(() => journeyModal.classList.add('hidden'), 300);
                 }
             });
         }
@@ -1685,7 +1491,7 @@
                 document.body.classList.remove('loading');
                 document.body.classList.add('loaded');
                 document.getElementById('app').style.opacity = '1';
-            }, 2500);
+            }, 2500); // Increased duration from 100ms
         
             // --- Event Listeners ---
             menuGrid.addEventListener('click', e => {
@@ -1703,14 +1509,7 @@
                 }
             });
 
-            // --- View Controls ---
-            document.getElementById('view-toggle-btn').addEventListener('click', (e) => {
-                setCardView(!isGlobalTarotView);
-            });
-
-            document.getElementById('view-reset-btn').addEventListener('click', () => {
-                setCardView(false);
-            });
+            // --- REMOVED View Controls Listeners ---
 
 
             // --- Bottom Nav Listeners ---
@@ -1720,11 +1519,12 @@
                 setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
             });
 
-            document.getElementById('tarot-reading-btn').addEventListener('click', () => {
-                handleTarotReading();
-                tarotReadingModal.classList.remove('hidden');
-                setTimeout(() => tarotReadingModal.classList.remove('opacity-0'), 10);
+            // Added listener for the new stories button
+            document.getElementById('stories-nav-btn').addEventListener('click', () => {
+                setCardView(!isGlobalTarotView);
             });
+
+            // REMOVED listener for journey-btn
 
             document.getElementById('bar-stock-btn').addEventListener('click', () => {
                 renderBarStockModal();
@@ -1744,7 +1544,7 @@
                 setTimeout(() => favoritesModal.classList.add('hidden'), 300);
             });
             document.getElementById('fav-drinks-tab').addEventListener('click', () => renderFavoritesModal('drink'));
-            document.getElementById('fav-tarot-tab').addEventListener('click', () => renderFavoritesModal('tarot'));
+            document.getElementById('fav-stories-tab').addEventListener('click', () => renderFavoritesModal('story'));
 
             document.getElementById('favorites-list-container').addEventListener('click', (e) => {
                 const favItem = e.target.closest('.favorite-item');
@@ -1754,8 +1554,7 @@
                     const cardInDeck = document.querySelector(`#menu-grid .drink-card[data-name="${cardName}"]`);
                     if (cardInDeck) {
                         highlightAndScrollToCard(cardInDeck);
-                        // Make sure the correct side is showing
-                        if (viewType === 'tarot') {
+                        if (viewType === 'story') {
                             cardInDeck.classList.add('is-flipped');
                         } else {
                             cardInDeck.classList.remove('is-flipped');
@@ -1766,10 +1565,10 @@
                 }
             });
 
-            // Tarot Reading Listeners
-            document.getElementById('close-tarot-btn').addEventListener('click', () => {
-                tarotReadingModal.classList.add('opacity-0');
-                    setTimeout(() => tarotReadingModal.classList.add('hidden'), 300);
+            // Journey Modal Listeners
+            document.getElementById('close-journey-btn').addEventListener('click', () => {
+                journeyModal.classList.add('opacity-0');
+                    setTimeout(() => journeyModal.classList.add('hidden'), 300);
                 });
 
                 // Stock Modal Listeners
@@ -1784,24 +1583,22 @@
                     setTimeout(() => filterModal.classList.add('hidden'), 300);
             });
             
-            // This listener now handles both filter pills and the new "Go to Card" functionality
             document.getElementById('filter-modal-content').addEventListener('click', e => {
                 if(e.target.closest('#go-to-card-container')) {
                     handleGoToCardClick(e);
-                    return; // Stop further execution if it's a "Go to Card" action
+                    return;
                 }
                 if(e.target.matches('.filter-pill')) {
                     const pill = e.target;
                     const groupContainer = pill.parentElement;
-                    // Handle spirit toggle separately
                         if (groupContainer.id === 'filter-group-spirit') {
                              if (pill.classList.contains('is-active')) {
-                                pill.classList.remove('is-active'); // Deselect if already active
+                                pill.classList.remove('is-active');
                             } else {
                                 groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
                                 pill.classList.add('is-active');
                             }
-                        } else { // Handle other groups (radio button behavior)
+                        } else {
                             groupContainer.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
                             pill.classList.add('is-active');
                         }
@@ -1809,15 +1606,13 @@
                 });
 
                 document.getElementById('reset-filters-btn').addEventListener('click', () => {
-                    activeFilters = { category: 'all', arcana: 'All', spirit: null, ingredient: null, showFavoritesOnly: false };
+                    activeFilters = { category: 'all', spirit: null, ingredient: null, showFavoritesOnly: false };
                     updatePillsFromState();
-                    setCardView(false); // Also reset the card view
+                    setCardView(false);
                 });
 
                 document.getElementById('apply-filters-btn').addEventListener('click', () => {
-                    // Read state from pills into activeFilters object
                     activeFilters.category = document.querySelector('#filter-group-category .is-active')?.dataset.category || 'all';
-                    activeFilters.arcana = document.querySelector('#filter-group-arcana .is-active')?.dataset.type || 'All';
                     activeFilters.spirit = document.querySelector('#filter-group-spirit .is-active')?.dataset.spirit || null;
                     activeFilters.ingredient = document.getElementById('ingredient-filter-select').value || null;
                     activeFilters.showFavoritesOnly = document.getElementById('favorites-filter-toggle').checked;
@@ -1831,5 +1626,13 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
 
 
