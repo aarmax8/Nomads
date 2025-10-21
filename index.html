@@ -85,6 +85,9 @@
                 transform: rotate(0deg) scale(1);
                 opacity: 1;
             }
+            70% {
+                opacity: 1; /* Hold opacity for most of the spin */
+            }
             100% {
                 transform: rotate(360deg) scale(0);
                 opacity: 0;
@@ -117,13 +120,13 @@
             pointer-events: none;
         }
         body.loaded #splash-logo {
-            animation: tire-spin-out 1s ease-in-out forwards;
+            animation: tire-spin-out 1.5s ease-in-out forwards; /* Matched to splash screen fade */
         }
 
 
         .app-container { 
             display: flex; flex-direction: column; height: 100vh;
-            transition: opacity 1.5s ease-in-out;
+            transition: opacity 1.0s ease-in-out 0.5s; /* Fade in for 1s after a 0.5s delay */
             opacity: 0; /* Start invisible to prevent flash */
         }
         main { flex-grow: 1; overflow: hidden; position: relative; }
@@ -336,12 +339,12 @@
             transform: scale(1.1);
             background: rgba(0,0,0,0.7);
         }
-        .favorite-btn .fa-star {
+        .favorite-btn .fa-motorcycle {
             font-size: 1.2rem;
             color: #9ca3af; /* Default gray */
             transition: all 0.2s ease;
         }
-        .favorite-btn.is-favorite .fa-star {
+        .favorite-btn.is-favorite .fa-motorcycle {
             color: #f59e0b; /* Amber when favorited */
             text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
         }
@@ -401,12 +404,20 @@
         
         /* --- Bottom Nav Bar --- */
         #bottom-nav {
-            background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://raw.githubusercontent.com/aarmax8/Nomads/e9172276c875ddaf545c6691f9d7c32a3d9abaef/hocking%20hills%20pano.jpg');
-            background-size: cover;
-            background-position: center 40%;
-            border-top: 2px solid #2dd4bf; /* Changed to turquoise */
+            background-color: rgba(17, 17, 17, 0.75);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 -5px 15px rgba(0,0,0,0.7);
-            height: 80px;
+            height: 70px;
+            position: fixed;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 1rem;
+            width: auto;
+            border-radius: 9999px;
+            padding: 0 0.5rem;
         }
 
         .bottom-nav-btn {
@@ -421,7 +432,7 @@
             cursor: pointer;
             transition: all 0.2s ease;
             border-radius: 8px;
-            width: 90px;
+            width: 80px;
             height: 100%;
         }
 
@@ -429,49 +440,6 @@
             color: #2dd4bf; /* Changed to turquoise */
             background-color: rgba(45, 212, 191, 0.1); /* Changed to turquoise glow */
         }
-
-        /* --- New Arrow Navigation --- */
-        #card-nav-controls {
-            position: absolute;
-            bottom: 90px; /* Position above the bottom nav bar */
-            left: 0;
-            right: 0;
-            padding: 0 0.5rem;
-            display: flex;
-            justify-content: space-between;
-            pointer-events: none; /* Parent container doesn't block clicks */
-            z-index: 5;
-        }
-        @media (min-width: 640px) {
-            #card-nav-controls {
-                padding: 0 1rem;
-            }
-        }
-        .nav-arrow-btn {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #d1d5db;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            pointer-events: auto; /* Buttons are clickable */
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            backdrop-filter: blur(4px);
-        }
-        .nav-arrow-btn:hover {
-            background: rgba(45, 212, 191, 0.2);
-            border-color: rgba(45, 212, 191, 0.4);
-            color: #2dd4bf;
-            transform: scale(1.05);
-        }
-        .nav-arrow-btn i {
-            font-size: 1.25rem;
-        }
-
 
         /* --- Journey Modal Styles --- */
         #journey-modal #journey-hand-container {
@@ -653,14 +621,9 @@
         
         <main>
             <div id="menu-grid"></div>
-             <!-- Arrow Navigation Controls -->
-            <div id="card-nav-controls">
-                <button id="prev-card-btn" class="nav-arrow-btn"><i class="fas fa-chevron-left"></i></button>
-                <button id="next-card-btn" class="nav-arrow-btn"><i class="fas fa-chevron-right"></i></button>
-            </div>
         </main>
 
-        <footer id="bottom-nav" class="fixed bottom-0 left-0 right-0 z-20 flex justify-around items-center">
+        <footer id="bottom-nav" class="fixed z-20 flex justify-around items-center">
             <button id="browse-btn" class="bottom-nav-btn">
                 <i class="fas fa-bars text-2xl"></i>
                 <span class="text-xs mt-1">Menu</span>
@@ -671,7 +634,7 @@
                 <span class="text-xs mt-1">Stories</span>
             </button>
             <button id="favorites-btn" class="bottom-nav-btn">
-                <i class="fas fa-star text-2xl"></i>
+                <i class="fas fa-motorcycle text-2xl"></i>
                 <span class="text-xs mt-1">Favorites</span>
             </button>
             <button id="bar-stock-btn" class="bottom-nav-btn">
@@ -690,7 +653,6 @@
                     <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Favorites</h2>
                     <button id="close-favorites-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
                 </div>
-                 <!-- REMOVED Stories Tab -->
             </div>
             <div id="favorites-list-container" class="p-6 text-gray-300 overflow-y-auto">
                 <!-- Favorite items will be injected here -->
@@ -1031,13 +993,12 @@
                                     <p class="text-xl mb-3 leading-relaxed text-teal-500" style="font-family: 'IM Fell DW Pica', serif; font-style: italic;">${item.flavorProfile}</p>
                                 </div>
                                 <div class="recipe-content">
-                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-star"></i></button>
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
                                 </div>
+                                <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-motorcycle"></i></button>
                                 <div class="card-footer">${item.cardHook}</div>
                             </div>
                             <div class="drink-card-back lazy-bg ${!item.image ? 'no-image' : ''}" ${item.image ? `data-bg="url('${item.image}')"` : ''} style="${bgPosStyle}">
-                               <!-- REMOVED Favorite button from story side -->
                                <div class="card-back-content">
                                     <p class="story-text">${item.story}</p>
                                 </div>
@@ -1153,11 +1114,7 @@
             
             // Favorites Filter
             if (activeFilters.showFavoritesOnly) {
-                if (isGlobalTarotView) { // if flipped to story view
-                    drinkableCocktails = drinkableCocktails.filter(drink => favoriteStories.includes(drink.name));
-                } else {
-                    drinkableCocktails = drinkableCocktails.filter(drink => favoriteDrinks.includes(drink.name));
-                }
+                drinkableCocktails = drinkableCocktails.filter(drink => favoriteDrinks.includes(drink.name));
             }
 
             const itemsToRender = barcodeCard ? [barcodeCard, ...drinkableCocktails] : drinkableCocktails;
@@ -1178,8 +1135,8 @@
         }
 
         function toggleFavorite(cardName, type, starButton) {
-            let favoritesList = type === 'drink' ? favoriteDrinks : favoriteStories;
-            const storageKey = type === 'drink' ? DRINKS_FAVORITES_KEY : STORIES_FAVORITES_KEY;
+            let favoritesList = favoriteDrinks;
+            const storageKey = DRINKS_FAVORITES_KEY;
             
             const index = favoritesList.indexOf(cardName);
             if (index > -1) {
@@ -1192,12 +1149,12 @@
             localStorage.setItem(storageKey, JSON.stringify(favoritesList));
         }
         
-        function renderFavoritesModal(type = 'drink') {
+        function renderFavoritesModal() {
             const container = document.getElementById('favorites-list-container');
             const favoritesList = favoriteDrinks; // Simplified to only show drinks
             
             if (favoritesList.length === 0) {
-                container.innerHTML = `<p class="text-gray-400 italic text-center">You haven't selected any favorite recipes yet. Tap the star icon on a card to add it here.</p>`;
+                container.innerHTML = `<p class="text-gray-400 italic text-center">You haven't selected any favorite recipes yet. Tap the motorcycle icon on a card to add it here.</p>`;
                 return;
             }
 
@@ -1471,10 +1428,6 @@
                 }
             });
 
-            // Arrow navigation listeners
-            document.getElementById('prev-card-btn').addEventListener('click', () => snapToCard(-1));
-            document.getElementById('next-card-btn').addEventListener('click', () => snapToCard(1));
-
 
             // --- Bottom Nav Listeners ---
             document.getElementById('browse-btn').addEventListener('click', () => {
@@ -1507,7 +1460,6 @@
                 favoritesModal.classList.add('opacity-0');
                 setTimeout(() => favoritesModal.classList.add('hidden'), 300);
             });
-            // REMOVED tab click listeners as they are no longer needed
 
             document.getElementById('favorites-list-container').addEventListener('click', (e) => {
                 const favItem = e.target.closest('.favorite-item');
@@ -1589,5 +1541,7 @@
 
 
 "
+
+
 
 
