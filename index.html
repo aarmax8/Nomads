@@ -150,52 +150,26 @@
             /* New polished metal border effect - NOW with toned-down TURQUOISE */
             border: 2px solid;
             border-color: #2dd4bf #0d9488 #0d9488 #2dd4bf; /* Light turquoise top/left, Dark turquoise bottom/right */
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.7), 0 0 40px rgba(245, 158, 11, 0.3), inset 0 0 10px rgba(0,0,0,0.5);
         }
         
-        /* NEW SPARKLE EFFECT */
+        /* NEW CHROME GLINT EFFECT */
         #header-logo-container::after {
             content: '';
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
+            left: -150%;
+            width: 40%;
             height: 100%;
-            background: transparent;
-            pointer-events: none;
-            border-radius: inherit;
-            animation: sparkle-effect 6s infinite ease-in-out;
-            animation-delay: 1s; /* Start after a small delay */
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+            transform: skewX(-25deg);
+            animation: glint-effect 5s infinite ease-in-out;
+            animation-delay: 2s;
         }
 
-        @keyframes sparkle-effect {
-            0%, 100% {
-                box-shadow: 
-                    15% 75% 10px 2px rgba(255, 220, 150, 0),
-                    85% 25% 12px 2px rgba(255, 220, 150, 0),
-                    50% 50% 15px 3px rgba(255, 220, 150, 0);
-                opacity: 0.5;
-            }
-            25% {
-                box-shadow: 
-                    15% 75% 10px 2px rgba(255, 220, 150, 0.8),
-                    85% 25% 12px 2px rgba(255, 220, 150, 0),
-                    50% 50% 15px 3px rgba(255, 220, 150, 0);
-                opacity: 1;
-            }
-            50% {
-                 box-shadow: 
-                    15% 75% 10px 2px rgba(255, 220, 150, 0),
-                    85% 25% 12px 2px rgba(255, 220, 150, 0.8),
-                    50% 50% 15px 3px rgba(255, 220, 150, 0);
-                opacity: 1;
-            }
-            75% {
-                 box-shadow: 
-                    15% 75% 10px 2px rgba(255, 220, 150, 0),
-                    85% 25% 12px 2px rgba(255, 220, 150, 0),
-                    50% 50% 15px 3px rgba(255, 220, 150, 0.8);
-                opacity: 1;
+        @keyframes glint-effect {
+            100% {
+                left: 150%;
             }
         }
         
@@ -228,6 +202,22 @@
         .drink-card.is-highlighted .drink-card-inner {
             box-shadow: 0 0 25px 8px rgba(245, 158, 11, 0.7); transform: scale(1.02);
         }
+        /* New pseudo-element for the active card glow */
+        .drink-card-inner::after {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            border: 2px solid #2dd4bf;
+            border-radius: calc(0.5rem + 2px);
+            pointer-events: none;
+            box-shadow: 0 0 20px rgba(45, 212, 191, 0.5);
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .drink-card.is-active .drink-card-inner::after {
+            opacity: 1;
+        }
+
 
         .drink-card-front, .drink-card-back {
             position: absolute; width: 100%; height: 100%;
@@ -418,7 +408,7 @@
             position: fixed;
             left: 50%;
             transform: translateX(-50%);
-            bottom: 2.5rem;
+            bottom: 4.5rem; /* Moved the menu up */
             width: auto;
             border-radius: 9999px;
             padding: 0 0.5rem;
@@ -1129,6 +1119,7 @@
             if (isGlobalTarotView) {
                 setCardView(true);
             }
+            setTimeout(updateActiveCard, 100); // Set initial active card
         }
 
         function initializeFavorites() {
@@ -1179,6 +1170,29 @@
             container.innerHTML = itemsHtml;
         }
 
+
+        function updateActiveCard() {
+            const containerRect = menuGrid.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+            let closestCard = null;
+            let minDistance = Infinity;
+
+            menuGrid.querySelectorAll('.drink-card').forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const distance = Math.abs(containerCenter - cardCenter);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = card;
+                }
+            });
+            
+            if (closestCard) {
+                menuGrid.querySelectorAll('.drink-card.is-active').forEach(c => c.classList.remove('is-active'));
+                closestCard.classList.add('is-active');
+            }
+        }
 
         function initializeBarStock() {
             const savedStock = localStorage.getItem(STOCK_STORAGE_KEY);
@@ -1432,6 +1446,13 @@
                 }
             });
 
+            // --- Active card listener ---
+            let scrollTimeout;
+            menuGrid.addEventListener('scroll', () => {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(updateActiveCard, 150);
+            });
+
 
             // --- Bottom Nav Listeners ---
             document.getElementById('browse-btn').addEventListener('click', () => {
@@ -1545,6 +1566,9 @@
 
 
 "
+
+
+
 
 
 
