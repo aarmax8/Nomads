@@ -144,7 +144,7 @@
             background-image: 
                 url('https://github.com/aarmax8/Nomads/blob/8c3ff181a15a9d877c3dc0952cb8a9ea3da6ce84/AI%20Title2.jpg?raw=true');
             background-size: cover; 
-            background-position: top; /* This will prioritize the top of the image */
+            background-position: top right; /* Aligns to top-right, cropping left */
             background-repeat: no-repeat;
             border-radius: 0.75rem; 
             overflow: hidden;
@@ -609,7 +609,8 @@
 
     <div id="app" class="app-container">
         <header class="text-center pt-4 px-4 flex-shrink-0">
-            <div id="header-logo-container" class="w-full max-w-lg mx-auto flex items-center justify-center">
+            <!-- Set width to 88% to match the cards -->
+            <div id="header-logo-container" class="w-[88%] max-w-lg mx-auto flex items-center justify-center">
                 <!-- REMOVED height classes -->
             </div>
         </header>
@@ -1563,6 +1564,7 @@
     </script>
 </body>
 </html>
+
 
 
 
