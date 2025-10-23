@@ -30,41 +30,18 @@
         
        
         }
-
-        /* NEW: Added a pseudo-element for glowing skull eyes */
-        #header-logo-container::before {
-            content: '';
-            position: absolute;
-            /* Position it over the skull's eyes (best guess) */
-            top: 80%; /* MODIFIED: Adjusted vertical position for new height */
-            left: 50%;
-            transform: translateX(-50%);
-            /* Size of the eye area */
-            width: 4%; /* MODIFIED: Slightly larger % */
-            height: 2%; /* MODIFIED: Slightly larger % */
-            
-            /* Create two glowing dots using radial gradients */
-            background-image: 
-                radial-gradient(circle, #f59e0b 20%, rgba(245, 158, 11, 0.7) 40%, transparent 70%),
-                radial-gradient(circle, #f59e0b 20%, rgba(245, 158, 11, 0.7) 40%, transparent 70%);
-            
-            background-position: 15% 50%, 85% 50%; /* Position the two "eyes" within the element */
-            background-size: 50% 100%; /* Each gradient takes half the width */
-            background-repeat: no-repeat;
-
-            /* Add a soft overall glow and blur */
-            filter: blur(1px);
-            box-shadow: 0 0 15px 4px rgba(245, 158, 11, 0.5);
-            
-            /* Add pulsing animation *//* NEW: Added back the missing header logo styles */
-#header-logo-container {
+       
+    #header-logo-container {
     /* --- CRITICAL CHANGES TO PUSH TO EDGES AND TOP --- */
-    position: fixed; /* Use 'fixed' to completely break out and stay at the top */
+    position: fixed; 
+    /* Use 'fixed' to completely break out and stay at the top */
     top: 0;
     left: 0;
     width: 100vw; /* Use viewport width to ensure edge-to-edge */
     z-index: 100; /* High z-index to ensure it sits above everything */
     margin: 0; /* Remove any lingering margins */
+        top: 0;
+        left 0;
     /* ------------------------------------------------ */
 
     overflow: hidden; /* To contain the glint */
