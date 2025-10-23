@@ -180,8 +180,8 @@
             display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory;
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             /* Removed horizontal padding (1rem) and adjusted vertical padding */
-            padding: 1.5rem 0 7rem; 
-            height: calc(100% - 52px); /* Adjusted for view-controls */
+            padding: 1rem 0 6.9rem; /* Reduced top/bottom padding */
+            height: 100%; /* Removed arbitrary 52px subtraction */
         }
         #menu-grid::-webkit-scrollbar { display: none; }
         #menu-grid { -ms-overflow-style: none; scrollbar-width: none; }
@@ -191,7 +191,7 @@
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
-            min-height: 480px; /* Shortened the cards */
+            min-height: 540px; /* Made the cards taller */
             transition: opacity 0.3s;
             /* Added margin auto for horizontal centering, especially for the first item */
             margin-left: auto;
@@ -1649,6 +1649,7 @@
     </script>
 </body>
 </html>
+
 
 
 
