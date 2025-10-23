@@ -30,9 +30,10 @@
         
         /* NEW: Added back the missing header logo styles */
         #header-logo-container {
-            position: sticky;
+            position: sticky; /* CHANGED from relative to sticky */
             top: 0;
-            left:0;
+            width: 100%; /* Ensure it goes edge-to-edge */
+            z-index: 10; /* NEW: Keep the header above the scrolling menu */
             overflow: hidden; /* To contain the glint */
             min-height: 110px; /* MODIFIED: Set height to match image aspect ratio */
             /* REMOVED: border-radius: 0.5rem; */ /* No rounding for edge-to-edge */
