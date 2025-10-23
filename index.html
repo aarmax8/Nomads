@@ -132,11 +132,12 @@
         /* 4. Corner Brackets - REMOVED */
 
         #menu-grid {
-            display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory;
-            scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* Removed horizontal padding (1rem) and adjusted vertical padding */
-            padding: 1rem 0 6.9rem; /* Reduced top/bottom padding */
-            height: 100%; /* Removed arbitrary 52px subtraction */
+            margin-top: 110px; /* NEW: Push content below the fixed header (110px tall) */
+        display: flex; gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory;
+        scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
+        /* Removed horizontal padding (1rem) and adjusted vertical padding */
+        padding: 1rem 0 6.9rem; /* Reduced top/bottom padding */
+        height: 100%; /* Removed arbitrary 52px subtraction */
         }
         #menu-grid::-webkit-scrollbar { display: none; }
         #menu-grid { -ms-overflow-style: none; scrollbar-width: none; }
