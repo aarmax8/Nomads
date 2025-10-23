@@ -203,7 +203,7 @@
         }
          #menu-grid > .drink-card:last-child {
              margin-right: calc((100% - 88%) / 2); /* Ensure last card can center */
-        }
+         }
 
         @media (min-width: 640px) { 
             .drink-card { flex-basis: 70%; } 
@@ -246,12 +246,76 @@
             -webkit-backface-visibility: hidden; backface-visibility: hidden;
             display: flex; flex-direction: column; overflow: hidden; border-radius: 0.5rem;
         }
+
+        /* === CARD FRONT REDESIGN === */
         .drink-card-front {
-            background-image: radial-gradient(circle at top, rgba(41, 37, 36, 0.8), rgba(28, 25, 23, 1)), url('https://www.transparenttextures.com/patterns/leather.png'); /* Matched to modal style */
-            border: 3px double #f59e0b; /* Stitched border effect */
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.8);
+            /* New cleaner gradient */
+            background-image: linear-gradient(145deg, rgba(42, 10, 10, 0.8) 0%, rgba(28, 7, 7, 0.8) 100%), url('https://github.com/aarmax8/Nomads/blob/639ee0ed0a332926ddf78c332e7c114a32af99ab/leather%20background.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            /* Cleaner, thinner border matching the app's turquoise */
+            border: 1px solid #2dd4bf;
+            /* Removed inset shadow, letting the .drink-card-inner shadow work */
+            box-shadow: none;
+        }
+        .card-header-front {
+            position: relative; /* For favorite button positioning */
+            /* Increased padding, especially on right for button */
+            padding: 1rem 4rem 1rem 1.25rem; 
+            background: transparent; 
+            /* Cleaner, lighter border */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none; 
+            flex-shrink: 0;
+        }
+        .recipe-content { 
+            flex-grow: 1; 
+            overflow-y: auto; 
+            padding: 0 1.5rem; /* More horizontal padding */
+            min-height: 0; 
+        }
+        .recipe-list-front { list-style: none; padding: 0; }
+        .recipe-list-front li {
+            display: flex; align-items: center; font-family: 'Roboto Condensed', sans-serif;
+            font-size: 1.125rem; /* Slightly smaller, cleaner */
+            line-height: 1.6;
+            letter-spacing: 0.02em; 
+            margin-bottom: 0.75rem; /* More spacing */
+            color: #e5e7eb; /* Brighter */
+        }
+        .recipe-list-front li i { 
+            width: 24px; text-align: center; 
+            margin-right: 1rem; /* More spacing */
+            font-size: 1.125rem; /* Match text */
+        }
+        .card-footer {
+            /* This is now just a spacer */
+            padding: 0;
+            flex-shrink: 0;
+            border-top: none;
+            background: transparent;
         }
         
+        /* NEW rule for the relocated tagline */
+        .card-hook-tagline {
+            text-align: center; 
+            font-size: 1.25rem; /* Made it bigger */
+            line-height: 1.4;
+            color: #2dd4bf; /* Changed to turquoise */
+            text-shadow: 0 0 8px rgba(45, 212, 191, 0.7); /* Turquoise glow */
+            padding: 1rem 1.5rem; /* Gave it padding */
+            font-family: 'Cinzel', serif; /* Cleaner font */
+            letter-spacing: 0.03em; 
+            flex-shrink: 0;
+            background: transparent; /* Clean background */
+            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Clean border */
+            font-style: normal; /* Removed italic */
+            margin-top: auto; /* Pushes it to the bottom of the flex content area */
+        }
+        
+        /* === END CARD FRONT REDESIGN === */
+
+
         /* --- Story Card Back Styling --- */
         .drink-card-back {
             transform: rotateY(180deg); 
@@ -309,7 +373,7 @@
         }
          .no-image {
             background-image: none; /* No overlay if no image */
-        }
+         }
         .card-footer-back {
              padding: 0.75rem;
             background: rgba(0,0,0,0.3);
@@ -349,8 +413,9 @@
         }
         /* Reposition favorite button on the front of the card */
         .drink-card-front .favorite-btn {
-            bottom: 4.5rem; /* Positioned above the footer */
+            top: 1rem; /* Moved to top corner */
             right: 1rem;
+            bottom: auto; /* Unset old position */
         }
         .favorite-btn:hover {
             transform: scale(1.1);
@@ -381,41 +446,27 @@
         
         .drink-card.is-unavailable { opacity: 0.4; pointer-events: none; }
         .drink-card-title {
-            font-size: 1.8rem; line-height: 1.2; color: #f59e0b; text-align: center;
+            font-size: 2rem; /* Larger title */
+            line-height: 1.2; color: #f59e0b; text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(245, 158, 11, 0.5);
+            padding-bottom: 0.25rem; /* Spacing for fonts with deep descenders */
         }
         .drink-card[data-is-barcode="true"] .drink-card-title {
             font-family: 'Cinzel', serif;
             font-size: 1.75rem;
         }
 
-        .card-footer {
-            text-align: center; font-size: 0.9rem; 
-            color: #f59e0b; /* UPDATED to orange */
-            text-shadow: 0 0 6px rgba(245, 158, 11, 0.6); /* UPDATED to orange glow */
-            padding: 0.75rem;
-            font-family: 'IM Fell DW Pica', serif; letter-spacing: 0.03em; flex-shrink: 0;
-            background: rgba(0,0,0,0.3); border-top: 1px solid #4a2c2a;
-            font-style: italic;
-        }
         .drink-card[data-is-barcode="true"] .card-footer {
             background: transparent;
             border: none;
             font-style: normal;
+            /* Match new footer style for consistency */
+            color: #2dd4bf; 
+            text-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
+            font-family: 'Cinzel', serif;
         }
-        .card-header-front {
-            padding: 0.75rem; background: rgba(0,0,0,0.3); border-bottom: 2px solid #525252;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.4); flex-shrink: 0;
-        }
-        .recipe-content { flex-grow: 1; overflow-y: auto; padding: 0.25rem 1rem; min-height: 0; }
+        
         /* .recipe-content-title class has been removed as it is no longer used */
-        .recipe-list-front { list-style: none; padding: 0; }
-        .recipe-list-front li {
-            display: flex; align-items: center; font-family: 'Roboto Condensed', sans-serif;
-            font-size: 1.05rem; /* Increased font size */
-            letter-spacing: 0.02em; margin-bottom: 0.4rem; color: #d1d5db;
-        }
-        .recipe-list-front li i { width: 24px; text-align: center; margin-right: 0.75rem; font-size: 1.05rem; /* Increased icon size */ }
         
         .modal { transition: opacity 0.3s ease-in-out; }
         
@@ -581,10 +632,10 @@
             border-bottom: 1px solid rgba(245, 158, 11, 0.4);
         }
         .modal-header h2 {
-             text-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+            text-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
         }
         #bar-stock-content .ingredient-btn {
-             background-color: rgba(245, 158, 11, 0.1) !important;
+            background-color: rgba(245, 158, 11, 0.1) !important;
             border: 1px solid rgba(245, 158, 11, 0.3) !important;
             color: #e2e8f0; /* Off-white */
         }
@@ -800,6 +851,7 @@
                 { name: "Mudslide", flavorProfile: "A rich, creamy, and decadent dessert drink with vodka, coffee, and Irish cream.", recipe: ["1 oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "We tried to ride through a mudslide. It was a bad idea. This drink is a much better, and cleaner, version of that experience. It's still a bad idea to have five of them, though.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8297.jpg", cardHook: "To the shortcuts that weren't." },
                 { name: "Desert Wind", flavorProfile: "A dry and spiced mix of bourbon, ginger soda, and orange bitters.", recipe: ["2 oz Bulleit Bourbon", "Fill with Ginger Soda", "2 dashes Orange Bitters"], story: "Named for our club secretary, who can talk for three hours without taking a breath. The drink is dry, spicy, and will leave you speechless. We wish he would try one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7996.jpg", cardHook: "For stories that go on too long." },
                 { name: "Oracle's Kiss", flavorProfile: "A sweet and floral blend of citrus vodka, elderflower, and cranberry.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], story: "Some lady at a carnival gave our treasurer a 'kiss for good luck.' He woke up three hours later with his wallet gone and a lingering taste of cranberry. We made this to commemorate his gullibility.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "The future is sweet and flowery." },
+        
                 { name: "Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the only two brain cells our prospect has left. They work together, they're surprisingly strong, and they're usually fueled by whiskey. Just like this drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth." },
                 { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this drink in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "Find your oasis." }
             ];
@@ -1001,19 +1053,27 @@
                 const drinkFavoriteClass = favoriteDrinks.includes(item.name) ? 'is-favorite' : '';
                 const storyFavoriteClass = favoriteStories.includes(item.name) ? 'is-favorite' : '';
 
+                // --- MODIFICATION START ---
+                // I've moved the favorite button inside the header, changed the flavor profile classes,
+                // and adjusted the flavor profile's wrapper div.
                 const cardHtml = `
                     <div class="drink-card ${isUnavailable ? 'is-unavailable' : ''}" data-name="${item.name}">
                         <div class="drink-card-inner">
                             <div class="drink-card-front">
-                                <div class="card-header-front"><h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3></div>
-                                <div class="px-4 pt-4 text-center relative">
-                                    <p class="text-xl mb-3 leading-relaxed text-teal-500" style="font-family: 'IM Fell DW Pica', serif; font-style: italic;">${item.flavorProfile}</p>
+                                <div class="card-header-front">
+                                    <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
+                                    <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-motorcycle"></i></button>
+                                </div>
+                                <div class="px-6 pt-5 text-center">
+                                    <p class="text-xl mb-4 font-cinzel text-gray-300">${item.flavorProfile}</p>
                                 </div>
                                 <div class="recipe-content">
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
                                 </div>
-                                <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-motorcycle"></i></button>
-                                <div class="card-footer">${item.cardHook}</div>
+                                <!-- MOVED THE TAGLINE HERE -->
+                                <div class="card-hook-tagline">${item.cardHook}</div>
+                                <!-- The card-footer is now just an empty spacer -->
+                                <div class="card-footer"></div>
                             </div>
                             <div class="drink-card-back lazy-bg ${!item.image ? 'no-image' : ''}" ${item.image ? `data-bg="url('${item.image}')"` : ''}>
                                <div class="card-back-content">
@@ -1023,6 +1083,7 @@
                             </div>
                         </div>
                     </div>`;
+                // --- MODIFICATION END ---
                 menuGrid.insertAdjacentHTML('beforeend', cardHtml);
             });
         }
@@ -1310,8 +1371,8 @@
                 <div>
                     <h3 class="text-lg text-amber-500 mb-2 font-rye tracking-wider">Contains Ingredient</h3>
                      <select id="ingredient-filter-select" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-                        <option value="">Any Ingredient</option>
-                        ${allIngredients.map(ing => `<option value="${ing}">${ing}</option>`).join('')}
+                         <option value="">Any Ingredient</option>
+                         ${allIngredients.map(ing => `<option value="${ing}">${ing}</option>`).join('')}
                     </select>
                 </div>
             `;
@@ -1369,14 +1430,17 @@
             const journeyLabels = ['The Scenic Route', 'The Shortcut', 'The Road Less Traveled'];
 
             const cardsHtml = journeyOptions.map((item, index) => {
+                // Using the new card front HTML structure for consistency
                 const cardInnerHtml = `
                     <div class="drink-card-inner">
                         <div class="drink-card-front">
-                            <div class="card-header-front"><h3 class="drink-card-title" style="font-family: 'Rye', cursive; color: ${item.titleColor};">${item.name}</h3></div>
+                            <div class="card-header-front">
+                                <h3 class="drink-card-title" style="font-family: 'Rye', cursive; color: ${item.titleColor};">${item.name}</h3>
+                            </div>
                             <div class="recipe-content p-2">
                                 <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
                             </div>
-                            <div class="card-footer" style="background:rgba(0,0,0,0.5); border-color: #854d0e;">Find in Deck</div>
+                            <div class="card-footer" style="background:rgba(0,0,0,0.5); border-color: #854d0e; color: #f59e0b; text-shadow: 0 0 6px rgba(245, 158, 11, 0.6);">Find in Deck</div>
                         </div>
                     </div>`;
 
@@ -1393,8 +1457,8 @@
             content.innerHTML = `
                 <div class="flex flex-col items-center w-full">
                      <div id="journey-explanation" class="p-4 text-center text-gray-300 font-serif text-base leading-relaxed max-w-2xl mx-auto">
-                        Every ride needs a destination. Pick a drink, see where the night takes you.
-                    </div>
+                         Every ride needs a destination. Pick a drink, see where the night takes you.
+                     </div>
                     <div id="journey-hand-container">
                         ${cardsHtml}
                     </div>
@@ -1585,6 +1649,5 @@
     </script>
 </body>
 </html>
-
 
 
