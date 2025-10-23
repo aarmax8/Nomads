@@ -278,9 +278,9 @@
         .recipe-list-front li {
             display: flex; align-items: center; font-family: 'Roboto Condensed', sans-serif;
             font-size: 1.125rem; /* Slightly smaller, cleaner */
-            line-height: 1.5; /* Tightened line height */
+            line-height: 1.4; /* Further tightened line height */
             letter-spacing: 0.02em; 
-            margin-bottom: 0.5rem; /* Reduced margin */
+            margin-bottom: 0.375rem; /* Further reduced margin (6px) */
             color: #e5e7eb; /* Brighter */
         }
         .recipe-list-front li i { 
@@ -303,7 +303,7 @@
             line-height: 1.4;
             color: #2dd4bf; /* Changed to turquoise */
             text-shadow: 0 0 8px rgba(45, 212, 191, 0.7); /* Turquoise glow */
-            padding: 1rem 1.5rem; /* Gave it padding */
+            padding: 0.75rem 1.5rem; /* Reduced vertical padding */
             font-family: 'Cinzel', serif; /* Cleaner font */
             letter-spacing: 0.03em; 
             flex-shrink: 0;
@@ -1064,8 +1064,8 @@
                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-motorcycle"></i></button>
                                 </div>
-                                <div class="px-6 pt-5 text-center">
-                                    <p class="text-xl mb-4 font-cinzel text-gray-300">${item.flavorProfile}</p>
+                                <div class="px-6 pt-4 text-center"> <!-- Reduced pt-5 to pt-4 -->
+                                    <p class="text-xl mb-3 font-cinzel text-gray-300">${item.flavorProfile}</p> <!-- Reduced mb-4 to mb-3 -->
                                 </div>
                                 <div class="recipe-content">
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
@@ -1649,6 +1649,7 @@
     </script>
 </body>
 </html>
+
 
 
 
