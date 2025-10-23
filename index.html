@@ -28,35 +28,7 @@
             padding: 0;
         }
         
-        /* NEW: Added back the missing header logo styles */
-        #header-logo-container {
-            position: sticky; /* CHANGED from relative to sticky */
-            top: 0;
-            width: 100%; /* Ensure it goes edge-to-edge */
-            z-index: 10; /* NEW: Keep the header above the scrolling menu */
-            overflow: hidden; /* To contain the glint */
-            min-height: 110px; /* MODIFIED: Set height to match image aspect ratio */
-            /* REMOVED: border-radius: 0.5rem; */ /* No rounding for edge-to-edge */
-            
-            /* Background image with gradient overlay */
-            background-image: 
-                /* NEW: Fade-to-black edges */
-                linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.8) 100%),
-                
-                /* 1. Linear gradient (existing) */
-                linear-gradient(to top, rgba(133, 77, 14, 0.25) 0%, rgba(28, 7, 7, 0.0) 50%), 
-                
-                /* 2. NEW: Radial spotlight for the skull */
-                radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 25%),
-                
-                /* 3. The actual logo image (existing) */
-                url('https://github.com/aarmax8/Nomads/blob/b4cab37c01bb62e803cb5e1442773bd7c849685e/AI%20Title3.jpg?raw=true');
-            
-            background-size: 100% 100%; /* MODIFIED: Stretches image to fill container, 'skewing' it */
-            background-position: center; /* MODIFIED: Centered the image */
-            background-repeat: no-repeat;
-            
-            /* REMOVED: box-shadow: inset 0 0 30px 25px rgba(0, 0, 0, 0.9); */ /* Removed the shadow 'border' */
+       
         }
 
         /* NEW: Added a pseudo-element for glowing skull eyes */
@@ -84,7 +56,38 @@
             filter: blur(1px);
             box-shadow: 0 0 15px 4px rgba(245, 158, 11, 0.5);
             
-            /* Add pulsing animation */
+            /* Add pulsing animation *//* NEW: Added back the missing header logo styles */
+#header-logo-container {
+    /* --- CRITICAL CHANGES TO PUSH TO EDGES AND TOP --- */
+    position: fixed; /* Use 'fixed' to completely break out and stay at the top */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Use viewport width to ensure edge-to-edge */
+    z-index: 100; /* High z-index to ensure it sits above everything */
+    margin: 0; /* Remove any lingering margins */
+    /* ------------------------------------------------ */
+
+    overflow: hidden; /* To contain the glint */
+    min-height: 110px; /* MODIFIED: Set height to match image aspect ratio */
+    
+    /* Background image with gradient overlay */
+    background-image: 
+        /* NEW: Fade-to-black edges */
+        linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 15%, transparent 85%, rgba(0,0,0,0.8) 100%),
+        
+        /* 1. Linear gradient (existing) */
+        linear-gradient(to top, rgba(133, 77, 14, 0.25) 0%, rgba(28, 7, 7, 0.0) 50%), 
+        
+        /* 2. NEW: Radial spotlight for the skull */
+        radial-gradient(circle at 50% 80%, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 25%),
+        
+        /* 3. The actual logo image (existing) */
+        url('https://github.com/aarmax8/Nomads/blob/b4cab37c01bb62e803cb5e1442773bd7c849685e/AI%20Title3.jpg?raw=true');
+    
+    background-size: 100% 100%; /* MODIFIED: Stretches image to fill container, 'skewing' it */
+    background-position: center; /* MODIFIED: Centered the image */
+    background-repeat: no-repeat;
+}
             animation: pulse-eyes 2.5s infinite ease-in-out;
             z-index: 1; /* Above background, below glint */
         }
