@@ -73,20 +73,20 @@
         #header-logo-container::after {
             content: '';
             position: absolute;
-            top: 50%; /* Center vertically */
+            top: 80%; /* MOVED: Lowered to 80% from top */
             left: -150%; /* Start off-screen */
-            width: 250px; /* Width of the light beam */
-            height: 250px; /* Height of the light beam */
-            margin-top: -125px; /* Adjust for vertical centering */
+            width: 200px; /* CHANGED: Made smaller */
+            height: 200px; /* CHANGED: Made smaller */
+            margin-top: -100px; /* CHANGED: Adjusted vertical centering */
             background: radial-gradient(ellipse at center, 
-                rgba(255, 255, 255, 0.4) 0%,  /* Bright center */
+                rgba(255, 255, 255, 0.3) 0%,  /* CHANGED: Made softer */
                 rgba(255, 255, 255, 0.05) 50%, /* Fades out */
                 rgba(255, 255, 255, 0) 70%  /* Fully transparent edge */
             );
             border-radius: 50%; /* Make it circular */
-            filter: blur(15px); /* Soften the edges */
+            filter: blur(20px); /* CHANGED: Softened the edges more */
             transform: skewX(0); /* Remove old skew */
-            animation: glint-effect 6s infinite linear; /* Change animation timing */
+            animation: glint-effect 7s infinite linear; /* CHANGED: Slowed down animation */
             animation-delay: 1s;
             z-index: 2; 
         }
@@ -610,6 +610,78 @@
              transform: scale(1) rotate(0deg);
              opacity: 1;
         }
+        
+        /* --- UPDATED: Style for single-action floating button (LEFT) --- */
+        .floating-action-btn-left {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem; /* Positioned on the left */
+            z-index: 49; /* Just below the menu */
+            width: 60px;
+            height: 60px;
+            background-color: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 2px solid #2dd4bf; /* Use TURQUOISE border */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3); /* TURQUOISE shadow */
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden; 
+        }
+        .floating-action-btn-left:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4); /* TURQUOISE shadow */
+            border-color: #2dd4bf;
+        }
+        .floating-action-btn-left i {
+            font-size: 1.5rem; /* 24px */
+            color: #2dd4bf; /* TURQUOISE icon */
+            transition: all 0.3s ease;
+        }
+        .floating-action-btn-left:hover i {
+            transform: rotate(90deg); /* Changed rotation for 'bars' */
+        }
+
+        /* --- NEW: Style for single-action floating button (MIDDLE) --- */
+        .floating-action-btn-middle {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%); /* Center horizontally */
+            z-index: 49; 
+            width: 60px;
+            height: 60px;
+            background-color: rgba(17, 17, 17, 0.9);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            border: 2px solid #854d0e; /* Use AMBER border */
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); /* AMBER shadow */
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden; 
+        }
+        .floating-action-btn-middle:hover {
+            transform: translateX(-50%) scale(1.1); /* Keep centering on hover */
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); /* AMBER shadow */
+            border-color: #f59e0b;
+        }
+        .floating-action-btn-middle i {
+            font-size: 1.5rem; /* 24px */
+            color: #f59e0b; /* AMBER icon */
+            transition: all 0.3s ease;
+        }
+        .floating-action-btn-middle:hover i {
+            transform: rotate(225deg); /* Keep original dice rotation */
+        }
+
         /* --- END: Floating Action Button Menu Styles --- */
 
     </style>
@@ -643,10 +715,7 @@
                     <i class="fas fa-book-open"></i>
                     <span>Stories</span> <!-- Text will be updated by JS -->
                 </button>
-                <button id="browse-btn" class="floating-menu-item">
-                    <i class="fas fa-bars"></i>
-                    <span>Menu</span>
-                </button>
+                <!-- REMOVED: Browse/Menu button removed from here -->
             </div>
             
             <!-- Main toggle button -->
@@ -655,6 +724,16 @@
                 <i class="icon-close fas fa-times"></i>
             </button>
         </div>
+
+        <!-- NEW: Browse/Menu Button -->
+        <button id="browse-btn-main" class="floating-action-btn-left" title="Browse Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <!-- UPDATED: Random Drink Button (now in middle) -->
+        <button id="random-drink-btn" class="floating-action-btn-middle" title="Pick a Random Drink">
+            <i class="fas fa-dice"></i>
+        </button>
     </div>
 
     <!-- Modals -->
@@ -1368,11 +1447,7 @@
                 if (!button) return;
 
                 switch (button.id) {
-                    case 'browse-btn':
-                        updatePillsFromState();
-                        filterModal.classList.remove('hidden');
-                        setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
-                        break;
+                    // REMOVED: case 'browse-btn'
                     case 'stories-nav-btn':
                         setCardView(!isGlobalTarotView); // Toggle the global view
                         break;
@@ -1393,6 +1468,40 @@
             });
             // --- END: Floating Action Button Menu Listeners ---
 
+
+            <!-- --- UPDATED: Random Drink Button Listener --- -->
+            const randomDrinkBtn = document.getElementById('random-drink-btn');
+            if (randomDrinkBtn) {
+                randomDrinkBtn.addEventListener('click', () => {
+                    const allDrinkCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
+                    if (allDrinkCards.length === 0) return; // No drinks to randomize
+
+                    const randomIndex = Math.floor(Math.random() * allDrinkCards.length);
+                    const randomCard = allDrinkCards[randomIndex];
+
+                    // Ensure card is flipped to recipe side
+                    randomCard.classList.remove('is-flipped');
+                    
+                    // Scroll to and highlight the card
+                    highlightAndScrollToCard(randomCard);
+
+                    // If menu is open, close it
+                    closeFloatingMenu();
+                });
+            }
+
+            // --- NEW: Browse/Menu Button Listener ---
+            const browseBtnMain = document.getElementById('browse-btn-main');
+            if (browseBtnMain) {
+                browseBtnMain.addEventListener('click', () => {
+                    updatePillsFromState();
+                    filterModal.classList.remove('hidden');
+                    setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
+                    
+                    // If menu is open, close it (good practice)
+                    closeFloatingMenu();
+                });
+            }
 
             // --- Modal Close Buttons & Handlers ---
             
