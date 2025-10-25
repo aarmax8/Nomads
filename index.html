@@ -297,20 +297,21 @@
             
             --bg-image: none;
             background-image: 
-                /* NEW LAYER 1: Subtle turquoise tint for overall theme and better contrast */
-                linear-gradient(rgba(45, 212, 191, 0.1), rgba(45, 212, 191, 0.05)),
-                /* 2. Top Fade: Strong fade for text legibility (Opaque at top, fades out quickly) */
-                linear-gradient(to bottom, rgba(17,17,17,0.95) 0%, rgba(17,17,17,0.6) 15%, transparent 30%), 
-                /* 3. Bottom Fade: Light fade at the very bottom edge for polish (mostly transparent) */
+                /* NEW LAYER 1 (Turquoise & Dark Fade): Darker and fades out quickly from top */
+                linear-gradient(to bottom, 
+                    rgba(17, 17, 17, 1) 0%, 
+                    rgba(45, 212, 191, 0.25) 30%, 
+                    transparent 60%
+                ),
+                /* Layer 2 (Bottom Dark Fade): Polish over the image anchor */
                 linear-gradient(to top, rgba(17,17,17,0.5) 0%, transparent 10%),
-                /* 4. The Actual Image */
+                /* Layer 3: The Actual Image */
                 var(--bg-image);
 
-            /* UPDATED: background-position must now account for 4 layers */
-            background-position: center, center, center, bottom;
+            /* UPDATED: Total of 3 layers */
+            background-position: center, center, bottom;
             background-repeat: no-repeat;
-            /* UPDATED: background-size must now account for 4 layers */
-            background-size: 100% 100%, 100% 100%, 100% 100%, cover;
+            background-size: 100% 100%, 100% 100%, cover;
         }
         
         /* NEW HEADER: For the flipped card title, replacing the old footer placement */
