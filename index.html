@@ -104,8 +104,9 @@
         
         #menu-grid {
             display: flex; gap: 1.5rem; overflow-x: auto; 
-            /* MODIFIED: Changed 'mandatory' to 'proximity' to allow "flick" scrolling */
-            scroll-snap-type: x proximity;
+            /* MODIFIED: Changed 'proximity' to 'mandatory' for stricter snapping */
+            scroll-snap-type: x mandatory; 
+            scroll-behavior: smooth; /* ADDED: Ensure smooth programmatic scrolling */
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             padding: 1rem 0;
             
@@ -116,9 +117,8 @@
             right: 0;
             bottom: 0; /* Fills the 'main' container */
             height: 100%; /* Explicitly set height */
-            /* REMOVED: padding-bottom: 120px; */
             box-sizing: border-box; /* Include padding in height calculation */
-            padding-bottom: 1rem; /* Give some space for the new scrollbar */
+            padding-bottom: 1rem; /* Give some space for the scrollbar */
         }
         
         /* --- NEW: Amber Scrollbar for Menu Grid --- */
@@ -151,15 +151,13 @@
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
-            /* REMOVED: min-height: 500px; */
             transition: opacity 0.3s;
             margin-left: auto;
             margin-right: auto;
             position: relative; /* Ensure card is a positioning context */
-            /* MODIFIED: Set to 100% to fill the grid's content area */
             height: 100%;
-            margin-top: 0; /* Remove specific top margin */
-            margin-bottom: 0; /* Remove specific bottom margin */
+            margin-top: 0; 
+            margin-bottom: 0; 
         }
         /* Add specific margin for first/last card to compensate for removed padding */
         #menu-grid > .drink-card:first-child {
@@ -170,13 +168,11 @@
          }
 
         @media (min-width: 640px) { 
-            /* MODIFIED: Set to 100% */
             .drink-card { flex-basis: 70%; height: 100%; }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } /* One main card on tablets */
         @media (min-width: 1024px) { 
-            /* MODIFIED: Set to 100% */
             .drink-card { flex-basis: 50%; height: 100%; }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
@@ -429,11 +425,8 @@
             font-family: 'Cinzel', serif;
         }
         
-        /* --- NEW: Filter Bar Styles --- */
-        /* REMOVED: #filter-bar-container styles */
-        /* REMOVED: #filter-pills-wrapper styles */
-        /* REMOVED: .filter-pill-separator styles */
-        /* --- End Filter Bar Styles --- */
+        /* --- Filter Bar Styles --- */
+        /* REMOVED */
 
         .modal { transition: opacity 0.3s ease-in-out; }
         
@@ -551,36 +544,31 @@
 
         /* --- Floating Action Button Menu Styles --- */
         #floating-menu-container {
-            position: relative; /* MODIFIED: Was fixed */
-            bottom: auto; /* MODIFIED */
-            right: auto; /* MODIFIED */
+            position: relative; 
+            bottom: auto; 
+            right: auto; 
             z-index: 50;
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Removed fixed positioning, will be placed by flex wrapper */
         }
 
         #floating-menu-items {
-            position: absolute; /* ADDED */
-            bottom: 100%; /* MODIFIED: Was top: 100% */
-            right: 0; /* ADDED */
-            margin-bottom: 0.75rem; /* MODIFIED: Was margin-top */
-            margin-top: 0; /* MODIFIED */
-
+            position: absolute; 
+            bottom: 100%; 
+            right: 0; 
+            margin-bottom: 0.75rem; 
+            margin-top: 0; 
             display: flex;
             flex-direction: column;
-            align-items: flex-end; /* Align text labels to the right */
+            align-items: flex-end; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            
-            /* Hidden state */
             opacity: 0;
-            transform: translateY(10px); /* MODIFIED: Was -10px */
+            transform: translateY(10px); 
             pointer-events: none;
         }
 
         #floating-menu-items.is-visible {
-            /* Visible state */
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
@@ -603,7 +591,6 @@
             white-space: nowrap;
         }
         
-        /* NEW: Active filter state for menu item */
         .floating-menu-item.is-active-filter {
             border-color: #f59e0b; /* Amber border */
             color: #f59e0b; /* Amber text */
@@ -647,7 +634,7 @@
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden; 
-            flex-shrink: 0; /* ADDED: Prevent button from shrinking */
+            flex-shrink: 0; 
         }
 
         #floating-menu-toggle:hover {
@@ -667,7 +654,7 @@
             font-size: 1.5rem; /* SMALLER */
             color: #2dd4bf; /* Match the border */
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: absolute; /* Allow them to stack and fade */
+            position: absolute; 
             transform: scale(1) rotate(0deg);
             opacity: 1;
         }
@@ -686,120 +673,100 @@
              opacity: 1;
         }
         
-        /* --- UPDATED: Style for single-action floating button (LEFT) --- */
         .floating-action-btn-left {
-            position: relative; /* MODIFIED: No longer fixed */
-            bottom: auto; /* MODIFIED */
-            left: auto; /* MODIFIED */
-            z-index: auto; /* MODIFIED */
+            position: relative; 
+            bottom: auto; 
+            left: auto; 
+            z-index: auto; 
             width: 60px;
             height: 60px;
             background-color: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border: 2px solid #2dd4bf; /* Use TURQUOISE border */
+            border: 2px solid #2dd4bf; 
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3); /* TURQUOISE shadow */
+            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3); 
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden; 
         }
         .floating-action-btn-left:hover {
             transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4); /* TURQUOISE shadow */
+            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4); 
             border-color: #2dd4bf;
         }
         .floating-action-btn-left i {
             font-size: 1.5rem; /* 24px */
-            color: #2dd4bf; /* TURQUOISE icon */
+            color: #2dd4bf; 
             transition: all 0.3s ease;
         }
         .floating-action-btn-left:hover i {
-            /* MODIFIED: Changed rotation for 'fast-backward' */
             transform: scale(0.9);
         }
         
-        /* NEW: Style for toggle button icons */
-        /* By default (Recipe View), show Book icon, hide Scroll icon */
         #toggle-view-btn-main .icon-recipe { display: none; }
         #toggle-view-btn-main .icon-stories { display: inline-block; }
 
-        /* When in Story View, show Scroll icon, hide Book icon */
         #toggle-view-btn-main.is-story-view .icon-recipe { display: inline-block; }
         #toggle-view-btn-main.is-story-view .icon-stories { display: none; }
         
-        /* NEW: Style for active filter button */
-        /* REMOVED: .floating-action-btn-left.is-active-filter styles */
-        
-
-        /* --- NEW: Style for single-action floating button (MIDDLE) --- */
         .floating-action-btn-middle {
-            position: relative; /* MODIFIED: No longer fixed */
-            bottom: auto; /* MODIFIED */
-            left: auto; /* MODIFIED */
-            transform: none; /* MODIFIED */
-            z-index: auto; /* MODIFIED */ 
+            position: relative; 
+            bottom: auto; 
+            left: auto; 
+            transform: none; 
+            z-index: auto; 
             width: 60px;
             height: 60px;
             background-color: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            border: 2px solid #854d0e; /* Use AMBER border */
+            border: 2px solid #854d0e; 
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); /* AMBER shadow */
+            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); 
             cursor: pointer;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             overflow: hidden; 
         }
         .floating-action-btn-middle:hover {
-            transform: scale(1.1); /* MODIFIED */
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); /* AMBER shadow */
+            transform: scale(1.1); 
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); 
             border-color: #f59e0b;
         }
         .floating-action-btn-middle i {
             font-size: 1.5rem; /* 24px */
-            color: #f59e0b; /* AMBER icon */
+            color: #f59e0b; 
             transition: all 0.3s ease;
         }
         .floating-action-btn-middle:hover i {
-            transform: rotate(225deg); /* Keep original dice rotation */
+            transform: rotate(225deg); 
         }
 
-        /* --- Style for single-action floating button (RIGHT) --- */
-        /* REMOVED: .floating-action-btn-right styles */
-
-        /* --- NEW: Footer Bar Styles --- */
+        /* --- Footer Bar Styles --- */
         footer {
             flex-shrink: 0;
             padding: 0.75rem 1rem;
-            /* MODIFIED: Added background image */
-            background-color: rgba(0,0,0,0.5); /* Darker fallback */
+            background-color: rgba(0,0,0,0.5); 
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://raw.githubusercontent.com/aarmax8/Nomads/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/panoback1.jpg');
             background-size: cover;
             background-position: center;
-            /* END MODIFIED */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             display: flex;
-            /* MODIFIED: Use justify-between for 5 items */
             justify-content: space-between;
             align-items: center;
             position: relative;
             z-index: 10;
         }
         
-        /* --- END: Footer Bar Styles --- */
-
-        /* --- END: Floating Action Button Menu Styles --- */
-
-        /* --- NEW: Splash Screen Styles --- */
+        /* --- Splash Screen Styles --- */
         #splash-screen {
             position: fixed;
             inset: 0;
@@ -840,13 +807,12 @@
                 opacity: 1;
             }
         }
-        /* --- END: Splash Screen Styles --- */
 
     </style>
 </head>
 <body class="antialiased text-gray-300">
 
-    <!-- NEW: Splash Screen -->
+    <!-- Splash Screen -->
     <div id="splash-screen">
         <div class="splash-text">Tap to Enter</div>
     </div>
@@ -857,36 +823,27 @@
                 <img src="https://github.com/aarmax8/Nomads/blob/dc5ee5946a1f36d3a1883cbec868080471acdfbf/ai%20nomads%20title1.png?raw=true" id="header-logo-image" alt="Nomad's Logo">
             </div>
         </header>
-
-        <!-- REMOVED: Filter Bar -->
-        <!-- <div id="filter-bar-container"> ... </div> -->
         
         <main>
             <div id="menu-grid"></div>
         </main>
 
-        <!-- NEW: Footer bar for buttons -->
+        <!-- Footer bar for buttons -->
         <footer id="app-footer">
-            <!-- NEW: Scroll to Start Button -->
             <button id="scroll-prev-btn" class="floating-action-btn-left" title="Scroll Left">
-                <!-- MODIFIED: Changed icon to fa-angles-left -->
                 <i class="fas fa-angles-left"></i>
             </button>
             
-            <!-- NEW: Toggle View Button -->
             <button id="toggle-view-btn-main" class="floating-action-btn-left" title="Toggle Recipe/Story">
                 <i class="fas fa-book-open icon-stories"></i>
                 <i class="fas fa-scroll icon-recipe"></i>
             </button>
      
-            <!-- Random Drink Button -->
             <button id="random-drink-btn" class="floating-action-btn-middle" title="Pick a Random Drink">
                 <i class="fas fa-dice"></i>
             </button>
 
-            <!-- NEW: Scroll Next Button -->
             <button id="scroll-next-btn" class="floating-action-btn-left" title="Scroll Right">
-                <!-- MODIFIED: Changed icon to fa-angles-right -->
                 <i class="fas fa-angles-right"></i>
             </button>
 
@@ -894,7 +851,6 @@
             <div id="floating-menu-container" class="flex-shrink-0">
                 <!-- Menu items (hidden by default) -->
                 <div id="floating-menu-items">
-                    <!-- NEW: Filters Button -->
                     <button id="filters-menu-btn" class="floating-menu-item">
                         <i class="fas fa-martini-glass-citrus"></i>
                         <span>Filters</span>
@@ -907,8 +863,6 @@
                         <i class="fas fa-heart"></i>
                         <span>Favorites</span>
                     </button>
-                    <!-- REMOVED: Stories button -->
-                    <!-- <button id="stories-nav-btn" class="floating-menu-item"> ... </button> -->
                 </div>
      
                 <!-- Toggle Button -->
@@ -918,15 +872,9 @@
                 </button>
             </div>
         </footer>
-
-        <!-- REMOVED: Old floating buttons -->
-        <!-- <button id="browse-btn-main" ... > -->
-        <!-- <button id="random-drink-btn" ... > -->
-        <!-- <button id="main-favorites-btn" ... > -->
     </div>
 
     <!-- Modals -->
-
     <div id="favorites-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
         <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
             <div class="modal-header p-6 flex-shrink-0">
@@ -1683,8 +1631,11 @@
             let scrollTimeout;
             menuGrid.addEventListener('scroll', () => {
                 clearTimeout(scrollTimeout);
-                scrollTimeout = setTimeout(updateActiveCard, 150); 
+                // Use throttled function for updating active card
+                throttledUpdateActiveCard(); 
             });
+            // Throttled version of updateActiveCard
+            const throttledUpdateActiveCard = throttle(updateActiveCard, 150); 
             
             // --- Listeners for Floating Action Button Menu ---
             floatingMenuToggle.addEventListener('click', () => {
