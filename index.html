@@ -334,6 +334,9 @@
             /* Removed max-height restriction */
             position: relative;
             z-index: 2;
+            /* IMPROVED TEXT VISIBILITY */
+            color: #f3f4f6; /* Lighter gray/white */
+            text-shadow: 1px 1px 4px rgba(0,0,0,1); /* Stronger shadow */
         }
 
         .story-text {
@@ -342,8 +345,7 @@
             text-align: justify;
             font-size: 1.15rem;
             line-height: 1.5;
-            color: #e5e7eb; /* Brightened text for contrast */
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Stronger shadow */
+            /* Removed inline color/shadow override, relies on parent (.card-back-content) for style */
         }
 
         .card-back-content::-webkit-scrollbar { width: 4px; }
@@ -498,6 +500,10 @@
 
         /* --- NEW BRIGHTER MODAL STYLES --- */
         .modal-panel {
+            /* FIX: Set max-height to leave generous space at top and especially bottom 
+               (Approx. 12rem/192px of total screen height free space) */
+            max-height: calc(100vh - 12rem); 
+            
             background-image: radial-gradient(circle at top, rgba(41, 37, 36, 0.4), rgba(28, 25, 23, 0.7)), url('https://www.transparenttextures.com/patterns/leather.png');
             border: 2px solid #f59e0b;
             box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), inset 0 0 20px rgba(245, 158, 11, 0.15);
@@ -920,14 +926,16 @@
     
     <!-- Favorites Modal -->
     <div id="favorites-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+        <!-- MODIFIED: max-h-[95vh] replaced with calculated max-height for better clearance -->
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[calc(100vh-12rem)] flex flex-col">
             <div class="modal-header p-6 flex-shrink-0">
                 <div class="flex justify-between items-center">
                     <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Favorites</h2>
                     <button id="close-favorites-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
                 </div>
             </div>
-            <div id="favorites-list-container" class="p-6 text-gray-300 overflow-y-auto">
+            <!-- ADDED: flex-grow class to make content scrollable in the remaining space -->
+            <div id="favorites-list-container" class="p-6 text-gray-300 overflow-y-auto flex-grow">
                 <!-- Favorite items will be rendered here by JS -->
             </div>
         </div>
@@ -935,18 +943,21 @@
 
     <!-- Bar Stock Modal -->
     <div id="bar-stock-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+        <!-- MODIFIED: max-h-[95vh] replaced with calculated max-height for better clearance -->
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[calc(100vh-12rem)] flex flex-col">
             <div class="modal-header p-6 flex justify-between items-center flex-shrink-0">
                 <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Bar Stock</h2>
                 <button id="close-stock-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
             </div>
-            <div id="bar-stock-content" class="p-6 text-gray-300 overflow-y-auto"></div>
+            <!-- ADDED: flex-grow class to make content scrollable in the remaining space -->
+            <div id="bar-stock-content" class="p-6 text-gray-300 overflow-y-auto flex-grow"></div>
         </div>
     </div>
     
     <!-- Filter Modal -->
     <div id="filter-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+        <!-- MODIFIED: max-h-[95vh] replaced with calculated max-height for better clearance -->
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[calc(100vh-12rem)] flex flex-col">
             <div class="modal-header p-6 flex-shrink-0">
                 <div class="flex justify-between items-center">
                     <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Browse The Deck</h2>
@@ -954,8 +965,9 @@
                 </div>
                 <p class="text-gray-400 mt-2" id="filter-modal-subtitle">Select filters to find your drink.</p>
             </div>
-            <div id="filter-modal-content" class="p-6 text-gray-300 overflow-y-auto"></div>
-             <div class="p-4 border-t border-white/10 flex justify-end gap-4">
+            <!-- ADDED: flex-grow class to make content scrollable in the remaining space -->
+            <div id="filter-modal-content" class="p-6 text-gray-300 overflow-y-auto flex-grow"></div>
+             <div class="p-4 border-t border-white/10 flex justify-end gap-4 flex-shrink-0">
                 <button id="reset-filters-btn" class="py-2 px-6 rounded-lg bg-transparent border border-gray-500 hover:bg-gray-700 text-white font-bold transition-colors">Reset</button>
                 <button id="apply-filters-btn" class="py-2 px-6 rounded-lg bg-amber-600 hover:bg-amber-500 text-black font-bold transition-colors">Show Drinks</button>
             </div>
@@ -1047,7 +1059,7 @@
                 { name: "Oracle's Kiss", flavorProfile: "A sweet and floral blend of citrus vodka, elderflower, and cranberry.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], story: "Some lady at a carnival gave our treasurer a 'kiss for good luck.' He woke up three hours later with his wallet gone and a lingering taste of cranberry. We made this to commemorate his gullibility.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "The future is sweet and flowery." }, // FIXED: Corrected https
                 
                 { name: "Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the only two brain cells our prospect has left. They work together, they're surprisingly strong, and they're usually fueled by whiskey. Just like this drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth." },
-                { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this drink in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7EC301c4fcc8.jpg", cardHook: "Find your oasis." }
+                { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this drink in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", image: "https://github.com/aarmax8/Nomads/blob/main/thumbnail_IMG_8224.jpg?raw=true", cardHook: "Find your oasis." } // FIXED: Corrected URL
             ];
 
             const processedCocktails = initialCocktails.map((cocktail) => {
@@ -1315,12 +1327,13 @@
                             }
                         }
                         // We are done with this card, so unobserve it
-                        imageObserver.unobserve(card);
+                        // CHANGE: Changed root from menuGrid to window in observer options below
+                        imageObserver.unobserve(card); 
                     }
                 });
                 }, { 
-                    root: menuGrid, // Observe scrolling within the menu grid
-                    rootMargin: "200px" // MODIFIED: Load images when 200px from *any* edge
+                    root: null, // Use the viewport (window) as the root
+                    rootMargin: "200px" // Load images when 200px from *any* edge of the viewport
                 }); 
                 
                 // Observe the parent cards
