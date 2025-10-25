@@ -19,6 +19,7 @@
     <style>
         html, body {
             overscroll-behavior-y: contain;
+            /* MODIFIED: Set both html and body to 100% height */
             height: 100%;
             overflow: hidden; /* Prevent scrolling on the body */
         }
@@ -29,18 +30,15 @@
             background-size: cover;
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Stack header, main, footer vertically */
-            
-            /* MODIFIED: Use dynamic viewport height to ensure body fills the entire screen, including safe areas */
-            height: 100vh; /* Fallback for older browsers */
-            height: 100dvh;
+            /* REMOVED: display: flex; -- No longer needed, body is just the background */
+            /* REMOVED: flex-direction: column; */
         }
         
         .app-container {
             display: flex;
             flex-direction: column;
-            height: 100%; /* Make the app container fill the body */
+            /* MODIFIED: Set app-container height to 100dvh to fill the entire dynamic screen height */
+            height: 100dvh;
         }
         
         header {
@@ -1861,6 +1859,7 @@
     </script>
 </body>
 </html>
+
 
 
 
