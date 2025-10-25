@@ -164,8 +164,8 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; /* Ensure card is a positioning context */
-            /* ADJUSTED: Increased height to ensure longest recipes fit and to visually overlap header/footer */
-            height: calc(100% + 2rem); 
+            /* UPDATED: Reduced card height for a tighter vertical fit */
+            height: calc(100% + 1rem); 
             margin-top: 0; 
             margin-bottom: 0; 
         }
@@ -178,12 +178,12 @@
          }
 
         @media (min-width: 640px) { 
-            .drink-card { flex-basis: 70%; height: calc(100% + 2rem); }
+            .drink-card { flex-basis: 70%; height: calc(100% + 1rem); }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } /* One main card on tablets */
         @media (min-width: 1024px) { 
-            .drink-card { flex-basis: 50%; height: calc(100% + 2rem); }
+            .drink-card { flex-basis: 50%; height: calc(100% + 1rem); }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } /* One main card on desktops */
@@ -297,14 +297,14 @@
             
             --bg-image: none;
             background-image: 
-                /* UPDATED: Smoother fade for better blend with the image */
+                /* UPDATED: Compressed fade for tighter fit */
                 linear-gradient(to bottom, 
                     rgba(0, 0, 0, 1) 0%,              /* Solid black at very top */
-                    rgba(0, 0, 0, 0.9) 5%,            /* Darker, opaque fade for text background */
-                    rgba(0, 100, 100, 0.7) 15%,       /* Max dark turquoise strength here */
-                    rgba(0, 100, 100, 0.3) 30%,       /* Softer dark turquoise blend */
-                    rgba(0, 0, 0, 0.05) 60%,          /* Very slight dark veil, subtle blend with image */
-                    transparent 85%                   /* Seamlessly disappear just above image anchor */
+                    rgba(0, 0, 0, 0.9) 4%,            /* Darker, opaque fade for text background */
+                    rgba(0, 100, 100, 0.7) 10%,       /* Max dark turquoise strength here */
+                    rgba(0, 100, 100, 0.1) 25%,       /* Softer dark turquoise blend */
+                    rgba(0, 0, 0, 0.05) 45%,          /* Very slight dark veil, subtle blend with image */
+                    transparent 65%                   /* Fade to transparent MUCH sooner */
                 ),
                 /* Layer 2 (Bottom Fade): Subtle dark fade over the image anchor */
                 linear-gradient(to top, rgba(17,17,17,0.5) 0%, transparent 10%),
@@ -1043,7 +1043,7 @@
                 },
                 { name: "Sidecar", flavorProfile: "A powerful and classic combination of strong brandy and bright, citrusy orange.", recipe: ["2 oz E&J Brandy", "1 oz Cointreau", "0.75 oz Lemon Juice", "Sugar Rim"], story: "Our mechanic, 'Wrench,' says this drink has the three essential food groups: strong, sour, and sugar. He also thinks rust is a 'nice patina.' His judgment is questionable, but his drink is solid.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/724b49e9a385815706ed2dbc9d7ca6f3.jpg", cardHook: "Strong enough to strip rust." },
                 { name: "Blackout", flavorProfile: "A simple, dark, and potent mix of herbal Jägermeister and sweet cola.", recipe: ["1.5 oz Jägermeister", "Fill a tall glass with Cola"], story: "The name isn't a suggestion, it's the inevitable conclusion. We invented it for 'initiation night.' If a prospect can drink three and still remember their own name, we're probably spelling it wrong on their patch.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7645bbca2888163b21bf0d193ad3fb21.jpg", cardHook: "A suggestion and a warning." },
-                { name: "Peaches 'n' Scream", flavorProfile: "A sweet and juicy blend of peach and orange, with a hint of Southern Comfort's spice.", recipe: ["1.5 oz Peach Schnapps", "0.5 oz Southern Comfort", "Fill a tall glass with Orange Juice"], story: "Named for the two sounds you'll hear. First, someone will say 'Ooh, peaches!' Then, about ten minutes later, you'll hear them scream 'Why did I have a third one?!' It's a predictable, and hilarious, cycle.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7f8779686c19c3de763ad13c03fee127.jpg", cardHook: "Our version of a smoothie." },
+                { name: "Peaches 'n' Scream", flavorProfile: "A sweet and juicy blend of peach and orange, with a hint of Southern Comfort's spice.", recipe: ["1.5 oz Peach Schnapps", "0.5 oz Southern Comfort", "Fill a tall glass with Orange Juice"], story: "Named for the two sounds you'll hear. First, someone will say 'Ooh, peaches!' Then, about ten minutes later, you'll hear them scream 'Why did I have a third one?!' Tt's a predictable, and hilarious, cycle.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7f8779686c19c3de763ad13c03fee127.jpg", cardHook: "Our version of a smoothie." },
                 { name: "White Liner", flavorProfile: "A sophisticated ride of bright floral notes, sharp citrus, and a clean, bubbly finish.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.75 oz Lemon Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This is for the guy who follows the rules. The one who actually signals, stays under the speed limit, and calls his mother. We don't understand him, but we make him this drink out of pity.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/95ae7009ba144fc3dd9fc68d14b5f929.jpg", cardHook: "For when you follow the rules too closely." },
                 { name: "Apricot Ambush", flavorProfile: "Sweet apricot brandy gets a tart lemon kick, smoothed out with a bubbly finish.", recipe: ["1.5 oz E&J Brandy", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice", "Top with Club Soda"], story: "We were ambushed by a rival club. They were terrible at it. They dropped a case of this stuff while retreating. We drank it to celebrate their incompetence. The tastiest victory we never had to fight for.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/83c048414249b2ffaf2cef7f5cdc5590.jpg", cardHook: "The tastiest ambush you'll ever face." },
                 { name: "Crimson Guard", flavorProfile: "A sharp and fruity blend of sloe gin and lime with a clean soda finish.", recipe: ["1.5 oz Sloe Gin", "0.5 oz Tanqueray Gin", "Fill a tall glass with Club Soda", "Splash of Lime Juice"], story: "We call it the Crimson Guard because after a few of these, you'll feel invincible enough to guard a gate to hell. You're not. And the resulting hangover will feel like you've been there.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/CuHwaf.jpg", cardHook: "Safer than Dead Man's Curve." },
