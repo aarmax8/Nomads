@@ -2,16 +2,20 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- MODIFIED: Added viewport-fit=cover to allow app to fill the entire screen -->
+    
+    <!-- UPDATED: Added viewport-fit=cover to allow the app to fill the entire screen -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>DILLIGAF</title>
 
+    <!-- ADDED: Meta tags for iOS full-screen app experience -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Nomad's">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/aarmax8/Nomads/b15a4394afade6bb543c1ece00102771641d1c82/Nicon5.png">
     
-    <!-- === Styles and Fonts === --><script src="https://cdn.tailwindcss.com"></script>
+    <!-- End of added tags -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Cinzel:wght@400;700&family=IM+Fell+DW+Pica&family=Roboto+Condensed:wght@700&family=Rye&display=swap" rel="stylesheet">
@@ -19,7 +23,6 @@
     <style>
         html, body {
             overscroll-behavior-y: contain;
-            /* MODIFIED: Set both html and body to 100% height */
             height: 100%;
             overflow: hidden; /* Prevent scrolling on the body */
         }
@@ -30,15 +33,14 @@
             background-size: cover;
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
-            /* REMOVED: display: flex; -- No longer needed, body is just the background */
-            /* REMOVED: flex-direction: column; */
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack header, main, footer vertically */
         }
         
         .app-container {
             display: flex;
             flex-direction: column;
-            /* MODIFIED: Set app-container height to 100dvh to fill the entire dynamic screen height */
-            height: 100dvh;
+            height: 100%; /* Make the app container fill the body */
         }
         
         header {
@@ -46,8 +48,8 @@
             /* ADDED: z-index to stay on top of card glow */
             position: relative;
             z-index: 10;
-            /* ADDED: Pushes content down from the status bar/notch area on iOS */
-            padding-top: env(safe-area-inset-top);
+            /* REMOVED: The padding-top below was pushing the content down. */
+            /* padding-top: env(safe-area-inset-top); */
         }
         
         main {
@@ -61,8 +63,17 @@
         #header-logo-container {
             position: relative;
             overflow: hidden; /* To contain the glint */
-            /* MODIFIED: Reduced min-height to give more vertical space to the cards */
-            min-height: 170px;
+            min-height: 200px;
+
+            /* REMOVED: Fallback for desktop preview. 
+               This was just to simulate the effect.
+            */
+            /* padding-top: 44px; */
+            
+            /* This is the real code for the device. 
+               It will override the 44px above if the device supports it.
+            */
+            padding-top: env(safe-area-inset-top);
             
             /* Background image with gradient overlay */
             background-image: 
@@ -820,7 +831,7 @@
 </head>
 <body class="antialiased text-gray-300">
 
-    <!-- Splash Screen -->
+    <!-- Splash screen to prompt user to tap -->
     <div id="splash-screen">
         <div class="splash-text">Tap to Enter</div>
     </div>
@@ -833,10 +844,12 @@
         </header>
         
         <main>
+            <!-- Grid for drink cards -->
             <div id="menu-grid"></div>
         </main>
 
-        <!-- Footer bar for buttons -->
+        
+        <!-- Main application footer -->
         <footer id="app-footer">
             <button id="scroll-prev-btn" class="floating-action-btn-left" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
@@ -855,9 +868,11 @@
                 <i class="fas fa-angles-right"></i>
             </button>
 
-            <!-- Floating Menu Button -->
+            
+            <!-- Container for the floating action button menu -->
             <div id="floating-menu-container" class="flex-shrink-0">
-                <!-- Menu items (hidden by default) -->
+                
+                <!-- Hidden menu items -->
                 <div id="floating-menu-items">
                     <button id="filters-menu-btn" class="floating-menu-item">
                         <i class="fas fa-martini-glass-citrus"></i>
@@ -873,7 +888,8 @@
                     </button>
                 </div>
      
-                <!-- Toggle Button -->
+                
+                <!-- Main toggle button for the menu -->
                 <button id="floating-menu-toggle">
                     <i class="fas fa-bars icon-open"></i>
                     <i class="fas fa-times icon-close"></i>
@@ -882,7 +898,8 @@
         </footer>
     </div>
 
-    <!-- Modals -->
+    
+    <!-- Favorites Modal -->
     <div id="favorites-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
         <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
             <div class="modal-header p-6 flex-shrink-0">
@@ -892,11 +909,12 @@
                 </div>
             </div>
             <div id="favorites-list-container" class="p-6 text-gray-300 overflow-y-auto">
-                <!-- Favorite items will be injected here -->
+                <!-- Favorite items will be rendered here by JS -->
             </div>
         </div>
     </div>
 
+    <!-- Bar Stock Modal -->
     <div id="bar-stock-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
         <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
             <div class="modal-header p-6 flex justify-between items-center flex-shrink-0">
@@ -907,6 +925,7 @@
         </div>
     </div>
     
+    <!-- Filter Modal -->
     <div id="filter-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
         <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
             <div class="modal-header p-6 flex-shrink-0">
@@ -950,7 +969,7 @@
                 { name: "Rusty Nail", flavorProfile: "A timeless and potent blend of smoky Scotch whisky sweetened by the honeyed, herbal spice of Drambuie.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Drambuie", "Serve on the rocks", "Lemon Twist Garnish"], story: "This is what you drink when you've made a deal you know you'll regret. Like trading your bike for a 'guaranteed' winning lottery ticket. Ask Jimmy how that went. Actually, don't. He's still sensitive about it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "Every deal has its price." },
                 { name: "Mechanic", flavorProfile: "A blast of bright citrus and sweet orange liqueur, carried by a wave of sour mix.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "2 dashes Orange Bitters", "Fill a tall glass with Sour Mix"], story: "Sal, our mechanic, calls this 'motivation.' He says the color reminds him of brand new antifreeze, which is the only thing that gets him excited. We're worried about Sal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/39cd9a9b372af2c86cb7189c2f929463.png", cardHook: "Tastes better than degreaser. Probably." },
                 { name: "Redline Riot", flavorProfile: "Sweet cherry and sharp sour mix create a vibrant, rebellious flavor.", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sour Mix", "Splash of Lime Juice"], story: "A tribute to the time we tried to see if a cherry-red '78 Sportster could actually hit the redline in first gear without exploding. It could not. This drink is less expensive to clean up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3a506b28b91e0e5d031cedbeca489a14.jpg", cardHook: "Here's to things we can't talk about." },
-                { name: "Spiced Rum Buck", flavorProfile: "Warm spiced rum gets a sharp, clean kick from lime and ginger.", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "This drink has all the stages of trying to kickstart a stubborn old Panhead: spicy anger, a sharp kick of frustration, and sweet relief when it roars to life. All that, without the risk of a torn ACL.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3df099091d9acb596f9d54e4ed858c8f.jpg", cardHook: "A more reliable way to get started." },
+                { name: "Spiced Rum Buck", flavorProfile: "Warm spiced rum gets a sharp, clean kick from lime and ginger.", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "This drink has all the stages of trying to kickstart a stubborn old Panhead: spicy anger, a sharp kick of frustration, and sweet relief when it roars to life. All that, without the risk of a torn ACL.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3df09091d9acb596f9d54e4ed858c8f.jpg", cardHook: "A more reliable way to get started." },
                 { name: "Shirley Temple", flavorProfile: "The classic sweet and spicy ginger soda, kissed with a touch of cherry.", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry Garnish"], story: "Our biggest, meanest member, Crusher, orders this. Not for his kid. For himself. He says it 'calms his inner rage.' You WILL NOT make fun of him. You WILL tell him it's a very manly drink. Your safety depends on it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7989.jpg", cardHook: "The toughest drink in the bar." }, // Swapped image URL
                 { name: "Dark 'n' Stormy", flavorProfile: "Deep, dark spiced rum with a bite of lime and a spicy ginger finish.", recipe: ["2 oz Kraken Black Spiced Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "We dared our prospect to ride through a tornado warning. He came back an hour later, clothes torn, hair standing on end, and holding a bottle of Kraken he 'found.' This drink is our best guess as to what happened.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "To making bad weather worse." },
                 { name: "Kraken's Grip", flavorProfile: "Dark rum and sweet almond create a rich, cola-based concoction.", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], story: "After two of these, you'll have a death grip on the bar and the questionable belief that you can arm-wrestle a sea monster. You can't. Ask Fingers, he's got the scars to prove it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/555331b7961b7c0880f3b2842529bcd8.jpg", cardHook: "It'll get a hold on you." },
@@ -1000,7 +1019,7 @@
                 { name: "Nightcap", flavorProfile: "A rich, smooth, and simple pairing of creamy Baileys and nutty amaretto.", recipe: ["2 oz Baileys Irish Cream", "1 oz Amaretto", "Serve on the rocks"], story: "Don't let the name fool you. This is not a 'one and done' drink. It's a 'one and then you decide it's a good idea to call your ex' drink. You have been warned.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ECaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "The perfect end to the day." },
                 { name: "Spiced Rum & Coke", flavorProfile: "A sweet and spicy mix of spiced rum, cola, and a hint of orange.", recipe: ["2 oz Captain Morgan Spiced Rum", "Fill with Cola", "2 dashes Orange Bitters"], story: "The sound of a missed gear is horrifying. The taste of this drink is not. It's what you drink to forget the crime you just committed against your motorcycle. The bike remembers, though. It always remembers.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.850190414_gb43.webp", cardHook: "An apology to our transmissions." },
                 { name: "Catalyst", flavorProfile: "An energetic and tart blend of vodka, sour mix, and lime.", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sour Mix", "Splash of Lime Juice"], story: "This drink doesn't cause problems. It's just... present when they happen. It's the catalyst for bar fights, terrible ideas, and waking up with a new tattoo. It's an agent of chaos.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7999.jpg", cardHook: "The start of a great story." }, // FIXED: Corrected https
-                { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn, our resident genius, tried to make 'artisanal applejack' in the clubhouse radiator. The radiator exploded. This drink, made with store-bought ingredients, is a much safer tribute to his ambition.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7991.jpg", cardHook: "A tribute to spectacular failures." },
+                { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn, our resident genius, tried to make 'artisanal applejack' in the clubhouse radiator. The radiator exploded. This drink, made with store-bought ingredients, is a much safer tribute to his ambition.", image: "httpshttps://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7991.jpg", cardHook: "A tribute to spectacular failures." },
                 { name: "Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
                 { name: "Purple Hooter", flavorProfile: "Bright, sweet raspberry balanced by a floral bitterness and a sharp citrus finish.", recipe: ["1oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash Lime Juice", "Fill a tall glass with Club Soda"], story: "We're not legally allowed to say why it's called this. Just know that it involves our least-favorite rival club, a gallon of purple paint, and a very surprised mascot. This drink is our trophy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7993.jpg", cardHook: "To our drunk owl." },
                 { name: "High Noon", flavorProfile: "A sharp and ready blend of tequila, lime, and bitter tonic.", recipe: ["2 oz El Mayor Tequila", "Fill with Tonic Water", "Splash of Lime Juice"], story: "This is what you drink when you're about to do something stupid, but you want to do it with confidence. It's the official beverage of 'Hold my beer and watch this.'", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7994.jpg", cardHook: "The drink of champions. And losers." },
@@ -1227,7 +1246,8 @@
                             <div class="drink-card-front">
                                 <div class="card-header-front">
                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
-                                    <!-- MODIFIED: Changed fa-motorcycle to fa-heart -->
+                                    
+                                    <!-- Favorite button for this drink -->
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
                                 <div class="px-6 pt-4 text-center">
@@ -1859,8 +1879,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
