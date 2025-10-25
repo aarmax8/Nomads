@@ -297,14 +297,13 @@
             
             --bg-image: none;
             background-image: 
-                /* LAYER 1: Strong, OPAQUE fade over the top half for maximum text contrast */
+                /* LAYER 1: Strong, OPAQUE fade at the top for text contrast, fading out softly */
                 linear-gradient(to bottom, 
-                    /* Solid black at very top for header contrast */
-                    rgba(0, 0, 0, 1) 0%,             
-                    /* Darkest turquoise blend for story text to sit on */
-                    rgba(0, 100, 100, 0.7) 18%,      
-                    /* Transition quickly to transparent over the middle of the card */
-                    transparent 65%                  
+                    rgba(0, 0, 0, 1) 0%,              /* Start solid black (for header text) */
+                    rgba(0, 100, 100, 0.7) 20%,       /* Start blending dark turquoise over black, max strength here */
+                    rgba(0, 100, 100, 0.5) 50%,       /* Transition point: less dark, fading turquoise */
+                    rgba(0, 0, 0, 0.1) 80%,           /* Very slight dark veil, far down */
+                    transparent 95%                   /* Seamlessly disappear just before bottom */
                 ),
                 /* Layer 2 (Bottom Fade): Subtle dark fade over the image anchor */
                 linear-gradient(to top, rgba(17,17,17,0.5) 0%, transparent 10%),
