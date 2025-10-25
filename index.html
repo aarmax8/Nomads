@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     
+    <!-- UPDATED: Added viewport-fit=cover to allow the app to fill the entire screen -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>DILLIGAF</title>
 
@@ -20,14 +21,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Cinzel:wght@400;700&family=IM+Fell+DW+Pica&family=Roboto+Condensed:wght@700&family=Rye&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        html {
-            /* UPDATED: This is the key fix.
-               Set the HTML element to the dynamic viewport height. */
-            height: 100vh; /* Fallback */
-            height: 100dvh;
-            overflow: hidden; /* Prevent scrolling on HTML */
+        html, body {
+            overscroll-behavior-y: contain;
+            height: 100%;
+            overflow: hidden; /* Prevent scrolling on the body */
         }
-        
         body {
             font-family: 'Inter', sans-serif;
             background-color: #210505; /* Fallback dark red-brown */
@@ -35,21 +33,15 @@
             background-size: cover;
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-
-            /* UPDATED: Body should fill 100% of the HTML tag */
-            height: 100%; 
-            
-            /* ADDED: Remove any default browser margin */
-            margin: 0;
-
-            overscroll-behavior-y: contain;
-            overflow: hidden; /* Prevent scrolling on the body */
+            display: flex; /* Use flexbox for layout */
+            flex-direction: column; /* Stack header, main, footer vertically */
         }
         
-        /* REMOVED: The .app-container rule is no longer needed.
-           The <body> tag now handles this layout. */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Make the app container fill the body */
+        }
         
         header {
             flex-shrink: 0; /* Prevent header from shrinking */
@@ -797,11 +789,6 @@
         #splash-screen {
             position: fixed;
             inset: 0;
-            /* ADDED: This forces the splash screen to fill the entire
-               dynamic viewport height, fixing the bottom bar. */
-            height: 100vh; /* Fallback */
-            height: 100dvh;
-            
             z-index: 1000;
             background-color: #000;
             background-image: url('https://github.com/aarmax8/Nomads/blob/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/splash.jpg?raw=true');
@@ -849,11 +836,9 @@
         <div class="splash-text">Tap to Enter</div>
     </div>
 
-    <!-- REMOVED: Redundant <div id="app" class="app-container"> wrapper. -->
-    <!-- The <body> tag is now the main app container. -->
-
-    <header class="text-center">
-        <div id="header-logo-container" class="w-full flex items-center justify-center">
+    <div id="app" class="app-container">
+        <header class="text-center">
+            <div id="header-logo-container" class="w-full flex items-center justify-center">
                 <img src="https://github.com/aarmax8/Nomads/blob/dc5ee5946a1f36d3a1883cbec868080471acdfbf/ai%20nomads%20title1.png?raw=true" id="header-logo-image" alt="Nomad's Logo">
             </div>
         </header>
@@ -911,8 +896,7 @@
                 </button>
             </div>
         </footer>
-    
-    <!-- REMOVED: Closing </div> for the old app-container -->
+    </div>
 
     
     <!-- Favorites Modal -->
@@ -1895,9 +1879,6 @@
     </script>
 </body>
 </html>
-
-
-
 
 
 
