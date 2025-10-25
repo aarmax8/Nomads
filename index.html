@@ -1600,11 +1600,22 @@
             
             // --- Splash Screen Listener ---
             const splashScreen = document.getElementById('splash-screen');
+            const splashSeenKey = 'nomads_splash_seen_v1';
+            
             if (splashScreen) {
-                // Hides splash screen on first click and never shows it again
-                splashScreen.addEventListener('click', () => {
+                // Check if the user has seen the splash screen before
+                if (localStorage.getItem(splashSeenKey) === 'true') {
+                    // If they have, hide it immediately without a fade
+                    splashScreen.style.transition = 'none'; // Disable transition
                     splashScreen.classList.add('is-hidden');
-                }, { once: true }); 
+                } else {
+                    // If it's their first time, add the click listener
+                    splashScreen.addEventListener('click', () => {
+                        splashScreen.classList.add('is-hidden');
+                        // Store that they've seen it so it doesn't show on next app open
+                        localStorage.setItem(splashSeenKey, 'true');
+                    }, { once: true }); 
+                }
             }
 
             // --- Event Listeners ---
@@ -1840,4 +1851,5 @@
     </script>
 </body>
 </html>
+
 
