@@ -31,6 +31,10 @@
             background-attachment: fixed;
             display: flex; /* Use flexbox for layout */
             flex-direction: column; /* Stack header, main, footer vertically */
+            
+            /* MODIFIED: Use dynamic viewport height to ensure body fills the entire screen, including safe areas */
+            height: 100vh; /* Fallback for older browsers */
+            height: 100dvh;
         }
         
         .app-container {
@@ -59,7 +63,8 @@
         #header-logo-container {
             position: relative;
             overflow: hidden; /* To contain the glint */
-            min-height: 200px;
+            /* MODIFIED: Reduced min-height to give more vertical space to the cards */
+            min-height: 170px;
             
             /* Background image with gradient overlay */
             background-image: 
@@ -1856,6 +1861,7 @@
     </script>
 </body>
 </html>
+
 
 
 
