@@ -47,19 +47,16 @@
         
         header {
             flex-shrink: 0; /* Prevent header from shrinking */
-            /* ADDED: z-index to stay on top of card glow */
             position: relative;
-            z-index: 10;
-            /* REMOVED: The padding-top below was pushing the content down. */
-            /* padding-top: env(safe-area-inset-top); */
+            /* CHANGE: Z-index moved behind cards (15) */
+            z-index: 5; 
         }
         
         main {
             flex-grow: 1; /* Allow main content to grow and fill space */
-            /* REMOVED: overflow: hidden; -- This lets the glow escape */
             position: relative; /* Needed for the menu grid */
-            /* ADDED: z-index to sit behind header/footer but allow glow to escape */
-            z-index: 1; 
+            /* CHANGE: Z-index moved in front of header/footer (5) */
+            z-index: 15; 
         }
 
         #header-logo-container {
@@ -67,15 +64,7 @@
             overflow: hidden; /* To contain the glint */
             /* ADJUSTED: Reduced min-height slightly, while keeping status bar clearance */
             min-height: 210px;
-
-            /* REMOVED: Fallback for desktop preview. 
-               This was just to simulate the effect.
-            */
-            /* padding-top: 44px; */
             
-            /* This is the real code for the device. 
-               It will override the 44px above if the device supports it.
-            */
             padding-top: env(safe-area-inset-top);
             
             /* Background image with gradient overlay */
@@ -769,11 +758,28 @@
             transform: rotate(225deg); 
         }
 
-        /* --- Footer Bar Styles --- */
+        /* --- NEW STYLES: Navigation Button Overlay --- */
+        #nav-controls-overlay {
+            position: fixed; /* Fixed positioning to float over other elements */
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100; /* Highest priority to ensure buttons are clickable */
+            padding: 0.75rem 1rem;
+            /* Use padding calc to correctly float buttons above iOS home indicator area */
+            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            /* Ensure the overlay is transparent, relying on the FOOTER for the background color/blur */
+            background: transparent; 
+        }
+
+        /* --- Footer Bar Styles (now primarily background/spacing) --- */
         footer {
             flex-shrink: 0;
             padding: 0.75rem 1rem;
-            /* MODIFIED: Pushes content up from the home indicator area on iOS */
+            /* Keep padding to reserve space in the flex column layout */
             padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
             background-color: rgba(0,0,0,0.5); 
             background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://raw.githubusercontent.com/aarmax8/Nomads/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/panoback1.jpg');
@@ -782,11 +788,11 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            /* CHANGE: Removed display: flex and block/flex properties, as content is gone. */
+            display: block; 
             position: relative;
-            z-index: 10;
+            /* CHANGE: Z-index moved behind cards (15) */
+            z-index: 5; 
         }
         
         /* --- Splash Screen Styles --- */
@@ -851,10 +857,9 @@
             <!-- Grid for drink cards -->
             <div id="menu-grid"></div>
         </main>
-
         
-        <!-- Main application footer -->
-        <footer id="app-footer">
+        <!-- NEW: NAVIGATION CONTROLS OVERLAY -->
+        <div id="nav-controls-overlay">
             <button id="scroll-prev-btn" class="floating-action-btn-left" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
             </button>
@@ -873,7 +878,7 @@
             </button>
 
             
-            <!-- Container for the floating action button menu -->
+            <!-- Floating menu container moved here -->
             <div id="floating-menu-container" class="flex-shrink-0">
                 
                 <!-- Hidden menu items -->
@@ -899,6 +904,12 @@
                     <i class="fas fa-times icon-close"></i>
                 </button>
             </div>
+        </div>
+
+        
+        <!-- Main application footer (now just the background bar and space holder) -->
+        <footer id="app-footer">
+            <!-- Content moved to #nav-controls-overlay -->
         </footer>
     </div>
 
@@ -1680,7 +1691,7 @@
             // Throttled version of updateActiveCard
             const throttledUpdateActiveCard = throttle(updateActiveCard, 150); 
             
-            // --- Listeners for Floating Action Button Menu ---
+            // --- Listeners for Floating Action Button Menu (Now in the overlay) ---
             floatingMenuToggle.addEventListener('click', () => {
                 floatingMenuToggle.classList.toggle('is-active');
                 floatingMenuItems.classList.toggle('is-visible');
