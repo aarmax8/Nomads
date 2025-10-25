@@ -1603,17 +1603,17 @@
             const splashSeenKey = 'nomads_splash_seen_v1';
             
             if (splashScreen) {
-                // Check if the user has seen the splash screen before
-                if (localStorage.getItem(splashSeenKey) === 'true') {
+                // Check if the user has seen the splash screen *this session*
+                if (sessionStorage.getItem(splashSeenKey) === 'true') {
                     // If they have, hide it immediately without a fade
                     splashScreen.style.transition = 'none'; // Disable transition
                     splashScreen.classList.add('is-hidden');
                 } else {
-                    // If it's their first time, add the click listener
+                    // If it's their first time *this session*, add the click listener
                     splashScreen.addEventListener('click', () => {
                         splashScreen.classList.add('is-hidden');
-                        // Store that they've seen it so it doesn't show on next app open
-                        localStorage.setItem(splashSeenKey, 'true');
+                        // Store that they've seen it *for this session*
+                        sessionStorage.setItem(splashSeenKey, 'true');
                     }, { once: true }); 
                 }
             }
@@ -1851,6 +1851,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
