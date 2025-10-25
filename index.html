@@ -797,6 +797,11 @@
         #splash-screen {
             position: fixed;
             inset: 0;
+            /* ADDED: This forces the splash screen to fill the entire
+               dynamic viewport height, fixing the bottom bar. */
+            height: 100vh; /* Fallback */
+            height: 100dvh;
+            
             z-index: 1000;
             background-color: #000;
             background-image: url('https://github.com/aarmax8/Nomads/blob/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/splash.jpg?raw=true');
@@ -1890,6 +1895,7 @@
     </script>
 </body>
 </html>
+
 
 
 
