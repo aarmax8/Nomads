@@ -265,6 +265,7 @@
         }
         
         .card-hook-tagline {
+            /* REMOVED: PUSH-TO-BOTTOM LOGIC */
             text-align: center; 
             font-size: 1.25rem; /* Made it bigger */
             line-height: 1.4;
@@ -273,11 +274,10 @@
             padding: 0.75rem 1.5rem; /* Reduced vertical padding */
             font-family: 'Cinzel', serif; /* Cleaner font */
             letter-spacing: 0.03em; 
-            flex-shrink: 0;
+            flex-shrink: 0; /* Keep it from shrinking */
             background: transparent; /* Clean background */
             border-top: 1px solid rgba(255, 255, 255, 0.1); /* Clean border */
-            font-style: normal; /* Removed italic */
-            margin-top: auto; /* Pushes it to the bottom of the flex content area */
+            /* Removed margin-top: auto; */
         }
         
         /* === END CARD FRONT REDESIGN === */
@@ -1268,11 +1268,13 @@
                                 <div class="px-6 pt-4 text-center">
                                     <p class="text-xl mb-3 font-cinzel text-gray-300">${item.flavorProfile}</p>
                                 </div>
+                                <!-- MOVED: Tagline moved from the bottom footer area to the non-scrolling upper area -->
+                                <div class="card-hook-tagline">${item.cardHook}</div>
+                                
                                 <div class="recipe-content">
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
                                 </div>
-                                <div class="card-hook-tagline">${item.cardHook}</div>
-                                <div class="card-footer"></div>
+                                <!-- REMOVED: Old card-footer and bottom tagline components -->
                             </div>
                             <div class="drink-card-back lazy-bg ${!item.image ? 'no-image' : ''}" ${item.image ? `data-bg="url('${item.image}')"` : ''}>
                                <div class="card-back-content">
