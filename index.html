@@ -44,8 +44,8 @@
             /* ADDED: z-index to stay on top of card glow */
             position: relative;
             z-index: 10;
-            /* REMOVED: The padding-top below was pushing the content down. */
-            /* padding-top: env(safe-area-inset-top); */
+            /* ADDED: Pushes content down from the status bar/notch area on iOS */
+            padding-top: env(safe-area-inset-top);
         }
         
         main {
@@ -60,8 +60,6 @@
             position: relative;
             overflow: hidden; /* To contain the glint */
             min-height: 200px;
-            /* ADDED: This tells the container to expand into the safe area */
-            padding-top: env(safe-area-inset-top);
             
             /* Background image with gradient overlay */
             background-image: 
@@ -1858,8 +1856,6 @@
     </script>
 </body>
 </html>
-
-
 
 
 
