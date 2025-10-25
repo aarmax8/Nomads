@@ -65,8 +65,8 @@
         #header-logo-container {
             position: relative;
             overflow: hidden; /* To contain the glint */
-            /* FIX: Increased min-height to push the banner content (people's heads) below the status bar area */
-            min-height: 230px;
+            /* ADJUSTED: Reduced min-height slightly, while keeping status bar clearance */
+            min-height: 210px;
 
             /* REMOVED: Fallback for desktop preview. 
                This was just to simulate the effect.
@@ -175,7 +175,8 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; /* Ensure card is a positioning context */
-            height: 100%;
+            /* ADJUSTED: Increased height to ensure longest recipes fit and to visually overlap header/footer */
+            height: calc(100% + 2rem); 
             margin-top: 0; 
             margin-bottom: 0; 
         }
@@ -188,12 +189,12 @@
          }
 
         @media (min-width: 640px) { 
-            .drink-card { flex-basis: 70%; height: 100%; }
+            .drink-card { flex-basis: 70%; height: calc(100% + 2rem); }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } /* One main card on tablets */
         @media (min-width: 1024px) { 
-            .drink-card { flex-basis: 50%; height: 100%; }
+            .drink-card { flex-basis: 50%; height: calc(100% + 2rem); }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } /* One main card on desktops */
@@ -968,7 +969,7 @@
                 { name: "Blacktop Sunset", flavorProfile: "Smooth Irish whiskey and sweet Southern Comfort are brightened by lime and spiced ginger.", recipe: ["1 oz Jameson Irish Whiskey", "1 oz Southern Comfort", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "This is the color of the bruise our prospect got after he mistook a puddle for a pothole and tried to 'bunny hop' it. The sunset that evening was almost as beautiful as his failure.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/192b194c611aafb0934b83ec0cd7474c.jpg", cardHook: "To the potholes you can't see." },
                 { name: "Elderflower Nomad", flavorProfile: "Delicate elderflower and botanical gin meet a hint of lavender and rosemary.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.5 oz Lime Juice", "2 dashes Rosemary Lavender Bitters", "Top with Club Soda in a tall glass"], story: "We sent 'Tiny' to get gin. He came back with this flowery stuff and said it would 'expand our horizons.' We expanded his list of chores instead. Turns out, the joke's on us. This stuff is good. Don't tell him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1bf52dfc1aad553db68333418c40d848.jpg", cardHook: "Even a nomad can be sophisticated." },
                 { name: "Grim Reaper", flavorProfile: "A dark and potent combination of herbal Jägermeister and spiced black rum.", recipe: ["1.5 oz Jägermeister", "1 oz Kraken Black Spiced Rum", "Fill with Cola"], story: "The first guy who drank this said he saw the Grim Reaper, who apparently asked for a sip. We told the Reaper to get lost. He's not welcome here. The drink, however, is.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1f512d08cccf12ad8dc389d42f5fcceb.jpg", cardHook: "For nights you'd rather forget." },
-                { name: "Apparition", flavorProfile: "Clean vodka and floral St-Germain are lifted by the bright spice of ginger.", recipe: ["2 oz Ketel One Vodka", "0.75 oz St-Germain", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "Gus drinks three of these and claims he can see through walls. All he's ever seen is the inside of the men's room, which is punishment enough for the rest of us who have to hear about it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/206S17.jpg", cardHook: "To the spirits that haunt the bar." },
+                { name: "Apparition", flavorProfile: "Clean vodka and floral St-Germain are lifted by the bright spice of ginger.", recipe: ["2 oz Ketel One Vodka", "0.75 oz St-Germain", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "Gus drinks three of these and claims he can see through walls. All he's ever seen is the inside of the men's room, which is punishment enough for the rest of us who have to hear about it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c4502907599bf6a90ecaf84a18fc47b/frontend/206S17.jpg", cardHook: "To the spirits that haunt the bar." },
                 { name: "Rusty Nail", flavorProfile: "A timeless and potent blend of smoky Scotch whisky sweetened by the honeyed, herbal spice of Drambuie.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Drambuie", "Serve on the rocks", "Lemon Twist Garnish"], story: "This is what you drink when you've made a deal you know you'll regret. Like trading your bike for a 'guaranteed' winning lottery ticket. Ask Jimmy how that went. Actually, don't. He's still sensitive about it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "Every deal has its price." },
                 { name: "Mechanic", flavorProfile: "A blast of bright citrus and sweet orange liqueur, carried by a wave of sour mix.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "2 dashes Orange Bitters", "Fill a tall glass with Sour Mix"], story: "Sal, our mechanic, calls this 'motivation.' He says the color reminds him of brand new antifreeze, which is the only thing that gets him excited. We're worried about Sal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/39cd9a9b372af2c86cb7189c2f929463.png", cardHook: "Tastes better than degreaser. Probably." },
                 { name: "Redline Riot", flavorProfile: "Sweet cherry and sharp sour mix create a vibrant, rebellious flavor.", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sour Mix", "Splash of Lime Juice"], story: "A tribute to the time we tried to see if a cherry-red '78 Sportster could actually hit the redline in first gear without exploding. It could not. This drink is less expensive to clean up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3a506b28b91e0e5d031cedbeca489a14.jpg", cardHook: "Here's to things we can't talk about." },
