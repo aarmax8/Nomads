@@ -286,7 +286,7 @@
         /* --- Story Card Back Styling --- */
         .drink-card-back {
             transform: rotateY(180deg); 
-            background-color: #111; /* Fallback for no image */
+            background-color: #111; /* Fallback for no content/image */
             border: 2px solid #854d0e; /* Dark amber border */
             color: #e5e7eb;
             position: relative;
@@ -295,27 +295,11 @@
             /* CHANGE: Push content to top, allowing the content to fill the area */
             justify-content: flex-start; 
             
-            --bg-image: none;
-            background-image: 
-                /* UPDATED: Compressed fade for tighter fit */
-                linear-gradient(to bottom, 
-                    rgba(0, 0, 0, 1) 0%,              /* Solid black at very top */
-                    rgba(0, 0, 0, 0.9) 4%,            /* Darker, opaque fade for text background */
-                    rgba(0, 100, 100, 0.7) 10%,       /* Max dark turquoise strength here */
-                    rgba(0, 100, 100, 0.1) 25%,       /* Softer dark turquoise blend */
-                    rgba(0, 0, 0, 0.05) 45%,          /* Very slight dark veil, subtle blend with image */
-                    transparent 65%                   /* Fade to transparent MUCH sooner */
-                ),
-                /* Layer 2 (Bottom Fade): Subtle dark fade over the image anchor */
-                linear-gradient(to top, rgba(17,17,17,0.5) 0%, transparent 10%),
-                /* Layer 3: The Actual Image */
-                var(--bg-image);
-
-            /* UPDATED: Total of 3 layers */
-            background-position: center, center, bottom;
-            /* CHANGE: Adjusted to ensure the image layer fits horizontally */
-            background-repeat: repeat, repeat, no-repeat; 
-            background-size: 100% 100%, 100% 100%, 100% auto;
+            /* REMOVED: Complex background image and gradient layers */
+            background-image: none;
+            background-position: initial;
+            background-repeat: initial;
+            background-size: initial;
         }
         
         /* NEW HEADER: For the flipped card title, replacing the old footer placement */
@@ -337,16 +321,27 @@
         }
 
         .card-back-content {
-            padding: 1rem 1.25rem; /* Increased top padding */
-            flex-grow: 1; /* Allow it to take up available space */
-            display: flex; flex-direction: column;
-            overflow-y: auto;
-            /* Removed max-height restriction */
+            padding: 1rem 1.25rem; 
+            flex-grow: 1; /* Allows the content block to take up remaining height */
+            display: flex; 
+            flex-direction: column;
+            overflow-y: auto; /* This section scrolls */
             position: relative;
             z-index: 2;
             /* IMPROVED TEXT VISIBILITY */
             color: #f3f4f6; /* Lighter gray/white */
             text-shadow: 1px 1px 4px rgba(0,0,0,1); /* Stronger shadow */
+            
+            /* NEW: Apply the dark/turquoise fade directly to the content background */
+            background-image: linear-gradient(to bottom, 
+                rgba(0, 0, 0, 0.9) 0%,              /* Solid black at top for text contrast */
+                rgba(0, 100, 100, 0.7) 5%,          /* Turquoise tint */
+                rgba(0, 0, 0, 0.5) 40%,             /* Blended middle */
+                transparent 70%                     /* Fade out towards the image */
+            );
+            background-repeat: no-repeat; 
+            background-position: top;
+            background-size: 100% 100%; 
         }
 
         .story-text {
@@ -355,20 +350,31 @@
             text-align: justify;
             font-size: 1.15rem;
             line-height: 1.5;
-            /* Removed inline color/shadow override, relies on parent (.card-back-content) for style */
+            margin-bottom: 0; /* Remove margin from the text itself for tighter fit to image */
         }
+        
+        /* NEW: Style for the flow-content image */
+        .story-image {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            /* Added padding/margin to separate it from the text above, but kept minimal */
+            margin-top: 1.5rem; 
+            border-radius: 0.5rem;
+            opacity: 0.8; /* Slight opacity for visual blending */
+        }
+
 
         .card-back-content::-webkit-scrollbar { width: 4px; }
         .card-back-content::-webkit-scrollbar-track { background: transparent; }
         .card-back-content::-webkit-scrollbar-thumb { background-color: #854d0e; border-radius: 4px; }
         
         .no-image .card-back-content {
-            margin-top: 0;
-            justify-content: center;
-            max-height: 100%;
+             background-image: none; /* No gradient if no image */
+             justify-content: center;
         }
-         .no-image {
-            background-image: none; /* No overlay if no image */
+         .no-image .story-image {
+             display: none; /* Hide the img element if no image */
          }
         /* REMOVED .card-footer-back - it is now .card-header-back */
 
@@ -1309,6 +1315,11 @@
                 const titleFont = titleFonts[index % titleFonts.length];
 
                 const drinkFavoriteClass = favoriteDrinks.includes(item.name) ? 'is-favorite' : '';
+                
+                // NEW: Use <img> tag for image, not background data attribute
+                const imageElement = item.image ? 
+                    `<img class="story-image lazy-img" data-src="${item.image}" alt="Image related to ${item.name}">` : 
+                    '';
 
                 const cardHtml = `
                     <div class="drink-card ${isUnavailable ? 'is-unavailable' : ''}" data-name="${item.name}">
@@ -1331,12 +1342,15 @@
                                 </div>
                                 <!-- REMOVED: Old card-footer and bottom tagline components -->
                             </div>
-                            <div class="drink-card-back lazy-bg ${!item.image ? 'no-image' : ''}" ${item.image ? `data-bg="url('${item.image}')"` : ''}>
+                            <!-- REMOVED lazy-bg class, as image is now in flow -->
+                            <div class="drink-card-back ${!item.image ? 'no-image' : ''}">
                                <!-- MOVED: Story title moved to the top of the flipped card content -->
                                <div class="card-header-back">The Story of ${item.name}</div>
                                
                                <div class="card-back-content">
                                     <p class="story-text">${item.story}</p>
+                                    <!-- IMAGE IS NOW IN THE SCROLLABLE CONTENT FLOW -->
+                                    ${imageElement} 
                                </div>
                             </div>
                         </div>
@@ -1346,28 +1360,19 @@
         }
         
         function setupLazyLoading() {
-            // Select the parent cards, not the hidden backs
-            const lazyCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
+            // NEW: Select the lazy <img> elements
+            const lazyImages = document.querySelectorAll('.lazy-img');
             
             if ("IntersectionObserver" in window) {
                 const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const card = entry.target; // The entry is the PARENT CARD
-                        
-                        // Find the .lazy-bg element *inside* this card
-                        const imageContainer = card.querySelector('.lazy-bg'); 
-                        
-                        if (imageContainer) {
-                            const imageUrl = imageContainer.dataset.bg;
-                            if (imageUrl) {
-                                // Apply the image to the card back
-                                imageContainer.style.setProperty('--bg-image', imageUrl);
-                            }
+                        const img = entry.target;
+                        const src = img.dataset.src;
+                        if (src) {
+                            img.src = src; // Set the actual image source
                         }
-                        // We are done with this card, so unobserve it
-                        // CHANGE: Changed root from menuGrid to window in observer options below
-                        imageObserver.unobserve(card); 
+                        imageObserver.unobserve(img); // Stop observing once loaded
                     }
                 });
                 }, { 
@@ -1375,19 +1380,13 @@
                     rootMargin: "200px" // Load images when 200px from *any* edge of the viewport
                 }); 
                 
-                // Observe the parent cards
-                lazyCards.forEach(card => imageObserver.observe(card));
+                // Observe the image elements
+                lazyImages.forEach(img => imageObserver.observe(img));
 
             } else {
                 // Fallback for older browsers (load all images)
-                document.querySelectorAll('.lazy-bg').forEach(img => {
-                    const imageUrl = img.dataset.bg;
-                    if (imageUrl) {
-                        // A small delay to let the browser breathe
-                        setTimeout(() => {
-                            img.style.setProperty('--bg-image', imageUrl);
-                        }, 100);
-                    }
+                document.querySelectorAll('.lazy-img').forEach(img => {
+                    img.src = img.dataset.src;
                 });
             }
         }
