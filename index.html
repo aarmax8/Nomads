@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     
-    <!-- UPDATED: Added viewport-fit=cover to allow the app to fill the entire screen -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>DILLIGAF</title>
 
@@ -22,13 +21,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         html {
-            /* ADDED: Ensure HTML covers the full height */
-            height: 100%;
+            /* UPDATED: This is the key fix.
+               Set the HTML element to the dynamic viewport height. */
+            height: 100vh; /* Fallback */
+            height: 100dvh;
             overflow: hidden; /* Prevent scrolling on HTML */
         }
         
-        /* REMOVED: Combined 'html, body' rule */
-
         body {
             font-family: 'Inter', sans-serif;
             background-color: #210505; /* Fallback dark red-brown */
@@ -36,19 +35,15 @@
             background-size: cover;
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
-            
-            /* MOVED & UPDATED: Body is now the main flex container */
             display: flex;
             flex-direction: column;
 
-            /* UPDATED: Use dynamic viewport height (dvh)
-              This is the key change to fill the entire screen,
-              eliminating the black bar at the bottom in PWA mode.
-            */
-            height: 100vh; /* Fallback for older browsers */
-            height: 100dvh; 
+            /* UPDATED: Body should fill 100% of the HTML tag */
+            height: 100%; 
+            
+            /* ADDED: Remove any default browser margin */
+            margin: 0;
 
-            /* MOVED: Overflow styles from old 'html, body' rule */
             overscroll-behavior-y: contain;
             overflow: hidden; /* Prevent scrolling on the body */
         }
@@ -1895,5 +1890,8 @@
     </script>
 </body>
 </html>
+
+
+
 
 
