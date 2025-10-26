@@ -122,7 +122,10 @@
             bottom: 0; /* Fills the 'main' container */
             height: 100%; /* Explicitly set height */
             box-sizing: border-box; 
-            padding-bottom: 1rem; /* Space for scrollbar */
+            
+            /* UPDATED: Increased bottom padding to 120px */
+            /* This ensures the last card can scroll up *above* the new fixed footer buttons */
+            padding-bottom: 120px; 
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -745,18 +748,37 @@
 
         /* --- Footer --- */
         footer {
+            /* PREVIOUSLY: position: relative; */
+            /* UPDATED: Position is now fixed to the bottom of the viewport */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            
             flex-shrink: 0;
             padding: 0.75rem 1rem;
+            
+            /* This padding pushes the buttons UP from the home bar, but the footer itself is transparent */
             padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-            background-color: rgba(17, 17, 17, 0.8); 
-            border-top: 1px solid rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            
+            /* UPDATED: Removed all background and border properties to make the footer invisible */
+            background-color: transparent; 
+            border-top: none; 
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+            
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
             z-index: 10;
+            
+            /* ADDED: This prevents touches from being "stolen" by the transparent footer area */
+            pointer-events: none;
+        }
+        
+        /* ADDED: Make the buttons clickable again inside the pointer-events:none footer */
+        footer > * {
+            pointer-events: auto;
         }
         
         /* --- Splash Screen --- */
@@ -1802,4 +1824,5 @@
     </script>
 </body>
 </html>
+
 
