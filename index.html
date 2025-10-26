@@ -25,6 +25,10 @@
             overscroll-behavior-y: contain;
             height: 100%;
             overflow: hidden; /* Prevent scrolling on the body */
+            
+            /* ADDED: Ensure body fills the full dynamic viewport height */
+            min-height: 100vh; 
+            min-height: -webkit-fill-available;
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -41,6 +45,10 @@
             display: flex;
             flex-direction: column;
             height: 100%; /* Make the app container fill the body */
+            
+            /* ADDED: Ensure app container also fills full height */
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
         }
         
         header {
@@ -75,10 +83,9 @@
             */
             padding-top: env(safe-area-inset-top);
             
-            /* Background image with gradient overlay */
-            background-image: 
-                /* 1. Bottom shadow gradient - kept this overlay */
-                linear-gradient(to top, rgba(133, 77, 14, 0.25) 0%, rgba(28, 7, 7, 0.0) 50%);
+            /* UPDATED: Removed dark gradient overlay */
+            /* background-image: 
+                linear-gradient(to top, rgba(133, 77, 14, 0.25) 0%, rgba(28, 7, 7, 0.0) 50%); */
         }
 
         #header-logo-image {
@@ -771,13 +778,14 @@
             padding: 0.75rem 1rem;
             /* MODIFIED: Pushes content up from the home indicator area on iOS */
             padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-            background-color: rgba(0,0,0,0.5); 
-            background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://raw.githubusercontent.com/aarmax8/Nomads/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/panoback1.jpg');
-            background-size: cover;
-            background-position: center;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
+            
+            /* UPDATED: Removed dark background styles */
+            background-color: transparent; 
+            border-top: none;
+            /* backdrop-filter: blur(5px); -- Removed */
+            /* -webkit-backdrop-filter: blur(5px); -- Removed */
+            /* END OF UPDATE */
+
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -1879,6 +1887,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
