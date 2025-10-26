@@ -23,12 +23,13 @@
     <style>
         html, body {
             overscroll-behavior-y: contain;
-            height: 100%;
+            /* REMOVED: height: 100%; */
             overflow: hidden; /* Prevent scrolling on the body */
             
-            /* ADDED: Ensure body fills the full dynamic viewport height */
-            min-height: 100vh; 
-            min-height: -webkit-fill-available;
+            /* MODIFIED: Use 100dvh to fill the dynamic viewport */
+            min-height: 100vh; /* Fallback */
+            min-height: -webkit-fill-available; /* Old iOS */
+            height: 100dvh; /* Modern standard */
         }
         body {
             font-family: 'Inter', sans-serif;
@@ -39,16 +40,22 @@
             background-attachment: fixed;
             display: flex; /* Use flexbox for layout */
             flex-direction: column; /* Stack header, main, footer vertically */
+            
+            /* ADDED: Make sure body itself respects the full height */
+            height: 100%;
         }
         
         .app-container {
             display: flex;
             flex-direction: column;
-            height: 100%; /* Make the app container fill the body */
+            /* REMOVED: Redundant height properties */
+            /* height: 100%; */
+            /* min-height: 100vh; */
+            /* min-height: -webkit-fill-available; */
             
-            /* ADDED: Ensure app container also fills full height */
-            min-height: 100vh;
-            min-height: -webkit-fill-available;
+            /* ADDED: Make the app container grow to fill the body */
+            flex-grow: 1;
+            min-height: 0; /* Prevents flex overflow issues */
         }
         
         header {
@@ -1894,6 +1901,7 @@
     </script>
 </body>
 </html>
+
 
 
 
