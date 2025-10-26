@@ -23,10 +23,9 @@
     <style>
         html, body {
             overscroll-behavior-y: contain;
-            /* REMOVED: height: 100%; */
             overflow: hidden; /* Prevent scrolling on the body */
             
-            /* MODIFIED: Use 100dvh to fill the dynamic viewport */
+            /* Use 100dvh to fill the dynamic viewport */
             min-height: 100vh; /* Fallback */
             min-height: -webkit-fill-available; /* Old iOS */
             height: 100dvh; /* Modern standard */
@@ -40,59 +39,34 @@
             background-attachment: fixed;
             display: flex; /* Use flexbox for layout */
             flex-direction: column; /* Stack header, main, footer vertically */
-            
-            /* REMOVED: Redundant height: 100% as it's set in the 'html, body' rule */
-            /* height: 100%; */
+            min-height: 0; /* ADDED: Prevent flexbox overflow */
         }
         
         .app-container {
             display: flex;
             flex-direction: column;
-            /* REMOVED: Redundant height properties */
-            /* height: 100%; */
-            /* min-height: 100vh; */
-            /* min-height: -webkit-fill-available; */
-            
-            /* ADDED: Make the app container grow to fill the body */
-            flex-grow: 1;
+            flex-grow: 1; /* Make the app container grow to fill the body */
             min-height: 0; /* Prevents flex overflow issues */
         }
         
         header {
             flex-shrink: 0; /* Prevent header from shrinking */
-            /* ADDED: z-index to stay on top of card glow */
             position: relative;
             z-index: 10;
-            /* REMOVED: The padding-top below was pushing the content down. */
-            /* padding-top: env(safe-area-inset-top); */
         }
         
         main {
             flex-grow: 1; /* Allow main content to grow and fill space */
-            /* REMOVED: overflow: hidden; -- This lets the glow escape */
             position: relative; /* Needed for the menu grid */
-            /* ADDED: z-index to sit behind header/footer but allow glow to escape */
             z-index: 1; 
+            min-height: 0; /* ADDED: Ensure main content can shrink if needed */
         }
 
         #header-logo-container {
             position: relative;
             overflow: hidden; /* To contain the glint */
             min-height: 200px;
-
-            /* REMOVED: Fallback for desktop preview. 
-               This was just to simulate the effect.
-            */
-            /* padding-top: 44px; */
-            
-            /* This is the real code for the device. 
-               It will override the 44px above if the device supports it.
-            */
             padding-top: env(safe-area-inset-top);
-            
-            /* UPDATED: Removed dark gradient overlay */
-            /* background-image: 
-                linear-gradient(to top, rgba(133, 77, 14, 0.25) 0%, rgba(28, 7, 7, 0.0) 50%); */
         }
 
         #header-logo-image {
@@ -105,24 +79,24 @@
             z-index: 1;
         }
 
-        /* --- NEW: Headlight Effect --- */
+        /* --- Headlight Effect --- */
         #header-logo-container::after {
             content: '';
             position: absolute;
-            top: 80%; /* MOVED: Lowered to 80% from top */
-            left: -150%; /* Start off-screen */
-            width: 200px; /* CHANGED: Made smaller */
-            height: 200px; /* CHANGED: Made smaller */
-            margin-top: -100px; /* CHANGED: Adjusted vertical centering */
+            top: 80%; 
+            left: -150%; 
+            width: 200px; 
+            height: 200px; 
+            margin-top: -100px; 
             background: radial-gradient(ellipse at center, 
-                rgba(255, 255, 255, 0.3) 0%,  /* CHANGED: Made softer */
-                rgba(255, 255, 255, 0.05) 50%, /* Fades out */
-                rgba(255, 255, 255, 0) 70%  /* Fully transparent edge */
+                rgba(255, 255, 255, 0.3) 0%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(255, 255, 255, 0) 70% 
             );
-            border-radius: 50%; /* Make it circular */
-            filter: blur(20px); /* CHANGED: Softened the edges more */
-            transform: skewX(0); /* Remove old skew */
-            animation: glint-effect 7s infinite linear; /* CHANGED: Slowed down animation */
+            border-radius: 50%; 
+            filter: blur(20px); 
+            transform: skewX(0); 
+            animation: glint-effect 7s infinite linear; 
             animation-delay: 1s;
             z-index: 2; 
         }
@@ -135,64 +109,62 @@
         
         #menu-grid {
             display: flex; gap: 1.5rem; overflow-x: auto; 
-            /* MODIFIED: Changed 'proximity' to 'mandatory' for stricter snapping */
             scroll-snap-type: x mandatory; 
-            scroll-behavior: smooth; /* ADDED: Ensure smooth programmatic scrolling */
+            scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             padding: 1rem 0;
             
-            /* CRITICAL: Make grid scrollable within main */
+            /* Make grid scrollable within main */
             position: absolute;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0; /* Fills the 'main' container */
             height: 100%; /* Explicitly set height */
-            box-sizing: border-box; /* Include padding in height calculation */
-            padding-bottom: 1rem; /* Give some space for the scrollbar */
+            box-sizing: border-box; 
+            padding-bottom: 1rem; /* Space for scrollbar */
         }
         
-        /* --- NEW: Amber Scrollbar for Menu Grid --- */
+        /* --- Amber Scrollbar for Menu Grid --- */
         #menu-grid::-webkit-scrollbar { 
-            width: 8px; /* Width of vertical scrollbar */
-            height: 8px; /* Height of horizontal scrollbar */
+            width: 8px; 
+            height: 8px; 
         }
         #menu-grid::-webkit-scrollbar-track {
-            background: rgba(0,0,0,0.3); /* Dark track */
+            background: rgba(0,0,0,0.3); 
             border-radius: 4px;
         }
         #menu-grid::-webkit-scrollbar-thumb {
             background-color: #f59e0b; /* Amber color */
             border-radius: 4px;
-            border: 2px solid rgba(0,0,0,0.3); /* Creates a nice inset effect */
+            border: 2px solid rgba(0,0,0,0.3); 
         }
         #menu-grid::-webkit-scrollbar-thumb:hover {
-            background-color: #fbbf24; /* Lighter amber on hover */
+            background-color: #fbbf24; 
         }
         #menu-grid { 
-            -ms-overflow-style: auto; /* Show scrollbar on IE/Edge */
+            -ms-overflow-style: auto; 
             scrollbar-width: thin; /* Firefox */
-            scrollbar-color: #f59e0b rgba(0,0,0,0.3); /* Firefox: thumb and track */
+            scrollbar-color: #f59e0b rgba(0,0,0,0.3); /* Firefox */
         }
         /* --- End Amber Scrollbar --- */
 
 
         .drink-card {
-            flex: 0 0 88%; /* Changed to ensure one card is visible at a time */
+            flex: 0 0 88%; 
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
             transition: opacity 0.3s;
             margin-left: auto;
             margin-right: auto;
-            position: relative; /* Ensure card is a positioning context */
+            position: relative; 
             height: 100%;
             margin-top: 0; 
             margin-bottom: 0; 
         }
-        /* Add specific margin for first/last card to compensate for removed padding */
         #menu-grid > .drink-card:first-child {
-             margin-left: calc((100% - 88%) / 2); /* Center the first card initially */
+             margin-left: calc((100% - 88%) / 2); /* Center the first card */
         }
          #menu-grid > .drink-card:last-child {
              margin-right: calc((100% - 88%) / 2); /* Ensure last card can center */
@@ -202,12 +174,12 @@
             .drink-card { flex-basis: 70%; height: 100%; }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
-        } /* One main card on tablets */
+        } 
         @media (min-width: 1024px) { 
             .drink-card { flex-basis: 50%; height: 100%; }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
-        } /* One main card on desktops */
+        } 
         .drink-card-inner {
             position: relative; width: 100%; height: 100%;
             transition: transform 0.7s, box-shadow 0.4s ease-in-out, opacity 0.5s;
@@ -216,16 +188,13 @@
         }
         .drink-card.is-flipped .drink-card-inner { transform: rotateY(180deg); }
         
-        /* 'is-active' class for the currently centered card */
-        /* 1. Default (unflipped/recipe) active glow: Turquoise */
+        /* Active card glows */
         .drink-card.is-active .drink-card-inner {
              box-shadow: 0 0 25px 8px rgba(45, 212, 191, 0.7); /* Turquoise glow */
         }
-        /* 2. Flipped (story) active glow: Amber */
         .drink-card.is-active.is-flipped .drink-card-inner {
              box-shadow: 0 0 25px 8px rgba(245, 158, 11, 0.7); /* Amber glow */
         }
-        /* Highlight state for when jumping to a card */
         .drink-card.is-highlighted .drink-card-inner {
              box-shadow: 0 0 25px 8px rgba(245, 158, 11, 0.7); /* Amber glow */
         }
@@ -236,7 +205,7 @@
             display: flex; flex-direction: column; overflow: hidden; border-radius: 0.5rem;
         }
 
-        /* === CARD FRONT REDESIGN === */
+        /* === CARD FRONT === */
         .drink-card-front {
             background-image: linear-gradient(145deg, rgba(42, 10, 10, 0.8) 0%, rgba(28, 7, 7, 0.8) 100%), url('https://github.com/aarmax8/Nomads/blob/639ee0ed0a332926ddf78c332e7c114a32af99ab/leather%20background.jpg?raw=true');
             background-size: cover;
@@ -245,7 +214,7 @@
             border: 2px solid #2dd4bf; /* Active border */
         }
         .card-header-front {
-            position: relative; /* For favorite button positioning */
+            position: relative; 
             padding: 1rem 4rem 1rem 1.25rem; 
             background: transparent; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -255,10 +224,9 @@
         .recipe-content { 
             flex-grow: 1; 
             overflow-y: auto; 
-            padding: 0 1.5rem; /* More horizontal padding */
+            padding: 0 1.5rem; 
             min-height: 0; 
         }
-        /* Scrollbar styling for recipe content */
         .recipe-content::-webkit-scrollbar { width: 4px; }
         .recipe-content::-webkit-scrollbar-track { background: transparent; }
         .recipe-content::-webkit-scrollbar-thumb { background-color: #2dd4bf; border-radius: 4px; }
@@ -266,19 +234,18 @@
         .recipe-list-front { list-style: none; padding: 0; }
         .recipe-list-front li {
             display: flex; align-items: center; font-family: 'Roboto Condensed', sans-serif;
-            font-size: 1.125rem; /* Slightly smaller, cleaner */
-            line-height: 1.4; /* Further tightened line height */
+            font-size: 1.125rem; 
+            line-height: 1.4; 
             letter-spacing: 0.02em; 
-            margin-bottom: 0.375rem; /* Further reduced margin (6px) */
-            color: #e5e7eb; /* Brighter */
+            margin-bottom: 0.375rem; 
+            color: #e5e7eb; 
         }
         .recipe-list-front li i { 
             width: 24px; text-align: center; 
-            margin-right: 1rem; /* More spacing */
-            font-size: 1.125rem; /* Match text */
+            margin-right: 1rem; 
+            font-size: 1.125rem; 
         }
         .card-footer {
-            /* This is now just a spacer */
             padding: 0;
             flex-shrink: 0;
             border-top: none;
@@ -287,40 +254,38 @@
         
         .card-hook-tagline {
             text-align: center; 
-            font-size: 1.25rem; /* Made it bigger */
+            font-size: 1.25rem; 
             line-height: 1.4;
-            color: #2dd4bf; /* Changed to turquoise */
-            text-shadow: 0 0 8px rgba(45, 212, 191, 0.7); /* Turquoise glow */
-            padding: 0.75rem 1.5rem; /* Reduced vertical padding */
-            font-family: 'Cinzel', serif; /* Cleaner font */
+            color: #2dd4bf; 
+            text-shadow: 0 0 8px rgba(45, 212, 191, 0.7); 
+            padding: 0.75rem 1.5rem; 
+            font-family: 'Cinzel', serif; 
             letter-spacing: 0.03em; 
             flex-shrink: 0;
-            background: transparent; /* Clean background */
-            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Clean border */
-            font-style: normal; /* Removed italic */
-            margin-top: auto; /* Pushes it to the bottom of the flex content area */
+            background: transparent; 
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            font-style: normal; 
+            margin-top: auto; /* Push to bottom */
         }
         
-        /* === END CARD FRONT REDESIGN === */
+        /* === END CARD FRONT === */
 
 
-        /* --- Story Card Back Styling --- */
+        /* --- Story Card Back --- */
         .drink-card-back {
             transform: rotateY(180deg); 
-            background-color: #111; /* Fallback for no image */
-            border: 2px solid #854d0e; /* Dark amber border */
+            background-color: #111; 
+            border: 2px solid #854d0e; 
             color: #e5e7eb;
             position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end; /* Pushes content to the bottom */
+            justify-content: flex-end; /* Push content to bottom */
             
             --bg-image: none;
             background-image: 
-                /* Gradient Overlays -- MODIFIED for better text visibility */
                 linear-gradient(to bottom, rgba(17,17,17,0.8) 0%, transparent 15%), 
                 linear-gradient(to top, rgba(17,17,17,1) 0%, rgba(17,17,17,0.9) 20%, transparent 55%),
-                /* Actual Image */
                 var(--bg-image);
 
             background-position: center, center, top;
@@ -330,10 +295,10 @@
 
         .card-back-content {
             padding: 0 1.25rem;
-            flex-grow: 0; /* Don't let it grow, just take space it needs */
+            flex-grow: 0; 
             display: flex; flex-direction: column;
             overflow-y: auto;
-            max-height: 50%; /* Content takes up bottom half at most */
+            max-height: 50%; 
             position: relative;
             z-index: 2;
         }
@@ -344,8 +309,8 @@
             text-align: justify;
             font-size: 1.15rem;
             line-height: 1.5;
-            color: #e5e7eb; /* Brightened text for contrast */
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); /* Stronger shadow */
+            color: #e5e7eb; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
         }
 
         .card-back-content::-webkit-scrollbar { width: 4px; }
@@ -358,7 +323,7 @@
             max-height: 100%;
         }
          .no-image {
-            background-image: none; /* No overlay if no image */
+            background-image: none; 
          }
         .card-footer-back {
              padding: 0.5rem 0.75rem;
@@ -373,12 +338,12 @@
             font-size: 1.2rem;
             color: #f59e0b;
             text-shadow: 0 0 8px rgba(245, 158, 11, 0.7);
-            z-index: 2; /* Ensure it's above the overlay */
-            flex-shrink: 0; /* Prevent footer from shrinking */
+            z-index: 2; 
+            flex-shrink: 0; 
         }
 
 
-        /* --- FAVORITES STYLES (MODIFIED) --- */
+        /* --- FAVORITES --- */
         .favorite-btn {
             position: absolute;
             z-index: 10;
@@ -392,32 +357,29 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            transform: translateZ(0); /* Fix for mobile rendering bug */
+            transform: translateZ(0); 
         }
-        /* NEW RULE: Explicitly hide the button when the card is flipped */
         .is-flipped .drink-card-front .favorite-btn {
             display: none;
         }
-        /* Reposition favorite button on the front of the card */
         .drink-card-front .favorite-btn {
-            top: 1rem; /* Moved to top corner */
+            top: 1rem; 
             right: 1rem;
-            bottom: auto; /* Unset old position */
+            bottom: auto; 
         }
         .favorite-btn:hover {
             transform: scale(1.1);
             background: rgba(0,0,0,0.7);
         }
-        
         .favorite-btn .fa-heart {
             font-size: 1.2rem;
-            color: #9ca3af; /* Default gray */
+            color: #9ca3af; 
             transition: all 0.2s ease;
             transform: translateZ(0); 
         }
         .favorite-btn.is-favorite .fa-heart {
-            color: #ef4444; /* Red when favorited */
-            text-shadow: 0 0 8px rgba(239, 68, 68, 0.7); /* Red glow */
+            color: #ef4444; 
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.7); 
         }
 
         #favorites-list-container .favorite-item {
@@ -436,10 +398,10 @@
         
         .drink-card.is-unavailable { opacity: 0.4; pointer-events: none; }
         .drink-card-title {
-            font-size: 2rem; /* Larger title */
+            font-size: 2rem; 
             line-height: 1.2; color: #f59e0b; text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(245, 158, 11, 0.5);
-            padding-bottom: 0.25rem; /* Spacing for fonts with deep descenders */
+            padding-bottom: 0.25rem; 
         }
         .drink-card[data-is-barcode="true"] .drink-card-title {
             font-family: 'Cinzel', serif;
@@ -450,18 +412,15 @@
             background: transparent;
             border: none;
             font-style: normal;
-            /* Match new footer style for consistency */
             color: #2dd4bf; 
             text-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
             font-family: 'Cinzel', serif;
         }
         
-        /* --- Filter Bar Styles --- */
-        /* REMOVED */
 
         .modal { transition: opacity 0.3s ease-in-out; }
         
-        /* --- Filter Modal & General UI Pills --- */
+        /* --- Filters & Pills --- */
         .filter-separator {
             height: 1px;
             background-color: rgba(255, 255, 255, 0.1);
@@ -478,26 +437,25 @@
             font-size: 0.875rem;
         }
         .filter-pill:hover {
-            background-color: rgba(45, 212, 191, 0.15); /* Subtle turquoise on hover */
+            background-color: rgba(45, 212, 191, 0.15); 
             border-color: rgba(45, 212, 191, 0.3);
         }
         .filter-pill.is-active {
-            background-color: #2dd4bf; /* Bright turquoise for active state */
-            color: #0f172a; /* Dark text for contrast */
+            background-color: #2dd4bf; 
+            color: #0f172a; 
             border-color: #2dd4bf;
             font-weight: 600;
-            box-shadow: 0 0 10px rgba(45, 212, 191, 0.5); /* Turquoise glow */
+            box-shadow: 0 0 10px rgba(45, 212, 191, 0.5); 
         }
         
-        /* Style for active favorites pill */
         #filter-bar-favs.is-active {
-             background-color: #ef4444; /* Red */
-            color: #fff; /* White icon */
+             background-color: #ef4444; 
+            color: #fff; 
             border-color: #ef4444;
-            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); /* Red glow */
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); 
         }
         #filter-bar-favs:hover:not(.is-active) {
-            background-color: rgba(239, 68, 68, 0.15); /* Subtle red on hover */
+            background-color: rgba(239, 68, 68, 0.15); 
             border-color: rgba(239, 68, 68, 0.3);
         }
 
@@ -513,7 +471,7 @@
             transform: scale(1.03);
         }
 
-        /* --- NEW BRIGHTER MODAL STYLES --- */
+        /* --- Modal Styles --- */
         .modal-panel {
             background-image: radial-gradient(circle at top, rgba(41, 37, 36, 0.4), rgba(28, 25, 23, 0.7)), url('https://www.transparenttextures.com/patterns/leather.png');
             border: 2px solid #f59e0b;
@@ -527,10 +485,16 @@
         .modal-header h2 {
             text-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
         }
+        /* UPDATED: Added flex-grow and min-height to bar stock content for scrolling */
+        #bar-stock-content {
+            flex-grow: 1; /* Allow content to grow */
+            min-height: 0; /* Allow content to shrink */
+            overflow-y: auto; /* Enable scrolling */
+        }
         #bar-stock-content .ingredient-btn {
             background-color: rgba(245, 158, 11, 0.1) !important;
             border: 1px solid rgba(245, 158, 11, 0.3) !important;
-            color: #e2e8f0; /* Off-white */
+            color: #e2e8f0; 
         }
         #bar-stock-content .ingredient-btn:hover {
             background-color: rgba(245, 158, 11, 0.25) !important;
@@ -547,15 +511,15 @@
             border-color: #9ca3af;
          }
          #apply-filters-btn {
-            background-color: #0d9488; /* Dark Turquoise */
+            background-color: #0d9488; 
             border: 1px solid transparent;
-            color: #fff; /* White text for readability */
+            color: #fff; 
          }
         #apply-filters-btn:hover {
-            background-color: #14b8a6; /* Mid-range turquoise on hover */
+            background-color: #14b8a6; 
         }
 
-        /* Barcode Card Specific Styles */
+        /* Barcode Card */
         .drink-card[data-is-barcode="true"] .drink-card-inner {
             background-color: #111;
             border: 3px double #525252;
@@ -573,7 +537,7 @@
             max-height: 65%;
         }
 
-        /* --- Floating Action Button Menu Styles --- */
+        /* --- Floating Action Button Menu --- */
         #floating-menu-container {
             position: relative; 
             bottom: auto; 
@@ -608,7 +572,7 @@
         .floating-menu-item {
             display: flex;
             align-items: center;
-            margin-top: 0.75rem; /* 12px */
+            margin-top: 0.75rem; 
             cursor: pointer;
             background-color: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(5px);
@@ -623,9 +587,9 @@
         }
         
         .floating-menu-item.is-active-filter {
-            border-color: #f59e0b; /* Amber border */
-            color: #f59e0b; /* Amber text */
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); /* Amber glow */
+            border-color: #f59e0b; 
+            color: #f59e0b; 
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); 
         }
         .floating-menu-item.is-active-filter:hover {
             background-color: rgba(245, 158, 11, 0.1);
@@ -639,20 +603,20 @@
         }
 
         .floating-menu-item i {
-            font-size: 1.1rem; /* 18px */
-            margin-right: 0.75rem; /* 12px */
-            width: 20px; /* Give icon a fixed width */
+            font-size: 1.1rem; 
+            margin-right: 0.75rem; 
+            width: 20px; 
             text-align: center;
         }
 
         .floating-menu-item span {
-            font-size: 0.875rem; /* 14px */
+            font-size: 0.875rem; 
             font-weight: 600;
         }
 
         #floating-menu-toggle {
-            width: 60px; /* SMALLER */
-            height: 60px; /* SMALLER */
+            width: 60px; 
+            height: 60px; 
             background-color: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -682,8 +646,8 @@
         }
         
         #floating-menu-toggle i {
-            font-size: 1.5rem; /* SMALLER */
-            color: #2dd4bf; /* Match the border */
+            font-size: 1.5rem; 
+            color: #2dd4bf; 
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             position: absolute; 
             transform: scale(1) rotate(0deg);
@@ -730,7 +694,7 @@
             border-color: #2dd4bf;
         }
         .floating-action-btn-left i {
-            font-size: 1.5rem; /* 24px */
+            font-size: 1.5rem; 
             color: #2dd4bf; 
             transition: all 0.3s ease;
         }
@@ -750,8 +714,8 @@
             left: auto; 
             transform: none; 
             z-index: auto; 
-            width: 80px; /* Made even bigger */
-            height: 80px; /* Made even bigger */
+            width: 80px; 
+            height: 80px; 
             background-color: rgba(17, 17, 17, 0.9);
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
@@ -771,7 +735,7 @@
             border-color: #f59e0b;
         }
         .floating-action-btn-middle i {
-            font-size: 2rem; /* 32px - Made even bigger */
+            font-size: 2rem; 
             color: #f59e0b; 
             transition: all 0.3s ease;
         }
@@ -779,20 +743,15 @@
             transform: rotate(225deg); 
         }
 
-        /* --- Footer Bar Styles --- */
+        /* --- Footer --- */
         footer {
             flex-shrink: 0;
             padding: 0.75rem 1rem;
-            /* MODIFIED: Pushes content up from the home indicator area on iOS */
             padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-            
-            /* UPDATED: Gave footer a dark, blurry background to fill the safe area */
-            background-color: rgba(17, 17, 17, 0.8); /* Dark, semi-transparent */
-            border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle top border */
+            background-color: rgba(17, 17, 17, 0.8); 
+            border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
-            /* END OF UPDATE */
-
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -800,7 +759,7 @@
             z-index: 10;
         }
         
-        /* --- Splash Screen Styles --- */
+        /* --- Splash Screen --- */
         #splash-screen {
             position: fixed;
             inset: 0;
@@ -936,7 +895,9 @@
                 <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Bar Stock</h2>
                 <button id="close-stock-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
             </div>
-            <div id="bar-stock-content" class="p-6 text-gray-300 overflow-y-auto"></div>
+            <div id="bar-stock-content" class="p-6 text-gray-300">
+                <!-- Content is rendered here, overflow handled by CSS -->
+            </div>
         </div>
     </div>
     
@@ -975,7 +936,6 @@
                 { name: "Outlaw's Peach", flavorProfile: "A surprisingly smooth mix of sweet peach, creamy Baileys, and dark cola.", recipe: ["1 oz Peach Schnapps", "1 oz Baileys Irish Cream", "Top with Cola in a tall glass"], story: "We tried to smuggle booze across the state line by soaking peaches in it and labeling the jar 'Pickled Eggs.' The cop who pulled us over was not amused. Or fooled. But he did let us keep the peaches.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8004.jpg", cardHook: "It tastes like a good alibi." },
                 { name: "Junk Drawer", flavorProfile: "An unapologetically sweet concoction of raspberry, butterscotch, and classic root beer.", recipe: ["0.75 oz Raspberry Schnapps", "0.75 oz Butterscotch Schnapps", "0.75 oz Root Beer Schnapps", "Fill a tall glass with Club Soda"], story: "We told the new guy to make a drink with 'whatever's in the junk drawer.' He took us literally. Found these three dusty bottles behind some old spark plugs. We're as surprised as you are that it's drinkable.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/08030c3d25616df982816261406e2c08.png", cardHook: "Sometimes, genius comes from just mixing stuff." },
                 { name: "Blue Lagoon's Ghost", flavorProfile: "Tropical orange and sweet cherry flavors ride on a clean rum backbone.", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice"], story: "A rival biker fell into the quarry. All they found was his floating, pristine blue helmet. We drink this to honor the helmet. Not the guy, the helmet was cool.", 
-                  /* UPDATED: Changed image URL as requested */
                   image: "https://raw.githubusercontent.com/aarmax8/Nomads/74ad18ef43d88d7bf2cdfc32f17174960c4228942/download%20(22).png", 
                   cardHook: "To the losers go the spoils." },
                 { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "Top with Club Soda in a tall glass"], story: "Two chapter presidents showed up wearing the same 'one-of-a-kind' leather jacket. They settled the dispute by drinking until one passed out and the other stole his jacket. This is what they drank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/0ac5da1e71c995f58d75335fffabd844.jpg", cardHook: "The official drink of stubborn arguments." },
@@ -988,7 +948,7 @@
                 { name: "Mechanic", flavorProfile: "A sharp, herbal, and industrial-strength mix of Jäger and gin, cut with spicy ginger.", recipe: ["1 oz Jägermeister", "1 oz Tanqueray Gin", "Fill a tall glass with Ginger Soda"], story: "Sal, our mechanic, calls this 'motivation.' He says the color reminds him of brand new antifreeze, which is the only thing that gets him excited. We're worried about Sal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/39cd9a9b372af2c86cb7189c2f929463.png", cardHook: "Tastes better than degreaser. Probably." },
                 { name: "Redline Riot", flavorProfile: "Sweet cherry and sharp sour mix create a vibrant, rebellious flavor.", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sour Mix", "Splash of Lime Juice"], story: "A tribute to the time we tried to see if a cherry-red '78 Sportster could actually hit the redline in first gear without exploding. It could not. This drink is less expensive to clean up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3a506b28b91e0e5d031cedbeca489a14.jpg", cardHook: "Here's to things we can't talk about." },
                 { name: "Spiced Rum Buck", flavorProfile: "Warm spiced rum gets a sharp, clean kick from lime and ginger.", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "This drink has all the stages of trying to kickstart a stubborn old Panhead: spicy anger, a sharp kick of frustration, and sweet relief when it roars to life. All that, without the risk of a torn ACL.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3df09091d9acb596f9d54e4ed858c8f.jpg", cardHook: "A more reliable way to get started." },
-                { name: "Shirley Temple", flavorProfile: "The classic sweet and spicy ginger soda, kissed with a touch of cherry.", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry Garnish"], story: "Our biggest, meanest member, Crusher, orders this. Not for his kid. For himself. He says it 'calms his inner rage.' You WILL NOT make fun of him. You WILL tell him it's a very manly drink. Your safety depends on it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7989.jpg", cardHook: "The toughest drink in the bar." }, // Swapped image URL
+                { name: "Shirley Temple", flavorProfile: "The classic sweet and spicy ginger soda, kissed with a touch of cherry.", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry Garnish"], story: "Our biggest, meanest member, Crusher, orders this. Not for his kid. For himself. He says it 'calms his inner rage.' You WILL NOT make fun of him. You WILL tell him it's a very manly drink. Your safety depends on it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7989.jpg", cardHook: "The toughest drink in the bar." }, 
                 { name: "Dark 'n' Stormy", flavorProfile: "Deep, dark spiced rum with a bite of lime and a spicy ginger finish.", recipe: ["2 oz Kraken Black Spiced Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "We dared our prospect to ride through a tornado warning. He came back an hour later, clothes torn, hair standing on end, and holding a bottle of Kraken he 'found.' This drink is our best guess as to what happened.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "To making bad weather worse." },
                 { name: "Kraken's Grip", flavorProfile: "Dark rum and sweet almond create a rich, cola-based concoction.", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], story: "After two of these, you'll have a death grip on the bar and the questionable belief that you can arm-wrestle a sea monster. You can't. Ask Fingers, he's got the scars to prove it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/555331b7961b7c0880f3b2842529bcd8.jpg", cardHook: "It'll get a hold on you." },
                 { name: "Siren's Call", flavorProfile: "Bitter Campari is tamed by tropical pineapple and dark spiced rum.", recipe: ["1.5 oz Kraken Black Spiced Rum", "0.75 oz Campari", "1.5 oz Pineapple Juice", "0.5 oz Lime Juice"], story: "Looks pretty, sounds sweet, but it'll drag your wallet onto the rocks and leave it for dead. Named after our club's lawyer. Drink with caution.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5638f66d00401c933df787eb50253fc8.jpg", cardHook: "Some bad ideas are worth it." },
@@ -1027,7 +987,6 @@
                 { name: "Screwdriver", flavorProfile: "A straightforward and bright classic, with clean vodka and sweet orange juice.", recipe: ["2 oz Stolichnaya Citros Vodka", "2 dashes Orange Bitters", "Fill a tall glass with Orange Juice"], story: "Our mechanic insists this is a legitimate cocktail. We're pretty sure it's just what he drinks when he runs out of clean glasses and has to mix it in a hubcap. We serve it in a glass. You're welcome.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/cfff51feaf6082d29a37912a44bfedc3.jpg", cardHook: "The second-best use for a screwdriver." },
                 { name: "Rusty Blade", flavorProfile: "Bold bourbon gets a sophisticated edge from honeyed, herbal Drambuie, sharpened with a dash of bitters.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Drambuie", "2 dashes Angostura Bitters", "Serve on the rocks"], story: "A Rusty Nail is for old men in smoking jackets. A Rusty Blade is what you drink after you've just won a knife fight over a parking spot. It's sharper, meaner, and has a better story.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "The sharpest blade is a sharp mind." },
                 
-                <!-- START OF RESTORED/FIXED CODE -->
                 { name: "Whiskey Sour", flavorProfile: "A perfect balance of bold whiskey, tart lemon, and sweet sugar.", recipe: ["2 oz Jim Beam Bourbon", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "Named for 'Sour' Sam, our Sergeant-at-Arms. He has two moods: sour and asleep. This drink is a tribute to his sunny disposition. He hates it. We love it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7995.jpg", cardHook: "To 'Sour' Sam. He'd hate this." },
                 { name: "Cuba Libre", flavorProfile: "A classic combination of smooth rum, sweet cola, and a sharp lime kick.", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], story: "Means 'Free Cuba.' We drank it to celebrate freeing our club mascot, a grumpy bulldog named Che, from the local dog catcher. It was a whole thing. The dog was not grateful.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d9a9ffbd510d7ea900f31195d5e857f6.jpg", cardHook: "Tastes like a good road trip." },
                 { name: "Godfather", flavorProfile: "A simple, powerful duo of bold bourbon and sweet, nutty amaretto.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Amaretto", "Serve on the rocks"], story: "This is what you drink right before you make a very serious, legally questionable promise to a group of men you probably shouldn't trust. It's strong, sweet, and tastes like brotherhood and future bad decisions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/dbb93ea76cfc2d6585f379c8bac90910--bike-art-motorcycle-art.jpg", cardHook: "To promises you'll try to keep." },
@@ -1050,7 +1009,6 @@
                 { name: "Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the only two brain cells our prospect has left. They work together, they're surprisingly strong, and they're usually fueled by whiskey. Just like this drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth." },
                 
                 { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this drink in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", 
-                  /* UPDATED: Changed image URL to be unique and not the same as 'Rusty Nail' */
                   image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", 
                   cardHook: "Find your oasis." }
             ];
@@ -1087,7 +1045,6 @@
                         if (foundLiqueur) { mainIngredient = foundLiqueur; break; }
                     }
                 }
-                // Use first ingredient if no spirit/liqueur found
                 if (!mainIngredient && cocktail.recipe.length > 0) {
                      mainIngredient = parseIngredientName(cocktail.recipe[0]);
                 }
@@ -1123,7 +1080,6 @@
             ingredient: null,
             showFavoritesOnly: false
         };
-        /* MODIFIED: Default to story view */
         let isGlobalTarotView = true;
         const titleFonts = ['Rye', 'Cinzel', 'IM Fell DW Pica', 'Black Ops One'];
         const ingredientCategories = {
@@ -1153,17 +1109,14 @@
         const filterModal = document.getElementById('filter-modal');
         const favoritesModal = document.getElementById('favorites-modal');
         
-        // NEW: Floating Menu Elements
         const floatingMenuToggle = document.getElementById('floating-menu-toggle');
         const floatingMenuItems = document.getElementById('floating-menu-items');
         
-        // Floating Action Buttons
         const randomDrinkBtn = document.getElementById('random-drink-btn');
 
 
         // --- Helper Functions ---
         
-        // NEW: Throttle function
         function throttle(func, limit) {
           let lastFunc;
           let lastRan;
@@ -1200,16 +1153,12 @@
             return name.trim();
         }
 
-        // NEW: Helper function to close the floating menu
         function closeFloatingMenu() {
             floatingMenuToggle.classList.remove('is-active');
             floatingMenuItems.classList.remove('is-visible');
         }
         
-        // --- RESTORED HELPER FUNCTIONS (and de-duplicated) ---
-
         function getIngredientInfo(ingredientName) {
-            // Handle null or undefined ingredientName
             if (!ingredientName) {
                 return { icon: 'fa-cube', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
             }
@@ -1256,12 +1205,11 @@
                             </div>
                         </div>`;
                     menuGrid.insertAdjacentHTML('beforeend', cardHtml);
-                    return; // Skip normal card rendering
+                    return; 
                 }
                 
                 const isUnavailable = !isDrinkMakeable(item);
                 const titleFont = titleFonts[index % titleFonts.length];
-
                 const drinkFavoriteClass = favoriteDrinks.includes(item.name) ? 'is-favorite' : '';
 
                 const cardHtml = `
@@ -1270,8 +1218,6 @@
                             <div class="drink-card-front">
                                 <div class="card-header-front">
                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
-                                    
-                                    <!-- Favorite Button -->
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
                                 <div class="px-6 pt-4 text-center">
@@ -1296,43 +1242,36 @@
         }
         
         function setupLazyLoading() {
-            // Select the parent cards, not the hidden backs
             const lazyCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
             
             if ("IntersectionObserver" in window) {
                 const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const card = entry.target; // The entry is the PARENT CARD
-                        
-                        // Find the .lazy-bg element *inside* this card
+                        const card = entry.target; 
                         const imageContainer = card.querySelector('.lazy-bg'); 
                         
                         if (imageContainer) {
                             const imageUrl = imageContainer.dataset.bg;
                             if (imageUrl) {
-                                // Apply the image to the card back
                                 imageContainer.style.setProperty('--bg-image', imageUrl);
                             }
                         }
-                        // We are done with this card, so unobserve it
                         imageObserver.unobserve(card);
                     }
                 });
                 }, { 
-                    root: menuGrid, // Observe scrolling within the menu grid
-                    rootMargin: "200px" // MODIFIED: Load images when 200px from *any* edge
+                    root: menuGrid, 
+                    rootMargin: "200px" 
                 }); 
                 
-                // Observe the parent cards
                 lazyCards.forEach(card => imageObserver.observe(card));
 
             } else {
-                // Fallback for older browsers (load all images)
+                // Fallback
                 document.querySelectorAll('.lazy-bg').forEach(img => {
                     const imageUrl = img.dataset.bg;
                     if (imageUrl) {
-                        // A small delay to let the browser breathe
                         setTimeout(() => {
                             img.style.setProperty('--bg-image', imageUrl);
                         }, 100);
@@ -1343,11 +1282,11 @@
 
         function setCardView(isStoryView) {
             const cards = document.querySelectorAll('#menu-grid .drink-card');
-            const toggleBtn = document.getElementById('toggle-view-btn-main'); // Find the button
+            const toggleBtn = document.getElementById('toggle-view-btn-main'); 
             
-            isGlobalTarotView = isStoryView; // Set state
+            isGlobalTarotView = isStoryView; 
 
-            if (toggleBtn) { // Check if button exists
+            if (toggleBtn) { 
                 if (isGlobalTarotView) {
                     toggleBtn.classList.add('is-story-view');
                 } else {
@@ -1356,31 +1295,26 @@
             }
 
             if (isGlobalTarotView) {
-                // Show Story View
                 cards.forEach(card => {
                     if (card.dataset && !card.dataset.isBarcode) {
                         card.classList.add('is-flipped');
                     }
                 });
             } else {
-                // Show Recipe View
                 cards.forEach(card => {
                     card.classList.remove('is-flipped');
                 });
             }
-            // Note: This function does NOT interact with the splash screen.
         }
 
         function applyAndRenderFilters() {
             const barcodeCard = cocktails.find(c => c.isBarcode);
             let drinkableCocktails = cocktails.filter(c => !c.isBarcode);
 
-            // Category Filter
             if (activeFilters.category && activeFilters.category !== 'all') {
                 drinkableCocktails = drinkableCocktails.filter(item => item.category.includes(activeFilters.category));
             }
 
-            // Spirit Filter
             if (activeFilters.spirit) {
                 const spiritsInFamily = ingredientCategories.Spirits[activeFilters.spirit] || [];
                 drinkableCocktails = drinkableCocktails.filter(drink =>
@@ -1391,7 +1325,6 @@
                 );
             }
 
-            // Ingredient Filter
             if (activeFilters.ingredient) {
                  drinkableCocktails = drinkableCocktails.filter(drink =>
                     drink.recipe.some(recipeLine => {
@@ -1401,7 +1334,6 @@
                 );
             }
             
-            // Favorites Filter
             if (activeFilters.showFavoritesOnly) {
                 drinkableCocktails = drinkableCocktails.filter(drink => favoriteDrinks.includes(drink.name));
             }
@@ -1409,12 +1341,11 @@
             const itemsToRender = barcodeCard ? [barcodeCard, ...drinkableCocktails] : drinkableCocktails;
 
             renderMenu(itemsToRender);
-            setupLazyLoading(); // Lazy loading for new cards
-            // Re-apply the global view state to the newly rendered cards
-            setCardView(isGlobalTarotView); // MODIFIED: Call this to set cards AND button icon
+            setupLazyLoading(); 
+            setCardView(isGlobalTarotView); 
             
-            setTimeout(updateActiveCard, 100); // Set initial active card
-            updateFilterMenuButtonState(); // NEW: Update filter menu button
+            setTimeout(updateActiveCard, 100); 
+            updateFilterMenuButtonState(); 
         }
  
         function initializeFavorites() {
@@ -1428,10 +1359,10 @@
             
             const index = favoritesList.indexOf(cardName);
             if (index > -1) {
-                favoritesList.splice(index, 1); // Remove from favorites
+                favoritesList.splice(index, 1); 
                 starButton.classList.remove('is-favorite');
             } else {
-                favoritesList.push(cardName); // Add to favorites
+                favoritesList.push(cardName); 
                 starButton.classList.add('is-favorite');
             }
             localStorage.setItem(storageKey, JSON.stringify(favoritesList));
@@ -1439,7 +1370,7 @@
         
         function renderFavoritesModal() {
             const container = document.getElementById('favorites-list-container');
-            const favoritesList = favoriteDrinks; // Simplified to only show drinks
+            const favoritesList = favoriteDrinks; 
             
             if (favoritesList.length === 0) {
                 container.innerHTML = `<p class="text-gray-400 italic text-center">You haven't selected any favorite recipes yet. Tap the heart icon on a card to add it here.</p>`;
@@ -1492,7 +1423,7 @@
             if (savedStock) {
                 barStock = JSON.parse(savedStock);
             } else {
-                // By default, assume all ingredients are in stock
+                // Default all in stock
                 const allIngredients = Object.values(ingredientCategories)
                     .flatMap(mainCat => Object.values(mainCat).flat());
                 allIngredients.forEach(ing => barStock[ing] = true);
@@ -1501,27 +1432,38 @@
 
         function renderBarStockModal() {
             const contentContainer = document.getElementById('bar-stock-content');
-            contentContainer.innerHTML = '';
+            contentContainer.innerHTML = ''; // Clear previous content
             const renderButtonsForStatus = (status) => {
                 let html = `<h3 class="text-xl ${status ? 'text-green-400' : 'text-red-400'} mb-4 font-black-ops">${status ? 'IN STOCK' : 'OUT OF STOCK'}</h3>`;
                 let hasAnyContent = false;
                 Object.keys(ingredientCategories).forEach(mainCategoryName => {
                     let mainCategoryHtml = ''; let hasContentInMainCategory = false;
                     Object.keys(ingredientCategories[mainCategoryName]).forEach(subCategoryName => {
-                        const subCategoryIngredients = ingredientCategories[mainCategoryName][subCategoryName].filter(ing => barStock[ing] === status).map(ing => `<button data-ingredient="${ing}" class="ingredient-btn text-sm text-white py-1 px-4 transition-colors">${ing}</button>`).join('');
+                        const subCategoryIngredients = ingredientCategories[mainCategoryName][subCategoryName]
+                            .filter(ing => barStock[ing] === status) // Filter based on status
+                            .map(ing => `<button data-ingredient="${ing}" class="ingredient-btn text-sm text-white py-1 px-4 transition-colors">${ing}</button>`)
+                            .join('');
+                        
                         if (subCategoryIngredients.length > 0) {
                             hasContentInMainCategory = true;
                             hasAnyContent = true;
                             mainCategoryHtml += `<div class="mb-3"><h5 class="text-md font-bold text-gray-400 mb-2">${subCategoryName}</h5><div class="flex flex-wrap gap-2">${subCategoryIngredients}</div></div>`;
                         }
                     });
-                    if (hasContentInMainCategory) html += `<div class="mb-6"><h4 class="text-xl font-rye text-amber-500 mb-3 border-b-2 border-gray-600 pb-2">${mainCategoryName}</h4>${mainCategoryHtml}</div>`;
+                    if (hasContentInMainCategory) {
+                         html += `<div class="mb-6"><h4 class="text-xl font-rye text-amber-500 mb-3 border-b-2 border-gray-600 pb-2">${mainCategoryName}</h4>${mainCategoryHtml}</div>`;
+                    }
                 });
-                if (!hasAnyContent) { html += `<p class="text-gray-500 italic">Nothing to show here.</p>`; }
+                 if (!hasAnyContent) { html += `<p class="text-gray-500 italic">Nothing to show here.</p>`; }
                 return html;
             };
+            // Render both sections
             contentContainer.innerHTML = renderButtonsForStatus(true) + '<div class="border-t-2 border-dashed border-gray-600 my-6"></div>' + renderButtonsForStatus(false);
-            contentContainer.querySelectorAll('.ingredient-btn').forEach(btn => btn.addEventListener('click', () => toggleStock(btn.dataset.ingredient)));
+            
+            // Re-attach event listeners after rendering
+            contentContainer.querySelectorAll('.ingredient-btn').forEach(btn => {
+                btn.addEventListener('click', () => toggleStock(btn.dataset.ingredient));
+            });
         }
         
         function isDrinkMakeable(drink) {
@@ -1532,10 +1474,16 @@
         }
 
         function toggleStock(ingredient) {
-            barStock[ingredient] = !barStock[ingredient];
+            // Ensure ingredient exists in barStock before toggling
+            if (barStock.hasOwnProperty(ingredient)) {
+                 barStock[ingredient] = !barStock[ingredient];
+            } else {
+                 // If somehow it doesn't exist, assume it was out and now it's in
+                 barStock[ingredient] = true;
+            }
             localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(barStock));
-            renderBarStockModal();
-            applyAndRenderFilters();
+            renderBarStockModal(); // Re-render the modal content
+            applyAndRenderFilters(); // Update main menu availability
         }
         
         function initializeFilterModal() {
@@ -1599,9 +1547,7 @@
         }
 
         function updatePillsFromState() {
-            // Clear all active
             document.querySelectorAll('#filter-modal .filter-pill').forEach(p => p.classList.remove('is-active'));
-            // Set active from state
             document.querySelector(`#filter-group-category .filter-pill[data-category="${activeFilters.category}"]`)?.classList.add('is-active');
             if(activeFilters.spirit) {
                 document.querySelector(`#filter-group-spirit .filter-pill[data-spirit="${activeFilters.spirit}"]`)?.classList.add('is-active');
@@ -1623,7 +1569,6 @@
             setTimeout(() => card.classList.remove('is-highlighted'), 2500);
         }
         
-        // --- NEW: Function to update filter button state in menu ---
         function updateFilterMenuButtonState() {
             const filtersBtn = document.getElementById('filters-menu-btn');
             if (!filtersBtn) return;
@@ -1647,40 +1592,35 @@
             initializeFavorites();
             initializeBarStock();
             initializeFilterModal(); 
-            applyAndRenderFilters(); // Initial render
-            updateFilterMenuButtonState(); // Set initial filter button state
+            applyAndRenderFilters(); 
+            updateFilterMenuButtonState(); 
             
-            // --- Splash Screen Listener ---
+            // --- Splash Screen ---
             const splashScreen = document.getElementById('splash-screen');
             const splashSeenKey = 'nomads_splash_seen_v1';
             
             if (splashScreen) {
-                // Check if the user has seen the splash screen *this session*
                 if (sessionStorage.getItem(splashSeenKey) === 'true') {
-                    // If they have, hide it immediately without a fade
-                    splashScreen.style.transition = 'none'; // Disable transition
+                    splashScreen.style.transition = 'none'; 
                     splashScreen.classList.add('is-hidden');
                 } else {
-                    // If it's their first time *this session*, add the click listener
                     splashScreen.addEventListener('click', () => {
                         splashScreen.classList.add('is-hidden');
-                        // Store that they've seen it *for this session*
                         sessionStorage.setItem(splashSeenKey, 'true');
                     }, { once: true }); 
                 }
             }
 
-            // --- Event Listeners ---
+            // --- Menu Grid Events ---
             menuGrid.addEventListener('click', e => {
                 const favoriteButton = e.target.closest('.favorite-btn');
                 if (favoriteButton) {
-                    e.stopPropagation(); // Prevent card from flipping when star is clicked
+                    e.stopPropagation(); 
                     const cardName = e.target.closest('.drink-card').dataset.name;
                     toggleFavorite(cardName, favoriteButton.dataset.type, favoriteButton);
                     return;
                 }
 
-                // Manual flip toggles individual card
                 const cardInner = e.target.closest('.drink-card-inner');
                  if (cardInner) {
                       const card = cardInner.closest('.drink-card');
@@ -1690,23 +1630,20 @@
                  }
             });
 
-            // --- Active card listener ---
+            // --- Active Card on Scroll ---
             let scrollTimeout;
+            const throttledUpdateActiveCard = throttle(updateActiveCard, 150); 
             menuGrid.addEventListener('scroll', () => {
                 clearTimeout(scrollTimeout);
-                // Use throttled function for updating active card
                 throttledUpdateActiveCard(); 
             });
-            // Throttled version of updateActiveCard
-            const throttledUpdateActiveCard = throttle(updateActiveCard, 150); 
             
-            // --- Listeners for Floating Action Button Menu ---
+            // --- Floating Menu ---
             floatingMenuToggle.addEventListener('click', () => {
                 floatingMenuToggle.classList.toggle('is-active');
                 floatingMenuItems.classList.toggle('is-visible');
             });
             
-            // --- Event delegation for the menu items
             floatingMenuItems.addEventListener('click', (e) => {
                 const button = e.target.closest('.floating-menu-item');
                 if (!button) return;
@@ -1723,52 +1660,41 @@
                         setTimeout(() => favoritesModal.classList.remove('opacity-0'), 10);
                         break;
                     case 'bar-stock-btn':
-                        renderBarStockModal();
+                        renderBarStockModal(); // Render content before showing
                         barStockModal.classList.remove('hidden');
                         setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
                         break;
                 }
                 
-                // Close the menu after clicking an item
                 closeFloatingMenu();
             });
-            // --- END: Floating Action Button Menu Listeners ---
  
  
-            // --- Modal Open/Close Listeners ---
-
-            // Helper function to close a modal
+            // --- Modals ---
             function closeModal(modalElement) {
                 if (!modalElement) return;
                 modalElement.classList.add('opacity-0');
                 setTimeout(() => {
                     modalElement.classList.add('hidden');
-                }, 300); // Match transition duration
+                }, 300); 
             }
 
-            // Add backdrop click listeners to all modals
             document.querySelectorAll('.modal').forEach(modal => {
                 modal.addEventListener('click', (e) => {
-                    // Check if the click is on the modal backdrop itself (not the panel)
                     if (e.target === modal) {
                         closeModal(modal);
                     }
                 });
             });
 
-            // Favorites Modal
-            document.getElementById('close-favorites-btn')?.addEventListener('click', () => {
-                closeModal(favoritesModal);
-            });
-            
-            // Handle clicking on a favorite item
+            // Favorites Modal Close & Item Click
+            document.getElementById('close-favorites-btn')?.addEventListener('click', () => closeModal(favoritesModal));
             document.getElementById('favorites-list-container').addEventListener('click', (e) => {
                  const favoriteItem = e.target.closest('.favorite-item');
                  if (favoriteItem) {
                      const cardName = favoriteItem.dataset.name;
                      const cardEl = document.querySelector(`.drink-card[data-name="${cardName}"]`);
                      if (cardEl) {
-                         // Flip to recipe side if it's a drink
                          if (favoriteItem.dataset.view === 'drink') {
                              cardEl.classList.remove('is-flipped');
                          }
@@ -1778,43 +1704,29 @@
                  }
             });
 
-            // Bar Stock Modal
-            document.getElementById('close-stock-btn')?.addEventListener('click', () => {
-                closeModal(barStockModal);
-            });
+            // Bar Stock Modal Close
+            document.getElementById('close-stock-btn')?.addEventListener('click', () => closeModal(barStockModal));
 
-            // Filter Modal
-            document.getElementById('close-filter-btn')?.addEventListener('click', () => {
-                closeModal(filterModal);
-            });
-
+            // Filter Modal Close & Actions
+            document.getElementById('close-filter-btn')?.addEventListener('click', () => closeModal(filterModal));
             document.getElementById('apply-filters-btn')?.addEventListener('click', () => {
                 applyAndRenderFilters();
                 closeModal(filterModal);
             });
-            
             document.getElementById('reset-filters-btn')?.addEventListener('click', () => {
-                activeFilters = {
-                    category: 'all',
-                    spirit: null,
-                    ingredient: null,
-                    showFavoritesOnly: false
-                };
+                activeFilters = { category: 'all', spirit: null, ingredient: null, showFavoritesOnly: false };
                 updatePillsFromState();
                 applyAndRenderFilters();
             });
             
-            // Filter Modal Pill Listeners (must be delegated)
+            // Filter Modal Content Interactions
             document.getElementById('filter-modal-content').addEventListener('click', (e) => {
                 const pill = e.target.closest('.filter-pill');
                 if (!pill) return;
-
                 const categoryGroup = e.target.closest('#filter-group-category');
                 const spiritGroup = e.target.closest('#filter-group-spirit');
-
                 if (categoryGroup) {
-                    const category = pill.dataset.category;
-                    activeFilters.category = category;
+                    activeFilters.category = pill.dataset.category;
                     categoryGroup.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('is-active'));
                     pill.classList.add('is-active');
                 } else if (spiritGroup) {
@@ -1829,8 +1741,6 @@
                     }
                 }
             });
-            
-            // Filter Modal Other Listeners
             document.getElementById('ingredient-filter-select')?.addEventListener('change', (e) => {
                  activeFilters.ingredient = e.target.value || null;
             });
@@ -1839,32 +1749,26 @@
             });
 
 
-            // --- Random Drink Button Listener ---
+            // --- Footer Buttons ---
             if (randomDrinkBtn) {
                 randomDrinkBtn.addEventListener('click', () => {
                     const allDrinkCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
                     if (allDrinkCards.length === 0) return; 
-
                     const randomIndex = Math.floor(Math.random() * allDrinkCards.length);
                     const randomCard = allDrinkCards[randomIndex];
-                    
-                    randomCard.classList.remove('is-flipped'); // Ensure recipe side
+                    randomCard.classList.remove('is-flipped'); 
                     highlightAndScrollToCard(randomCard);
                 });
             }
             
-            
-            // --- Scroll Prev/Next Button Listeners ---
             const scrollPrevBtn = document.getElementById('scroll-prev-btn');
             if (scrollPrevBtn) {
                 scrollPrevBtn.addEventListener('click', () => {
                     const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
                     if (cards.length === 0) return;
-                    
                     const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
                     const activeIndex = cards.indexOf(activeCard);
                     const targetIndex = Math.max(0, activeIndex - 4); 
-                    
                     if (activeIndex !== targetIndex) {
                         cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
@@ -1876,29 +1780,24 @@
                 scrollNextBtn.addEventListener('click', () => {
                     const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
                     if (cards.length === 0) return;
-
                     const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
                     const activeIndex = cards.indexOf(activeCard);
                     const targetIndex = Math.min(cards.length - 1, activeIndex + 4); 
-
                     if (activeIndex !== targetIndex) {
                         cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
                 });
             }
             
-            // --- Main Toggle View Button Listener ---
             const toggleViewBtnMain = document.getElementById('toggle-view-btn-main');
-            // Throttled version to prevent rapid toggling issues
             const throttledToggle = throttle(() => {
-                 setCardView(!isGlobalTarotView); // Toggle the global view
-            }, 300); // Limit execution to once every 300ms
-            
+                 setCardView(!isGlobalTarotView); 
+            }, 300); 
             if (toggleViewBtnMain) {
                 toggleViewBtnMain.addEventListener('click', throttledToggle);
             }
 
-        }); // This closes DOMContentLoaded
+        }); // End DOMContentLoaded
  
     </script>
 </body>
