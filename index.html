@@ -759,7 +759,8 @@
             padding: 0.75rem 1rem;
             
             /* This padding pushes the buttons UP from the home bar, but the footer itself is transparent */
-            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
+            /* UPDATED: Removed env(safe-area-inset-bottom) to make the bar sit flush at the bottom */
+            padding-bottom: 0.75rem;
             
             /* UPDATED: Using your requested image as a background with a dark overlay */
             background-image: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.8)), url('https://github.com/aarmax8/Nomads/blob/c94378a2d62758f678fc1ccb1db7e91921680de3/panoback1.jpg?raw=true');
@@ -1827,6 +1828,7 @@
     </script>
 </body>
 </html>
+
 
 
 
