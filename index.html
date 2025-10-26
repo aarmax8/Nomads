@@ -761,25 +761,28 @@
             /* This padding pushes the buttons UP from the home bar, but the footer itself is transparent */
             padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
             
-            /* UPDATED: Removed all background and border properties to make the footer invisible */
-            background-color: transparent; 
-            border-top: none; 
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
+            /* UPDATED: Using your requested image as a background with a dark overlay */
+            background-image: linear-gradient(rgba(17, 17, 17, 0.8), rgba(17, 17, 17, 0.8)), url('https://github.com/aarmax8/Nomads/blob/c94378a2d62758f678fc1ccb1db7e91921680de3/panoback1.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            /* background-color: rgba(17, 17, 17, 0.9); */ /* Replaced by background-image */
+            border-top: 1px solid #2dd4bf;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             
             display: flex;
             justify-content: space-between;
             align-items: center;
             z-index: 10;
             
-            /* ADDED: This prevents touches from being "stolen" by the transparent footer area */
-            pointer-events: none;
+            /* REMOVED: No longer need pointer-events tricks as the bar is solid */
+            /* pointer-events: none; */
         }
         
-        /* ADDED: Make the buttons clickable again inside the pointer-events:none footer */
-        footer > * {
+        /* REMOVED: No longer need this as the parent footer is clickable */
+        /* footer > * {
             pointer-events: auto;
-        }
+        } */
         
         /* --- Splash Screen --- */
         #splash-screen {
@@ -1824,5 +1827,7 @@
     </script>
 </body>
 </html>
+
+
 
 
