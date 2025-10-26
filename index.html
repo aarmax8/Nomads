@@ -538,170 +538,66 @@
         }
 
         /* --- Floating Action Button Menu --- */
-        #floating-menu-container {
-            position: relative; 
-            bottom: auto; 
-            right: auto; 
-            z-index: 50;
+        /* REMOVED: All styles from #floating-menu-container to .floating-action-btn-middle:hover i */
+        
+        /* --- New Footer Button Styles --- */
+        .footer-btn {
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-
-        #floating-menu-items {
-            position: absolute; 
-            bottom: 100%; 
-            right: 0; 
-            margin-bottom: 0.75rem; 
-            margin-top: 0; 
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0;
-            transform: translateY(10px); 
-            pointer-events: none;
-        }
-
-        #floating-menu-items.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: auto;
-        }
-
-        .floating-menu-item {
-            display: flex;
-            align-items: center;
-            margin-top: 0.75rem; 
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: #d1d5db; /* Light gray */
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.5rem;
             cursor: pointer;
-            background-color: rgba(17, 17, 17, 0.9);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 1px solid #2dd4bf;
-            border-radius: 9999px;
-            padding: 0.6rem 1.25rem;
-            color: #d1d5db;
             transition: all 0.2s ease;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-            white-space: nowrap;
+            font-size: 0.75rem; /* Small text */
+            width: 60px; /* Give them a consistent width */
+            line-height: 1.2;
+        }
+        .footer-btn i {
+            font-size: 1.5rem; /* Icon size */
+            margin-bottom: 0.25rem;
+            color: #2dd4bf; /* Teal */
+        }
+        .footer-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Special style for middle button */
+        .footer-btn-middle {
+            color: #f59e0b; /* Amber */
+            transform: scale(1.1); /* Make it slightly larger */
+        }
+        .footer-btn-middle i {
+            font-size: 2rem; /* Larger icon */
+            color: #f59e0b; /* Amber */
         }
         
-        .floating-menu-item.is-active-filter {
-            border-color: #f59e0b; 
-            color: #f59e0b; 
-            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5); 
-        }
-        .floating-menu-item.is-active-filter:hover {
+        /* Style for active filter/favorites buttons */
+        .footer-btn.is-active-filter {
+            color: #f59e0b;
+            box-shadow: 0 -2px 10px rgba(245, 158, 11, 0.5); /* Top glow */
             background-color: rgba(245, 158, 11, 0.1);
-            color: #fbbf24;
+        }
+        .footer-btn.is-active-filter i {
+            color: #f59e0b;
         }
         
-        .floating-menu-item:hover {
-            background-color: rgba(45, 212, 191, 0.1);
-            color: #2dd4bf;
-            transform: scale(1.05);
+        /* Style for favorites button when active */
+        #footer-favorites-btn.is-active {
+            color: #ef4444; /* Red */
+             box-shadow: 0 -2px 10px rgba(239, 68, 68, 0.5); /* Top glow */
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+        #footer-favorites-btn.is-active i {
+            color: #ef4444; /* Red */
         }
 
-        .floating-menu-item i {
-            font-size: 1.1rem; 
-            margin-right: 0.75rem; 
-            width: 20px; 
-            text-align: center;
-        }
+        /* --- End New Footer Button Styles --- */
 
-        .floating-menu-item span {
-            font-size: 0.875rem; 
-            font-weight: 600;
-        }
-
-        #floating-menu-toggle {
-            width: 60px; 
-            height: 60px; 
-            background-color: rgba(17, 17, 17, 0.9);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 2px solid #2dd4bf;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden; 
-            flex-shrink: 0; 
-        }
-
-        #floating-menu-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4);
-        }
-        
-        #floating-menu-toggle.is-active {
-             box-shadow: 0 0 15px rgba(45, 212, 191, 0.5);
-        }
-
-        #floating-menu-toggle img {
-            display: none;
-        }
-        
-        #floating-menu-toggle i {
-            font-size: 1.5rem; 
-            color: #2dd4bf; 
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: absolute; 
-            transform: scale(1) rotate(0deg);
-            opacity: 1;
-        }
-
-        #floating-menu-toggle .icon-close {
-            transform: scale(0.5) rotate(-90deg);
-            opacity: 0;
-        }
-        
-        #floating-menu-toggle.is-active .icon-open {
-            transform: scale(0.5) rotate(90deg);
-            opacity: 0;
-        }
-        #floating-menu-toggle.is-active .icon-close {
-             transform: scale(1) rotate(0deg);
-             opacity: 1;
-        }
-        
-        .floating-action-btn-left {
-            position: relative; 
-            bottom: auto; 
-            left: auto; 
-            z-index: auto; 
-            width: 60px;
-            height: 60px;
-            background-color: rgba(17, 17, 17, 0.9);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 2px solid #2dd4bf; 
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(45, 212, 191, 0.3); 
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden; 
-        }
-        .floating-action-btn-left:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(45, 212, 191, 0.4); 
-            border-color: #2dd4bf;
-        }
-        .floating-action-btn-left i {
-            font-size: 1.5rem; 
-            color: #2dd4bf; 
-            transition: all 0.3s ease;
-        }
-        .floating-action-btn-left:hover i {
-            transform: scale(0.9);
-        }
-        
         #toggle-view-btn-main .icon-recipe { display: none; }
         #toggle-view-btn-main .icon-stories { display: inline-block; }
 
@@ -746,17 +642,21 @@
         /* --- Footer --- */
         footer {
             flex-shrink: 0;
-            padding: 0.75rem 1rem;
-            padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
-            background-color: rgba(17, 17, 17, 0.8); 
+            padding: 0.5rem 0; /* MODIFIED: Reduced padding */
+            padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); /* MODIFIED: Reduced padding */
+            background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
             -webkit-backdrop-filter: blur(5px);
             display: flex;
-            justify-content: space-between;
+            justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
             position: relative;
             z-index: 10;
+            /* ADDED: Background image for the filter bar */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://github.com/aarmax8/Nomads/blob/1281dca5c0a07d6260d7382301f8640d934bee97/panoback2.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
         }
         
         /* --- Splash Screen --- */
@@ -825,50 +725,42 @@
         
         <!-- Main application footer -->
         <footer id="app-footer">
-            <button id="scroll-prev-btn" class="floating-action-btn-left" title="Scroll Left">
+            <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
+                <span class="text-xs">Prev</span>
             </button>
             
-            <button id="random-drink-btn" class="floating-action-btn-left" title="Pick a Random Drink">
+            <button id="random-drink-btn" class="footer-btn" title="Pick a Random Drink">
                 <i class="fas fa-dice"></i>
+                <span class="text-xs">Random</span>
+            </button>
+            
+            <button id="footer-favorites-btn" class="footer-btn" title="Favorites">
+                <i class="fas fa-heart"></i>
+                <span class="text-xs">Faves</span>
             </button>
      
-            <button id="toggle-view-btn-main" class="floating-action-btn-middle" title="Toggle Recipe/Story">
+            <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
                 <i class="fas fa-book-open icon-stories"></i>
                 <i class="fas fa-scroll icon-recipe"></i>
+                <!-- Text will be hidden by icons, but good for accessibility -->
+                <span class="text-xs sr-only">Toggle</span>
             </button>
 
-            <button id="scroll-next-btn" class="floating-action-btn-left" title="Scroll Right">
-                <i class="fas fa-angles-right"></i>
+            <button id="footer-stock-btn" class="footer-btn" title="Bar Stock">
+                <i class="fas fa-wine-bottle"></i>
+                <span class="text-xs">Stock</span>
             </button>
-
             
-            <!-- Container for the floating action button menu -->
-            <div id="floating-menu-container" class="flex-shrink-0">
-                
-                <!-- Hidden menu items -->
-                <div id="floating-menu-items">
-                    <button id="filters-menu-btn" class="floating-menu-item">
-                        <i class="fas fa-martini-glass-citrus"></i>
-                        <span>Filters</span>
-                    </button>
-                    <button id="bar-stock-btn" class="floating-menu-item">
-                        <i class="fas fa-wine-bottle"></i>
-                        <span>Stock</span>
-                    </button>
-                    <button id="favorites-btn" class="floating-menu-item">
-                        <i class="fas fa-heart"></i>
-                        <span>Favorites</span>
-                    </button>
-                </div>
-     
-                
-                <!-- Main toggle button for the menu -->
-                <button id="floating-menu-toggle">
-                    <i class="fas fa-bars icon-open"></i>
-                    <i class="fas fa-times icon-close"></i>
-                </button>
-            </div>
+            <button id="footer-filters-btn" class="footer-btn" title="Filters">
+                <i class="fas fa-martini-glass-citrus"></i>
+                <span class="text-xs">Filters</span>
+            </button>
+
+            <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
+                <i class="fas fa-angles-right"></i>
+                <span class="text-xs">Next</span>
+            </button>
         </footer>
     </div>
 
@@ -936,7 +828,7 @@
                 { name: "Outlaw's Peach", flavorProfile: "A surprisingly smooth mix of sweet peach, creamy Baileys, and dark cola.", recipe: ["1 oz Peach Schnapps", "1 oz Baileys Irish Cream", "Top with Cola in a tall glass"], story: "We tried to smuggle booze across the state line by soaking peaches in it and labeling the jar 'Pickled Eggs.' The cop who pulled us over was not amused. Or fooled. But he did let us keep the peaches.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8004.jpg", cardHook: "It tastes like a good alibi." },
                 { name: "Junk Drawer", flavorProfile: "An unapologetically sweet concoction of raspberry, butterscotch, and classic root beer.", recipe: ["0.75 oz Raspberry Schnapps", "0.75 oz Butterscotch Schnapps", "0.75 oz Root Beer Schnapps", "Fill a tall glass with Club Soda"], story: "We told the new guy to make a drink with 'whatever's in the junk drawer.' He took us literally. Found these three dusty bottles behind some old spark plugs. We're as surprised as you are that it's drinkable.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/08030c3d25616df982816261406e2c08.png", cardHook: "Sometimes, genius comes from just mixing stuff." },
                 { name: "Blue Lagoon's Ghost", flavorProfile: "Tropical orange and sweet cherry flavors ride on a clean rum backbone.", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice"], story: "A rival biker fell into the quarry. All they found was his floating, pristine blue helmet. We drink this to honor the helmet. Not the guy, the helmet was cool.", 
-                  image: "https://raw.githubusercontent.com/aarmax8/Nomads/74ad18ef43d88d7bf2cdfc32f17174960c4228942/download%20(22).png", 
+                  image: "https://github.com/aarmax8/Nomads/blob/bc62d5aebb9a232818104ce036e8325a73533520/frontend/206S17.jpg?raw=true", 
                   cardHook: "To the losers go the spoils." },
                 { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "Top with Club Soda in a tall glass"], story: "Two chapter presidents showed up wearing the same 'one-of-a-kind' leather jacket. They settled the dispute by drinking until one passed out and the other stole his jacket. This is what they drank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/0ac5da1e71c995f58d75335fffabd844.jpg", cardHook: "The official drink of stubborn arguments." },
                 { name: "Double Cross", flavorProfile: "An aggressive clash of bitter Campari and bold bourbon, with a sweet and salty edge.", recipe: ["2 oz Bulleit Bourbon", "1 oz Campari", "Half Salt, Half Sugar Rim"], story: "Named for 'Smiley' Pete, our ex-treasurer who ran off with the club's funds and the bartender's wife. This drink is as sweet as the revenge we're planning and as bitter as Pete's life will be when we find him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/19071808632f94b0b81d595f74f700f0.jpg", cardHook: "Here's to friends you can't trust." },
@@ -1109,8 +1001,7 @@
         const filterModal = document.getElementById('filter-modal');
         const favoritesModal = document.getElementById('favorites-modal');
         
-        const floatingMenuToggle = document.getElementById('floating-menu-toggle');
-        const floatingMenuItems = document.getElementById('floating-menu-items');
+        /* REMOVED: floatingMenuToggle and floatingMenuItems */
         
         const randomDrinkBtn = document.getElementById('random-drink-btn');
 
@@ -1153,10 +1044,7 @@
             return name.trim();
         }
 
-        function closeFloatingMenu() {
-            floatingMenuToggle.classList.remove('is-active');
-            floatingMenuItems.classList.remove('is-visible');
-        }
+        /* REMOVED: closeFloatingMenu function */
         
         function getIngredientInfo(ingredientName) {
             if (!ingredientName) {
@@ -1366,6 +1254,9 @@
                 starButton.classList.add('is-favorite');
             }
             localStorage.setItem(storageKey, JSON.stringify(favoritesList));
+            
+            // ADDED: Update footer button state
+            updateFilterMenuButtonState();
         }
         
         function renderFavoritesModal() {
@@ -1570,7 +1461,7 @@
         }
         
         function updateFilterMenuButtonState() {
-            const filtersBtn = document.getElementById('filters-menu-btn');
+            const filtersBtn = document.getElementById('footer-filters-btn'); // MODIFIED: Target new button
             if (!filtersBtn) return;
 
             const isFilterActive = activeFilters.category !== 'all' || 
@@ -1582,6 +1473,16 @@
                 filtersBtn.classList.add('is-active-filter');
             } else {
                 filtersBtn.classList.remove('is-active-filter');
+            }
+            
+            // ADDED: Update favorites button state
+            const favoritesBtn = document.getElementById('footer-favorites-btn');
+            if (favoritesBtn) {
+                if (favoriteDrinks.length > 0) {
+                    favoritesBtn.classList.add('is-active');
+                } else {
+                    favoritesBtn.classList.remove('is-active');
+                }
             }
         }
 
@@ -1638,36 +1539,7 @@
                 throttledUpdateActiveCard(); 
             });
             
-            // --- Floating Menu ---
-            floatingMenuToggle.addEventListener('click', () => {
-                floatingMenuToggle.classList.toggle('is-active');
-                floatingMenuItems.classList.toggle('is-visible');
-            });
-            
-            floatingMenuItems.addEventListener('click', (e) => {
-                const button = e.target.closest('.floating-menu-item');
-                if (!button) return;
-
-                switch (button.id) {
-                    case 'filters-menu-btn':
-                        updatePillsFromState(); 
-                        filterModal.classList.remove('hidden');
-                        setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
-                        break;
-                    case 'favorites-btn':
-                        renderFavoritesModal(); 
-                        favoritesModal.classList.remove('hidden');
-                        setTimeout(() => favoritesModal.classList.remove('opacity-0'), 10);
-                        break;
-                    case 'bar-stock-btn':
-                        renderBarStockModal(); // Render content before showing
-                        barStockModal.classList.remove('hidden');
-                        setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
-                        break;
-                }
-                
-                closeFloatingMenu();
-            });
+            /* REMOVED: Old Floating Menu listeners */
  
  
             // --- Modals ---
@@ -1749,7 +1621,26 @@
             });
 
 
-            // --- Footer Buttons ---
+            // --- New Footer Button Listeners ---
+            document.getElementById('footer-filters-btn')?.addEventListener('click', () => {
+                updatePillsFromState(); 
+                filterModal.classList.remove('hidden');
+                setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
+            });
+            
+            document.getElementById('footer-favorites-btn')?.addEventListener('click', () => {
+                renderFavoritesModal(); 
+                favoritesModal.classList.remove('hidden');
+                setTimeout(() => favoritesModal.classList.remove('opacity-0'), 10);
+            });
+            
+            document.getElementById('footer-stock-btn')?.addEventListener('click', () => {
+                renderBarStockModal(); // Render content before showing
+                barStockModal.classList.remove('hidden');
+                setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
+            });
+
+            // --- Footer Buttons (existing) ---
             if (randomDrinkBtn) {
                 randomDrinkBtn.addEventListener('click', () => {
                     const allDrinkCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
@@ -1802,4 +1693,6 @@
     </script>
 </body>
 </html>
+
+
 
