@@ -767,7 +767,7 @@
     
     <!-- Favorites Modal -->
     <div id="favorites-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
             <div class="modal-header p-6 flex-shrink-0">
                 <div class="flex justify-between items-center">
                     <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Favorites</h2>
@@ -782,12 +782,12 @@
 
     <!-- Bar Stock Modal -->
     <div id="bar-stock-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
             <div class="modal-header p-6 flex justify-between items-center flex-shrink-0">
                 <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Bar Stock</h2>
                 <button id="close-stock-btn" class="text-gray-400 hover:text-white text-3xl">&times;</button>
             </div>
-            <div id="bar-stock-content" class="p-6 text-gray-300">
+            <div id="bar-stock-content" class="p-6 text-gray-300 flex-grow min-h-0 overflow-y-auto">
                 <!-- Content is rendered here, overflow handled by CSS -->
             </div>
         </div>
@@ -795,7 +795,7 @@
     
     <!-- Filter Modal -->
     <div id="filter-modal" class="modal fixed inset-0 bg-black/60 flex items-center justify-center p-4 hidden opacity-0 z-50">
-        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[95vh] flex flex-col">
+        <div class="modal-panel rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] flex flex-col">
             <div class="modal-header p-6 flex-shrink-0">
                 <div class="flex justify-between items-center">
                     <h2 class="text-3xl text-amber-400 font-cinzel tracking-wider">Browse The Deck</h2>
@@ -1693,6 +1693,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
