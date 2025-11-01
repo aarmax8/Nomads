@@ -81,6 +81,8 @@
             position: relative; /* Needed for the menu grid */
             z-index: 1; 
             min-height: 0; /* ADDED: Ensure main content can shrink if needed */
+            /* ADDED: Padding to offset the fixed footer */
+            padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
         }
 
         #header-logo-container {
@@ -139,8 +141,8 @@
             top: 0;
             left: 0;
             right: 0;
-            /* MODIFIED: Set bottom to 4rem to make space for the fixed footer */
-            bottom: 4rem;
+            /* MODIFIED: Set bottom to 0 to fill the padded main element */
+            bottom: 0;
             /* MODIFIED: Removed height: 100% as top/bottom/left/right define it */
             /* height: 100%; */
             box-sizing: border-box; 
@@ -674,8 +676,8 @@
         footer {
             flex-shrink: 0;
             padding: 0.5rem 0; /* MODIFIED: Reduced padding */
-            /* MODIFIED: Added safe area padding to the fixed footer */
-            padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+            /* MODIFIED: Set padding-bottom to *only* the safe area */
+            padding-bottom: env(safe-area-inset-bottom);
             background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
@@ -689,6 +691,9 @@
             left: 0;
             right: 0;
             width: 100%; /* Explicitly set width for fixed position */
+            
+            /* ADDED: Explicit height for the footer's content area */
+            height: calc(4.5rem + env(safe-area-inset-bottom));
             
             z-index: 10;
             /* ADDED: Background image for the filter bar */
@@ -1752,6 +1757,7 @@
     </script>
 </body>
 </html>
+
 
 
 
