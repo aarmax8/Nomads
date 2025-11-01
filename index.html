@@ -1694,7 +1694,7 @@
                     if (cards.length === 0) return;
                     const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
                     const activeIndex = cards.indexOf(activeCard);
-                    const targetIndex = Math.max(0, activeIndex - 4); 
+                    const targetIndex = Math.max(0, activeIndex - 8); /* MODIFIED: Was 4, now 8 */
                     if (activeIndex !== targetIndex) {
                         cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
@@ -1708,7 +1708,7 @@
                     if (cards.length === 0) return;
                     const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
                     const activeIndex = cards.indexOf(activeCard);
-                    const targetIndex = Math.min(cards.length - 1, activeIndex + 4); 
+                    const targetIndex = Math.min(cards.length - 1, activeIndex + 8); /* MODIFIED: Was 4, now 8 */
                     if (activeIndex !== targetIndex) {
                         cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
@@ -1728,6 +1728,7 @@
     </script>
 </body>
 </html>
+
 
 
 
