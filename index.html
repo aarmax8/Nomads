@@ -41,9 +41,9 @@
             flex-direction: column; /* Stack header, main, footer vertically */
             min-height: 0; /* ADDED: Prevent flexbox overflow */
             
-            /* ADDED: Push the entire app down from the top */
-            padding-top: max(2rem, env(safe-area-inset-top));
-            padding-bottom: env(safe-area-inset-bottom); /* ADDED: Account for bottom safe area */
+            /* REMOVED: Padding from body */
+            /* padding-top: max(2rem, env(safe-area-inset-top)); */
+            /* padding-bottom: env(safe-area-inset-bottom); */
             box-sizing: border-box; /* Ensure padding is included in height */
         }
         
@@ -52,6 +52,11 @@
             flex-direction: column;
             flex-grow: 1; /* Make the app container grow to fill the body */
             min-height: 0; /* Prevents flex overflow issues */
+            
+            /* ADDED: Padding moved here from body */
+            padding-top: max(2rem, env(safe-area-inset-top));
+            padding-bottom: env(safe-area-inset-bottom);
+            box-sizing: border-box;
         }
         
         header {
@@ -1728,6 +1733,7 @@
     </script>
 </body>
 </html>
+
 
 
 
