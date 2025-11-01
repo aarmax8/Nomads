@@ -100,7 +100,8 @@
             display: flex;
             flex-direction: column; /* Stack children vertically */
             padding: 1rem 0; /* MOVED: Padding is now here, NOT on #menu-grid */
-            overflow: hidden; /* ADDED: This is the critical fix to contain the scrolling child */
+            /* MODIFIED: Removed overflow: hidden. It was part of the problem. */
+            /* overflow: hidden; */
         }
 
         #header-logo-container {
@@ -161,12 +162,10 @@
             /* right: 0; */
             /* bottom: 0; */
             
-            /* MODIFIED: Removed flex-grow and min-height */
-            /* flex-grow: 1; */
-            /* min-height: 0; */
-            
-            /* ADDED: Set explicit height: 100% to fill the 'main' container */
-            height: 100%;
+            /* MODIFIED: Replaced height: 100% with flex-grow: 1 and min-height: 0 */
+            flex-grow: 1;
+            min-height: 0; /* This is the critical fix for scrolling flex children */
+            /* height: 100%; */
 
             box-sizing: border-box; 
         }
@@ -1782,6 +1781,7 @@
     </script>
 </body>
 </html>
+
 
 
 
