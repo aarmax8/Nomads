@@ -56,10 +56,12 @@
             display: flex;
             flex-direction: column;
             
-            /* MODIFIED: Apply fill-available here */
-            min-height: 100vh; /* Fallback */
-            min-height: -webkit-fill-available;
-            height: 100%; /* Fill the body */
+            /* MODIFIED: Changed min-height to height and removed height: 100%.
+              Setting height *directly* to fill-available 
+              should force the container to be the EXACT full screen height.
+            */
+            height: 100vh; /* Fallback */
+            height: -webkit-fill-available;
             
             /* Safe area padding for notches/home bar */
             padding-top: max(2rem, env(safe-area-inset-top));
@@ -1740,6 +1742,7 @@
     </script>
 </body>
 </html>
+
 
 
 
