@@ -70,6 +70,7 @@
             /* MODIFIED: Set height to 100% explicitly instead of flex-grow */
             /* This is often more reliable for iOS PWA standalone mode */
             height: 100%;
+            height: -webkit-fill-available; /* ADDED: This is the critical fix to make the container fill the PWA screen */
             /* flex-grow: 1; */
             min-height: 0; 
             
@@ -1773,6 +1774,7 @@
     </script>
 </body>
 </html>
+
 
 
 
