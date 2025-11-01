@@ -21,15 +21,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Black+Ops+One&family=Cinzel:wght@400;700&family=IM+Fell+DW+Pica&family=Roboto+Condensed:wght@700&family=Rye&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        html, body {
+        /* --- CSS FIX FOR iOS PWA FULLSCREEN --- */
+        html {
             overscroll-behavior-y: contain;
-            overflow: hidden; /* Prevent scrolling on the body */
-            
-            /* Use 100dvh to fill the dynamic viewport */
-            min-height: 100vh; /* Fallback */
-            min-height: -webkit-fill-available; /* Old iOS */
-            height: 100dvh; /* Modern standard */
+            overflow: hidden;
+            /* This is the key for iOS PWA full-screen height */
+            height: -webkit-fill-available; 
+            margin: 0;
+            padding: 0;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background-color: #210505; /* Fallback dark red-brown */
@@ -37,25 +38,28 @@
             background-size: cover;
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
-            /* REMOVED: display: flex; */
-            /* REMOVED: flex-direction: column; */
-            /* REMOVED: min-height: 0; */
             
-            /* REMOVED: Padding from body */
-            /* padding-top: max(2rem, env(safe-area-inset-top)); */
-            /* padding-bottom: env(safe-area-inset-bottom); */
+            /* Fill the <html> element */
+            min-height: 100%; /* Fallback */
+            height: 100%; 
+            
+            overscroll-behavior-y: contain;
+            overflow: hidden; /* Prevent scrolling on the body */
+            margin: 0;
+            padding: 0;
+            
             box-sizing: border-box; /* Ensure padding is included in height */
         }
+        /* --- END OF CSS FIX --- */
         
         .app-container {
             display: flex;
             flex-direction: column;
-            /* MODIFIED: Changed from flex-grow to height: 100% */
-            /* flex-grow: 1; */ 
+            /* Fill the body */
             height: 100%;
             min-height: 0; /* Prevents flex overflow issues */
             
-            /* ADDED: Padding moved here from body */
+            /* Safe area padding for notches/home bar */
             padding-top: max(2rem, env(safe-area-inset-top));
             padding-bottom: env(safe-area-inset-bottom);
             box-sizing: border-box;
@@ -78,7 +82,6 @@
             position: relative;
             overflow: hidden; /* To contain the glint */
             min-height: 150px; /* MODIFIED: Was 200px, reduced to give more space to menu */
-            /* REMOVED: padding-top: env(safe-area-inset-top); (Moved to body) */
         }
 
         #header-logo-image {
@@ -664,7 +667,7 @@
         footer {
             flex-shrink: 0;
             padding: 0.5rem 0; /* MODIFIED: Reduced padding */
-            padding-bottom: 0.5rem; /* MODIFIED: Removed safe-area-inset, moved to body */
+            padding-bottom: 0.5rem; /* MODIFIED: Removed safe-area-inset, moved to app-container */
             background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
@@ -888,7 +891,7 @@
                 { name: "Ruby Rider", flavorProfile: "Deep, rich sloe gin is perfectly complemented by the spicy kick of ginger soda.", recipe: ["2 oz Sloe Gin", "Fill a tall glass with Ginger Soda"], story: "We keep making this, hoping the legendary Ruby Rider will show up. So far, all we've summoned is her angry ex-boyfriend, three cops, and a very confused pizza delivery guy. Our patience is wearing thin.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/PcZieI.jpg", cardHook: "To the ghosts we haven't met yet." },
                 { name: "Cowboy's Hard Root Beer", flavorProfile: "A creamy and bold mix of classic root beer and smooth Irish whiskey.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "A cowboy bet us we couldn't make a drink that tasted like 'a rodeo in a bottle.' We made this. It's got the sweet taste of victory and the kick of a pissed-off bull. He paid up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ECaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "This drink has spurs." },
                 { name: "Knob Creek Kentucky Smash", flavorProfile: "A powerful, sour punch of strong bourbon and fresh lemon, with a hint of orange.", recipe: ["2 oz Knob Creek", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This is what happens when you let our Kentucky chapter president make drinks. It's less of a recipe and more of a threat. It hits you hard and leaves you wondering why you let a man named 'Brawler' be your bartender.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/USq6nI.jpg", cardHook: "As subtle as a thunderstorm." },
-                { name: "Godfather Highball", flavorProfile: "Rich Canadian whiskey and nutty amaretto create a smooth, sophisticated flavor.", recipe: ["1.5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "For the guy who traded his handlebars for a keyboard. It's the taste of a steady paycheck, a 401k, and the soul-crushing despair of rush hour traffic. Welcome to the cage, pal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/YDZaH0.jpg", cardHook: "The taste of selling out." },
+                { name: "Godfather Highball", flavorProfile: "Rich Canadian whiskey and nutty amaretto create a smooth, sophisticated flavor.", recipe: ["1.A 5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "For the guy who traded his handlebars for a keyboard. It's the taste of a steady paycheck, a 401k, and the soul-crushing despair of rush hour traffic. Welcome to the cage, pal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/YDZaH0.jpg", cardHook: "The taste of selling out." },
                 { name: "Bulleit Frontier Punch", flavorProfile: "A bold and fruity mix of bourbon, orange, and lemon, with a sweet grenadine finish.", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when you try to make 'Jungle Juice' with actual bourbon. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/a401737bafe60d0edc1c1ea7ddb18508.jpg", cardHook: "History, but with more sugar." },
                 { name: "Seagram's 7 Sour", flavorProfile: "A classic, balanced sour with smooth whiskey, tart lemon, and a hint of bitters.", recipe: ["2 oz Seagram's 7", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters", "Top with Club Soda in a tall glass"], story: "Named in honor of our Treasurer's heart. He's as cold as stone and perpetually sour about the bar tab. We drink this to annoy him. It works.", image: "https://github.com/aarmax8/Nomads/blob/0dcbab77d90f59f2298642338dfee691353ce70a/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg?raw=true", cardHook: "Better than the memories." },
                 { name: "Jim Beam Black Cherry Bomb", flavorProfile: "Bold bourbon meets its match with sweet black cherry and classic cola.", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], story: "This isn't a drink, it's an escalation. It starts with bourbon, adds some cherry, and ends with you-thinking it's a good idea to see if your bike can do a burnout on the bar. It can't.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5a6b0379f72b6c8fb2751409d48ac8fa.jpg", cardHook: "Tastes like minor property damage." },
@@ -1735,12 +1738,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
 
