@@ -192,7 +192,7 @@
 
 
         .drink-card {
-            flex: 0 0 80%; /* MODIFIED: Was 88%, pulled in to 80% */
+            flex: 0 0 88%; /* MODIFIED: Was 80%, back to 88% for a wider card */
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
@@ -200,26 +200,26 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
-            /* MODIFIED: Set height to 100% */
-            height: 100%;
+            /* MODIFIED: REMOVED height: 100%. Let flexbox stretch handle it. */
+            /* height: 100%; */
             /* MODIFIED: Removed vertical margins */
             /* margin-top: auto; */
             /* margin-bottom: auto; */
         }
         #menu-grid > .drink-card:first-child {
-             margin-left: calc((100% - 80%) / 2); /* MODIFIED: Was 88% */
+             margin-left: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
         }
          #menu-grid > .drink-card:last-child {
-             margin-right: calc((100% - 80%) / 2); /* MODIFIED: Was 88% */
+             margin-right: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
          }
 
         @media (min-width: 640px) { 
-            .drink-card { flex-basis: 70%; height: 100%; }
+            .drink-card { flex-basis: 70%; /* MODIFIED: Removed height: 100% */ }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } 
         @media (min-width: 1024px) { 
-            .drink-card { flex-basis: 50%; height: 100%; }
+            .drink-card { flex-basis: 50%; /* MODIFIED: Removed height: 100% */ }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } 
@@ -1775,6 +1775,7 @@
     </script>
 </body>
 </html>
+
 
 
 
