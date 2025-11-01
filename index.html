@@ -65,7 +65,8 @@
             
             /* Safe area padding for notches/home bar */
             padding-top: max(2rem, env(safe-area-inset-top));
-            padding-bottom: env(safe-area-inset-bottom);
+            /* MODIFIED: Removed padding-bottom, it will be added to the fixed footer */
+            /* padding-bottom: env(safe-area-inset-bottom); */
             box-sizing: border-box;
         }
         
@@ -138,8 +139,10 @@
             top: 0;
             left: 0;
             right: 0;
-            bottom: 0; /* Fills the 'main' container */
-            height: 100%; /* Explicitly set height */
+            /* MODIFIED: Set bottom to 4rem to make space for the fixed footer */
+            bottom: 4rem;
+            /* MODIFIED: Removed height: 100% as top/bottom/left/right define it */
+            /* height: 100%; */
             box-sizing: border-box; 
             padding-bottom: 1rem; /* Space for scrollbar */
         }
@@ -671,7 +674,8 @@
         footer {
             flex-shrink: 0;
             padding: 0.5rem 0; /* MODIFIED: Reduced padding */
-            padding-bottom: 0.5rem; /* MODIFIED: Removed safe-area-inset, moved to app-container */
+            /* MODIFIED: Added safe area padding to the fixed footer */
+            padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
             background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
@@ -679,7 +683,13 @@
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
-            position: relative;
+            /* MODIFIED: Changed to fixed to dock it at the bottom */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%; /* Explicitly set width for fixed position */
+            
             z-index: 10;
             /* ADDED: Background image for the filter bar */
             background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://github.com/aarmax8/Nomads/blob/b300c373e214909a32ad3a13c083f341bf00a019/hocking%20hills%20pano.jpg?raw=true');
@@ -1742,6 +1752,7 @@
     </script>
 </body>
 </html>
+
 
 
 
