@@ -98,6 +98,7 @@
             /* ADDED: Make main a flex container so its child can grow */
             display: flex;
             flex-direction: column; /* Stack children vertically */
+            padding: 1rem 0; /* MOVED: Padding is now here, NOT on #menu-grid */
         }
 
         #header-logo-container {
@@ -149,7 +150,7 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            padding: 1rem 0; /* MODIFIED: Added vertical padding back */
+            padding: 0; /* MODIFIED: Removed vertical padding. It's on 'main' now. */
             
             /* MODIFIED: Removed absolute positioning */
             /* position: absolute; */
@@ -1774,6 +1775,7 @@
     </script>
 </body>
 </html>
+
 
 
 
