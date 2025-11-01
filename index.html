@@ -72,7 +72,8 @@
             height: 100%;
             height: -webkit-fill-available; /* ADDED: This is the critical fix to make the container fill the PWA screen */
             /* flex-grow: 1; */
-            min-height: 0; 
+            /* MODIFIED: Removed min-height: 0, not needed on top container */
+            /* min-height: 0; */ 
             
             /* Safe area padding for notches/home bar */
             padding-top: max(0.5rem, env(safe-area-inset-top)); /* MODIFIED: Reduced fallback padding from 2rem to 0.5rem */
@@ -99,6 +100,7 @@
             display: flex;
             flex-direction: column; /* Stack children vertically */
             padding: 1rem 0; /* MOVED: Padding is now here, NOT on #menu-grid */
+            overflow: hidden; /* ADDED: This is the critical fix to contain the scrolling child */
         }
 
         #header-logo-container {
@@ -1775,6 +1777,7 @@
     </script>
 </body>
 </html>
+
 
 
 
