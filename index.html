@@ -43,6 +43,7 @@
             
             /* ADDED: Push the entire app down from the top */
             padding-top: max(2rem, env(safe-area-inset-top));
+            padding-bottom: env(safe-area-inset-bottom); /* ADDED: Account for bottom safe area */
             box-sizing: border-box; /* Ensure padding is included in height */
         }
         
@@ -656,7 +657,7 @@
         footer {
             flex-shrink: 0;
             padding: 0.5rem 0; /* MODIFIED: Reduced padding */
-            padding-bottom: calc(0.5rem + env(safe-area-inset-bottom)); /* MODIFIED: Reduced padding */
+            padding-bottom: 0.5rem; /* MODIFIED: Removed safe-area-inset, moved to body */
             background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
@@ -1727,6 +1728,7 @@
     </script>
 </body>
 </html>
+
 
 
 
