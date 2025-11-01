@@ -26,7 +26,7 @@
             overscroll-behavior-y: contain;
             overflow: hidden;
             /* This is the key for iOS PWA full-screen height */
-            height: -webkit-fill-available; 
+            height: 100%; /* MODIFIED: Was -webkit-fill-available */
             margin: 0;
             padding: 0;
         }
@@ -55,9 +55,11 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            /* Fill the body */
-            height: 100%;
-            min-height: 0; /* Prevents flex overflow issues */
+            
+            /* MODIFIED: Apply fill-available here */
+            min-height: 100vh; /* Fallback */
+            min-height: -webkit-fill-available;
+            height: 100%; /* Fill the body */
             
             /* Safe area padding for notches/home bar */
             padding-top: max(2rem, env(safe-area-inset-top));
@@ -1738,4 +1740,5 @@
     </script>
 </body>
 </html>
+
 
