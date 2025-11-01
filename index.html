@@ -40,6 +40,10 @@
             display: flex; /* Use flexbox for layout */
             flex-direction: column; /* Stack header, main, footer vertically */
             min-height: 0; /* ADDED: Prevent flexbox overflow */
+            
+            /* ADDED: Push the entire app down from the top */
+            padding-top: max(2rem, env(safe-area-inset-top));
+            box-sizing: border-box; /* Ensure padding is included in height */
         }
         
         .app-container {
@@ -66,7 +70,7 @@
             position: relative;
             overflow: hidden; /* To contain the glint */
             min-height: 150px; /* MODIFIED: Was 200px, reduced to give more space to menu */
-            padding-top: env(safe-area-inset-top);
+            /* REMOVED: padding-top: env(safe-area-inset-top); (Moved to body) */
         }
 
         #header-logo-image {
@@ -1723,6 +1727,7 @@
     </script>
 </body>
 </html>
+
 
 
 
