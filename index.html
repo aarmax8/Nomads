@@ -25,10 +25,11 @@
         html {
             overscroll-behavior-y: contain;
             overflow: hidden;
-            /* MODIFIED: Set min-height on html */
-            min-height: 100vh; /* Fallback */
-            min-height: -webkit-fill-available;
-            height: 100%; /* ADDED: Ensure it tries to be 100% */
+            
+            /* MODIFIED: Force height to fill viewport */
+            height: 100vh; /* Fallback */
+            height: -webkit-fill-available;
+            
             margin: 0;
             padding: 0;
         }
@@ -41,8 +42,10 @@
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
             
-            /* MODIFIED: Use min-height and make body a flex container */
-            min-height: 100%; /* Fill the <html> element */
+            /* MODIFIED: Force height to fill html */
+            height: 100%; /* Fallback */
+            height: -webkit-fill-available;
+            
             display: flex;
             flex-direction: column;
             
@@ -65,8 +68,7 @@
             
             /* Safe area padding for notches/home bar */
             padding-top: max(2rem, env(safe-area-inset-top));
-            /* MODIFIED: Removed padding-bottom, it will be added to the fixed footer */
-            /* padding-bottom: env(safe-area-inset-bottom); */
+            /* MODIFIED: Removed all padding-bottom, will be on footer */
             box-sizing: border-box;
         }
         
@@ -81,8 +83,8 @@
             position: relative; /* Needed for the menu grid */
             z-index: 1; 
             min-height: 0; /* ADDED: Ensure main content can shrink if needed */
-            /* ADDED: Padding to offset the fixed footer */
-            padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+            /* MODIFIED: Removed padding-bottom, footer is no longer fixed */
+            /* padding-bottom: calc(4.5rem + env(safe-area-inset-bottom)); */
         }
 
         #header-logo-container {
@@ -141,7 +143,7 @@
             top: 0;
             left: 0;
             right: 0;
-            /* MODIFIED: Set bottom to 0 to fill the padded main element */
+            /* MODIFIED: bottom: 0 fills the main container, which now has no padding */
             bottom: 0;
             /* MODIFIED: Removed height: 100% as top/bottom/left/right define it */
             /* height: 100%; */
@@ -675,9 +677,9 @@
         /* --- Footer --- */
         footer {
             flex-shrink: 0;
-            padding: 0.5rem 0; /* MODIFIED: Reduced padding */
-            /* MODIFIED: Set padding-bottom to *only* the safe area */
-            padding-bottom: env(safe-area-inset-bottom);
+            padding: 0.5rem 0;
+            /* MODIFIED: Set padding-bottom to *only* the safe area. This is the only bottom spacing now. */
+            padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
             background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
@@ -685,15 +687,16 @@
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
-            /* MODIFIED: Changed to fixed to dock it at the bottom */
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            
+            /* MODIFIED: Removed fixed positioning. Footer is now in the flex flow. */
+            /* position: fixed; */
+            /* bottom: 0; */
+            /* left: 0; */
+            /* right: 0; */
             width: 100%; /* Explicitly set width for fixed position */
             
-            /* ADDED: Explicit height for the footer's content area */
-            height: calc(4.5rem + env(safe-area-inset-bottom));
+            /* MODIFIED: Removed explicit height. Let content define height. */
+            /* height: calc(4.5rem + env(safe-area-inset-bottom)); */
             
             z-index: 10;
             /* ADDED: Background image for the filter bar */
@@ -1757,6 +1760,7 @@
     </script>
 </body>
 </html>
+
 
 
 
