@@ -37,9 +37,9 @@
             background-size: cover;
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
-            display: flex; /* Use flexbox for layout */
-            flex-direction: column; /* Stack header, main, footer vertically */
-            min-height: 0; /* ADDED: Prevent flexbox overflow */
+            /* REMOVED: display: flex; */
+            /* REMOVED: flex-direction: column; */
+            /* REMOVED: min-height: 0; */
             
             /* REMOVED: Padding from body */
             /* padding-top: max(2rem, env(safe-area-inset-top)); */
@@ -50,7 +50,9 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            flex-grow: 1; /* Make the app container grow to fill the body */
+            /* MODIFIED: Changed from flex-grow to height: 100% */
+            /* flex-grow: 1; */ 
+            height: 100%;
             min-height: 0; /* Prevents flex overflow issues */
             
             /* ADDED: Padding moved here from body */
@@ -1733,6 +1735,7 @@
     </script>
 </body>
 </html>
+
 
 
 
