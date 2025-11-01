@@ -161,9 +161,12 @@
             /* right: 0; */
             /* bottom: 0; */
             
-            /* ADDED: Allow grid to grow and fill the 'main' container */
-            flex-grow: 1;
-            min-height: 0; /* Good practice for flex children */
+            /* MODIFIED: Removed flex-grow and min-height */
+            /* flex-grow: 1; */
+            /* min-height: 0; */
+            
+            /* ADDED: Set explicit height: 100% to fill the 'main' container */
+            height: 100%;
 
             box-sizing: border-box; 
         }
@@ -310,7 +313,8 @@
             background: transparent; 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             font-style: normal; 
-            margin-top: auto; /* Push to bottom */
+            /* MODIFIED: Removed margin-top: auto. This was squishing the recipe list. */
+            /* margin-top: auto; */
         }
         
         /* === END CARD FRONT === */
@@ -1173,7 +1177,8 @@
                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
-                                <div class="px-6 pt-4 text-center">
+                                <!-- MODIFIED: Added flex-shrink-0 to this wrapper div -->
+                                <div class="px-6 pt-4 text-center flex-shrink-0">
                                     <p class="text-xl mb-3 font-cinzel text-gray-300">${item.flavorProfile}</p>
                                 </div>
                                 <div class="recipe-content">
@@ -1777,6 +1782,7 @@
     </script>
 </body>
 </html>
+
 
 
 
