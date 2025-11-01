@@ -25,18 +25,65 @@
         html {
             overscroll-behavior-y: contain;
             overflow: hidden;
-            
-            /* MODIFIED: Change to height: 100% */
-            height: 100%;
-            /* ADDED: Match body property for iOS PWA reliability */
+            /* This is the key for iOS PWA full-screen height */
             height: -webkit-fill-available; 
-            
             margin: 0;
             padding: 0;
         }
 
-        /* MODIFIED: This selector was a typo. It was #header-logo-container, which broke the layout. */
-        /* It now correctly targets the <img> tag INSIDE the container. */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #210505; /* Fallback dark red-brown */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://github.com/aarmax8/Nomads/blob/40535297512be76fe3adc3ff7db2d53af65bddb3/pittsburghbridge.jpg?raw=true');
+            background-size: cover;
+            background-position: center; /* This centers the main background image */
+            background-attachment: fixed;
+            
+            /* Fill the <html> element */
+            min-height: 100%; /* Fallback */
+            height: 100%; 
+            
+            overscroll-behavior-y: contain;
+            overflow: hidden; /* Prevent scrolling on the body */
+            margin: 0;
+            padding: 0;
+            
+            box-sizing: border-box; /* Ensure padding is included in height */
+        }
+        /* --- END OF CSS FIX --- */
+        
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            /* Fill the body */
+            height: 100%;
+            min-height: 0; /* Prevents flex overflow issues */
+            
+            /* Safe area padding for notches/home bar */
+            padding-top: max(2rem, env(safe-area-inset-top));
+            padding-bottom: env(safe-area-inset-bottom);
+            box-sizing: border-box;
+        }
+        
+        header {
+            flex-shrink: 0; /* Prevent header from shrinking */
+            position: relative;
+            z-index: 10;
+        }
+        
+        main {
+            flex-grow: 1; /* Allow main content to grow and fill space */
+            position: relative; /* Needed for the menu grid */
+            z-index: 1; 
+            min-height: 0; /* ADDED: Ensure main content can shrink if needed */
+        }
+
+        #header-logo-container {
+            position: relative;
+            overflow: hidden; /* To contain the glint */
+            min-height: 150px; /* MODIFIED: Was 200px, reduced to give more space to menu */
+        }
+
         #header-logo-image {
             width: 100%;
             height: 100%;
@@ -80,23 +127,17 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: ADDED vertical padding. This was on main. */
-            /* MODIFIED: ADDED large bottom padding to account for new fixed footer */
-            padding: 1rem 0 calc(100px + env(safe-area-inset-bottom));
+            padding: 1rem 0;
             
-            /* MODIFIED: REMOVED absolute positioning to fill 'main' */
-            /* position: absolute; */
-            /* top: 0; */
-            /* left: 0; */
-            /* right: 0; */
-            /* bottom: 0; */
-            
-            /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
-            flex-grow: 1;
-            min-height: 0; 
-            /* height: 100%; */
-
+            /* Make grid scrollable within main */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0; /* Fills the 'main' container */
+            height: 100%; /* Explicitly set height */
             box-sizing: border-box; 
+            padding-bottom: 1rem; /* Space for scrollbar */
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -125,7 +166,7 @@
 
 
         .drink-card {
-            flex: 0 0 88%; /* MODIFIED: Was 80%, back to 88% for a wider card */
+            flex: 0 0 88%; 
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
@@ -133,26 +174,24 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
-            /* MODIFIED: REMOVED height: 100%. Let flexbox stretch handle it. */
-            /* height: 100%; */
-            /* MODIFIED: Removed vertical margins */
-            /* margin-top: auto; */
-            /* margin-bottom: auto; */
+            height: 100%;
+            margin-top: 0; 
+            margin-bottom: 0; 
         }
         #menu-grid > .drink-card:first-child {
-             margin-left: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
+             margin-left: calc((100% - 88%) / 2); /* Center the first card */
         }
          #menu-grid > .drink-card:last-child {
-             margin-right: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
+             margin-right: calc((100% - 88%) / 2); /* Ensure last card can center */
          }
 
         @media (min-width: 640px) { 
-            .drink-card { flex-basis: 70%; /* MODIFIED: Removed height: 100% */ }
+            .drink-card { flex-basis: 70%; height: 100%; }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } 
         @media (min-width: 1024px) { 
-            .drink-card { flex-basis: 50%; /* MODIFIED: Removed height: 100% */ }
+            .drink-card { flex-basis: 50%; height: 100%; }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } 
@@ -201,7 +240,7 @@
             flex-grow: 1; 
             overflow-y: auto; 
             padding: 0 1.5rem; 
-            min-height: 0; /* ADDED: Explicit min-height: 0 for flex child */
+            min-height: 0; 
         }
         .recipe-content::-webkit-scrollbar { width: 4px; }
         .recipe-content::-webkit-scrollbar-track { background: transparent; }
@@ -241,8 +280,7 @@
             background: transparent; 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             font-style: normal; 
-            /* MODIFIED: Removed margin-top: auto. This was squishing the recipe list. */
-            /* margin-top: auto; */
+            margin-top: auto; /* Push to bottom */
         }
         
         /* === END CARD FRONT === */
@@ -535,8 +573,7 @@
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons smaller */
-            font-size: 1.25rem; /* Icon size */
+            font-size: 1.5rem; /* Icon size */
             margin-bottom: 0.25rem;
             color: #2dd4bf; /* Teal */
         }
@@ -550,8 +587,7 @@
             transform: scale(1.1); /* Make it slightly larger */
         }
         .footer-btn-middle i {
-            /* MODIFIED: Made middle icon smaller */
-            font-size: 1.75rem; /* Larger icon */
+            font-size: 2rem; /* Larger icon */
             color: #f59e0b; /* Amber */
         }
         
@@ -628,14 +664,10 @@
         }
 
         /* --- Footer --- */
-        /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
-        #app-footer {
-            /* MODIFIED: Removed flex-shrink: 0 */
-            /* flex-shrink: 0; */
-            /* MODIFIED: Reduced top padding */
-            padding: 0.25rem 0;
-            /* MODIFIED: Reduced bottom padding */
-            padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
+        footer {
+            flex-shrink: 0;
+            padding: 0.5rem 0; /* MODIFIED: Reduced padding */
+            padding-bottom: 0.5rem; /* MODIFIED: Removed safe-area-inset, moved to app-container */
             background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
@@ -643,16 +675,7 @@
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
-            
-            /* MODIFIED: Changed from in-flow to fixed positioning */
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%; 
-            
-            /* MODIFIED: Removed explicit height. Let content define height. */
-            
+            position: relative;
             z-index: 10;
             /* ADDED: Background image for the filter bar */
             background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://github.com/aarmax8/Nomads/blob/b300c373e214909a32ad3a13c083f341bf00a019/hocking%20hills%20pano.jpg?raw=true');
@@ -725,8 +748,7 @@
 
         
         <!-- Main application footer -->
-        <!-- MODIFIED: Changed from <footer> to <div> with ID -->
-        <div id="app-footer">
+        <footer id="app-footer">
             <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
                 <span class="text-xs">Prev</span>
@@ -765,7 +787,7 @@
                 <i class="fas fa-angles-right"></i>
                 <span class="text-xs">Next</span>
             </button>
-        </div>
+        </footer>
     </div>
 
     
@@ -1112,8 +1134,7 @@
                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
-                                <!-- MODIFIED: Added flex-shrink-0 to this wrapper div -->
-                                <div class="px-6 pt-4 text-center flex-shrink-0">
+                                <div class="px-6 pt-4 text-center">
                                     <p class="text-xl mb-3 font-cinzel text-gray-300">${item.flavorProfile}</p>
                                 </div>
                                 <div class="recipe-content">
@@ -1717,32 +1738,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
