@@ -1560,12 +1560,15 @@
 
             // --- Active Card on Scroll ---
             let scrollTimeout;
-            const throttledUpdateActiveCard = throttle(updateActiveCard, 150); 
+            // We use a "debounce" pattern here. The updateActiveCard function will
+            // only be called 150ms *after* the user has stopped scrolling.
+            // This prevents the "active" class change (and its box-shadow) 
+            // from interfering with the browser's scroll-snap behavior.
             menuGrid.addEventListener('scroll', () => {
                 clearTimeout(scrollTimeout);
-                throttledUpdateActiveCard(); 
+                scrollTimeout = setTimeout(updateActiveCard, 150);
             });
-            
+        
             /* REMOVED: Old Floating Menu listeners */
  
  
@@ -1720,10 +1723,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
