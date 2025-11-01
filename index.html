@@ -74,7 +74,7 @@
             min-height: 0; 
             
             /* Safe area padding for notches/home bar */
-            padding-top: max(2rem, env(safe-area-inset-top));
+            padding-top: max(0.5rem, env(safe-area-inset-top)); /* MODIFIED: Reduced fallback padding from 2rem to 0.5rem */
             /* MODIFIED: Removed all padding-bottom, will be on footer */
             box-sizing: border-box;
         }
@@ -148,7 +148,7 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            padding: 0; /* MODIFIED: Removed vertical padding */
+            padding: 1rem 0; /* MODIFIED: Added vertical padding back */
             
             /* MODIFIED: Removed absolute positioning */
             /* position: absolute; */
@@ -1773,6 +1773,7 @@
     </script>
 </body>
 </html>
+
 
 
 
