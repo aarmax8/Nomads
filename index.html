@@ -168,7 +168,7 @@
 
 
         .drink-card {
-            flex: 0 0 88%; 
+            flex: 0 0 80%; /* MODIFIED: Was 88%, pulled in to 80% */
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
@@ -181,10 +181,10 @@
             margin-bottom: 0; 
         }
         #menu-grid > .drink-card:first-child {
-             margin-left: calc((100% - 88%) / 2); /* Center the first card */
+             margin-left: calc((100% - 80%) / 2); /* MODIFIED: Was 88% */
         }
          #menu-grid > .drink-card:last-child {
-             margin-right: calc((100% - 88%) / 2); /* Ensure last card can center */
+             margin-right: calc((100% - 80%) / 2); /* MODIFIED: Was 88% */
          }
 
         @media (min-width: 640px) { 
@@ -1740,5 +1740,6 @@
     </script>
 </body>
 </html>
+
 
 
