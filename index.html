@@ -25,9 +25,10 @@
         html {
             overscroll-behavior-y: contain;
             overflow: hidden;
-            /* MODIFIED: Set the root height to fill-available */
-            height: 100vh; /* Fallback */
-            height: -webkit-fill-available;
+            /* MODIFIED: Set min-height on html */
+            min-height: 100vh; /* Fallback */
+            min-height: -webkit-fill-available;
+            height: 100%; /* ADDED: Ensure it tries to be 100% */
             margin: 0;
             padding: 0;
         }
@@ -40,9 +41,10 @@
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
             
-            /* Fill the <html> element */
-            min-height: 100%; /* Fallback */
-            height: 100%; 
+            /* MODIFIED: Use min-height and make body a flex container */
+            min-height: 100%; /* Fill the <html> element */
+            display: flex;
+            flex-direction: column;
             
             overscroll-behavior-y: contain;
             overflow: hidden; /* Prevent scrolling on the body */
@@ -57,10 +59,9 @@
             display: flex;
             flex-direction: column;
             
-            /* MODIFIED: Set height to 100% to fill the body, 
-               which is filling the html element.
-            */
-            height: 100%;
+            /* MODIFIED: Set flex-grow to fill the body */
+            flex-grow: 1;
+            min-height: 0; /* ADDED: Allow app-container to shrink if needed in flex context */
             
             /* Safe area padding for notches/home bar */
             padding-top: max(2rem, env(safe-area-inset-top));
@@ -1741,6 +1742,7 @@
     </script>
 </body>
 </html>
+
 
 
 
