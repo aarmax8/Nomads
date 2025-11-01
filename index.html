@@ -127,9 +127,9 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: ADDED vertical padding. This was on main. */
-            /* MODIFIED: ADDED large bottom padding to account for new fixed footer */
-            padding: 1rem 0 calc(100px + env(safe-area-inset-bottom));
+            /* MODIFIED: Reduced vertical padding to make cards taller */
+            /* and reduce the gap above the fixed footer. */
+            padding: 0.5rem 0 calc(80px + env(safe-area-inset-bottom));
             
             /* MODIFIED: REMOVED absolute positioning to fill 'main' */
             /* position: absolute; */
@@ -1764,6 +1764,7 @@
     </script>
 </body>
 </html>
+
 
 
 
