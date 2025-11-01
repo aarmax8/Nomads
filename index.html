@@ -35,82 +35,9 @@
             padding: 0;
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #210505; /* Fallback dark red-brown */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://github.com/aarmax8/Nomads/blob/40535297512be76fe3adc3ff7db2d53af65bddb3/pittsburghbridge.jpg?raw=true');
-            background-size: cover;
-            background-position: center; /* This centers the main background image */
-            background-attachment: fixed;
-            
-            /* MODIFIED: Set explicit height to fill html AND webkit-fill-available */
-            height: 100%; /* Fallback */
-            height: -webkit-fill-available;
-            /* MODIFIED: Remove min-height */
-            /* min-height: 100%; */
-            /* min-height: -webkit-fill-available; */
-            
-            /* MODIFIED: Removed flex properties. Not needed for a single child. */
-            /* display: flex; */
-            /* flex-direction: column; */
-            
-            overscroll-behavior-y: contain;
-            overflow: hidden; /* Prevent scrolling on the body */
-            margin: 0;
-            padding: 0;
-            
-            box-sizing: border-box; /* Ensure padding is included in height */
-        }
-        /* --- END OF CSS FIX --- */
-        
-        .app-container {
-            display: flex;
-            flex-direction: column;
-            
-            /* MODIFIED: Set height to 100% explicitly instead of flex-grow */
-            /* This is often more reliable for iOS PWA standalone mode */
-            height: 100%;
-            height: -webkit-fill-available; /* ADDED: This is the critical fix to make the container fill the PWA screen */
-            /* flex-grow: 1; */
-            /* MODIFIED: Removed min-height: 0, not needed on top container */
-            /* min-height: 0; */ 
-            
-            /* Safe area padding for notches/home bar */
-            padding-top: max(0.5rem, env(safe-area-inset-top)); /* MODIFIED: Reduced fallback padding from 2rem to 0.5rem */
-            /* MODIFIED: Removed all padding-bottom, will be on footer */
-            box-sizing: border-box;
-        }
-        
-        header {
-            flex-shrink: 0; /* Prevent header from shrinking */
-            position: relative;
-            z-index: 10;
-        }
-        
-        main {
-            flex-grow: 1; /* Allow main content to grow and fill space */
-            
-            /* MODIFIED: REMOVED position: relative. */
-            /* position: relative; */ 
-            
-            z-index: 1; 
-            min-height: 0; /* Ensure main content can shrink if needed */
-
-            /* MODIFIED: ADDED flex properties back. This is critical for the grid to grow. */
-            display: flex;
-            flex-direction: column; 
-            
-            /* MODIFIED: REMOVED padding. This will go on the grid. */
-            /* padding: 1rem 0; */ 
-        } 
-
-        #header-logo-container {
-            position: relative;
-            overflow: hidden; /* To contain the glint */
-            min-height: 150px; /* MODIFIED: Was 200px, reduced to give more space to menu */
-        }
-
-        #header-logo-container {
+        /* MODIFIED: This selector was a typo. It was #header-logo-container, which broke the layout. */
+        /* It now correctly targets the <img> tag INSIDE the container. */
+        #header-logo-image {
             width: 100%;
             height: 100%;
             object-fit: fill; /* Stretches to fill the container */
@@ -1790,6 +1717,7 @@
     </script>
 </body>
 </html>
+
 
 
 
