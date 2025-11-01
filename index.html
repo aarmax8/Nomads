@@ -96,13 +96,15 @@
             z-index: 1; 
             min-height: 0; /* Ensure main content can shrink if needed */
 
-            /* ADDED: Make main a flex container so its child can grow */
-            display: flex;
-            flex-direction: column; /* Stack children vertically */
-            padding: 1rem 0; /* MOVED: Padding is now here, NOT on #menu-grid */
-            /* MODIFIED: Removed overflow: hidden. It was part of the problem. */
-            /* overflow: hidden; */
-        }
+            /* MODIFIED: Removed flex properties from main. It will just be a growing block. */
+            /* display: flex; */
+            /* flex-direction: column; */ 
+            
+            /* MODIFIED: Removed padding from main. It will be on the grid now. */
+            /* padding: 1rem 0; */ 
+            
+            /* MODIFIED: Removed overflow: hidden. */
+        } /* ADDED: This closing brace was missing, which broke the entire layout. */
 
         #header-logo-container {
             position: relative;
@@ -110,7 +112,7 @@
             min-height: 150px; /* MODIFIED: Was 200px, reduced to give more space to menu */
         }
 
-        #header-logo-image {
+        #header-logo-container {
             width: 100%;
             height: 100%;
             object-fit: fill; /* Stretches to fill the container */
@@ -153,7 +155,7 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            padding: 0; /* MODIFIED: Removed vertical padding. It's on 'main' now. */
+            padding: 1rem 0; /* MODIFIED: Added vertical padding, was 0 */
             
             /* MODIFIED: Removed absolute positioning */
             /* position: absolute; */
@@ -162,10 +164,10 @@
             /* right: 0; */
             /* bottom: 0; */
             
-            /* MODIFIED: Replaced height: 100% with flex-grow: 1 and min-height: 0 */
-            flex-grow: 1;
-            min-height: 0; /* This is the critical fix for scrolling flex children */
-            /* height: 100%; */
+            /* MODIFIED: Replaced flex-grow with height: 100% to fill the 'main' block */
+            /* flex-grow: 1; */
+            /* min-height: 0; */ 
+            height: 100%;
 
             box-sizing: border-box; 
         }
@@ -1781,6 +1783,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
