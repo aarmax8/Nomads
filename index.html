@@ -42,12 +42,12 @@
             background-position: center; /* This centers the main background image */
             background-attachment: fixed;
             
-            /* MODIFIED: Set min-height to fill html AND webkit-fill-available */
-            min-height: 100%; /* Fallback */
-            min-height: -webkit-fill-available;
-            /* MODIFIED: Remove explicit height */
-            /* height: 100%; */
-            /* height: -webkit-fill-available; */
+            /* MODIFIED: Set explicit height to fill html AND webkit-fill-available */
+            height: 100%; /* Fallback */
+            height: -webkit-fill-available;
+            /* MODIFIED: Remove min-height */
+            /* min-height: 100%; */
+            /* min-height: -webkit-fill-available; */
             
             display: flex;
             flex-direction: column;
@@ -137,7 +137,7 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            padding: 1rem 0;
+            padding: 0; /* MODIFIED: Removed vertical padding */
             
             /* Make grid scrollable within main */
             position: absolute;
@@ -149,7 +149,8 @@
             /* MODIFIED: Removed height: 100% as top/bottom/left/right define it */
             /* height: 100%; */
             box-sizing: border-box; 
-            padding-bottom: 1rem; /* Space for scrollbar */
+            /* MODIFIED: Removed padding-bottom */
+            /* padding-bottom: 1rem; */
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -186,10 +187,11 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
-            /* MODIFIED: Set height to 98% to prevent overflow */
-            height: 98%;
-            margin-top: auto; /* Center vertically */
-            margin-bottom: auto; /* Center vertically */
+            /* MODIFIED: Set height to 100% */
+            height: 100%;
+            /* MODIFIED: Removed vertical margins */
+            /* margin-top: auto; */
+            /* margin-bottom: auto; */
         }
         #menu-grid > .drink-card:first-child {
              margin-left: calc((100% - 80%) / 2); /* MODIFIED: Was 88% */
@@ -1760,6 +1762,7 @@
     </script>
 </body>
 </html>
+
 
 
 
