@@ -25,66 +25,65 @@
         html {
             overscroll-behavior-y: contain;
             overflow: hidden;
-            /* This is the key for iOS PWA full-screen height */
+            
+            /* MODIFIED: Change to height: 100% */
+            height: 100%;
+            /* ADDED: Match body property for iOS PWA reliability */
             height: -webkit-fill-available; 
+            
             margin: 0;
             padding: 0;
         }
 
+        /* --- ADDED BACK: CORE LAYOUT STYLES --- */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #210505; /* Fallback dark red-brown */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://github.com/aarmax8/Nomads/blob/40535297512be76fe3adc3ff7db2d53af65bddb3/pittsburghbridge.jpg?raw=true');
-            background-size: cover;
-            background-position: center; /* This centers the main background image */
-            /* REMOVED: This property causes painting issues in iOS PWA mode */
-            /* background-attachment: fixed; */
-            
-            /* Fill the <html> element */
-            min-height: 100%; /* Fallback */
-            height: 100%; 
-            
-            overscroll-behavior-y: contain;
-            overflow: hidden; /* Prevent scrolling on the body */
+            background-color: #000;
+            font-family: 'Roboto Condensed', sans-serif;
+            overscroll-behavior-y: contain; /* Prevents pull-to-refresh on body */
+            overflow: hidden; /* Prevents scrolling on body */
+            height: 100%;
+            height: -webkit-fill-available; /* For iOS PWA */
             margin: 0;
             padding: 0;
-            
-            box-sizing: border-box; /* Ensure padding is included in height */
         }
-        /* --- END OF CSS FIX --- */
-        
+
         .app-container {
             display: flex;
             flex-direction: column;
-            /* Fill the body */
-            height: 100%;
-            min-height: 0; /* Prevents flex overflow issues */
+            min-height: 100%;
+            min-height: -webkit-fill-available; /* Match body for iOS */
+            width: 100%;
+            max-width: 1024px; /* Center content on desktop */
+            margin: 0 auto;
+            background-color: #000;
             
-            /* Safe area padding for notches/home bar */
-            padding-top: max(2rem, env(safe-area-inset-top));
-            padding-bottom: env(safe-area-inset-bottom);
-            box-sizing: border-box;
+            /* This is the gradient background for the app */
+            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.9), rgba(17, 17, 17, 0.95) 50%, #000 100%), url('https://github.com/aarmax8/Nomads/blob/b300c373e214909a32ad3a13c083f341bf00a019/hocking%20hills%20pano.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keep background stationary */
+            
+            padding-top: env(safe-area-inset-top); 
         }
-        
+
         header {
-            flex-shrink: 0; /* Prevent header from shrinking */
-            position: relative;
-            z-index: 10;
+            flex-shrink: 0; /* Header should not shrink */
+            position: relative; /* For z-index and pseudo-elements */
+            height: 150px;
+            z-index: 10; /* Keep header above main content */
         }
         
         main {
             flex-grow: 1; /* Allow main content to grow and fill space */
-            position: relative; /* Needed for the menu grid */
             z-index: 1; 
-            min-height: 0; /* ADDED: Ensure main content can shrink if needed */
-        }
+            min-height: 0; /* Ensure main content can shrink if needed */
+            display: flex;
+            flex-direction: column; 
+        } 
+        /* --- END OF ADDED STYLES --- */
 
-        #header-logo-container {
-            position: relative;
-            overflow: hidden; /* To contain the glint */
-            min-height: 150px; /* MODIFIED: Was 200px, reduced to give more space to menu */
-        }
-
+        /* MODIFIED: This selector was a typo. It was #header-logo-container, which broke the layout. */
+        /* It now correctly targets the <img> tag INSIDE the container. */
         #header-logo-image {
             width: 100%;
             height: 100%;
@@ -128,17 +127,23 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            padding: 1rem 0;
+            /* MODIFIED: ADDED vertical padding. This was on main. */
+            /* MODIFIED: ADDED large bottom padding to account for new fixed footer */
+            padding: 1rem 0 calc(100px + env(safe-area-inset-bottom));
             
-            /* Make grid scrollable within main */
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0; /* Fills the 'main' container */
-            height: 100%; /* Explicitly set height */
+            /* MODIFIED: REMOVED absolute positioning to fill 'main' */
+            /* position: absolute; */
+            /* top: 0; */
+            /* left: 0; */
+            /* right: 0; */
+            /* bottom: 0; */
+            
+            /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
+            flex-grow: 1;
+            min-height: 0; 
+            /* height: 100%; */
+
             box-sizing: border-box; 
-            padding-bottom: 1rem; /* Space for scrollbar */
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -167,7 +172,7 @@
 
 
         .drink-card {
-            flex: 0 0 88%; 
+            flex: 0 0 88%; /* MODIFIED: Was 80%, back to 88% for a wider card */
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
@@ -175,24 +180,26 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
-            height: 100%;
-            margin-top: 0; 
-            margin-bottom: 0; 
+            /* MODIFIED: REMOVED height: 100%. Let flexbox stretch handle it. */
+            /* height: 100%; */
+            /* MODIFIED: Removed vertical margins */
+            /* margin-top: auto; */
+            /* margin-bottom: auto; */
         }
         #menu-grid > .drink-card:first-child {
-             margin-left: calc((100% - 88%) / 2); /* Center the first card */
+             margin-left: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
         }
          #menu-grid > .drink-card:last-child {
-             margin-right: calc((100% - 88%) / 2); /* Ensure last card can center */
+             margin-right: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
          }
 
         @media (min-width: 640px) { 
-            .drink-card { flex-basis: 70%; height: 100%; }
+            .drink-card { flex-basis: 70%; /* MODIFIED: Removed height: 100% */ }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } 
         @media (min-width: 1024px) { 
-            .drink-card { flex-basis: 50%; height: 100%; }
+            .drink-card { flex-basis: 50%; /* MODIFIED: Removed height: 100% */ }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } 
@@ -241,7 +248,7 @@
             flex-grow: 1; 
             overflow-y: auto; 
             padding: 0 1.5rem; 
-            min-height: 0; 
+            min-height: 0; /* ADDED: Explicit min-height: 0 for flex child */
         }
         .recipe-content::-webkit-scrollbar { width: 4px; }
         .recipe-content::-webkit-scrollbar-track { background: transparent; }
@@ -281,7 +288,8 @@
             background: transparent; 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             font-style: normal; 
-            margin-top: auto; /* Push to bottom */
+            /* MODIFIED: Removed margin-top: auto. This was squishing the recipe list. */
+            /* margin-top: auto; */
         }
         
         /* === END CARD FRONT === */
@@ -574,7 +582,8 @@
             line-height: 1.2;
         }
         .footer-btn i {
-            font-size: 1.5rem; /* Icon size */
+            /* MODIFIED: Made icons smaller */
+            font-size: 1.25rem; /* Icon size */
             margin-bottom: 0.25rem;
             color: #2dd4bf; /* Teal */
         }
@@ -588,7 +597,8 @@
             transform: scale(1.1); /* Make it slightly larger */
         }
         .footer-btn-middle i {
-            font-size: 2rem; /* Larger icon */
+            /* MODIFIED: Made middle icon smaller */
+            font-size: 1.75rem; /* Larger icon */
             color: #f59e0b; /* Amber */
         }
         
@@ -665,10 +675,14 @@
         }
 
         /* --- Footer --- */
-        footer {
-            flex-shrink: 0;
-            padding: 0.5rem 0; /* MODIFIED: Reduced padding */
-            padding-bottom: 0.5rem; /* MODIFIED: Removed safe-area-inset, moved to app-container */
+        /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
+        #app-footer {
+            /* MODIFIED: Removed flex-shrink: 0 */
+            /* flex-shrink: 0; */
+            /* MODIFIED: Reduced top padding */
+            padding: 0.25rem 0;
+            /* MODIFIED: Reduced bottom padding */
+            padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
             background-color: rgba(0, 0, 0, 0.7); 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(5px);
@@ -676,7 +690,16 @@
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
-            position: relative;
+            
+            /* MODIFIED: Changed from in-flow to fixed positioning */
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%; 
+            
+            /* MODIFIED: Removed explicit height. Let content define height. */
+            
             z-index: 10;
             /* ADDED: Background image for the filter bar */
             background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://github.com/aarmax8/Nomads/blob/b300c373e214909a32ad3a13c083f341bf00a019/hocking%20hills%20pano.jpg?raw=true');
@@ -749,7 +772,8 @@
 
         
         <!-- Main application footer -->
-        <footer id="app-footer">
+        <!-- MODIFIED: Changed from <footer> to <div> with ID -->
+        <div id="app-footer">
             <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
                 <span class="text-xs">Prev</span>
@@ -788,7 +812,7 @@
                 <i class="fas fa-angles-right"></i>
                 <span class="text-xs">Next</span>
             </button>
-        </footer>
+        </div>
     </div>
 
     
@@ -892,7 +916,7 @@
                 { name: "Ruby Rider", flavorProfile: "Deep, rich sloe gin is perfectly complemented by the spicy kick of ginger soda.", recipe: ["2 oz Sloe Gin", "Fill a tall glass with Ginger Soda"], story: "We keep making this, hoping the legendary Ruby Rider will show up. So far, all we've summoned is her angry ex-boyfriend, three cops, and a very confused pizza delivery guy. Our patience is wearing thin.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/PcZieI.jpg", cardHook: "To the ghosts we haven't met yet." },
                 { name: "Cowboy's Hard Root Beer", flavorProfile: "A creamy and bold mix of classic root beer and smooth Irish whiskey.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "A cowboy bet us we couldn't make a drink that tasted like 'a rodeo in a bottle.' We made this. It's got the sweet taste of victory and the kick of a pissed-off bull. He paid up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ECaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "This drink has spurs." },
                 { name: "Knob Creek Kentucky Smash", flavorProfile: "A powerful, sour punch of strong bourbon and fresh lemon, with a hint of orange.", recipe: ["2 oz Knob Creek", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This is what happens when you let our Kentucky chapter president make drinks. It's less of a recipe and more of a threat. It hits you hard and leaves you wondering why you let a man named 'Brawler' be your bartender.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/USq6nI.jpg", cardHook: "As subtle as a thunderstorm." },
-                { name: "Godfather Highball", flavorProfile: "Rich Canadian whiskey and nutty amaretto create a smooth, sophisticated flavor.", recipe: ["1.5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "For the guy who traded his handlebars for a keyboard. It's the taste of a steady paycheck, a 401k, and the soul-crushing despair of rush hour traffic. Welcome to the cage, pal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/YDZaH0.jpg", cardHook: "The taste of selling out." },
+                { name: "Godfather Highball", flavorProfile: "Rich Canadian whiskey and nutty amaretto create a smooth, sophisticated flavor.", recipe: ["1.A 5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "For the guy who traded his handlebars for a keyboard. It's the taste of a steady paycheck, a 401k, and the soul-crushing despair of rush hour traffic. Welcome to the cage, pal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/YDZaH0.jpg", cardHook: "The taste of selling out." },
                 { name: "Bulleit Frontier Punch", flavorProfile: "A bold and fruity mix of bourbon, orange, and lemon, with a sweet grenadine finish.", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when you try to make 'Jungle Juice' with actual bourbon. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/a401737bafe60d0edc1c1ea7ddb18508.jpg", cardHook: "History, but with more sugar." },
                 { name: "Seagram's 7 Sour", flavorProfile: "A classic, balanced sour with smooth whiskey, tart lemon, and a hint of bitters.", recipe: ["2 oz Seagram's 7", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters", "Top with Club Soda in a tall glass"], story: "Named in honor of our Treasurer's heart. He's as cold as stone and perpetually sour about the bar tab. We drink this to annoy him. It works.", image: "https://github.com/aarmax8/Nomads/blob/0dcbab77d90f59f2298642338dfee691353ce70a/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg?raw=true", cardHook: "Better than the memories." },
                 { name: "Jim Beam Black Cherry Bomb", flavorProfile: "Bold bourbon meets its match with sweet black cherry and classic cola.", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], story: "This isn't a drink, it's an escalation. It starts with bourbon, adds some cherry, and ends with you-thinking it's a good idea to see if your bike can do a burnout on the bar. It can't.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5a6b0379f72b6c8fb2751409d48ac8fa.jpg", cardHook: "Tastes like minor property damage." },
@@ -927,7 +951,7 @@
                 
                 { name: "Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the only two brain cells our prospect has left. They work together, they're surprisingly strong, and they're usually fueled by whiskey. Just like this drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth." },
                 
-                { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", 
+                { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this drink in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", 
                   image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", 
                   cardHook: "Find your oasis." }
             ];
@@ -1023,12 +1047,14 @@
             };
  
         // --- DOM Elements ---
-        // MOVED DECLARATIONS TO 'let'
-        let menuGrid;
-        let barStockModal;
-        let filterModal;
-        let favoritesModal;
-        let randomDrinkBtn;
+        const menuGrid = document.getElementById('menu-grid');
+        const barStockModal = document.getElementById('bar-stock-modal');
+        const filterModal = document.getElementById('filter-modal');
+        const favoritesModal = document.getElementById('favorites-modal');
+        
+        /* REMOVED: floatingMenuToggle and floatingMenuItems */
+        
+        const randomDrinkBtn = document.getElementById('random-drink-btn');
 
 
         // --- Helper Functions ---
@@ -1097,7 +1123,6 @@
         }
         
         function renderMenu(itemsToRender) {
-            if (!menuGrid) return; // Safety check
             menuGrid.innerHTML = '';
             if (itemsToRender.length === 0) {
                 menuGrid.innerHTML = `<div class="text-center w-full p-10"><h3 class="text-2xl font-cinzel text-amber-400">No Matching Drinks</h3><p class="text-gray-400 mt-2">Try adjusting your filters in the Browse panel.</p></div>`;
@@ -1134,7 +1159,8 @@
                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
-                                <div class="px-6 pt-4 text-center">
+                                <!-- MODIFIED: Added flex-shrink-0 to this wrapper div -->
+                                <div class="px-6 pt-4 text-center flex-shrink-0">
                                     <p class="text-xl mb-3 font-cinzel text-gray-300">${item.flavorProfile}</p>
                                 </div>
                                 <div class="recipe-content">
@@ -1313,7 +1339,6 @@
 
 
         function updateActiveCard() {
-            if (!menuGrid) return; // Safety check
             const containerRect = menuGrid.getBoundingClientRect();
             const containerCenter = containerRect.left + containerRect.width / 2;
             let closestCard = null;
@@ -1532,14 +1557,6 @@
         // --- END HELPER FUNCTIONS ---
  
         document.addEventListener('DOMContentLoaded', () => {
-            // --- FIX: ASSIGN DOM ELEMENTS *AFTER* DOM IS LOADED ---
-            menuGrid = document.getElementById('menu-grid');
-            barStockModal = document.getElementById('bar-stock-modal');
-            filterModal = document.getElementById('filter-modal');
-            favoritesModal = document.getElementById('favorites-modal');
-            randomDrinkBtn = document.getElementById('random-drink-btn');
-            // --- END FIX ---
-
             setupCocktailData();
             initializeFavorites();
             initializeBarStock();
@@ -1747,4 +1764,33 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
