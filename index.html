@@ -90,18 +90,18 @@
         main {
             flex-grow: 1; /* Allow main content to grow and fill space */
             
-            /* MODIFIED: Removed position: relative */
-            /* position: relative; */ /* No longer needed */
+            /* MODIFIED: ADDED position: relative. This is the new anchor. */
+            position: relative; 
             
             z-index: 1; 
             min-height: 0; /* Ensure main content can shrink if needed */
 
-            /* MODIFIED: ADDED flex properties back to main. This is critical. */
-            display: flex;
-            flex-direction: column; 
+            /* MODIFIED: REMOVED flex properties. main is now just a growing block. */
+            /* display: flex; */
+            /* flex-direction: column; */ 
             
-            /* MODIFIED: Added padding to main. This pushes the grid down from the header. */
-            padding: 1rem 0; 
+            /* MODIFIED: REMOVED padding. This will go on the grid. */
+            /* padding: 1rem 0; */ 
         } 
 
         #header-logo-container {
@@ -153,18 +153,19 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            padding: 0; /* MODIFIED: Removed padding, it's on 'main' now. */
+            /* MODIFIED: ADDED vertical padding. This was on main. */
+            padding: 1rem 0;
             
-            /* MODIFIED: Removed absolute positioning */
-            /* position: absolute; */
-            /* top: 0; */
-            /* left: 0; */
-            /* right: 0; */
-            /* bottom: 0; */
+            /* MODIFIED: ADDED absolute positioning to fill 'main' */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
             
-            /* MODIFIED: Replaced height: 100% with flex-grow: 1 and min-height: 0 */
-            flex-grow: 1;
-            min-height: 0; 
+            /* MODIFIED: REMOVED flex-grow. It's not a flex item anymore. */
+            /* flex-grow: 1; */
+            /* min-height: 0; */ 
             /* height: 100%; */
 
             box-sizing: border-box; 
@@ -1781,6 +1782,7 @@
     </script>
 </body>
 </html>
+
 
 
 
