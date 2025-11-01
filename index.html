@@ -87,11 +87,16 @@
         
         main {
             flex-grow: 1; /* Allow main content to grow and fill space */
-            position: relative; /* Needed for the menu grid */
+            
+            /* MODIFIED: Removed position: relative */
+            /* position: relative; */ /* No longer needed */
+            
             z-index: 1; 
-            min-height: 0; /* ADDED: Ensure main content can shrink if needed */
-            /* REMOVED: This line was causing the container to collapse */
-            /* overflow: hidden; */
+            min-height: 0; /* Ensure main content can shrink if needed */
+
+            /* ADDED: Make main a flex container so its child can grow */
+            display: flex;
+            flex-direction: column; /* Stack children vertically */
         }
 
         #header-logo-container {
@@ -145,18 +150,18 @@
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             padding: 0; /* MODIFIED: Removed vertical padding */
             
-            /* Make grid scrollable within main */
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            /* MODIFIED: bottom: 0 fills the main container, which now has no padding */
-            bottom: 0;
-            /* MODIFIED: Removed height: 100% as top/bottom/left/right define it */
-            /* height: 100%; */
+            /* MODIFIED: Removed absolute positioning */
+            /* position: absolute; */
+            /* top: 0; */
+            /* left: 0; */
+            /* right: 0; */
+            /* bottom: 0; */
+            
+            /* ADDED: Allow grid to grow and fill the 'main' container */
+            flex-grow: 1;
+            min-height: 0; /* Good practice for flex children */
+
             box-sizing: border-box; 
-            /* MODIFIED: Removed padding-bottom */
-            /* padding-bottom: 1rem; */
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -1768,6 +1773,7 @@
     </script>
 </body>
 </html>
+
 
 
 
