@@ -167,9 +167,8 @@
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             
-            /* MODIFIED: Increased bottom padding to 50px (to clear the ~35-40px footer) */
-            /* plus the safe-area-inset. This pushes the content and scrollbar up. */
-            padding: 0 0 calc(50px + env(safe-area-inset-bottom));
+            /* MODIFIED: Reduced padding from 35px to 10px to bring cards lower */
+            padding: 0 0 calc(10px + env(safe-area-inset-bottom));
             
             /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
             flex-grow: 1;
@@ -1771,7 +1770,6 @@
     </script>
 </body>
 </html>
-
 
 
 
