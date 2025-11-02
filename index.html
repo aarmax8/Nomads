@@ -577,7 +577,8 @@
             justify-content: center;
             background: transparent;
             border: none;
-            color: #d1d5db; /* Light gray */
+            /* MODIFIED: iOS-style neutral gray */
+            color: #8e8e93; 
             /* MODIFIED: Reduced vertical padding to make buttons more compact */
             padding: 0.15rem 0.5rem; 
             border-radius: 0.5rem;
@@ -591,7 +592,8 @@
             /* MODIFIED: Made icons smaller */
             font-size: 1.25rem; /* Icon size */
             margin-bottom: 0.25rem;
-            color: #2dd4bf; /* Teal */
+            /* MODIFIED: iOS-style neutral gray */
+            color: #8e8e93; 
         }
         .footer-btn:hover {
             background-color: rgba(255, 255, 255, 0.1);
@@ -605,80 +607,65 @@
         .footer-btn-middle i {
             /* MODIFIED: Made middle icon smaller */
             font-size: 1.75rem; /* Larger icon */
-            color: #f59e0b; /* Amber */
+            /* Color is set by specific classes below */
         }
         
         /* Style for active filter/favorites buttons */
         .footer-btn.is-active-filter {
-            color: #f59e0b;
-            box-shadow: 0 -2px 10px rgba(245, 158, 11, 0.5); /* Top glow */
-            background-color: rgba(245, 158, 11, 0.1);
+            color: #f59e0b; /* Amber label */
+            /* MODIFIED: Removed glow and background */
+            box-shadow: none; 
+            background-color: transparent;
         }
         .footer-btn.is-active-filter i {
-            color: #f59e0b;
+            color: #f59e0b; /* Amber icon */
         }
         
         /* Style for favorites button when active */
         #footer-favorites-btn.is-active {
-            color: #ef4444; /* Red */
-             box-shadow: 0 -2px 10px rgba(239, 68, 68, 0.5); /* Top glow */
-            background-color: rgba(239, 68, 68, 0.1);
+            color: #ef4444; /* Red label */
+            /* MODIFIED: Removed glow and background */
+            box-shadow: none; 
+            background-color: transparent;
         }
         #footer-favorites-btn.is-active i {
-            color: #ef4444; /* Red */
+            color: #ef4444; /* Red icon */
         }
 
         /* --- End New Footer Button Styles --- */
 
         #toggle-view-btn-main .icon-recipe { display: none; }
-        #toggle-view-btn-main .icon-stories { display: inline-block; }
+        #toggle-view-btn-main .icon-stories { 
+            display: inline-block; 
+            /* MODIFIED: Set default icon to amber */
+            color: #f59e0b;
+        }
 
         /* ADDED: Styles for the new text labels */
         #toggle-view-btn-main .label-recipe { display: none; }
-        #toggle-view-btn-main .label-stories { display: inline-block; }
+        #toggle-view-btn-main .label-stories { 
+            display: inline-block; 
+            /* Inherits amber color from .footer-btn-middle */
+        }
 
 
-        #toggle-view-btn-main.is-story-view .icon-recipe { display: inline-block; }
+        #toggle-view-btn-main.is-story-view {
+            /* MODIFIED: Change text color when active */
+            color: #2dd4bf; 
+        }
+        #toggle-view-btn-main.is-story-view .icon-recipe { 
+            display: inline-block; 
+            /* MODIFIED: Set active icon to teal */
+            color: #2dd4bf;
+        }
         #toggle-view-btn-main.is-story-view .icon-stories { display: none; }
         
         /* ADDED: Styles to toggle the text labels */
         #toggle-view-btn-main.is-story-view .label-recipe { display: inline-block; }
         #toggle-view-btn-main.is-story-view .label-stories { display: none; }
         
-        .floating-action-btn-middle {
-            position: relative; 
-            bottom: auto; 
-            left: auto; 
-            transform: none; 
-            z-index: auto; 
-            width: 80px; 
-            height: 80px; 
-            background-color: rgba(17, 17, 17, 0.9);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-            border: 2px solid #854d0e; 
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3); 
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            overflow: hidden; 
-        }
-        .floating-action-btn-middle:hover {
-            transform: scale(1.1); 
-            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4); 
-            border-color: #f59e0b;
-        }
-        .floating-action-btn-middle i {
-            font-size: 2rem; 
-            color: #f59e0b; 
-            transition: all 0.3s ease;
-        }
-        .floating-action-btn-middle:hover i {
-            transform: rotate(225deg); 
-        }
+        /* REMOVED: All .floating-action-btn-middle styles. They are not used. */
+        
 
         /* --- Footer --- */
         /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
@@ -688,17 +675,18 @@
             /* MODIFIED: Reduced bottom padding */
             padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
             
-            /* --- NEW FOOTER STYLE --- */
-            /* UPDATED: Changed background to be solid, textured, and themed */
-            background-color: #211a0e; /* Dark, warm brown */
-            border-top: 1px solid #f59e0b; /* Bright amber border */
+            /* --- NEW IOS FOOTER STYLE --- */
+            /* UPDATED: iOS dark mode color with transparency */
+            background-color: rgba(28, 28, 30, 0.85); 
+            /* UPDATED: Thin iOS-style border */
+            border-top: 1px solid rgba(255, 255, 255, 0.15); 
             
-            /* REMOVED: backdrop-filter blur */
-            /* backdrop-filter: blur(20px); */
-            /* -webkit-backdrop-filter: blur(20px); */
+            /* ADDED: iOS blur effect */
+            backdrop-filter: blur(20px); 
+            -webkit-backdrop-filter: blur(20px); 
 
-            /* UPDATED: Brighter, more focused glow */
-            box-shadow: 0 -3px 15px rgba(245, 158, 11, 0.3); 
+            /* UPDATED: Removed heavy shadow */
+            box-shadow: none; 
             /* --- End iOS Aesthetics --- */
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
@@ -714,10 +702,8 @@
             /* MODIFIED: Removed explicit height. Let content define height. */
             
             z-index: 10;
-            /* UPDATED: New background image for the filter bar */
-            background-image: linear-gradient(to bottom, rgba(33, 26, 14, 0.85), rgba(33, 26, 14, 0.85)), url('https://www.transparenttextures.com/patterns/leather.png');
-            background-size: auto, auto;
-            background-position: center;
+            /* UPDATED: Removed background image */
+            background-image: none;
         }
         
         /* --- Splash Screen --- */
@@ -1037,7 +1023,8 @@
             ingredient: null,
             showFavoritesOnly: false
         };
-        let isGlobalTarotView = true;
+        /* MODIFIED: Set to false to show recipe/drink side first */
+        let isGlobalTarotView = false;
         const titleFonts = ['Rye', 'Cinzel', 'IM Fell DW Pica', 'Black Ops One'];
         const ingredientCategories = {
             'Spirits': {
@@ -1786,5 +1773,6 @@
     </script>
 </body>
 </html>
+
 
 
