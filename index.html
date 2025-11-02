@@ -579,19 +579,21 @@
             border: none;
             /* MODIFIED: iOS-style neutral gray */
             color: #8e8e93; 
-            /* MODIFIED: Reduced vertical padding to make buttons more compact */
-            padding: 0.15rem 0.5rem; 
+            /* MODIFIED: Reduced vertical padding to 0, horizontal padding to 0.25rem */
+            padding: 0 0.25rem; 
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
-            font-size: 0.75rem; /* Small text */
+            /* MODIFIED: Reduced font size from 0.75rem to 0.65rem (approx 10px) */
+            font-size: 0.65rem; 
             width: 60px; /* Give them a consistent width */
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons smaller */
-            font-size: 1.25rem; /* Icon size */
-            margin-bottom: 0.25rem;
+            /* MODIFIED: Made icons smaller (was 1.25rem) */
+            font-size: 1.1rem; /* Icon size */
+            /* MODIFIED: Reduced margin-bottom (was 0.25rem) */
+            margin-bottom: 0.1rem;
             /* MODIFIED: iOS-style neutral gray */
             color: #8e8e93; 
         }
@@ -605,8 +607,8 @@
             transform: scale(1.1); /* Make it slightly larger */
         }
         .footer-btn-middle i {
-            /* MODIFIED: Made middle icon smaller */
-            font-size: 1.75rem; /* Larger icon */
+            /* MODIFIED: Made middle icon smaller (was 1.75rem) */
+            font-size: 1.5rem; /* Larger icon */
             /* Color is set by specific classes below */
         }
         
@@ -672,8 +674,8 @@
         #app-footer {
             /* MODIFIED: Reduced top padding (was 0.25rem) */
             padding: 0 0;
-            /* MODIFIED: Reduced bottom padding */
-            padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
+            /* MODIFIED: Reduced bottom padding, now ONLY safe area */
+            padding-bottom: env(safe-area-inset-bottom);
             
             /* --- NEW IOS FOOTER STYLE --- */
             /* UPDATED: iOS dark mode color with transparency */
@@ -1773,6 +1775,7 @@
     </script>
 </body>
 </html>
+
 
 
 
