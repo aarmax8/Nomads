@@ -50,8 +50,10 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            min-height: 100%;
-            min-height: -webkit-fill-available; /* Match body for iOS */
+            /* MODIFIED: Changed min-height to height */
+            height: 100%;
+            /* MODIFIED: Changed min-height to height */
+            height: -webkit-fill-available; /* Match body for iOS */
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
@@ -935,7 +937,8 @@
                             <div class="drink-card-inner">
                                 <img src="${item.image}" alt="3D Barcode">
                                 <div class="text-center mt-2">
-                                     <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
+                                     <!-- MODIFIED: Added font-size -->
+                                     <h3 class="drink-card-title" style="color: ${item.titleColor}; font-size: 1.5rem;">${item.name}</h3>
                                      <div class="card-footer text-xs">
                                          <p class="mb-2">${item.cardHook}</p>
                                          <p class="font-normal not-italic leading-tight text-gray-400"><strong class="text-gray-300">To Install for Full Screen:</strong><br><i class="fab fa-apple"></i> iOS: Tap Share then 'Add to Home Screen'.<br><i class="fab fa-android"></i> Android: Tap Menu then 'Install App'.</p>
@@ -956,7 +959,8 @@
                         <div class="drink-card-inner">
                             <div class="drink-card-front">
                                  <div class="card-header-front">
-                                    <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
+                                    <!-- MODIFIED: Added font-size -->
+                                    <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor}; font-size: 1.5rem;">${item.name}</h3>
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
                                 <!-- MODIFIED: Changed text-xl to text-lg -->
@@ -1567,6 +1571,7 @@
     </script>
 </body>
 </html>
+
 
 
 
