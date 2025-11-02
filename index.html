@@ -172,7 +172,7 @@
 
 
         .drink-card {
-            flex: 0 0 88%; /* MODIFIED: Was 80%, back to 88% for a wider card */
+            flex: 0 0 84%; /* MODIFIED: Was 88%, narrowed to show peek of next card */
             scroll-snap-align: center; 
             perspective: 1500px;
             background-color: transparent; 
@@ -187,12 +187,12 @@
             /* margin-bottom: auto; */
         }
         #menu-grid > .drink-card:first-child {
-             margin-left: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
+             margin-left: calc((100% - 84%) / 2); /* MODIFIED: Was 88% */
         }
          #menu-grid > .drink-card:last-child {
-             margin-right: calc((100% - 88%) / 2); /* MODIFIED: Was 80% */
+             margin-right: calc((100% - 84%) / 2); /* MODIFIED: Was 88% */
          }
-
+ 
         @media (min-width: 640px) { 
             .drink-card { flex-basis: 70%; /* MODIFIED: Removed height: 100% */ }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
@@ -1775,6 +1775,7 @@
     </script>
 </body>
 </html>
+
 
 
 
