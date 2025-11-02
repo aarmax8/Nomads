@@ -60,7 +60,7 @@
             /* This is the gradient background for the app */
             /* UPDATED: New background image URL */
             /* UPDATED: Made gradient slightly more transparent to see bridge */
-            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.85) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/7bfd55d5509e96aa14d03699f4a2ada62c69efb4/pittsburghbridge.jpg');
+            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.85) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed; /* Keep background stationary */
@@ -89,10 +89,7 @@
         #header-logo-image {
             width: 100%;
             height: 100%;
-            /* MODIFIED: Changed from 'fill' to 'cover' to fix iOS PWA alignment */
-            object-fit: cover; 
-            /* ADDED: Explicitly set object-position to 'top' */
-            object-position: top;
+            object-fit: fill; /* Stretches to fill the container */
             position: absolute;
             top: 0;
             left: 0;
@@ -127,30 +124,56 @@
             }
         }
         
+        /* --- NEW: Action Bar (between header and cards) --- */
+        #action-bar {
+            flex-shrink: 0;
+            /* background-color: rgba(0, 0, 0, 0.1); */
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Override footer-btn styles when inside action-bar */
+        #action-bar .footer-btn {
+            font-size: 0.75rem; /* 12px */
+            color: #b0b0b5; 
+            padding-top: 0.25rem; /* Add a bit of top padding */
+        }
+        #action-bar .footer-btn i {
+            font-size: 1.25rem; /* 20px */
+            margin-bottom: 0.2rem;
+            color: #b0b0b5;
+        }
+
+        /* Override active states for action-bar */
+        #action-bar .footer-btn.is-active-filter {
+            color: #f59e0b; 
+        }
+        #action-bar .footer-btn.is-active-filter i {
+            color: #f59e0b; 
+        }
+        
+        #action-bar #action-favorites-btn.is-active {
+            color: #ef4444; 
+        }
+        #action-bar #action-favorites-btn.is-active i {
+            color: #ef4444; 
+        }
+        /* --- End Action Bar Styles --- */
+        
         #menu-grid {
             display: flex; gap: 1.5rem; overflow-x: auto; 
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: TIGHTENED bottom clearance from 50px to 45px to maximize card height */
-            padding: 0 0 calc(45px + env(safe-area-inset-bottom));
             
-            /* MODIFIED: REMOVED absolute positioning to fill 'main' */
-            /* position: absolute; */
-            /* top: 0; */
-            /* left: 0; */
-            /* right: 0; */
-            /* bottom: 0; */
+            /* MODIFIED: This padding now clears the NEW fixed footer */
+            /* 45px is a safe height for the new 3-button footer */
+            padding: 0 0 calc(45px + env(safe-area-inset-bottom));
             
             /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
             flex-grow: 1;
             min-height: 0; 
 
             box-sizing: border-box; 
-            
-            /* ADDED: Explicitly set align-items to stretch for iOS PWA. */
-            /* This should force the .drink-card items to fill the grid height. */
-            align-items: stretch;
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -187,17 +210,6 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
-            
-            /* --- ADDED: Fix for iOS PWA vertical stretch --- */
-            display: flex;
-            flex-direction: column;
-            /* --- End Fix --- */
-            
-            /* MODIFIED: REMOVED height: 100%. Let flexbox stretch handle it. */
-            /* height: 100%; */
-            /* MODIFIED: Removed vertical margins */
-            /* margin-top: auto; */
-            /* margin-bottom: auto; */
         }
         #menu-grid > .drink-card:first-child {
              margin-left: calc((100% - 84%) / 2); /* MODIFIED: Was 88% */
@@ -207,23 +219,17 @@
          }
  
         @media (min-width: 640px) { 
-            .drink-card { flex-basis: 70%; /* MODIFIED: Removed height: 100% */ }
+            .drink-card { flex-basis: 70%; }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } 
         @media (min-width: 1024px) { 
-            .drink-card { flex-basis: 50%; /* MODIFIED: Removed height: 100% */ }
+            .drink-card { flex-basis: 50%; }
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } 
         .drink-card-inner {
-            position: relative; width: 100%; 
-            
-            /* MODIFIED: Replaced height: 100% with flex-grow for iOS PWA stretch */
-            /* height: 100%; */
-            flex-grow: 1;
-            min-height: 0; /* Ensures inner card can shrink if needed */
-            
+            position: relative; width: 100%; height: 100%;
             transition: transform 0.7s, box-shadow 0.4s ease-in-out, opacity 0.5s;
             transform-style: preserve-3d;
             box-shadow: 0 8px 20px rgba(0,0,0,0.7); border-radius: 0.5rem;
@@ -309,8 +315,6 @@
             background: transparent; 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
             font-style: normal; 
-            /* MODIFIED: Removed margin-top: auto. This was squishing the recipe list. */
-            /* margin-top: auto; */
         }
         
         /* === END CARD FRONT === */
@@ -585,10 +589,8 @@
             max-height: 65%;
         }
 
-        /* --- Floating Action Button Menu --- */
-        /* REMOVED: All styles from #floating-menu-container to .floating-action-btn-middle:hover i */
         
-        /* --- New Footer Button Styles --- */
+        /* --- New Footer Button Styles (Base) --- */
         .footer-btn {
             display: flex;
             flex-direction: column;
@@ -603,16 +605,16 @@
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
-            /* MODIFIED: Increased font size from 0.65rem to 0.75rem (12px) */
-            font-size: 0.75rem; 
+            /* MODIFIED: Reduced font size from 0.75rem to 0.65rem (approx 10px) */
+            font-size: 0.65rem; 
             width: 60px; /* Give them a consistent width */
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons larger (was 1.1rem) */
-            font-size: 1.25rem; /* Icon size */
-            /* MODIFIED: Increased margin-bottom (was 0.1rem) */
-            margin-bottom: 0.2rem;
+            /* MODIFIED: Made icons smaller (was 1.25rem) */
+            font-size: 1.1rem; /* Icon size */
+            /* MODIFIED: Reduced margin-bottom (was 0.25rem) */
+            margin-bottom: 0.1rem;
             /* MODIFIED: iOS-style neutral gray */
             color: #8e8e93; 
         }
@@ -620,40 +622,20 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
 
-        /* Special style for middle button */
-        .footer-btn-middle {
+        /* Special style for middle button (in footer) */
+        #app-footer .footer-btn-middle {
             color: #f59e0b; /* Amber */
             transform: scale(1.1); /* Make it slightly larger */
         }
-        .footer-btn-middle i {
-            /* MODIFIED: Made middle icon larger (was 1.5rem) */
-            font-size: 1.75rem; /* Larger icon */
+        #app-footer .footer-btn-middle i {
+            /* MODIFIED: Made middle icon smaller (was 1.75rem) */
+            font-size: 1.5rem; /* Larger icon */
             /* Color is set by specific classes below */
         }
         
-        /* Style for active filter/favorites buttons */
-        .footer-btn.is-active-filter {
-            color: #f59e0b; /* Amber label */
-            /* MODIFIED: Removed glow and background */
-            box-shadow: none; 
-            background-color: transparent;
-        }
-        .footer-btn.is-active-filter i {
-            color: #f59e0b; /* Amber icon */
-        }
-        
-        /* Style for favorites button when active */
-        #footer-favorites-btn.is-active {
-            color: #ef4444; /* Red label */
-            /* MODIFIED: Removed glow and background */
-            box-shadow: none; 
-            background-color: transparent;
-        }
-        #footer-favorites-btn.is-active i {
-            color: #ef4444; /* Red icon */
-        }
+        /* REMOVED: Old .footer-btn.is-active-filter and #footer-favorites-btn.is-active */
+        /* These are now handled by the #action-bar overrides */
 
-        /* --- End New Footer Button Styles --- */
 
         #toggle-view-btn-main .icon-recipe { display: none; }
         #toggle-view-btn-main .icon-stories { 
@@ -685,11 +667,8 @@
         #toggle-view-btn-main.is-story-view .label-recipe { display: inline-block; }
         #toggle-view-btn-main.is-story-view .label-stories { display: none; }
         
-        /* REMOVED: All .floating-action-btn-middle styles. They are not used. */
-        
 
         /* --- Footer --- */
-        /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
         #app-footer {
             /* MODIFIED: Reduced top padding (was 0.25rem) */
             padding: 0 0;
@@ -719,8 +698,6 @@
             left: 0;
             right: 0;
             width: 100%; 
-            
-            /* MODIFIED: Removed explicit height. Let content define height. */
             
             z-index: 10;
             /* UPDATED: Removed background image */
@@ -786,46 +763,46 @@
         </header>
         
         <main>
+            <!-- NEW: Action bar for filters, faves, etc. -->
+            <div id="action-bar" class="w-full flex-shrink-0 flex justify-evenly items-center py-2 px-4">
+                <button id="action-random-btn" class="footer-btn" title="Pick a Random Drink">
+                    <i class="fas fa-dice"></i>
+                    <span class="text-xs">Random</span>
+                </button>
+                
+                <button id="action-favorites-btn" class="footer-btn" title="Favorites">
+                    <i class="fas fa-heart"></i>
+                    <span class="text-xs">Faves</span>
+                </button>
+                
+                <button id="action-stock-btn" class="footer-btn" title="Bar Stock">
+                    <i class="fas fa-wine-bottle"></i>
+                    <span class="text-xs">Stock</span>
+                </button>
+                
+                <button id="action-filters-btn" class="footer-btn" title="Filters">
+                    <i class="fas fa-martini-glass-citrus"></i>
+                    <span class="text-xs">Filters</span>
+                </button>
+            </div>
+            
             <!-- Grid for drink cards -->
             <div id="menu-grid"></div>
         </main>
 
         
-        <!-- Main application footer -->
-        <!-- MODIFIED: Changed from <footer> to <div> with ID -->
+        <!-- Main application footer (Now for navigation only) -->
         <div id="app-footer">
             <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
                 <span class="text-xs">Prev</span>
             </button>
-            
-            <button id="random-drink-btn" class="footer-btn" title="Pick a Random Drink">
-                <i class="fas fa-dice"></i>
-                <span class="text-xs">Random</span>
-            </button>
-            
-            <button id="footer-favorites-btn" class="footer-btn" title="Favorites">
-                <i class="fas fa-heart"></i>
-                <span class="text-xs">Faves</span>
-            </button>
     
             <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
                 <i class="fas fa-book-open icon-stories"></i>
                 <i class="fas fa-scroll icon-recipe"></i>
-                <!-- Text will be hidden by icons, but good for accessibility -->
-                <!-- UPDATED: Replaced sr-only span with dynamic labels -->
                 <span class="text-xs label-stories">Story</span>
                 <span class="text-xs label-recipe">Recipe</span>
-            </button>
-
-            <button id="footer-stock-btn" class="footer-btn" title="Bar Stock">
-                <i class="fas fa-wine-bottle"></i>
-                <span class="text-xs">Stock</span>
-            </button>
-            
-            <button id="footer-filters-btn" class="footer-btn" title="Filters">
-                <i class="fas fa-martini-glass-citrus"></i>
-                <span class="text-xs">Filters</span>
             </button>
 
             <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
@@ -1074,9 +1051,8 @@
         const filterModal = document.getElementById('filter-modal');
         const favoritesModal = document.getElementById('favorites-modal');
         
-        /* REMOVED: floatingMenuToggle and floatingMenuItems */
-        
-        const randomDrinkBtn = document.getElementById('random-drink-btn');
+        /* UPDATED: Get new action bar button */
+        const randomDrinkBtn = document.getElementById('action-random-btn');
 
 
         // --- Helper Functions ---
@@ -1116,8 +1092,6 @@
             if(pureInstructions.includes(name.toLowerCase().trim())) return null;
             return name.trim();
         }
-
-        /* REMOVED: closeFloatingMenu function */
         
         function getIngredientInfo(ingredientName) {
             if (!ingredientName) {
@@ -1551,7 +1525,8 @@
         }
         
         function updateFilterMenuButtonState() {
-            const filtersBtn = document.getElementById('footer-filters-btn'); // MODIFIED: Target new button
+            /* UPDATED: Target new action bar button */
+            const filtersBtn = document.getElementById('action-filters-btn');
             if (!filtersBtn) return;
 
             const isFilterActive = activeFilters.category !== 'all' || 
@@ -1565,8 +1540,8 @@
                 filtersBtn.classList.remove('is-active-filter');
             }
             
-            // ADDED: Update favorites button state
-            const favoritesBtn = document.getElementById('footer-favorites-btn');
+            /* UPDATED: Target new action bar button */
+            const favoritesBtn = document.getElementById('action-favorites-btn');
             if (favoritesBtn) {
                 if (favoriteDrinks.length > 0) {
                     favoritesBtn.classList.add('is-active');
@@ -1631,17 +1606,11 @@
 
             // --- Active Card on Scroll ---
             let scrollTimeout;
-            // We use a "debounce" pattern here. The updateActiveCard function will
-            // only be called 150ms *after* the user has stopped scrolling.
-            // This prevents the "active" class change (and its box-shadow) 
-            // from interfering with the browser's scroll-snap behavior.
             menuGrid.addEventListener('scroll', () => {
                 clearTimeout(scrollTimeout);
                 scrollTimeout = setTimeout(updateActiveCard, 150);
             });
         
-            /* REMOVED: Old Floating Menu listeners */
- 
  
             // --- Modals ---
             function closeModal(modalElement) {
@@ -1722,27 +1691,27 @@
             });
 
 
-            // --- New Footer Button Listeners ---
-            document.getElementById('footer-filters-btn')?.addEventListener('click', () => {
+            // --- NEW: Action Bar Button Listeners ---
+            document.getElementById('action-filters-btn')?.addEventListener('click', () => {
                 updatePillsFromState(); 
                 filterModal.classList.remove('hidden');
                 setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
             });
             
-            document.getElementById('footer-favorites-btn')?.addEventListener('click', () => {
+            document.getElementById('action-favorites-btn')?.addEventListener('click', () => {
                 renderFavoritesModal(); 
                 favoritesModal.classList.remove('hidden');
                 setTimeout(() => favoritesModal.classList.remove('opacity-0'), 10);
             });
             
-            document.getElementById('footer-stock-btn')?.addEventListener('click', () => {
+            document.getElementById('action-stock-btn')?.addEventListener('click', () => {
                 renderBarStockModal(); // Render content before showing
                 barStockModal.classList.remove('hidden');
                 setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
             });
 
-            // --- Footer Buttons (existing) ---
-            if (randomDrinkBtn) {
+            // --- Footer Buttons (and remaining action bar) ---
+            if (randomDrinkBtn) { // Note: randomDrinkBtn var was updated above
                 randomDrinkBtn.addEventListener('click', () => {
                     const allDrinkCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
                     if (allDrinkCards.length === 0) return; 
@@ -1794,10 +1763,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
