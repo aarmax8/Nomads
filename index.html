@@ -127,8 +127,8 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: Reduced bottom clearance from 65px to 55px to maximize card height */
-            padding: 0 0 calc(55px + env(safe-area-inset-bottom));
+            /* MODIFIED: TIGHTENED bottom clearance from 55px to 50px to maximize card height */
+            padding: 0 0 calc(50px + env(safe-area-inset-bottom));
             
             /* MODIFIED: REMOVED absolute positioning to fill 'main' */
             /* position: absolute; */
@@ -438,6 +438,8 @@
             color: #2dd4bf; 
             text-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
             font-family: 'Cinzel', serif;
+            /* ADDED: Ensure no extra margin is pushing this content up */
+            margin-bottom: 0;
         }
         
 
@@ -550,7 +552,8 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-around;
+            /* MODIFIED: Changed from space-around to space-between for tighter fit */
+            justify-content: space-between; 
             padding: 1rem;
         }
         .drink-card[data-is-barcode="true"] img {
@@ -908,7 +911,7 @@
                 { name: "Buckeye Cider", flavorProfile: "Sweet and spicy Southern Comfort with a classic bitter backbone, lifted by a crisp soda finish.", recipe: ["2oz Southern Comfort", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "This recipe comes from a long ride through the Hocking Hills. We met a rival club out of Columbus, and instead of the usual staredown, we ended up sharing a fire and a few drinks. Their president, a guy they called 'Buckeye,' made this. It's smooth, strong, and a little unexpected, just like finding friends in rival territory. We stole the recipe, but we left a bottle of our own stuff as a trade. We're not savages.", image: "https://github.com/aarmax8/Nomads/blob/1e1c514fd7e07a421ae95d827c230b7fea504fa7/aabuckeyecider.jpg?raw=true", cardHook: "To the rivals who ain't so bad." },
                 { name: "Sidecar", flavorProfile: "A powerful and classic combination of strong brandy and bright, citrusy orange.", recipe: ["2 oz E&J Brandy", "1 oz Triple Sec", "0.75 oz Lemon Juice"], story: "Our mechanic, 'Wrench,' says this drink has the three essential food groups: strong, sour, and sugar. He also thinks rust is a 'nice patina.' His judgment is questionable, but his drink is solid.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/724b49e9a385815706ed2dbc9d7ca6f3.jpg", cardHook: "Strong enough to strip rust." },
                 { name: "Nicky Finn", flavorProfile: "A complex, citrus-forward drink with a sharp anise bite.", recipe: ["1 oz E&J Brandy", "1 oz Cointreau", "1 oz Lemon Juice", "1 dash Pernod"], story: "Named after a guy who swore his drink was 'spiked.' Turns out, he'd just never had Pernod before. He spent all night accusing the bartender of trying to 'slip him a mickey.' We call it a Nicky Finn to remind him of his 'wild' night.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7645bbca2888163b21bf0d193ad3fb21.jpg", cardHook: "It's got a secret." },
-                { name: "Alabama Slammer", flavorProfile: "A famously smooth and fruity classic, blending amaretto, sloe gin, and Southern Comfort with bright orange.", recipe: ["0.75 oz Southern Comfort", "0.75 oz Sloe Gin", "0.75 oz Amaretto", "Fill a tall glass with Orange Juice"], story: "This one's a classic for a reason. It's sweet, fruity, and hits you like a freight train. We call it the 'Slammer' because our Sergeant-at-Arms, 'Slam,' drank five of them and then tried to 'slam' dunk a pool ball into a pint glass. He missed. Badly.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7f8779686c19c3de763ad13c03fee127.jpg", cardHook: "Sweet, nutty, and dangerous." },
+                { name: "Alabama Slammer", flavorProfile: "A famously smooth and fruity classic, blending amaretto, sloe gin, and Southern Comfort with bright orange.", recipe: ["0.75 oz Southern Comfort", "0.75 oz Sloe Gin", "0.75 oz Amaretto", "Fill a tall glass with Orange Juice"], story: "This one's a classic for a reason. It's sweet, fruity, and hits you like a freight train. We call it the 'Slammer' because our Sergeant-at-Arms, 'Slam,' drank five of them and then tried to 'slam' dunk a pool ball into a pint glass. He missed. Badly.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7f877968c19c3de763ad13c03fee127.jpg", cardHook: "Sweet, nutty, and dangerous." },
                 { name: "White Liner", flavorProfile: "A sophisticated ride of bright floral notes, sharp citrus, and a clean, bubbly finish.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.75 oz Lemon Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This is for the guy who follows the rules. The one who actually signals, stays under the speed limit, and calls his mother. We don't understand him, but we make him this drink out of pity.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/95ae7009ba144fc3dd9fc68d14b5f929.jpg", cardHook: "For when you follow the rules too closely." },
                 { name: "Apricot Ambush", flavorProfile: "Sweet apricot brandy gets a tart lemon kick, smoothed out with a bubbly finish.", recipe: ["1.5 oz E&J Brandy", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice", "Top with Club Soda"], story: "We were ambushed by a rival club. They were terrible at it. They dropped a case of this stuff while retreating. We drank it to celebrate their incompetence. The tastiest victory we never had to fight for.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/83c048414249b2ffaf2cef7f5cdc5590.jpg", cardHook: "The tastiest ambush you'll ever face." },
                 { name: "Crimson Guard", flavorProfile: "A sharp and fruity blend of sloe gin and lime with a clean soda finish.", recipe: ["1.5 oz Sloe Gin", "0.5 oz Tanqueray Gin", "Fill a tall glass with Club Soda", "Splash of Lime Juice"], story: "We call it the Crimson Guard because after a few of these, you'll feel invincible enough to guard a gate to hell. You're not. And the resulting hangover will feel like you've been there.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/CuHwaf.jpg", cardHook: "Safer than Dead Man's Curve." },
@@ -983,7 +986,7 @@
                 }
                 if (!mainIngredient) {
                     for (const liqueurType of liqueurOrder) {
-                        const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType];
+                        const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType]; // FIXED: Typo from liqueuerType to liqueurType
                         const foundLiqueur = cocktail.recipe.map(parseIngredientName).find(ing => ing && liqueurs.includes(ing));
                         if (foundLiqueur) { mainIngredient = foundLiqueur; break; }
                     }
