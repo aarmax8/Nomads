@@ -127,9 +127,8 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: Reduced vertical padding to make cards taller */
-            /* and reduce the gap above the fixed footer. */
-            padding: 0.5rem 0 calc(80px + env(safe-area-inset-bottom));
+            /* MODIFIED: Removed top padding (was 0.5rem) and drastically reduced bottom clearance (from 80px to 65px) to maximize card height */
+            padding: 0 0 calc(65px + env(safe-area-inset-bottom));
             
             /* MODIFIED: REMOVED absolute positioning to fill 'main' */
             /* position: absolute; */
@@ -573,7 +572,8 @@
             background: transparent;
             border: none;
             color: #d1d5db; /* Light gray */
-            padding: 0.25rem 0.5rem;
+            /* MODIFIED: Reduced vertical padding to make buttons more compact */
+            padding: 0.15rem 0.5rem; 
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -679,8 +679,8 @@
         #app-footer {
             /* MODIFIED: Removed flex-shrink: 0 */
             /* flex-shrink: 0; */
-            /* MODIFIED: Reduced top padding */
-            padding: 0.25rem 0;
+            /* MODIFIED: Removed top padding (was 0.25rem) */
+            padding: 0 0;
             /* MODIFIED: Reduced bottom padding */
             padding-bottom: calc(0.25rem + env(safe-area-inset-bottom));
             background-color: rgba(0, 0, 0, 0.7); 
@@ -952,7 +952,7 @@
                 { name: "Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the only two brain cells our prospect has left. They work together, they're surprisingly strong, and they're usually fueled by whiskey. Just like this drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth." },
                 
                 { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this drink in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", 
-                  image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", 
+                  image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df4909aac18eadeeb826a6e5a1f2d.jpg", 
                   cardHook: "Find your oasis." }
             ];
 
@@ -983,7 +983,7 @@
                 }
                 if (!mainIngredient) {
                     for (const liqueurType of liqueurOrder) {
-                        const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType];
+                        const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType]; // FIXED: Typo here. Changed 'liqueuerType' to 'liqueurType'
                         const foundLiqueur = cocktail.recipe.map(parseIngredientName).find(ing => ing && liqueurs.includes(ing));
                         if (foundLiqueur) { mainIngredient = foundLiqueur; break; }
                     }
@@ -1764,34 +1764,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
