@@ -89,7 +89,10 @@
         #header-logo-image {
             width: 100%;
             height: 100%;
-            object-fit: fill; /* Stretches to fill the container */
+            /* MODIFIED: Changed from 'fill' to 'cover' to fix iOS PWA alignment */
+            object-fit: cover; 
+            /* ADDED: Explicitly set object-position to 'top' */
+            object-position: top;
             position: absolute;
             top: 0;
             left: 0;
@@ -144,6 +147,10 @@
             min-height: 0; 
 
             box-sizing: border-box; 
+            
+            /* ADDED: Explicitly set align-items to stretch for iOS PWA. */
+            /* This should force the .drink-card items to fill the grid height. */
+            align-items: stretch;
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -180,6 +187,12 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
+            
+            /* --- ADDED: Fix for iOS PWA vertical stretch --- */
+            display: flex;
+            flex-direction: column;
+            /* --- End Fix --- */
+            
             /* MODIFIED: REMOVED height: 100%. Let flexbox stretch handle it. */
             /* height: 100%; */
             /* MODIFIED: Removed vertical margins */
@@ -204,7 +217,13 @@
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } 
         .drink-card-inner {
-            position: relative; width: 100%; height: 100%;
+            position: relative; width: 100%; 
+            
+            /* MODIFIED: Replaced height: 100% with flex-grow for iOS PWA stretch */
+            /* height: 100%; */
+            flex-grow: 1;
+            min-height: 0; /* Ensures inner card can shrink if needed */
+            
             transition: transform 0.7s, box-shadow 0.4s ease-in-out, opacity 0.5s;
             transform-style: preserve-3d;
             box-shadow: 0 8px 20px rgba(0,0,0,0.7); border-radius: 0.5rem;
@@ -1775,6 +1794,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
