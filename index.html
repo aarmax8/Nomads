@@ -527,6 +527,12 @@
             transform: scale(1.03);
         }
 
+        /* ADDED: Rule to remove bottom margin from prev/next icons */
+        #scroll-prev-btn i,
+        #scroll-next-btn i {
+            margin-bottom: 0;
+        }
+
         /* --- Modal Styles --- */
         .modal-panel {
             background-image: radial-gradient(circle at top, rgba(41, 37, 36, 0.4), rgba(28, 25, 23, 0.7)), url('https://www.transparenttextures.com/patterns/leather.png');
@@ -797,7 +803,7 @@
         <div id="app-footer">
             <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
-                <span class="text-xs">Prev</span>
+                <!-- REMOVED: <span class="text-xs">Prev</span> -->
             </button>
             
             <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
@@ -811,7 +817,7 @@
 
             <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
                 <i class="fas fa-angles-right"></i>
-                <span class="text-xs">Next</span>
+                <!-- REMOVED: <span class="text-xs">Next</span> -->
             </button>
         </div>
     </div>
@@ -1776,6 +1782,7 @@
     </script>
 </body>
 </html>
+
 
 
 
