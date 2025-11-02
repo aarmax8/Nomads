@@ -59,12 +59,14 @@
             
             /* This is the gradient background for the app */
             /* UPDATED: Changed background image to the one requested by the user */
-            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.9), rgba(17, 17, 17, 0.95) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/2e02c58872ec5fe5f7a6170ef4063713778c9278/pittsburghbridge.jpg');
+            /* UPDATED: Made the gradient more transparent so the bridge is visible */
+            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.85) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/2e02c58872ec5fe5f7a6170ef4063713778c9278/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed; /* Keep background stationary */
             
-            padding-top: env(safe-area-inset-top); 
+            /* UPDATED: Added a fallback padding (1.25rem) in case env() isn't ready */
+            padding-top: max(1.25rem, env(safe-area-inset-top)); 
         }
 
         header {
@@ -128,8 +130,8 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: Set bottom padding to a more robust value to clear the fixed footer */
-            padding: 0 0 calc(71px + env(safe-area-inset-bottom));
+            /* MODIFIED: Set bottom padding to a more robust value to clear the fixed footer, adding a fallback */
+            padding: 0 0 calc(71px + max(1rem, env(safe-area-inset-bottom)));
             
             /* MODIFIED: REMOVED absolute positioning to fill 'main' */
             /* position: absolute; */
@@ -871,19 +873,19 @@
 
         /* --- Footer --- */
         /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
+            /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
         #app-footer {
-            /* MODIFIED: Removed flex-shrink: 0 */
-            /* flex-shrink: 0; */
             /* MODIFIED: Reduced top padding (was 0.25rem) */
             padding: 0 0;
-            /* MODIFIED: Explicitly set padding-bottom to safe-area */
-            padding-bottom: env(safe-area-inset-bottom);
+            /* MODIFIED: Explicitly set padding-bottom to safe-area with a fallback */
+            padding-bottom: max(1rem, env(safe-area-inset-bottom));
             /* --- iOS Aesthetics for Footer --- */
-            background-color: rgba(0, 0, 0, 0.4); /* Slightly transparent background */
-            border-top: 1px solid rgba(255, 255, 255, 0.1); 
-            backdrop-filter: blur(20px); /* Frosted glass effect */
-            -webkit-backdrop-filter: blur(20px);
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.5); /* Subtle shadow on top edge */
+            /* UPDATED: Changed background to be less transparent and have a different texture */
+            background-color: #211a0e; /* Dark, warm brown */
+            border-top: 1px solid #f59e0b; /* Bright amber border */
+            backdrop-filter: blur(10px); /* Slightly less blur */
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 -3px 15px rgba(245, 158, 11, 0.3); /* Brighter, more focused glow */
             /* --- End iOS Aesthetics --- */
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
@@ -896,15 +898,14 @@
             right: 0;
             width: 100%; 
             
-            /* MODIFIED: Set explicit height for footer */
-            height: calc(55px + env(safe-area-inset-bottom));
+            /* MODIFIED: Set explicit height for footer with a fallback */
+            height: calc(55px + max(1rem, env(safe-area-inset-bottom)));
             box-sizing: border-box; /* Ensure padding is included in height */
             
             z-index: 10;
-            /* ADDED: Background image for the filter bar */
-            /* Kept the background image for overall theme, but added heavy overlay above */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://github.com/aarmax8/Nomads/blob/b300c373e214909a32ad3a13c083f341bf00a019/hocking%20hills%20pano.jpg?raw=true');
-            background-size: cover;
+            /* UPDATED: New background image for the filter bar */
+            background-image: linear-gradient(to bottom, rgba(33, 26, 14, 0.85), rgba(33, 26, 14, 0.85)), url('https://www.transparenttextures.com/patterns/leather.png');
+            background-size: auto, auto;
             background-position: center;
         }
         
@@ -920,7 +921,10 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding-bottom: 15vh;
+            /* UPDATED: Added safe-area padding to splash screen as well */
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: calc(15vh + env(safe-area-inset-bottom));
             cursor: pointer;
             transition: opacity 0.7s ease-out;
         }
@@ -1982,5 +1986,7 @@
     </script>
 </body>
 </html>
+
+
 
 
