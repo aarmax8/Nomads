@@ -50,10 +50,8 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            /* MODIFIED: Changed min-height to height */
-            height: 100%;
-            /* MODIFIED: Changed min-height to height */
-            height: -webkit-fill-available; /* Match body for iOS */
+            min-height: 100%;
+            min-height: -webkit-fill-available; /* Match body for iOS */
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
@@ -61,8 +59,8 @@
             
             /* This is the gradient background for the app */
             /* UPDATED: New background image URL */
-            /* UPDATED: Made gradient slightly more transparent to see bridge */
-            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.7), rgba(17, 17, 17, 0.85) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
+            /* UPDATED: Made gradient lighter as requested */
+            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed; /* Keep background stationary */
@@ -167,8 +165,8 @@
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             
-            /* MODIFIED: Reduced padding from 40px to 30px to make cards longer */
-            padding: 0 0 calc(30px + env(safe-area-inset-bottom));
+            /* MODIFIED: Reduced padding from 45px to 40px to reclaim space */
+            padding: 0 0 calc(40px + env(safe-area-inset-bottom));
             
             /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
             flex-grow: 1;
@@ -409,14 +407,213 @@
             justify-content: center;
             cursor: pointer;
             transition: all 0.2s ease;
-            /* MODIFIED: Increased font size from 0.65rem to 0.7rem */
-            font-size: 0.7rem; 
+            transform: translateZ(0); 
+        }
+        .is-flipped .drink-card-front .favorite-btn {
+            display: none;
+        }
+        .drink-card-front .favorite-btn {
+            top: 1rem; 
+            right: 1rem;
+            bottom: auto; 
+        }
+        .favorite-btn:hover {
+            transform: scale(1.1);
+            background: rgba(0,0,0,0.7);
+        }
+        .favorite-btn .fa-heart {
+            font-size: 1.2rem;
+            color: #9ca3af; 
+            transition: all 0.2s ease;
+            transform: translateZ(0); 
+        }
+        .favorite-btn.is-favorite .fa-heart {
+            color: #ef4444; 
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.7); 
+        }
+
+        #favorites-list-container .favorite-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            background: rgba(245, 158, 11, 0.05);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        #favorites-list-container .favorite-item:hover {
+            background: rgba(245, 158, 11, 0.15);
+        }
+        
+        .drink-card.is-unavailable { opacity: 0.4; pointer-events: none; }
+        .drink-card-title {
+            font-size: 2rem; 
+            line-height: 1.2; color: #f59e0b; text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(245, 158, 11, 0.5);
+            padding-bottom: 0.25rem; 
+        }
+        .drink-card[data-is-barcode="true"] .drink-card-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.75rem;
+        }
+
+        .drink-card[data-is-barcode="true"] .card-footer {
+            background: transparent;
+            border: none;
+            font-style: normal;
+            color: #2dd4bf; 
+            text-shadow: 0 0 6px rgba(45, 212, 191, 0.6);
+            font-family: 'Cinzel', serif;
+            /* ADDED: Ensure no extra margin is pushing this content up */
+            margin-bottom: 0;
+        }
+        
+
+        .modal { transition: opacity 0.3s ease-in-out; }
+        
+        /* --- Filters & Pills --- */
+        .filter-separator {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 1.5rem 0;
+        }
+        .filter-pill {
+            background-color: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d1d5db;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.875rem;
+        }
+        .filter-pill:hover {
+            background-color: rgba(45, 212, 191, 0.15); 
+            border-color: rgba(45, 212, 191, 0.3);
+        }
+        .filter-pill.is-active {
+            background-color: #2dd4bf; 
+            color: #0f172a; 
+            border-color: #2dd4bf;
+            font-weight: 600;
+            box-shadow: 0 0 10px rgba(45, 212, 191, 0.5); 
+        }
+        
+        #filter-bar-favs.is-active {
+             background-color: #ef4444; 
+            color: #fff; 
+            border-color: #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); 
+        }
+        #filter-bar-favs:hover:not(.is-active) {
+            background-color: rgba(239, 68, 68, 0.15); 
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .ingredient-btn {
+            background-color: rgba(255, 255, 255, 0.07) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease-in-out;
+            border-radius: 0.5rem !important;
+        }
+        .ingredient-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(1.03);
+        }
+
+        /* --- Modal Styles --- */
+        .modal-panel {
+            background-image: radial-gradient(circle at top, rgba(41, 37, 36, 0.4), rgba(28, 25, 23, 0.7)), url('https://www.transparenttextures.com/patterns/leather.png');
+            border: 2px solid #f59e0b;
+            box-shadow: 0 0 30px rgba(245, 158, 11, 0.3), inset 0 0 20px rgba(245, 158, 11, 0.15);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .modal-header {
+            border-bottom: 1px solid rgba(245, 158, 11, 0.4);
+        }
+        .modal-header h2 {
+            text-shadow: 0 0 12px rgba(245, 158, 11, 0.8);
+        }
+        /* UPDATED: Added flex-grow and min-height to bar stock content for scrolling */
+        #bar-stock-content {
+            flex-grow: 1; /* Allow content to grow */
+            min-height: 0; /* Allow content to shrink */
+            overflow-y: auto; /* Enable scrolling */
+        }
+        #bar-stock-content .ingredient-btn {
+            background-color: rgba(245, 158, 11, 0.1) !important;
+            border: 1px solid rgba(245, 158, 11, 0.3) !important;
+            color: #e2e8f0; 
+        }
+        #bar-stock-content .ingredient-btn:hover {
+            background-color: rgba(245, 158, 11, 0.25) !important;
+            border-color: rgba(245, 158, 11, 0.6) !important;
+            color: #fff;
+        }
+
+        #reset-filters-btn {
+            background-color: transparent;
+            border-color: #6b7280;
+        }
+         #reset-filters-btn:hover {
+            background-color: #374151;
+            border-color: #9ca3af;
+         }
+         #apply-filters-btn {
+            background-color: #0d9488; 
+            border: 1px solid transparent;
+            color: #fff; 
+         }
+        #apply-filters-btn:hover {
+            background-color: #14b8a6; 
+        }
+
+        /* Barcode Card */
+        .drink-card[data-is-barcode="true"] .drink-card-inner {
+            background-color: #111;
+            border: 3px double #525252;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            /* MODIFIED: Changed from space-around to space-between for tighter fit */
+            justify-content: space-between; 
+            padding: 1rem;
+        }
+        .drink-card[data-is-barcode="true"] img {
+            width: 100%;
+            border-radius: 0.5rem;
+            object-fit: contain;
+            max-height: 65%;
+        }
+
+        
+        /* --- New Footer Button Styles (Base) --- */
+        .footer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            /* MODIFIED: iOS-style neutral gray */
+            color: #8e8e93; 
+            /* MODIFIED: Reduced vertical padding to 0, horizontal padding to 0.25rem */
+            padding: 0 0.25rem; 
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            /* MODIFIED: Reduced font size from 0.75rem to 0.65rem (approx 10px) */
+            font-size: 0.65rem; 
             width: 60px; /* Give them a consistent width */
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons bigger (was 1.0rem) */
-            font-size: 1.2rem; /* Icon size */
+            /* MODIFIED: Made icons smaller (was 1.1rem) */
+            font-size: 1.0rem; /* Icon size */
             /* MODIFIED: Reduced margin-bottom (was 0.25rem) */
             margin-bottom: 0.1rem;
             /* MODIFIED: iOS-style neutral gray */
@@ -432,8 +629,8 @@
             transform: scale(1.1); /* Make it slightly larger */
         }
         #app-footer .footer-btn-middle i {
-            /* MODIFIED: Made middle icon bigger (was 1.3rem) */
-            font-size: 1.6rem; /* Larger icon */
+            /* MODIFIED: Made middle icon smaller (was 1.5rem) */
+            font-size: 1.3rem; /* Larger icon */
             /* Color is set by specific classes below */
         }
         
@@ -479,19 +676,16 @@
             /* MODIFIED: Reduced bottom padding, now ONLY safe area */
             padding-bottom: env(safe-area-inset-bottom);
             
-            /* --- NEW IOS FOOTER STYLE --- */
-            /* UPDATED: iOS dark mode color with transparency */
-            background-color: rgba(28, 28, 30, 0.85); 
-            /* UPDATED: Thin iOS-style border */
-            border-top: 1px solid rgba(255, 255, 255, 0.15); 
+            /* --- UPDATED: Transparent Footer --- */
+            background-color: transparent; 
+            border-top: none; 
             
-            /* ADDED: iOS blur effect */
-            backdrop-filter: blur(20px); 
-            -webkit-backdrop-filter: blur(20px); 
-
-            /* UPDATED: Removed heavy shadow */
+            /* REMOVED: Blur and shadow for full transparency */
+            backdrop-filter: none; 
+            -webkit-backdrop-filter: none; 
             box-shadow: none; 
-            /* --- End iOS Aesthetics --- */
+            /* --- End Footer Update --- */
+            
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
@@ -937,8 +1131,7 @@
                             <div class="drink-card-inner">
                                 <img src="${item.image}" alt="3D Barcode">
                                 <div class="text-center mt-2">
-                                     <!-- MODIFIED: Added font-size -->
-                                     <h3 class="drink-card-title" style="color: ${item.titleColor}; font-size: 1.5rem;">${item.name}</h3>
+                                     <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
                                      <div class="card-footer text-xs">
                                          <p class="mb-2">${item.cardHook}</p>
                                          <p class="font-normal not-italic leading-tight text-gray-400"><strong class="text-gray-300">To Install for Full Screen:</strong><br><i class="fab fa-apple"></i> iOS: Tap Share then 'Add to Home Screen'.<br><i class="fab fa-android"></i> Android: Tap Menu then 'Install App'.</p>
@@ -959,8 +1152,7 @@
                         <div class="drink-card-inner">
                             <div class="drink-card-front">
                                  <div class="card-header-front">
-                                    <!-- MODIFIED: Added font-size -->
-                                    <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor}; font-size: 1.5rem;">${item.name}</h3>
+                                    <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
                                 <!-- MODIFIED: Changed text-xl to text-lg -->
@@ -1571,7 +1763,6 @@
     </script>
 </body>
 </html>
-
 
 
 
