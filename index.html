@@ -75,6 +75,19 @@
             z-index: 10; /* Keep header above main content */
         }
         
+        /* ADDED: Fade-out effect at the top of the header */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 50%; /* Fade the top 50% of the header */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, transparent 100%);
+            z-index: 2; /* Sit on top of the image (z-index: 1) */
+            pointer-events: none; /* Allow clicks through */
+        }
+        
         main {
             flex-grow: 1; /* Allow main content to grow and fill space */
             z-index: 1; 
@@ -1782,6 +1795,7 @@
     </script>
 </body>
 </html>
+
 
 
 
