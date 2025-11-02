@@ -165,9 +165,8 @@
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             
-            /* MODIFIED: This padding now clears the NEW fixed footer */
-            /* 45px is a safe height for the new 3-button footer */
-            padding: 0 0 calc(45px + env(safe-area-inset-bottom));
+            /* MODIFIED: Reduced padding from 45px to 40px to reclaim space */
+            padding: 0 0 calc(40px + env(safe-area-inset-bottom));
             
             /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
             flex-grow: 1;
@@ -304,11 +303,13 @@
         
         .card-hook-tagline {
             text-align: center; 
-            font-size: 1.25rem; 
+            /* MODIFIED: Reduced font size from 1.25rem to 1.125rem */
+            font-size: 1.125rem; 
             line-height: 1.4;
             color: #2dd4bf; 
             text-shadow: 0 0 8px rgba(45, 212, 191, 0.7); 
-            padding: 0.75rem 1.5rem; 
+            /* MODIFIED: Reduced padding from 0.75rem to 0.5rem */
+            padding: 0.5rem 1.5rem; 
             font-family: 'Cinzel', serif; 
             letter-spacing: 0.03em; 
             flex-shrink: 0;
@@ -611,8 +612,8 @@
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons smaller (was 1.25rem) */
-            font-size: 1.1rem; /* Icon size */
+            /* MODIFIED: Made icons smaller (was 1.1rem) */
+            font-size: 1.0rem; /* Icon size */
             /* MODIFIED: Reduced margin-bottom (was 0.25rem) */
             margin-bottom: 0.1rem;
             /* MODIFIED: iOS-style neutral gray */
@@ -628,8 +629,8 @@
             transform: scale(1.1); /* Make it slightly larger */
         }
         #app-footer .footer-btn-middle i {
-            /* MODIFIED: Made middle icon smaller (was 1.75rem) */
-            font-size: 1.5rem; /* Larger icon */
+            /* MODIFIED: Made middle icon smaller (was 1.5rem) */
+            font-size: 1.3rem; /* Larger icon */
             /* Color is set by specific classes below */
         }
         
@@ -1157,9 +1158,9 @@
                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                                 </div>
-                                <!-- MODIFIED: Added flex-shrink-0 to this wrapper div -->
+                                <!-- MODIFIED: Changed text-xl to text-lg -->
                                 <div class="px-6 pt-4 text-center flex-shrink-0">
-                                    <p class="text-xl mb-3 font-cinzel text-gray-300">${item.flavorProfile}</p>
+                                    <p class="text-lg mb-3 font-cinzel text-gray-300">${item.flavorProfile}</p>
                                 </div>
                                 <div class="recipe-content">
                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
@@ -1765,5 +1766,6 @@
     </script>
 </body>
 </html>
+
 
 
