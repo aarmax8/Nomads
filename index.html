@@ -130,8 +130,8 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: Set bottom padding to a more robust value to clear the fixed footer, adding a fallback */
-            padding: 0 0 calc(71px + max(1rem, env(safe-area-inset-bottom)));
+            /* MODIFIED: Set bottom padding to a new, larger value to ensure the FAB doesn't cover the last card */
+            padding: 0 0 calc(70px + max(3rem, env(safe-area-inset-bottom)));
             
             /* MODIFIED: REMOVED absolute positioning to fill 'main' */
             /* position: absolute; */
@@ -758,66 +758,91 @@
         }
 
         /* --- Floating Action Button Menu --- */
-        /* REMOVED: All styles from #floating-menu-container to .floating-action-btn-middle:hover i */
-        
-        /* --- New Footer Button Styles --- */
-        .footer-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            color: #d1d5db; /* Light gray */
-            /* MODIFIED: Reduced vertical padding to make buttons more compact */
-            padding: 0.15rem 0.5rem; 
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 0.75rem; /* Small text */
-            width: 60px; /* Give them a consistent width */
-            line-height: 1.2;
-        }
-        .footer-btn i {
-            /* MODIFIED: Made icons smaller */
-            font-size: 1.25rem; /* Icon size */
-            margin-bottom: 0.25rem;
-            color: #2dd4bf; /* Teal */
-        }
-        .footer-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
+        /* ADDED: Container for the new FAB menu */
+        #fab-menu-container {
+            position: fixed;
+            /* MODIFIED: Changed bottom padding to be more robust */
+            bottom: max(1.5rem, env(safe-area-inset-bottom));
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 50;
+            width: 60px;
+            height: 60px;
         }
 
-        /* Special style for middle button */
-        .footer-btn-middle {
-            color: #f59e0b; /* Amber */
-            transform: scale(1.1); /* Make it slightly larger */
+        /* ADDED: Style for the main toggle button */
+        #fab-toggle-btn {
+            width: 60px;
+            height: 60px;
+            background-color: #f59e0b; /* Amber */
+            color: #111;
+            border-radius: 50%;
+            border: 2px solid #111;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 52;
         }
-        .footer-btn-middle i {
-            /* MODIFIED: Made middle icon smaller */
-            font-size: 1.75rem; /* Larger icon */
-            color: #f59e0b; /* Amber */
+        #fab-toggle-btn i {
+            font-size: 1.75rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* ADDED: Styles for the individual menu item buttons */
+        .fab-child-btn {
+            position: absolute;
+            bottom: 5px; /* Start slightly up from center */
+            left: 50%;
+            transform: translateX(-50%) translateY(0) scale(0.5);
+            width: 48px;
+            height: 48px;
+            background: #2dd4bf; /* Teal */
+            color: #111;
+            border-radius: 50%;
+            border: none;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 51;
+            opacity: 0;
+            pointer-events: none;
+            font-size: 1.1rem;
         }
         
-        /* Style for active filter/favorites buttons */
-        .footer-btn.is-active-filter {
-            color: #f59e0b;
-            box-shadow: 0 -2px 10px rgba(245, 158, 11, 0.5); /* Top glow */
-            background-color: rgba(245, 158, 11, 0.1);
-        }
-        .footer-btn.is-active-filter i {
-            color: #f59e0b;
+        /* Specific colors for certain buttons */
+        #fab-story-btn { background-color: #f59e0b; color: #111; }
+        #fab-faves-btn { background-color: #ef4444; color: #fff; }
+        #fab-filters-btn { background-color: #22d3ee; color: #111; }
+
+        /* ADDED: Open state for the FAB menu */
+        #fab-menu-container.is-open #fab-toggle-btn i {
+            transform: rotate(135deg); /* Rotates 'fa-bars' to look like 'X' */
         }
         
-        /* Style for favorites button when active */
-        #footer-favorites-btn.is-active {
-            color: #ef4444; /* Red */
-             box-shadow: 0 -2px 10px rgba(239, 68, 68, 0.5); /* Top glow */
-            background-color: rgba(239, 68, 68, 0.1);
+        #fab-menu-container.is-open .fab-child-btn {
+            opacity: 1;
+            pointer-events: auto;
+            scale: 1;
         }
-        #footer-favorites-btn.is-active i {
-            color: #ef4444; /* Red */
-        }
+        
+        /* --- This is the "fan out" animation --- */
+        #fab-menu-container.is-open #fab-story-btn { transform: translateX(-50%) translateY(-70px); }
+        #fab-menu-container.is-open #fab-faves-btn { transform: translateX(-50%) translateY(-135px); } /* NEW: Was -130px */
+        #fab-menu-container.is-open #fab-stock-btn { transform: translateX(-87px) translateY(-115px); } /* NEW: Was -110px */
+        #fab-menu-container.is-open #fab-filters-btn { transform: translateX(-114px) translateY(-55px); } /* NEW: Was -80px */
+        #fab-menu-container.is-open #fab-random-btn { transform: translateX(-114px) translateY(15px); } /* NEW: Was -30px */
+        #fab-menu-container.is-open #fab-prev-btn { transform: translateX(-87px) translateY(65px); } /* NEW: Was 30px */
+        #fab-menu-container.is-open #fab-next-btn { transform: translateX(-50%) translateY(85px); } /* NEW: Was 70px */
+
+
+        /* REMOVED: All .footer-btn, .footer-btn-middle styles */
 
         /* --- End New Footer Button Styles --- */
 
@@ -902,12 +927,12 @@
             height: calc(55px + max(1rem, env(safe-area-inset-bottom)));
             box-sizing: border-box; /* Ensure padding is included in height */
             
-            z-index: 10;
-            /* UPDATED: New background image for the filter bar */
-            background-image: linear-gradient(to bottom, rgba(33, 26, 14, 0.85), rgba(33, 26, 14, 0.85)), url('https://www.transparenttextures.com/patterns/leather.png');
-            background-size: auto, auto;
-            background-position: center;
-        }
+        /* REMOVED: All styles from #toggle-view-btn-main.is-story-view .label-stories to .floating-action-btn-middle:hover i */
+        
+        /* --- Footer --- */
+        /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
+            /* MODIFIED: Changed selector from 'footer' to '#app-footer' */
+        /* REMOVED: All styles for #app-footer */
         
         /* --- Splash Screen --- */
         #splash-screen {
@@ -977,45 +1002,43 @@
 
         
         <!-- Main application footer -->
-        <!-- MODIFIED: Changed from <footer> to <div> with ID -->
-        <div id="app-footer">
-            <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
+        <!-- MODIFIED: Replaced #app-footer with the new FAB menu -->
+        <div id="fab-menu-container">
+            <!-- The main toggle button -->
+            <button id="fab-toggle-btn" title="Open Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <!-- Child buttons (hidden by default) -->
+            <!-- Prev -->
+            <button id="fab-prev-btn" class="fab-child-btn" title="Scroll Left">
                 <i class="fas fa-angles-left"></i>
-                <span class="text-xs">Prev</span>
             </button>
-            
-            <button id="random-drink-btn" class="footer-btn" title="Pick a Random Drink">
+            <!-- Random -->
+            <button id="fab-random-btn" class="fab-child-btn" title="Pick a Random Drink">
                 <i class="fas fa-dice"></i>
-                <span class="text-xs">Random</span>
             </button>
-            
-            <button id="footer-favorites-btn" class="footer-btn" title="Favorites">
-                <i class="fas fa-heart"></i>
-                <span class="text-xs">Faves</span>
-            </button>
-     
-            <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
-                <i class="fas fa-book-open icon-stories"></i>
-                <i class="fas fa-scroll icon-recipe"></i>
-                <!-- Text will be hidden by icons, but good for accessibility -->
-                <!-- UPDATED: Replaced sr-only span with dynamic labels -->
-                <span class="text-xs label-stories">Story</span>
-                <span class="text-xs label-recipe">Recipe</span>
-            </button>
-
-            <button id="footer-stock-btn" class="footer-btn" title="Bar Stock">
-                <i class="fas fa-wine-bottle"></i>
-                <span class="text-xs">Stock</span>
-            </button>
-            
-            <button id="footer-filters-btn" class="footer-btn" title="Filters">
+            <!-- Filters -->
+            <button id="fab-filters-btn" class="fab-child-btn" title="Filters">
                 <i class="fas fa-martini-glass-citrus"></i>
-                <span class="text-xs">Filters</span>
             </button>
-
-            <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
+            <!-- Stock -->
+            <button id="fab-stock-btn" class="fab-child-btn" title="Bar Stock">
+                <i class="fas fa-wine-bottle"></i>
+            </button>
+            <!-- Faves -->
+            <button id="fab-faves-btn" class="fab-child-btn" title="Favorites">
+                <i class="fas fa-heart"></i>
+            </button>
+            <!-- Story/Recipe Toggle -->
+            <button id="fab-story-btn" class="fab-child-btn" title="Toggle Recipe/Story">
+                <!-- These icons will be toggled by JS -->
+                <i class="fas fa-book-open icon-stories"></i>
+                <i class="fas fa-scroll icon-recipe" style="display: none;"></i>
+            </button>
+            <!-- Next -->
+            <button id="fab-next-btn" class="fab-child-btn" title="Scroll Right">
                 <i class="fas fa-angles-right"></i>
-                <span class="text-xs">Next</span>
             </button>
         </div>
     </div>
@@ -1258,49 +1281,51 @@
         const filterModal = document.getElementById('filter-modal');
         const favoritesModal = document.getElementById('favorites-modal');
         
+        /* ADDED: New FAB Menu Elements */
+        const fabMenuContainer = document.getElementById('fab-menu-container');
+        const fabToggleBtn = document.getElementById('fab-toggle-btn');
+        
         /* REMOVED: floatingMenuToggle and floatingMenuItems */
         
-        const randomDrinkBtn = document.getElementById('random-drink-btn');
+        const randomDrinkBtn = document.getElementById('fab-random-btn'); // MODIFIED: Target new button
 
 
         // --- Helper Functions ---
+
+        /* ADDED: Function to parse ingredient name from recipe line */
+        function parseIngredientName(recipeLine) {
+            if (!recipeLine) return null;
+            
+            const allIngredients = Object.values(ingredientCategories)
+                .flatMap(mainCat => Object.values(mainCat).flat());
+
+            // Check for the most specific match first
+            // e.g. "Stolichnaya Citros Vodka" before "Vodka"
+            let bestMatch = null;
+            for (const ing of allIngredients) {
+                if (recipeLine.toLowerCase().includes(ing.toLowerCase())) {
+                    if (!bestMatch || ing.length > bestMatch.length) {
+                        bestMatch = ing;
+                    }
+                }
+            }
+            if (bestMatch) return bestMatch;
+            
+            // Fallback regex if no specific match is found (e.g. for simple ingredients)
+            const match = recipeLine.match(/(?:[0-9.]+\s+(?:oz|oz\.|ml|tsp|teaspoon|dash|dashes)\s+)?([A-Za-z'-]+(?:\s+[A-Za-z'-]+)*)/);
+            if (match && match[1]) {
+                const parsedName = match[1].trim();
+                
+                // Check if the parsed name is a known ingredient
+                const directMatch = allIngredients.find(ing => ing.toLowerCase() === parsedName.toLowerCase());
+                if (directMatch) {
+                    return directMatch;
+                }
+            }
+            
+            return null; // No match
+        }
         
-        function throttle(func, limit) {
-          let lastFunc;
-          let lastRan;
-          return function(...args) {
-            const context = this;
-            if (!lastRan) {
-              func.apply(context, args);
-              lastRan = Date.now();
-            } else {
-              clearTimeout(lastFunc);
-              lastFunc = setTimeout(function() {
-                if ((Date.now() - lastRan) >= limit) {
-                  func.apply(context, args);
-                  lastRan = Date.now();
-                }
-              }, limit - (Date.now() - lastRan));
-            }
-          }
-        }
-
-        function parseIngredientName(ingStr) {
-            let name = ingStr.replace(/^[\d./\s-]+(oz|dashes|dash|garnish)\s*/i, '');
-            const instructionalPhrases = [ 'Fill a tall glass with ', 'Fill with ', 'Top with ', 'Splash of ', 'Splash ', '1 teaspoon '];
-            for (const phrase of instructionalPhrases) {
-                if (name.toLowerCase().startsWith(phrase.toLowerCase())) {
-                    name = name.substring(phrase.length);
-                    const inIndex = name.toLowerCase().indexOf(' in a');
-                    if (inIndex > -1) name = name.substring(0, inIndex);
-                    break;
-                }
-            }
-            const pureInstructions = ['serve on the rocks'];
-            if(pureInstructions.includes(name.toLowerCase().trim())) return null;
-            return name.trim();
-        }
-
         /* REMOVED: closeFloatingMenu function */
         
         function getIngredientInfo(ingredientName) {
@@ -1428,15 +1453,22 @@
 
         function setCardView(isStoryView) {
             const cards = document.querySelectorAll('#menu-grid .drink-card');
-            const toggleBtn = document.getElementById('toggle-view-btn-main'); 
+            /* MODIFIED: Target new button */
+            const toggleBtn = document.getElementById('fab-story-btn'); 
             
             isGlobalTarotView = isStoryView; 
 
             if (toggleBtn) { 
+                const iconStory = toggleBtn.querySelector('.icon-stories');
+                const iconRecipe = toggleBtn.querySelector('.icon-recipe');
                 if (isGlobalTarotView) {
-                    toggleBtn.classList.add('is-story-view');
+                    /* toggleBtn.classList.add('is-story-view'); */ // No longer needed
+                    if (iconStory) iconStory.style.display = 'none';
+                    if (iconRecipe) iconRecipe.style.display = 'inline-block';
                 } else {
-                    toggleBtn.classList.remove('is-story-view');
+                    /* toggleBtn.classList.remove('is-story-view'); */ // No longer needed
+                    if (iconStory) iconStory.style.display = 'inline-block';
+                    if (iconRecipe) iconRecipe.style.display = 'none';
                 }
             }
 
@@ -1517,6 +1549,9 @@
             updateFilterMenuButtonState();
         }
         
+        // NOTE: This function was duplicated. I am removing the second, out-of-place definition.
+        // function setCardView(isStoryView) { ... }
+
         function renderFavoritesModal() {
             const container = document.getElementById('favorites-list-container');
             const favoritesList = favoriteDrinks; 
@@ -1746,10 +1781,14 @@
             document.querySelectorAll('.is-highlighted').forEach(c => c.classList.remove('is-highlighted'));
             card.classList.add('is-highlighted');
             setTimeout(() => card.classList.remove('is-highlighted'), 2500);
+            
+            // ADDED: Close FAB menu on card selection
+            if (fabMenuContainer) fabMenuContainer.classList.remove('is-open');
         }
         
         function updateFilterMenuButtonState() {
-            const filtersBtn = document.getElementById('footer-filters-btn'); // MODIFIED: Target new button
+            /* MODIFIED: Target new button */
+            const filtersBtn = document.getElementById('fab-filters-btn'); 
             if (!filtersBtn) return;
 
             const isFilterActive = activeFilters.category !== 'all' || 
@@ -1759,17 +1798,38 @@
                                    
             if (isFilterActive) {
                 filtersBtn.classList.add('is-active-filter');
+                 /* ADDED: Visual cue for active filter */
+                filtersBtn.style.backgroundColor = '#f59e0b';
             } else {
                 filtersBtn.classList.remove('is-active-filter');
+                filtersBtn.style.backgroundColor = '#22d3ee';
             }
             
             // ADDED: Update favorites button state
-            const favoritesBtn = document.getElementById('footer-favorites-btn');
+            /* MODIFIED: Target new button */
+            const favoritesBtn = document.getElementById('fab-faves-btn');
             if (favoritesBtn) {
                 if (favoriteDrinks.length > 0) {
                     favoritesBtn.classList.add('is-active');
+                    /* ADDED: Visual cue for active faves */
+                    favoritesBtn.style.boxShadow = '0 0 15px 5px rgba(239, 68, 68, 0.7)';
                 } else {
                     favoritesBtn.classList.remove('is-active');
+                    favoritesBtn.style.boxShadow = '0 3px 10px rgba(0,0,0,0.3)';
+                }
+            }
+        }
+
+        // --- ADDED: Throttle function to prevent rapid clicks ---
+        function throttle(func, limit) {
+            let inThrottle;
+            return function() {
+                const args = arguments;
+                const context = this;
+                if (!inThrottle) {
+                    func.apply(context, args);
+                    inThrottle = true;
+                    setTimeout(() => inThrottle = false, limit);
                 }
             }
         }
@@ -1848,6 +1908,9 @@
                 setTimeout(() => {
                     modalElement.classList.add('hidden');
                 }, 300); 
+                
+                // ADDED: Close FAB menu when a modal is closed
+                if (fabMenuContainer) fabMenuContainer.classList.remove('is-open');
             }
 
             document.querySelectorAll('.modal').forEach(modal => {
@@ -1856,30 +1919,8 @@
                         closeModal(modal);
                     }
                 });
-            });
-
-            // Favorites Modal Close & Item Click
-            document.getElementById('close-favorites-btn')?.addEventListener('click', () => closeModal(favoritesModal));
-            document.getElementById('favorites-list-container').addEventListener('click', (e) => {
-                 const favoriteItem = e.target.closest('.favorite-item');
-                 if (favoriteItem) {
-                     const cardName = favoriteItem.dataset.name;
-                     const cardEl = document.querySelector(`.drink-card[data-name="${cardName}"]`);
-                     if (cardEl) {
-                         if (favoriteItem.dataset.view === 'drink') {
-                             cardEl.classList.remove('is-flipped');
-                         }
-                         highlightAndScrollToCard(cardEl);
-                     }
-                     closeModal(favoritesModal);
-                 }
-            });
-
-            // Bar Stock Modal Close
-            document.getElementById('close-stock-btn')?.addEventListener('click', () => closeModal(barStockModal));
-
-            // Filter Modal Close & Actions
-            document.getElementById('close-filter-btn')?.addEventListener('click', () => closeModal(filterModal));
+            }); // <-- FIXED: Added missing closing brace for forEach
+            
             document.getElementById('apply-filters-btn')?.addEventListener('click', () => {
                 applyAndRenderFilters();
                 closeModal(filterModal);
@@ -1915,22 +1956,34 @@
 
 
             // --- New Footer Button Listeners ---
-            document.getElementById('footer-filters-btn')?.addEventListener('click', () => {
+            /* ADDED: Main FAB toggle listener */
+            if (fabToggleBtn) {
+                /* FIXED: Corrected syntax from ()_=> to () => */
+                fabToggleBtn.addEventListener('click', () => {
+                    if (fabMenuContainer) fabMenuContainer.classList.toggle('is-open');
+                });
+            }
+
+            /* MODIFIED: All listeners below now target the 'fab-' buttons */
+            document.getElementById('fab-filters-btn')?.addEventListener('click', () => {
                 updatePillsFromState(); 
                 filterModal.classList.remove('hidden');
                 setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
+                if (fabMenuContainer) fabMenuContainer.classList.remove('is-open'); // Close menu
             });
             
-            document.getElementById('footer-favorites-btn')?.addEventListener('click', () => {
+            document.getElementById('fab-faves-btn')?.addEventListener('click', () => {
                 renderFavoritesModal(); 
                 favoritesModal.classList.remove('hidden');
                 setTimeout(() => favoritesModal.classList.remove('opacity-0'), 10);
+                if (fabMenuContainer) fabMenuContainer.classList.remove('is-open'); // Close menu
             });
             
-            document.getElementById('footer-stock-btn')?.addEventListener('click', () => {
+            document.getElementById('fab-stock-btn')?.addEventListener('click', () => {
                 renderBarStockModal(); // Render content before showing
                 barStockModal.classList.remove('hidden');
                 setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
+                if (fabMenuContainer) fabMenuContainer.classList.remove('is-open'); // Close menu
             });
 
             // --- Footer Buttons (existing) ---
@@ -1942,10 +1995,11 @@
                     const randomCard = allDrinkCards[randomIndex];
                     randomCard.classList.remove('is-flipped'); 
                     highlightAndScrollToCard(randomCard);
+                    // No need to close menu, highlightAndScrollToCard does it
                 });
             }
             
-            const scrollPrevBtn = document.getElementById('scroll-prev-btn');
+            const scrollPrevBtn = document.getElementById('fab-prev-btn'); // MODIFIED
             if (scrollPrevBtn) {
                 scrollPrevBtn.addEventListener('click', () => {
                     const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
@@ -1959,7 +2013,7 @@
                 });
             }
 
-            const scrollNextBtn = document.getElementById('scroll-next-btn');
+            const scrollNextBtn = document.getElementById('fab-next-btn'); // MODIFIED
             if (scrollNextBtn) {
                 scrollNextBtn.addEventListener('click', () => {
                     const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
@@ -1973,7 +2027,7 @@
                 });
             }
             
-            const toggleViewBtnMain = document.getElementById('toggle-view-btn-main');
+            const toggleViewBtnMain = document.getElementById('fab-story-btn'); // MODIFIED
             const throttledToggle = throttle(() => {
                  setCardView(!isGlobalTarotView); 
             }, 300); 
@@ -1986,7 +2040,4 @@
     </script>
 </body>
 </html>
-
-
-
 
