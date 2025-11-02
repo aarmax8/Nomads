@@ -166,8 +166,10 @@
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             
-            /* MODIFIED: Reduced padding from 45px to 40px to reclaim space */
-            padding: 0 0 calc(40px + env(safe-area-inset-bottom));
+            /* MODIFIED: Reduced padding-bottom from 40px to 0px. */
+            /* This will make the cards scroll all the way to the bottom, */
+            /* appearing behind the transparent footer. */
+            padding: 0 0 env(safe-area-inset-bottom);
             
             /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
             flex-grow: 1;
@@ -1774,6 +1776,7 @@
     </script>
 </body>
 </html>
+
 
 
 
