@@ -127,8 +127,8 @@
             scroll-snap-type: x mandatory; 
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
-            /* MODIFIED: Removed top padding (was 0.5rem) and drastically reduced bottom clearance (from 80px to 65px) to maximize card height */
-            padding: 0 0 calc(65px + env(safe-area-inset-bottom));
+            /* MODIFIED: Reduced bottom clearance from 65px to 55px to maximize card height */
+            padding: 0 0 calc(55px + env(safe-area-inset-bottom));
             
             /* MODIFIED: REMOVED absolute positioning to fill 'main' */
             /* position: absolute; */
@@ -983,7 +983,7 @@
                 }
                 if (!mainIngredient) {
                     for (const liqueurType of liqueurOrder) {
-                        const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType]; // FIXED: Typo here. Changed 'liqueuerType' to 'liqueurType'
+                        const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType];
                         const foundLiqueur = cocktail.recipe.map(parseIngredientName).find(ing => ing && liqueurs.includes(ing));
                         if (foundLiqueur) { mainIngredient = foundLiqueur; break; }
                     }
@@ -1557,12 +1557,20 @@
         // --- END HELPER FUNCTIONS ---
  
         document.addEventListener('DOMContentLoaded', () => {
-            setupCocktailData();
-            initializeFavorites();
-            initializeBarStock();
-            initializeFilterModal(); 
-            applyAndRenderFilters(); 
-            updateFilterMenuButtonState(); 
+            // --- START: Critical setup wrapped in try/catch ---
+            try {
+                setupCocktailData();
+                initializeFavorites();
+                initializeBarStock();
+                initializeFilterModal(); 
+                applyAndRenderFilters(); 
+                updateFilterMenuButtonState(); 
+            } catch (error) {
+                console.error("Critical Setup Error:", error);
+                // Fallback rendering in case data setup fails
+                menuGrid.innerHTML = `<div class="text-center w-full p-10"><h3 class="text-2xl font-cinzel text-red-400">Application Error</h3><p class="text-gray-400 mt-2">Could not load the menu data. Please check the console for details.</p></div>`;
+            }
+            // --- END: Critical setup wrapped in try/catch ---
             
             // --- Splash Screen ---
             const splashScreen = document.getElementById('splash-screen');
