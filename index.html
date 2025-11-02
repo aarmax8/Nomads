@@ -181,8 +181,8 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
-            /* MODIFIED: REMOVED height: 100%. Let flexbox stretch handle it. */
-            /* height: 100%; */
+            /* MODIFIED: ADDED height: 100% back to make cards fill vertical space */
+            height: 100%;
             /* MODIFIED: Removed vertical margins */
             /* margin-top: auto; */
             /* margin-bottom: auto; */
@@ -195,12 +195,12 @@
          }
 
         @media (min-width: 640px) { 
-            .drink-card { flex-basis: 70%; /* MODIFIED: Removed height: 100% */ }
+            .drink-card { flex-basis: 70%; height: 100%; } /* MODIFIED: Added height: 100% */
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
             #menu-grid > .drink-card:last-child { margin-right: calc((100% - 70%) / 2); }
         } 
         @media (min-width: 1024px) { 
-            .drink-card { flex-basis: 50%; /* MODIFIED: Removed height: 100% */ }
+            .drink-card { flex-basis: 50%; height: 100%; } /* MODIFIED: Added height: 100% */
              #menu-grid > .drink-card:first-child { margin-left: calc((100% - 50%) / 2); }
              #menu-grid > .drink-card:last-child { margin-right: calc((100% - 50%) / 2); }
         } 
@@ -833,13 +833,14 @@
         }
         
         /* --- This is the "fan out" animation --- */
-        #fab-menu-container.is-open #fab-story-btn { transform: translateX(-50%) translateY(-70px); }
-        #fab-menu-container.is-open #fab-faves-btn { transform: translateX(-50%) translateY(-135px); } /* NEW: Was -130px */
-        #fab-menu-container.is-open #fab-stock-btn { transform: translateX(-87px) translateY(-115px); } /* NEW: Was -110px */
-        #fab-menu-container.is-open #fab-filters-btn { transform: translateX(-114px) translateY(-55px); } /* NEW: Was -80px */
-        #fab-menu-container.is-open #fab-random-btn { transform: translateX(-114px) translateY(15px); } /* NEW: Was -30px */
-        #fab-menu-container.is-open #fab-prev-btn { transform: translateX(-87px) translateY(65px); } /* NEW: Was 30px */
-        #fab-menu-container.is-open #fab-next-btn { transform: translateX(-50%) translateY(85px); } /* NEW: Was 70px */
+        /* UPDATED: Shifted all buttons up (negative translateY) so none are hidden at the bottom */
+        #fab-menu-container.is-open #fab-story-btn   { transform: translateX(-50%) translateY(-70px); }  /* Top-Center (was -70px) */
+        #fab-menu-container.is-open #fab-faves-btn   { transform: translateX(-50%) translateY(-135px); } /* Far Top-Center (was -135px) */
+        #fab-menu-container.is-open #fab-stock-btn   { transform: translateX(-87px) translateY(-115px); } /* Top-Left (was -115px) */
+        #fab-menu-container.is-open #fab-filters-btn { transform: translateX(-114px) translateY(-55px); } /* Mid-Left (was -55px) */
+        #fab-menu-container.is-open #fab-random-btn  { transform: translateX(65px) translateY(-55px); }  /* Mid-Right (was +15px) */
+        #fab-menu-container.is-open #fab-prev-btn    { transform: translateX(35px) translateY(-115px); }  /* Top-Right (was +65px) */
+        #fab-menu-container.is-open #fab-next-btn    { transform: translateX(35px) translateY(-170px); }  /* Far Top-Right (was +85px) */
 
 
         /* REMOVED: All .footer-btn, .footer-btn-middle styles */
@@ -1023,7 +1024,7 @@
                 <i class="fas fa-martini-glass-citrus"></i>
             </button>
             <!-- Stock -->
-            <button id="fab-stock-btn" class="fab-child-btn" title="Bar Stock">
+            <button id="fab-stock-btn" class.fab-child-btn" title="Bar Stock">
                 <i class="fas fa-wine-bottle"></i>
             </button>
             <!-- Faves -->
@@ -1920,6 +1921,31 @@
                     }
                 });
             }); // <-- FIXED: Added missing closing brace for forEach
+            
+            // --- Modal Close Buttons ---
+            document.getElementById('close-favorites-btn')?.addEventListener('click', () => closeModal(favoritesModal));
+            document.getElementById('close-stock-btn')?.addEventListener('click', () => closeModal(barStockModal));
+            document.getElementById('close-filter-btn')?.addEventListener('click', () => closeModal(filterModal));
+
+            // --- Favorites Modal Click ---
+            document.getElementById('favorites-list-container')?.addEventListener('click', (e) => {
+                const favItem = e.target.closest('.favorite-item');
+                if (!favItem) return;
+                
+                const cardName = favItem.dataset.name;
+                const card = menuGrid.querySelector(`.drink-card[data-name="${cardName}"]`);
+                
+                if (card) {
+                    highlightAndScrollToCard(card);
+                    if (favItem.dataset.view === 'story') {
+                        card.classList.add('is-flipped');
+                    } else {
+                        card.classList.remove('is-flipped');
+                    }
+                }
+                closeModal(favoritesModal);
+            });
+            
             
             document.getElementById('apply-filters-btn')?.addEventListener('click', () => {
                 applyAndRenderFilters();
