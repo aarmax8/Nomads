@@ -26,9 +26,9 @@
             overscroll-behavior-y: contain;
             overflow: hidden;
             
-            /* MODIFIED: Relying only on height: 100% */
+            /* MODIFIED: Re-adding -webkit-fill-available */
             height: 100%;
-            /* REMOVED: height: -webkit-fill-available; */ 
+            height: -webkit-fill-available; 
             
             margin: 0;
             padding: 0;
@@ -44,7 +44,7 @@
             overscroll-behavior-y: contain; /* Prevents pull-to-refresh on body */
             overflow: hidden; /* Prevents scrolling on body */
             height: 100%;
-            /* REMOVED: height: -webkit-fill-available; */ 
+            height: -webkit-fill-available; /* MODIFIED: Re-adding */
             margin: 0;
             padding: 0;
             /* ADDED: Background properties moved here */
@@ -59,9 +59,9 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            /* MODIFIED: Relying only on height: 100% */
+            /* MODIFIED: Re-adding -webkit-fill-available */
             height: 100%;
-            /* REMOVED: height: -webkit-fill-available; */ 
+            height: -webkit-fill-available; 
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
@@ -288,6 +288,13 @@
             overflow-y: auto; 
             padding: 0 1.5rem; 
             min-height: 0; /* ADDED: Explicit min-height: 0 for flex child */
+            
+            /* --- ADDED --- */
+            /* These properties will vertically center short recipe lists */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* --- END ADD --- */
         }
         .recipe-content::-webkit-scrollbar { width: 4px; }
         .recipe-content::-webkit-scrollbar-track { background: transparent; }
@@ -597,9 +604,11 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* MODIFIED: Changed from space-around to space-between for tighter fit */
-            justify-content: space-between; 
+            /* MODIFIED: Changed from space-between to center to reduce empty space */
+            justify-content: center; 
             padding: 1rem;
+            /* ADDED: Gap between items when centered */
+            gap: 1rem;
         }
         .drink-card[data-is-barcode="true"] img {
             width: 100%;
@@ -1841,6 +1850,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
