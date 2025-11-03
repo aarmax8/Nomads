@@ -45,6 +45,14 @@
             height: -webkit-fill-available; /* For iOS PWA */
             margin: 0;
             padding: 0;
+            
+            /* --- MOVED FROM .app-container --- */
+            /* This is the gradient background for the app */
+            /* This will now fill the ENTIRE screen, including the problem area */
+            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; /* Keep background stationary */
         }
 
         .app-container {
@@ -57,15 +65,18 @@
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
-            background-color: #000;
+            /* MODIFIED: Changed from #000 to transparent */
+            /* This lets the new body background show through */
+            background-color: transparent; 
             
             /* This is the gradient background for the app */
             /* UPDATED: New background image URL */
             /* UPDATED: Made gradient lighter as requested */
-            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* Keep background stationary */
+            /* --- MOVED TO body ELEMENT --- */
+            /* background-image: ... */
+            /* background-size: cover; */
+            /* background-position: center; */
+            /* background-attachment: fixed; */
             
             padding-top: env(safe-area-inset-top); 
         }
@@ -1812,5 +1823,6 @@
     </script>
 </body>
 </html>
+
 
 
