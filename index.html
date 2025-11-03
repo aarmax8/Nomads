@@ -28,7 +28,8 @@
             
             /* MODIFIED: Relying only on height: 100% */
             height: 100%;
-            /* REMOVED: height: -webkit-fill-available; */ 
+            /* ADDED BACK: This is the critical fix for iOS PWA height */ 
+            height: -webkit-fill-available;
             
             margin: 0;
             padding: 0;
@@ -44,7 +45,8 @@
             overscroll-behavior-y: contain; /* Prevents pull-to-refresh on body */
             overflow: hidden; /* Prevents scrolling on body */
             height: 100%;
-            /* REMOVED: height: -webkit-fill-available; */ /* For iOS PWA */
+            /* ADDED BACK: This is the critical fix for iOS PWA height */ 
+            height: -webkit-fill-available;
             margin: 0;
             padding: 0;
             /* ADDED: Background properties moved here */
@@ -61,7 +63,8 @@
             flex-direction: column;
             /* MODIFIED: Relying only on height: 100% */
             height: 100%;
-            /* REMOVED: height: -webkit-fill-available; */ /* Match body for iOS */
+            /* ADDED BACK: This is the critical fix for iOS PWA height */ 
+            height: -webkit-fill-available;
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
@@ -1838,6 +1841,7 @@
     </script>
 </body>
 </html>
+
 
 
 
