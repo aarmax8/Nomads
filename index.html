@@ -34,8 +34,8 @@
             margin: 0;
             padding: 0;
 
-            /* ADDED: Set root background to black */
-            background-color: #000;
+            /* REMOVED: Set root background to black */
+            /* background-color: #000; */
         }
 
         /* --- ADDED BACK: CORE LAYOUT STYLES --- */
@@ -48,26 +48,14 @@
             height: -webkit-fill-available; /* For iOS PWA */
             margin: 0;
             padding: 0;
-            /* REMOVED: Background is handled by #app-bg */
-        }
-        
-        /* --- NEW: Fullscreen Background Fix --- */
-        /* This div sits behind everything and is forced to fill the screen */
-        #app-bg {
-            position: fixed;
-            inset: 0; /* top: 0, left: 0, right: 0, bottom: 0 */
-            z-index: -1; /* Sit behind all other content */
-            
-            /* ADDED: Force height to fill screen */
-            height: 100%;
-            height: -webkit-fill-available;
-            
-            /* This is the gradient background for the app */
+            /* ADDED: Background properties moved here */
             background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
-            /* background-attachment: fixed; -- This causes iOS bugs, so we leave it off */
         }
+        
+        /* --- REMOVED: Fullscreen Background Fix --- */
+        /* #app-bg { ... } */
 
         .app-container {
             display: flex;
@@ -185,8 +173,8 @@
             scroll-behavior: smooth; 
             scroll-padding: 1rem; -webkit-overflow-scrolling: touch; 
             
-            /* MODIFIED: Increased padding-bottom to account for the fixed footer's height */
-            padding: 0 0 calc(50px + env(safe-area-inset-bottom) + 1rem); /* 50px footer + safe area + 1rem breathing room */
+            /* MODIFIED: Removed complex padding, footer is no longer fixed */
+            padding: 0;
             
             /* MODIFIED: ADDED flex-grow back. This makes the grid fill main. */
             flex-grow: 1;
@@ -719,14 +707,17 @@
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
             
-            /* MODIFIED: Changed from in-flow to fixed positioning */
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%; 
+            /* MODIFIED: REMOVED fixed positioning */
+            /* position: fixed; */
+            /* bottom: 0; */
+            /* left: 0; */
+            /* right: 0; */
+            /* width: 100%; */
+            /* z-index: 10; */
+
+            /* ADDED: Make footer a non-shrinking flex item */
+            flex-shrink: 0;
             
-            z-index: 10;
             /* UPDATED: Removed background image */
             background-image: none;
         }
@@ -796,8 +787,8 @@
 </head>
 <body class="antialiased text-gray-300">
 
-    <!-- NEW: Fullscreen Background Div -->
-    <div id="app-bg"></div>
+    <!-- REMOVED: Fullscreen Background Div -->
+    <!-- <div id="app-bg"></div> -->
 
     <!-- Splash screen to prompt user to tap -->
     <div id="splash-screen">
@@ -1847,5 +1838,6 @@
     </script>
 </body>
 </html>
+
 
 
