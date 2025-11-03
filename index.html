@@ -23,32 +23,14 @@
     <style>
         /* --- CSS FIX FOR iOS PWA FULLSCREEN --- */
         html {
-            /* ADDED: This ensures the root element is black, not white */
-            background-color: #000; 
             overscroll-behavior-y: contain;
             overflow: hidden;
             
             /* MODIFIED: Change to height: 100% */
             height: 100%;
-            min-height: 100%; /* ADDED for robustness */
             /* ADDED: Match body property for iOS PWA reliability */
             height: -webkit-fill-available; 
-            min-height: -webkit-fill-available; /* ADDED for robustness */
             
-            margin: 0;
-            padding: 0;
-        }
-
-        /* --- ADDED BACK: CORE LAYOUT STYLES --- */
-        body {
-            background-color: #000;
-            font-family: 'Roboto Condensed', sans-serif;
-            overscroll-behavior-y: contain; /* Prevents pull-to-refresh on body */
-            overflow: hidden; /* Prevents scrolling on body */
-            height: 100%;
-            min-height: 100%; /* ADDED for robustness */
-            height: -webkit-fill-available; /* For iOS PWA */
-            min-height: -webkit-fill-available; /* ADDED for robustness */
             margin: 0;
             padding: 0;
         }
@@ -751,16 +733,15 @@
             z-index: 1000;
             background-color: #000;
             background-image: url('https://github.com/aarmax8/Nomads/blob/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/splash.jpg?raw=true');
-            /* MODIFIED: Use 'contain' to show the whole image, including the diamond */
-            background-size: contain;
+            background-size: cover;
             background-position: center;
-            /* ADDED: Prevent the image from repeating */
-            background-repeat: no-repeat;
-            /* REMOVED: No longer need flex properties */
-            /* display: flex; */
-            /* align-items: flex-end; */
-            /* justify-content: center; */
-            /* padding-bottom: env(safe-area-inset-bottom); */
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            /* REMOVED: This was pushing the background up */
+            /* padding-bottom: 15vh; */
+            /* ADDED: This handles the safe area for the container */
+            padding-bottom: env(safe-area-inset-bottom);
             cursor: pointer;
             transition: opacity 0.7s ease-out;
         }
@@ -768,8 +749,6 @@
             opacity: 0;
             pointer-events: none;
         }
-        /* REMOVED: This text button is part of the background image, so we don't need a separate one. */
-        /*
         .splash-text {
             font-family: 'Cinzel', serif;
             font-size: 1.25rem;
@@ -780,6 +759,7 @@
             border-radius: 9999px;
             border: 1px solid rgba(255,255,255,0.3);
             animation: pulse-text 2.5s infinite;
+            /* ADDED: This pushes the button up from the bottom */
             margin-bottom: 15vh;
         }
         @keyframes pulse-text {
@@ -792,7 +772,6 @@
                 opacity: 1;
             }
         }
-        */
 
     </style>
 </head>
@@ -800,8 +779,7 @@
 
     <!-- Splash screen to prompt user to tap -->
     <div id="splash-screen">
-        <!-- REMOVED: The "Tap to Enter" text is part of the background image -->
-        <!-- <div class="splash-text">Tap to Enter</div> -->
+        <div class="splash-text">Tap to Enter</div>
     </div>
 
     <div id="app" class="app-container">
@@ -1830,6 +1808,4 @@
     </script>
 </body>
 </html>
-
-
 
