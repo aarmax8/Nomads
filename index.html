@@ -738,7 +738,10 @@
             display: flex;
             align-items: flex-end;
             justify-content: center;
-            padding-bottom: 15vh;
+            /* REMOVED: This was pushing the background up */
+            /* padding-bottom: 15vh; */
+            /* ADDED: This handles the safe area for the container */
+            padding-bottom: env(safe-area-inset-bottom);
             cursor: pointer;
             transition: opacity 0.7s ease-out;
         }
@@ -756,6 +759,8 @@
             border-radius: 9999px;
             border: 1px solid rgba(255,255,255,0.3);
             animation: pulse-text 2.5s infinite;
+            /* ADDED: This pushes the button up from the bottom */
+            margin-bottom: 15vh;
         }
         @keyframes pulse-text {
             0%, 100% {
@@ -920,7 +925,7 @@
                   cardHook: "A vacation in a glass." },
                 { name: "Gin Rickey", flavorProfile: "A clean and bracing mix of botanical gin and sharp lime, mellowed by club soda.", recipe: ["2 oz Tanqueray Gin", "1 oz Lime Juice", "Fill a tall glass with Club Soda"], story: "Tastes like taking a mountain switchback too fast. It's sharp, it makes your stomach turn, and you feel a moment of pure, blinding panic. Then it's over and you feel like a hero. A stupid, stupid hero.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "For roads that go back and forth." },
                 { name: "Long Haul", flavorProfile: "Crisp gin and tonic gets a complex, herbal twist from rosemary and lavender.", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], story: "This drink is like a 10-hour ride through Nebraska. It starts out fine, then it gets weirdly complex, then it's just... a lot. By the end, you're not sure if you like it, but you respect its commitment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/608bdca2cf73d693c4e80d1723cd59b8.jpg", cardHook: "For when you're in it for the long haul." },
-                { name: "Whiskey Highball", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "We call it the Country and Western because after three of them, everyone thinks they can sing both parts of a Johnny Cash and June Carter duet. They can't. And it's always sad.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/62a04e5b236c0659fec18c5f76651953.jpg", cardHook: "Simple, honest, and a little bit sad." },
+                { name: "Whiskey Highball", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "We call it the Country and Western because after three of them, everyone thinks they can sing both parts of a Johnny Cash and June Carter duet. They can't. And it's always sad.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/62a04e5b236c0659fec180c5f76651953.jpg", cardHook: "Simple, honest, and a little bit sad." },
                 { name: "Rattlesnake", flavorProfile: "Earthy tequila gets a surprising bite from sweet cherry and sharp lime.", recipe: ["2 oz El Mayor Tequila", "0.5 oz Cherry Schnapps", "0.5 oz Lime Juice", "Top with Club Soda in a tall glass"], story: "Looks harmless, right? Sweet, even. That's what the rattlesnake we found in the ice machine thought. This drink has a bite that sneaks up on you, just like he did. We check the ice more carefully now.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6418051b93b83a2239400213863d22a1.jpg", cardHook: "Sweet, with a venomous bite." },
                 { name: "Paradise", flavorProfile: "A tropical and tangy blend where botanical gin and sweet apricot meet bright citrus.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz Apricot Brandy", "Fill a tall glass with Orange Juice", "0.5 oz Lemon Juice", "Cherry Garnish"], story: "We call this Paradise because it's what 'Wrench' drinks when he's dreaming of retiring to a beach somewhere. One sip and he's gone... still in the garage, but mentally he's on a beach. We let him have it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1bf52dfc1aad553db68333418c40d848.jpg", cardHook: "Your own personal oasis." },
                 { name: "Tequila Sunrise", flavorProfile: "Sweet and vibrant, this is a classic tequila sunrise with an extra bitter orange kick.", recipe: ["2 oz El Mayor Tequila", "Fill a tall glass with Orange Juice", "2 dashes Orange Bitters", "0.5 oz Grenadine"], story: "The only time you should see a desert sunrise is because you've been riding all night. This drink lets you skip the riding part and get straight to the 'seeing pretty colors while your brain feels like sand' part. It's more efficient.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "All the beauty, none of the early morning." },
@@ -1803,16 +1808,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
