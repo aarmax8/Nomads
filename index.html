@@ -48,7 +48,8 @@
             /* --- MOVED FROM .app-container --- */
             /* This is the gradient background for the app */
             /* This will now fill the ENTIRE screen, including the problem area */
-            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
+            /* MODIFIED: Changed gradient to fade to solid black at 85% height to hide bottom edge */
+            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5) 0%, rgba(17, 17, 17, 0.7) 40%, #000 85%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
             /* MODIFIED: Removed background-attachment: fixed; */
@@ -63,7 +64,8 @@
             inset: 0; /* top: 0, left: 0, right: 0, bottom: 0 */
             z-index: -1; /* Sit behind all other content */
             
-            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
+            /* MODIFIED: Changed gradient to fade to solid black at 85% height to hide bottom edge */
+            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5) 0%, rgba(17, 17, 17, 0.7) 40%, #000 85%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -1844,6 +1846,7 @@
     </script>
 </body>
 </html>
+
 
 
 
