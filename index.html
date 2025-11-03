@@ -58,10 +58,10 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            /* MODIFIED: Changed min-height to height */
-            /* This should force the container to fill the full PWA screen */
-            height: 100%;
-            height: -webkit-fill-available; /* Match body for iOS */
+            /* MODIFIED: Reverted from 'height' back to 'min-height' */
+            /* This will fix the card height issue. */
+            min-height: 100%;
+            min-height: -webkit-fill-available; /* Match body for iOS */
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
@@ -745,6 +745,10 @@
         #splash-screen {
             position: fixed;
             inset: 0;
+            /* ADDED: Explicit height properties to force full-screen */
+            height: 100%;
+            height: -webkit-fill-available;
+            
             z-index: 1000;
             background-color: #000;
             background-image: url('https://github.com/aarmax8/Nomads/blob/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/splash.jpg?raw=true');
@@ -1823,6 +1827,7 @@
     </script>
 </body>
 </html>
+
 
 
 
