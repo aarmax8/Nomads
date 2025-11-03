@@ -26,9 +26,8 @@
             overscroll-behavior-y: contain;
             overflow: hidden;
             
-            /* MODIFIED: Change to height: 100% */
-            height: 100%;
-            /* ADDED: Match body property for iOS PWA reliability */
+            /* MODIFIED: Removed height: 100% */
+            /* This property can sometimes conflict with -webkit-fill-available */
             height: -webkit-fill-available; 
             
             margin: 0;
@@ -41,7 +40,7 @@
             font-family: 'Roboto Condensed', sans-serif;
             overscroll-behavior-y: contain; /* Prevents pull-to-refresh on body */
             overflow: hidden; /* Prevents scrolling on body */
-            height: 100%;
+            /* MODIFIED: Removed height: 100% */
             height: -webkit-fill-available; /* For iOS PWA */
             margin: 0;
             padding: 0;
@@ -52,7 +51,9 @@
             background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
-            background-attachment: fixed; /* Keep background stationary */
+            /* MODIFIED: Removed background-attachment: fixed; */
+            /* This property is known to cause rendering bugs on iOS. */
+            /* Since the body is set to overflow:hidden, it's not needed. */
         }
 
         .app-container {
@@ -60,7 +61,8 @@
             flex-direction: column;
             /* MODIFIED: Reverted from 'height' back to 'min-height' */
             /* This will fix the card height issue. */
-            min-height: 100%;
+            /* MODIFIED: Removed min-height: 100% */
+            /* We will rely solely on -webkit-fill-available for consistency */
             min-height: -webkit-fill-available; /* Match body for iOS */
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
@@ -746,7 +748,7 @@
             position: fixed;
             inset: 0;
             /* ADDED: Explicit height properties to force full-screen */
-            height: 100%;
+            /* MODIFIED: Removed height: 100% */
             height: -webkit-fill-available;
             
             z-index: 1000;
@@ -1827,6 +1829,7 @@
     </script>
 </body>
 </html>
+
 
 
 
