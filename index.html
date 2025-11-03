@@ -60,8 +60,9 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            min-height: 100%;
-            min-height: -webkit-fill-available; /* Match body for iOS */
+            /* MODIFIED: Changed from min-height to height */
+            height: 100%;
+            height: -webkit-fill-available; /* Match body for iOS */
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
@@ -1838,6 +1839,7 @@
     </script>
 </body>
 </html>
+
 
 
 
