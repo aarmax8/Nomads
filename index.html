@@ -767,7 +767,8 @@
             
             z-index: 1000;
             background-color: #000;
-            background-image: url('https://github.com/aarmax8/Nomads/blob/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/splash.jpg?raw=true');
+            /* MODIFIED: Added fade-to-black gradient to hide the bottom edge */
+            background-image: linear-gradient(to bottom, transparent 70%, #000 95%), url('https://github.com/aarmax8/Nomads/blob/ac96a3e89384bc4f8a4feefe4af617c47d901a0e/splash.jpg?raw=true');
             background-size: cover;
             background-position: center;
             display: flex;
@@ -1846,6 +1847,7 @@
     </script>
 </body>
 </html>
+
 
 
 
