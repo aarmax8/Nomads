@@ -34,28 +34,8 @@
             
             margin: 0;
             padding: 0;
-
-            /* ADDED: Set root background to black to fix white bar */
-            background-color: #000;
-        }
-
-        /* --- ADDED BACK: CORE LAYOUT STYLES --- */
-        body {
-            background-color: #000;
-            font-family: 'Roboto Condensed', sans-serif;
-            overscroll-behavior-y: contain; /* Prevents pull-to-refresh on body */
-            overflow: hidden; /* Prevents scrolling on body */
-            
-            /* MODIFIED: More aggressive fullscreen fix */
-            height: 100vh;
-            height: -webkit-fill-available;
-            width: 100%;
-            position: fixed; /* ADDED: Lock viewport */
-            
-            margin: 0;
-            padding: 0;
-            /* ADDED: Background properties moved here */
-            background-image: linear-gradient(to bottom, rgba(17, 17, 17, 0.5), rgba(17, 17, 17, 0.7) 50%, #000 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
+            /* MODIFIED: Removed the linear-gradient overlay */
+            background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
         }
@@ -1878,5 +1858,6 @@
     </script>
 </body>
 </html>
+
 
 
