@@ -1489,16 +1489,7 @@
                 });
             }
             
-            // --- FIX: Forced re-scroll to the currently active card after flip animation ---
-            // This prevents the scroll position from jumping back to the start (barcode card).
-            setTimeout(() => {
-                const activeCard = menuGrid.querySelector('.drink-card.is-active');
-                if (activeCard) {
-                    // Use behavior: 'instant' to prevent the smooth scroll from causing jittering after a flip
-                    activeCard.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
-                }
-            }, 750); // Delay slightly longer than the flip transition (0.7s)
-            // --- END FIX ---
+            // NOTE: The forced scroll restoration has been moved to throttledToggle for better control.
         }
 
         function applyAndRenderFilters() {
@@ -2046,13 +2037,23 @@
             // This is the new, strict throttle logic
             const throttledToggle = () => {
                  if (isToggleThrottled) return;
+
+                 // --- FIX STEP 1: Immediately identify and mark the currently viewed card ---
+                 updateActiveCard(); 
+                 const cardToRestore = menuGrid.querySelector('.drink-card.is-active'); // Save reference to the active card
                  
                  isToggleThrottled = true;
                  setCardView(!isGlobalTarotView);
-                 
-                 // Clear the throttle state after the animation time (750ms)
+
+                 // Clear the throttle state *and* force scroll restoration
                  setTimeout(() => {
                      isToggleThrottled = false;
+                     
+                     // --- FIX STEP 2: Force scroll restoration to the saved card ---
+                     if (cardToRestore) {
+                         // Use 'instant' to prevent the jittering/scroll jump from the slow smooth scroll
+                         cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+                     }
                  }, THROTTLE_LIMIT); 
             };
             
