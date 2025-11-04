@@ -30,7 +30,7 @@
             height: 100vh;
             height: -webkit-fill-available; 
             width: 100%;
-            position: fixed; /* ADDED: Lock viewport */
+            /* REMOVED: position: fixed; This was breaking the layout */
             
             margin: 0;
             padding: 0;
@@ -38,6 +38,9 @@
             background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
             background-position: center;
+
+            /* ADDED: This fills the "white bars" at top/bottom */
+            background-color: #000;
         }
         
         /* --- REMOVED: Fullscreen Background Fix --- */
@@ -84,10 +87,10 @@
             display: flex;
             flex-direction: column; 
             
-            /* ADDED: Centering logic moved here from .app-container */
+            /* REMOVED: Centering logic moved to inner elements */
             width: 100%;
-            max-width: 1024px;
-            margin: 0 auto;
+            /* max-width: 1024px; */
+            /* margin: 0 auto; */
         } 
         /* --- END OF ADDED STYLES --- */
 
@@ -106,6 +109,8 @@
             max-width: 1024px;
             margin-left: auto;
             margin-right: auto;
+            height: 100%; /* Ensure it fills the header */
+            position: relative; /* Needed for z-index stacking context */
         }
 
         /* --- Headlight Effect --- */
@@ -143,7 +148,9 @@
             /* --- NEW STYLES --- */
             /* Copied from #app-footer to create a matching iOS-style top bar */
             height: 50px;
-            padding: 0 0.5rem; /* Horizontal padding */
+            /* MODIFIED: Added safe-area padding for landscape */
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
             box-sizing: border-box;
             
             background-color: rgba(26, 26, 26, 0.7); /* Semi-transparent dark bg */
@@ -152,10 +159,22 @@
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Shadow below the bar */
 
-            display: flex;
-            justify-content: space-evenly; /* Evenly space all buttons */
-            align-items: center;
+            /* REMOVED: Flex properties are now on the inner wrapper */
+            /* display: flex; */
+            /* justify-content: space-evenly; */
+            /* align-items: center; */
             /* --- End New Styles --- */
+        }
+
+        /* ADDED: Wrapper to center action bar content */
+        #action-bar-content {
+            width: 100%;
+            max-width: 1024px; /* Matches main content width */
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 100%;
         }
 
         /* Override footer-btn styles when inside action-bar */
@@ -201,6 +220,11 @@
             min-height: 0; 
 
             box-sizing: border-box; 
+
+            /* ADDED: Center the grid inside the full-width main */
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -732,15 +756,20 @@
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
             /* --- End Footer Update --- */
             
-            display: flex;
-            justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
-            align-items: center;
+            /* REMOVED: Flex properties are now on the inner wrapper */
+            /* display: flex; */
+            /* justify-content: space-evenly; */
+            /* align-items: center; */
             
-            /* ADDED: Center the footer bar to match the main content */
+            /* REMOVED: Centering logic, bar is now full-width */
             width: 100%;
-            max-width: 1024px;
-            margin-left: auto;
-            margin-right: auto;
+            /* max-width: 1024px; */
+            /* margin-left: auto; */
+            /* margin-right: auto; */
+
+            /* ADDED: Safe-area padding for landscape */
+            padding-left: env(safe-area-inset-left);
+            padding-right: env(safe-area-inset-right);
             
             /* MODIFIED: REMOVED fixed positioning */
             /* position: fixed; */
@@ -755,6 +784,17 @@
             
             /* UPDATED: Removed background image */
             background-image: none;
+        }
+
+        /* ADDED: Wrapper to center footer content */
+        #footer-content {
+            width: 100%;
+            max-width: 1024px; /* Matches main content width */
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            height: 100%;
         }
         
         /* --- Splash Screen --- */
@@ -841,25 +881,28 @@
             <!-- NEW: Action bar for filters, faves, etc. -->
             <!-- MODIFIED: Removed all tailwind layout classes, now handled by CSS -->
             <div id="action-bar">
-                <button id="action-random-btn" class="footer-btn" title="Pick a Random Drink">
-                    <i class="fas fa-dice"></i>
-                    <span class="text-xs">Random</span>
-                </button>
-                
-                <button id="action-favorites-btn" class="footer-btn" title="Favorites">
-                    <i class="fas fa-heart"></i>
-                    <span class="text-xs">Faves</span>
-                </button>
-                
-                <button id="action-stock-btn" class="footer-btn" title="Bar Stock">
-                    <i class="fas fa-wine-bottle"></i>
-                    <span class="text-xs">Stock</span>
-                </button>
-                
-                <button id="action-filters-btn" class="footer-btn" title="Filters">
-                    <i class="fas fa-martini-glass-citrus"></i>
-                    <span class="text-xs">Filters</span>
-                </button>
+                <!-- ADDED: Wrapper to center the content -->
+                <div id="action-bar-content">
+                    <button id="action-random-btn" class="footer-btn" title="Pick a Random Drink">
+                        <i class="fas fa-dice"></i>
+                        <span class="text-xs">Random</span>
+                    </button>
+                    
+                    <button id="action-favorites-btn" class="footer-btn" title="Favorites">
+                        <i class="fas fa-heart"></i>
+                        <span class="text-xs">Faves</span>
+                    </button>
+                    
+                    <button id="action-stock-btn" class="footer-btn" title="Bar Stock">
+                        <i class="fas fa-wine-bottle"></i>
+                        <span class="text-xs">Stock</span>
+                    </button>
+                    
+                    <button id="action-filters-btn" class="footer-btn" title="Filters">
+                        <i class="fas fa-martini-glass-citrus"></i>
+                        <span class="text-xs">Filters</span>
+                    </button>
+                </div>
             </div>
             
             <!-- Grid for drink cards -->
@@ -869,24 +912,27 @@
         
         <!-- Main application footer (Now for navigation only) -->
         <div id="app-footer">
-            <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
-                <i class="fas fa-angles-left"></i>
-                <!-- REMOVED: <span class="text-xs">Prev</span> -->
-            </button>
-            
-            <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
-                <i class="fas fa-book-open icon-stories"></i>
-                <i class="fas fa-scroll icon-recipe"></i>
-                <!-- Text will be hidden by icons, but good for accessibility -->
-                <!-- UPDATED: Replaced sr-only span with dynamic labels -->
-                <span class="text-xs label-stories">Story</span>
-                <span class="text-xs label-recipe">Recipe</span>
-            </button>
+             <!-- ADDED: Wrapper to center the content -->
+            <div id="footer-content">
+                <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
+                    <i class="fas fa-angles-left"></i>
+                    <!-- REMOVED: <span class="text-xs">Prev</span> -->
+                </button>
+                
+                <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
+                    <i class="fas fa-book-open icon-stories"></i>
+                    <i class="fas fa-scroll icon-recipe"></i>
+                    <!-- Text will be hidden by icons, but good for accessibility -->
+                    <!-- UPDATED: Replaced sr-only span with dynamic labels -->
+                    <span class="text-xs label-stories">Story</span>
+                    <span class="text-xs label-recipe">Recipe</span>
+                </button>
 
-            <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
-                <i class="fas fa-angles-right"></i>
-                <!-- REMOVED: <span class="text-xs">Next</span> -->
-            </button>
+                <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
+                    <i class="fas fa-angles-right"></i>
+                    <!-- REMOVED: <span class="text-xs">Next</span> -->
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1874,7 +1920,4 @@
     </script>
 </body>
 </html>
-
-
-
 
