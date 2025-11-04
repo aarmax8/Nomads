@@ -91,6 +91,7 @@
             position: relative; /* For z-index and pseudo-elements */
             height: 150px;
             z-index: 10; /* Keep header above main content */
+            width: 100%; /* ADDED: Ensure header is full width */
         }
         
         /* REMOVED: Fade-out effect at the top of the header */
@@ -118,6 +119,13 @@
             top: 0;
             left: 0;
             z-index: 1;
+        }
+
+        /* ADDED: Center the header logo container to match the main content */
+        #header-logo-container {
+            max-width: 1024px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         /* --- Headlight Effect --- */
@@ -732,6 +740,12 @@
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
             align-items: center;
+            
+            /* ADDED: Center the footer bar to match the main content */
+            width: 100%;
+            max-width: 1024px;
+            margin-left: auto;
+            margin-right: auto;
             
             /* MODIFIED: REMOVED fixed positioning */
             /* position: fixed; */
@@ -1864,4 +1878,5 @@
     </script>
 </body>
 </html>
+
 
