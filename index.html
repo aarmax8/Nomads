@@ -26,9 +26,11 @@
             overscroll-behavior-y: contain;
             overflow: hidden;
             
-            /* MODIFIED: Re-adding -webkit-fill-available */
-            height: 100%;
+            /* MODIFIED: More aggressive fullscreen fix */
+            height: 100vh;
             height: -webkit-fill-available; 
+            width: 100%;
+            position: fixed; /* ADDED: Lock viewport */
             
             margin: 0;
             padding: 0;
@@ -43,8 +45,13 @@
             font-family: 'Roboto Condensed', sans-serif;
             overscroll-behavior-y: contain; /* Prevents pull-to-refresh on body */
             overflow: hidden; /* Prevents scrolling on body */
-            height: 100%;
-            height: -webkit-fill-available; /* MODIFIED: Re-adding */
+            
+            /* MODIFIED: More aggressive fullscreen fix */
+            height: 100vh;
+            height: -webkit-fill-available;
+            width: 100%;
+            position: fixed; /* ADDED: Lock viewport */
+            
             margin: 0;
             padding: 0;
             /* ADDED: Background properties moved here */
@@ -59,9 +66,11 @@
         .app-container {
             display: flex;
             flex-direction: column;
-            /* MODIFIED: Re-adding -webkit-fill-available */
-            height: 100%;
+            
+            /* MODIFIED: Use 100vh and -webkit-fill-available */
+            height: 100vh;
             height: -webkit-fill-available; 
+            
             width: 100%;
             max-width: 1024px; /* Center content on desktop */
             margin: 0 auto;
@@ -1850,6 +1859,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
