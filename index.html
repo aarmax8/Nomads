@@ -72,8 +72,8 @@
             height: -webkit-fill-available; 
             
             width: 100%;
-            max-width: 1024px; /* Center content on desktop */
-            margin: 0 auto;
+            /* REMOVED: max-width: 1024px; */ /* Center content on desktop */
+            /* REMOVED: margin: 0 auto; */
             /* MODIFIED: Background is now on #app-bg */
             background-color: transparent;
             
@@ -102,6 +102,11 @@
             min-height: 0; /* Ensure main content can shrink if needed */
             display: flex;
             flex-direction: column; 
+            
+            /* ADDED: Centering logic moved here from .app-container */
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
         } 
         /* --- END OF ADDED STYLES --- */
 
@@ -1859,3 +1864,4 @@
     </script>
 </body>
 </html>
+
