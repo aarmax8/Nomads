@@ -239,7 +239,7 @@
              /* MODIFIED: Was 84% */
              margin-right: calc((100% - 80%) / 2); 
          }
- 
+
         @media (min-width: 640px) { 
             .drink-card { flex-basis: 70%; }
             #menu-grid > .drink-card:first-child { margin-left: calc((100% - 70%) / 2); }
@@ -921,7 +921,7 @@
             </div>
         </div>
     </div>
- 
+
     <script>
         // --- Data ---
         let cocktails = []; // This will be populated by the setup function
@@ -1124,8 +1124,8 @@
                     'Syrups': ['Grenadine', 'Simple Syrup', 'Passion Fruit Syrup'],
                 },
                 'Other': { 'Garnish & Rims': ['Cherry Garnish', 'Lemon Twist Garnish', 'Lime Wedge Garnish', '1 teaspoon Maraschino Liqueur'] }
-            };
- 
+        };
+
         // --- DOM Elements ---
         const menuGrid = document.getElementById('menu-grid');
         const barStockModal = document.getElementById('bar-stock-modal');
@@ -1372,7 +1372,7 @@
             setTimeout(updateActiveCard, 100); 
             updateFilterMenuButtonState(); 
         }
- 
+
         function initializeFavorites() {
             const savedDrinkFavs = localStorage.getItem(DRINKS_FAVORITES_KEY);
             if (savedDrinkFavs) {
@@ -1452,7 +1452,7 @@
                 closestCard.classList.add('is-active');
             }
         }
- 
+
         function initializeBarStock() {
             const savedStockJSON = localStorage.getItem(STOCK_STORAGE_KEY);
             const allIngredients = Object.values(ingredientCategories)
@@ -1612,7 +1612,7 @@
                 favToggle.checked = activeFilters.showFavoritesOnly;
             }
         }
- 
+
         function highlightAndScrollToCard(card) {
             card.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             document.querySelectorAll('.is-highlighted').forEach(c => c.classList.remove('is-highlighted'));
@@ -1626,10 +1626,10 @@
             if (!filtersBtn) return;
 
             const isFilterActive = activeFilters.category !== 'all' || 
-                                   activeFilters.spirit !== null || 
-                                   activeFilters.ingredient !== null || 
-                                   activeFilters.showFavoritesOnly;
-                                   
+                                    activeFilters.spirit !== null || 
+                                    activeFilters.ingredient !== null || 
+                                    activeFilters.showFavoritesOnly;
+                                    
             if (isFilterActive) {
                 filtersBtn.classList.add('is-active-filter');
             } else {
@@ -1648,7 +1648,7 @@
         }
 
         // --- END HELPER FUNCTIONS ---
- 
+
         document.addEventListener('DOMContentLoaded', () => {
             // --- START: Critical setup wrapped in try/catch ---
             try {
@@ -1693,10 +1693,10 @@
 
                 const cardInner = e.target.closest('.drink-card-inner');
                  if (cardInner) {
-                      const card = cardInner.closest('.drink-card');
-                      if(card && !card.dataset.isBarcode) {
+                     const card = cardInner.closest('.drink-card');
+                     if(card && !card.dataset.isBarcode) {
                          card.classList.toggle('is-flipped');
-                      }
+                     }
                  }
             });
 
@@ -1706,8 +1706,8 @@
                 clearTimeout(scrollTimeout);
                 scrollTimeout = setTimeout(updateActiveCard, 150);
             });
-        
- 
+            
+
             // --- Modals ---
             function closeModal(modalElement) {
                 if (!modalElement) return;
@@ -1855,21 +1855,7 @@
             }
 
         }); // End DOMContentLoaded
- 
+
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
