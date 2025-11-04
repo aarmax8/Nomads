@@ -591,14 +591,18 @@
         /* Special style for middle button (in footer) */
         #app-footer .footer-btn-middle {
             color: #f59e0b; /* Amber */
-            transform: scale(1.1); /* Make it slightly larger */
-            /* MODIFIED: Added negative margin to pull it down */
-            margin-bottom: -5px;
+            /* REMOVED: scale effect */
+            transform: none; 
+            /* REMOVED: negative margin to pull it down */
+            margin-bottom: 0; 
+            /* MODIFIED: Pushed the content up a bit to feel centered in the lower area */
+            padding-bottom: 0.5rem; 
+            padding-top: 0.5rem;
+            
         }
         #app-footer .footer-btn-middle i {
-            /* MODIFIED: Made middle icon larger (was 2rem) */
-            font-size: 2.2rem; /* Larger icon */
-            /* Color is set by specific classes below */
+            /* MODIFIED: Made icon slightly smaller to match others, but still prominent */
+            font-size: 2rem; 
         }
         
         /* REMOVED: Old .footer-btn.is-active-filter and #footer-favorites-btn.is-active */
@@ -657,8 +661,8 @@
             
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
-            /* MODIFIED: Changed from 'center' to 'flex-end' to push icons to the bottom */
-            align-items: flex-end;
+            /* MODIFIED: Changed from 'flex-end' to 'center' to center content vertically */
+            align-items: center; 
             
             /* ADDED: Center the footer bar to match the main content */
             width: 100%;
@@ -666,14 +670,6 @@
             margin-left: auto;
             margin-right: auto;
             
-            /* MODIFIED: REMOVED fixed positioning */
-            /* position: fixed; */
-            /* bottom: 0; */
-            /* left: 0; */
-            /* right: 0; */
-            /* width: 100%; */
-            /* z-index: 10; */
-
             /* ADDED: Make footer a non-shrinking flex item */
             flex-shrink: 0;
             
