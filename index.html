@@ -788,6 +788,41 @@
             background-position: center;
             border: 2px solid #2dd4bf; /* Turquoise border for definition */
         }
+        
+        /* --- START NEW TOC STYLING --- */
+        /* Container for all drink names on the barcode back */
+        .barcode-back-content {
+            padding: 1.5rem; /* Increased overall padding */
+            flex-grow: 1; 
+            overflow-y: auto; /* Enable scrolling if list is too long */
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem; /* Space between items (Separation) */
+        }
+        .barcode-back-content::-webkit-scrollbar { width: 6px; }
+        .barcode-back-content::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        .barcode-back-content::-webkit-scrollbar-thumb { background-color: #f59e0b; border-radius: 3px; }
+
+        /* Individual drink name item (Touch Target) */
+        .toc-item {
+            padding: 0.75rem 1rem; /* Increased vertical padding (Bigger Touch Target) */
+            border-radius: 0.5rem; 
+            background: rgba(0, 0, 0, 0.4); /* Dark background for separation */
+            cursor: pointer;
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem; /* Slightly larger font */
+            font-weight: 700;
+            line-height: 1.2;
+            transition: background-color 0.2s, transform 0.1s;
+            border: 1px solid; 
+        }
+
+        .toc-item:hover {
+            background-color: rgba(0, 0, 0, 0.6);
+            transform: scale(1.02);
+        }
+        /* --- END NEW TOC STYLING --- */
         /* --- END Modal Panel Styling --- */
 
     </style>
@@ -1755,17 +1790,29 @@
                     const cardName = tocItem.dataset.name;
                     const cardToScroll = menuGrid.querySelector(`.drink-card[data-name="${cardName}"]`);
                     if (cardToScroll) {
+                        // --- FIX APPLIED HERE: Temporarily disable scroll snap to ensure target sticks ---
+                        menuGrid.style.scrollSnapType = 'none'; 
+                        
                         // Flip the barcode card back to the front
                         const barcodeCard = tocItem.closest('.drink-card');
                         if (barcodeCard) {
                             barcodeCard.classList.remove('is-flipped');
                         }
+                        
                         // Scroll to and highlight the selected card
                         highlightAndScrollToCard(cardToScroll);
+                        
                         // Ensure the highlighted card is showing the recipe
                         cardToScroll.classList.remove('is-flipped');
+                        
                         // Set global view to recipe
                         setCardView(false); 
+                        
+                        // Re-enable scroll snap after the scroll animation has finished (e.g., 800ms)
+                        setTimeout(() => {
+                            menuGrid.style.scrollSnapType = 'x mandatory';
+                        }, 800);
+                        // --- END FIX ---
                     }
                     return; // Prevent card flip
                 }
