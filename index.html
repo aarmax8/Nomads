@@ -98,12 +98,14 @@
 
         #header-logo-image {
             width: 100%;
-            /* MODIFIED: Make height cover padding area */
-            height: calc(150px + env(safe-area-inset-top));
+            /* MODIFIED: Removed explicit height */
+            /* height: calc(150px + env(safe-area-inset-top)); */
             object-fit: fill; /* Stretches to fill the container */
             position: absolute;
             /* MODIFIED: Pull image up to cover padding */
             top: -env(safe-area-inset-top);
+            /* ADDED: Stretch image to bottom of container */
+            bottom: 0;
             left: 0;
             z-index: 1;
         }
@@ -666,16 +668,18 @@
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
+            /* ADDED: Add a small gap between icon and text */
+            gap: 0.1rem;
             /* MODIFIED: Reduced font size from 0.75rem to 0.65rem (approx 10px) */
             font-size: 0.65rem; 
             width: 60px; /* Give them a consistent width */
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons smaller (was 1.1rem) */
-            font-size: 1.0rem; /* Icon size */
-            /* MODIFIED: Reduced margin-bottom (was 0.25rem) */
-            margin-bottom: 0.1rem;
+            /* MODIFIED: Made icons larger (was 1.0rem) */
+            font-size: 1.25rem; /* Icon size */
+            /* MODIFIED: Reduced margin-bottom (was 0.1rem) */
+            margin-bottom: 0;
             /* MODIFIED: iOS-style neutral gray */
             color: #8e8e93; 
         }
@@ -689,8 +693,8 @@
             transform: scale(1.1); /* Make it slightly larger */
         }
         #app-footer .footer-btn-middle i {
-            /* MODIFIED: Made middle icon smaller (was 1.5rem) */
-            font-size: 1.3rem; /* Larger icon */
+            /* MODIFIED: Made middle icon larger (was 1.3rem) */
+            font-size: 1.6rem; /* Larger icon */
             /* Color is set by specific classes below */
         }
         
@@ -1889,5 +1893,6 @@
     </script>
 </body>
 </html>
+
 
 
