@@ -1488,6 +1488,17 @@
                     card.classList.remove('is-flipped');
                 });
             }
+            
+            // --- FIX: Forced re-scroll to the currently active card after flip animation ---
+            // This prevents the scroll position from jumping back to the start (barcode card).
+            setTimeout(() => {
+                const activeCard = menuGrid.querySelector('.drink-card.is-active');
+                if (activeCard) {
+                    // Use behavior: 'instant' to prevent the smooth scroll from causing jittering after a flip
+                    activeCard.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+                }
+            }, 750); // Delay slightly longer than the flip transition (0.7s)
+            // --- END FIX ---
         }
 
         function applyAndRenderFilters() {
