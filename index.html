@@ -98,18 +98,16 @@
 
         #header-logo-image {
             width: 100%;
-            /* ADDED: Set height to 100% of the container */
-            height: 100%;
-            /* MODIFIED: Changed from 'contain' back to 'cover' for a photograph */
-            object-fit: cover;
-            /* MODIFIED: Center the image in the header area */
-            object-position: center center;
-            /* REMOVED: No longer absolute positioned */
-            /* position: absolute; */
-            /* top: -env(safe-area-inset-top); */
-            /* bottom: 0; */
-            /* left: 0; */
-            /* z-index: 1; */
+            /* MODIFIED: Removed explicit height */
+            /* height: calc(150px + env(safe-area-inset-top)); */
+            object-fit: fill; /* Stretches to fill the container */
+            position: absolute;
+            /* MODIFIED: Pull image up to cover padding */
+            top: -env(safe-area-inset-top);
+            /* ADDED: Stretch image to bottom of container */
+            bottom: 0;
+            left: 0;
+            z-index: 1;
         }
 
         /* ADDED: Center the header logo container to match the main content */
@@ -943,8 +941,8 @@
     <div id="app" class="app-container">
         <header class="text-center">
             <div id="header-logo-container" class="w-full flex items-center justify-center">
-                <!-- MODIFIED: Swapped the image src and added ?raw=true -->
-                <img src="https://github.com/aarmax8/Nomads/blob/b28dd212641c4a3caecfd4b2a55d4d8be9895f3a/nomadstitle5.jpg?raw=true" id="header-logo-image" alt="Nomad's Logo">
+                <!-- UPDATED HEADER IMAGE SOURCE -->
+                <img src="https://github.com/aarmax8/Nomads/blob/a8d1406a9b88cc4caa2246a2b1fa12bc493757e2/AI%20Title3.jpg?raw=true" id="header-logo-image" alt="Nomad's Logo">
             </div>
         </header>
         
@@ -2036,9 +2034,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
