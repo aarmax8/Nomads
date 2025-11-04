@@ -2024,9 +2024,10 @@
             }
             
             const toggleViewBtnMain = document.getElementById('toggle-view-btn-main');
+            /* FIXED: Increased throttle time from 300ms to 700ms to match the card transition time (0.7s) */
             const throttledToggle = throttle(() => {
                  setCardView(!isGlobalTarotView); 
-            }, 300); 
+            }, 700); 
             if (toggleViewBtnMain) {
                 toggleViewBtnMain.addEventListener('click', throttledToggle);
             }
