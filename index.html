@@ -100,7 +100,10 @@
             width: 100%;
             /* MODIFIED: Removed explicit height */
             /* height: calc(150px + env(safe-area-inset-top)); */
-            object-fit: fill; /* Stretches to fill the container */
+            /* MODIFIED: Changed from 'fill' to 'cover' for a better look */
+            object-fit: cover;
+            /* ADDED: Center the image in the header area */
+            object-position: center center;
             position: absolute;
             /* MODIFIED: Pull image up to cover padding */
             top: -env(safe-area-inset-top);
@@ -941,7 +944,8 @@
     <div id="app" class="app-container">
         <header class="text-center">
             <div id="header-logo-container" class="w-full flex items-center justify-center">
-                <img src="https://github.com/aarmax8/Nomads/blob/dc5ee5946a1f36d3a1883cbec868080471acdfbf/ai%20nomads%20title1.png?raw=true" id="header-logo-image" alt="Nomad's Logo">
+                <!-- MODIFIED: Swapped the image src and added ?raw=true -->
+                <img src="https://github.com/aarmax8/Nomads/blob/9656a5e94fdce9bfeac0ede5f6a797bc5e579115/IMG_0162.jpeg?raw=true" id="header-logo-image" alt="Nomad's Logo">
             </div>
         </header>
         
@@ -2033,6 +2037,7 @@
     </script>
 </body>
 </html>
+
 
 
 
