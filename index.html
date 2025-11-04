@@ -747,6 +747,48 @@
                 opacity: 1;
             }
         }
+        
+        /* --- Filter Pill Styles for Modals --- */
+        .filter-pill {
+            /* Base pill style */
+            background-color: rgba(255, 255, 255, 0.05); /* Very slight background */
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #d1d5db; /* Light gray text */
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px; /* Full pill shape */
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Roboto Condensed', sans-serif;
+            font-weight: 700;
+            font-size: 0.875rem; /* text-sm */
+            flex-shrink: 0;
+            text-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        .filter-pill:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+        .filter-pill.is-active {
+            /* Active pill style */
+            background-color: #f59e0b; /* Amber 500 */
+            border: 1px solid #fbbf24; /* Brighter amber border */
+            color: #111827; /* Dark text for contrast */
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.7); /* Subtle glow */
+            transform: scale(1.05);
+            text-shadow: none;
+        }
+        /* --- End Filter Pill Styles --- */
+
+        /* --- ADDED/FIXED: Modal Panel Background and Styling --- */
+        .modal-panel {
+            /* Background Image from user request, with a dark overlay for text readability */
+            background-image: 
+                linear-gradient(to top, rgba(17, 17, 17, 0.95) 0%, rgba(17, 17, 17, 0.7) 30%, rgba(17, 17, 17, 0.9) 100%), 
+                url('https://github.com/aarmax8/Nomads/blob/c494fdd916aac964350c8174aa9fd9a37f7f09b7/thumbnail_IMG_8263.jpg?raw=true');
+            background-size: cover;
+            background-position: center;
+            border: 2px solid #2dd4bf; /* Turquoise border for definition */
+        }
+        /* --- END Modal Panel Styling --- */
 
     </style>
 </head>
@@ -1817,11 +1859,14 @@
                     }
                 }
             });
-            document.getElementById('ingredient-filter-select')?.addEventListener('change', (e) => {
-                 activeFilters.ingredient = e.target.value || null;
-            });
-            document.getElementById('favorites-filter-toggle')?.addEventListener('change', (e) => {
-                activeFilters.showFavoritesOnly = e.target.checked;
+            // MODIFIED: Replaced direct-by-ID listeners with a single, more robust delegated 'change' listener.
+            // This captures changes from the 'Favorites Only' toggle and the 'Contains Ingredient' dropdown.
+            document.getElementById('filter-modal-content').addEventListener('change', (e) => {
+                if (e.target.id === 'ingredient-filter-select') {
+                    activeFilters.ingredient = e.target.value || null;
+                } else if (e.target.id === 'favorites-filter-toggle') {
+                    activeFilters.showFavoritesOnly = e.target.checked;
+                }
             });
 
 
