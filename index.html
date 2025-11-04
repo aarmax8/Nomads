@@ -2065,12 +2065,12 @@
             const throttledToggle = () => {
                  if (isToggleThrottled) return;
 
-                 // --- FIX STEP 1: Immediately identify and mark the currently viewed card ---
-                 const cardToRestore = getCurrentActiveCard(); // Use direct check, more robust
-                 if (!cardToRestore) return; // Safety check
+                 // --- FIX STEP 1: Identify and temporarily disable scroll snap ---
+                 const cardToRestore = getCurrentActiveCard(); 
+                 if (!cardToRestore) return; 
 
-                 // Force the active state right before flip to ensure it's the target
-                 updateActiveCard(); 
+                 // CRITICAL FIX: Disable scroll snapping during the flip to prevent reset
+                 menuGrid.style.scrollSnapType = 'none';
                  
                  isToggleThrottled = true;
                  setCardView(!isGlobalTarotView);
@@ -2079,10 +2079,12 @@
                  setTimeout(() => {
                      isToggleThrottled = false;
                      
-                     // --- FIX STEP 2: Force scroll restoration to the saved card ---
                      if (cardToRestore) {
-                         // Use 'instant' to prevent the jittering/scroll jump from the slow smooth scroll
+                         // Force instant scroll restoration to the saved card
                          cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+                         
+                         // Re-enable scroll snapping
+                         menuGrid.style.scrollSnapType = 'x mandatory';
                      }
                  }, THROTTLE_LIMIT); 
             };
