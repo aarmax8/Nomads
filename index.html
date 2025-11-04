@@ -990,7 +990,7 @@
                 <i class="fas fa-scroll icon-recipe"></i>
                 <!-- Text will be hidden by icons, but good for accessibility -->
                 <!-- UPDATED: Replaced sr-only span with dynamic labels -->
-                <span class="text-xs label-stories">Story</span>
+                <span class="text-xs label-stories">Story"></span>
                 <span class="text-xs label-recipe">Recipe</span>
             </button>
 
@@ -1364,6 +1364,12 @@
                             <div class="drink-card-inner">
                                 <!-- Barcode Front Face -->
                                 <div class="drink-card-front">
+                                    <!-- NEW: Added instruction for flipping -->
+                                    <div class="text-center">
+                                        <p class="text-lg text-amber-400 font-cinzel">
+                                            <i class="fas fa-undo-alt mr-2"></i> **Flip Card for Full Deck Index**
+                                        </p>
+                                    </div>
                                     <img src="${item.image}" alt="3D Barcode" style="width: 100%; border-radius: 0.5rem; object-fit: contain; max-height: 65%;">
                                     <div class="text-center mt-2">
                                         <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
