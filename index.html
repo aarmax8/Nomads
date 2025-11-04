@@ -521,6 +521,19 @@
             font-size: 1.75rem;
         }
 
+        /* MODIFIED: This rule is now for the FRONT face of the barcode card */
+        .drink-card[data-is-barcode="true"] .drink-card-front {
+            background-color: #111;
+            border: 3px double #525252;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center; 
+            padding: 1rem;
+            gap: 1rem;
+        }
+
         .drink-card[data-is-barcode="true"] .card-footer {
             background: transparent;
             border: none;
@@ -531,6 +544,52 @@
             /* ADDED: Ensure no extra margin is pushing this content up */
             margin-bottom: 0;
         }
+        
+        /* MODIFIED: Removed styles from the inner wrapper, they moved to the front face */
+        .drink-card[data-is-barcode="true"] .drink-card-inner {
+            /* All layout styles removed from here */
+        }
+        
+        /* ADDED: Styles for the new barcode card back */
+        .drink-card[data-is-barcode="true"] .drink-card-back {
+            border: 2px solid #854d0e; /* Amber border like story backs */
+            background-color: #1a1a1a; 
+            background-image: linear-gradient(rgba(26, 26, 26, 0.8), rgba(26, 26, 26, 0.8)), url('https://github.com/aarmax8/Nomads/blob/639ee0ed0a332926ddf78c332e7c114a32af99ab/leather%20background.jpg?raw=true');
+            background-size: cover;
+            color: #e5e7eb;
+            display: flex;
+            flex-direction: column; /* To allow scrolling content */
+        }
+        
+        .barcode-back-content {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 0 1.25rem;
+            min-height: 0;
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+        .barcode-back-content::-webkit-scrollbar { width: 4px; }
+        .barcode-back-content::-webkit-scrollbar-track { background: transparent; }
+        .barcode-back-content::-webkit-scrollbar-thumb { background-color: #854d0e; border-radius: 4px; }
+
+        .toc-item {
+            padding: 0.6rem 0.5rem;
+            border-bottom: 1px solid rgba(133, 77, 14, 0.3);
+            cursor: pointer;
+            color: #d1d5db;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+        }
+        .toc-item:hover, .toc-item:active {
+            background-color: rgba(245, 158, 11, 0.15);
+            color: #f59e0b;
+            transform: translateX(5px);
+        }
+        .toc-item:last-child {
+            border-bottom: none;
+        }
+        /* --- END of barcode back styles --- */
         
 
         .modal { transition: opacity 0.3s ease-in-out; }
@@ -1060,7 +1119,7 @@
                 { name: "Nightcap", flavorProfile: "A rich, smooth, and simple pairing of creamy Baileys and nutty amaretto.", recipe: ["2 oz Baileys Irish Cream", "1 oz Amaretto", "Serve on the rocks"], story: "Don't let the name fool you. This is not a 'one and done' drink. It's a 'one and then you decide it's a good idea to call your ex' drink. You have been warned.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ECaf84a18fc47b/frontend/R.jpg", cardHook: "The perfect end to the day." },
                 /* --- FIX: Removed 's' from 'httpss' --- */
                 { name: "Spiced Rum & Coke", flavorProfile: "A sweet and spicy mix of spiced rum, cola, and a hint of orange.", recipe: ["2 oz Captain Morgan Spiced Rum", "Fill with Cola", "2 dashes Orange Bitters"], story: "The sound of a missed gear is horrifying. The taste of this drink is not. It's what you drink to forget the crime you just committed against your motorcycle. The bike remembers, though. It always remembers.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.850190414_gb43.webp", cardHook: "An apology to our transmissions." },
-                { name: "Catalyst", flavorProfile: "An energetic and tart blend of vodka, sour mix, and lime.", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sour Mix", "Splash of Lime Juice"], story: "This drink doesn't cause problems. It's just... present when they happen. It's the catalyst for bar fights, terrible ideas, and waking up with a new tattoo. It's an agent of chaos.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7999.jpg", cardHook: "The start of a great story." },
+                { name: "Catalyst", flavorProfile: "An energetic and tart blend of vodka, sour mix, and lime.", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sour Mix", "Splash of Lime Juice"], story: "This drink doesn't cause problems. It's just... present when they happen. It's the catalyst for bar fights, terrible ideas, and waking up with a new tattoo. It's an agent of chaos.", image: "https.raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7999.jpg", cardHook: "The start of a great story." },
                 /* --- FIX: Removed 's' from 'httpss' --- */
                 { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn, our resident genius, tried to make 'artisanal applejack' in the clubhouse radiator. The radiator exploded. This drink, made with store-bought ingredients, is a much safer tribute to his ambition.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "A tribute to spectacular failures." },
                 { name: "Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
@@ -1266,15 +1325,38 @@
             }
             itemsToRender.forEach((item, index) => {
                 if (item.isBarcode) {
+                    
+                    // ADDED: Generate the Table of Contents HTML
+                    // MODIFIED: Use titleColor for the list items
+                    const allDrinkNames = cocktails.filter(c => !c.isBarcode).map(c => ({name: c.name, color: c.titleColor}));
+                    const listHtml = allDrinkNames.map(drink => `<div class="toc-item" data-name="${drink.name}" style="color: ${drink.color}; border-color: ${drink.color}80;">${drink.name}</div>`).join('');
+
+
+                    // MODIFIED: This is now a flippable card
                     const cardHtml = `
                         <div class="drink-card" data-is-barcode="true">
                             <div class="drink-card-inner">
-                                <img src="${item.image}" alt="3D Barcode">
-                                <div class="text-center mt-2">
-                                    <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
-                                    <div class="card-footer text-xs">
-                                        <p class="mb-2">${item.cardHook}</p>
-                                        <p class="font-normal not-italic leading-tight text-gray-400"><strong class="text-gray-300">To Install for Full Screen:</strong><br><i class="fab fa-apple"></i> iOS: Tap Share then 'Add to Home Screen'.<br><i class="fab fa-android"></i> Android: Tap Menu then 'Install App'.</p>
+                                <!-- Barcode Front Face -->
+                                <div class="drink-card-front">
+                                    <img src="${item.image}" alt="3D Barcode" style="width: 100%; border-radius: 0.5rem; object-fit: contain; max-height: 65%;">
+                                    <div class="text-center mt-2">
+                                        <h3 class="drink-card-title" style="color: ${item.titleColor};">${item.name}</h3>
+                                        <div class="card-footer text-xs">
+                                            <p class="mb-2">${item.cardHook}</p>
+                                            <p class="font-normal not-italic leading-tight text-gray-400"><strong class="text-gray-300">To Install for Full Screen:</strong><br><i class="fab fa-apple"></i> iOS: Tap Share then 'Add to Home Screen'.<br><i class="fab fa-android"></i> Android: Tap Menu then 'Install App'.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Table of Contents Back Face -->
+                                <div class="drink-card-back">
+                                    <div class="card-header-front" style="border-bottom: 2px double rgba(133, 77, 14, 0.5); padding-top: 1rem; padding-bottom: 0.5rem;">
+                                        <h3 class="drink-card-title" style="font-family: 'Cinzel', cursive; font-size: 1.75rem; color: #f59e0b;">The Full Deck</h3>
+                                    </div>
+                                    <div class="barcode-back-content">
+                                        ${listHtml}
+                                    </div>
+                                    <div class="card-footer-back" style="min-height: 40px; font-size: 0.8rem; font-style: italic; color: #8e8e93; border-top: 1px solid rgba(133, 77, 14, 0.5);">
+                                        Tap a name to jump to the card
                                     </div>
                                 </div>
                             </div>
@@ -1741,11 +1823,34 @@
                     toggleFavorite(cardName, favoriteButton.dataset.type, favoriteButton);
                     return;
                 }
+                
+                // ADDED: Handle Table of Contents clicks
+                const tocItem = e.target.closest('.toc-item');
+                if (tocItem) {
+                    e.stopPropagation(); // Stop the card from flipping back
+                    const cardName = tocItem.dataset.name;
+                    const cardToScroll = menuGrid.querySelector(`.drink-card[data-name="${cardName}"]`);
+                    if (cardToScroll) {
+                        // Flip the barcode card back to the front
+                        const barcodeCard = tocItem.closest('.drink-card');
+                        if (barcodeCard) {
+                            barcodeCard.classList.remove('is-flipped');
+                        }
+                        // Scroll to and highlight the selected card
+                        highlightAndScrollToCard(cardToScroll);
+                        // Ensure the highlighted card is showing the recipe
+                        cardToScroll.classList.remove('is-flipped');
+                        // Set global view to recipe
+                        setCardView(false); 
+                    }
+                    return; // Prevent card flip
+                }
 
                 const cardInner = e.target.closest('.drink-card-inner');
                  if (cardInner) {
                      const card = cardInner.closest('.drink-card');
-                     if(card && !card.dataset.isBarcode) {
+                     // MODIFIED: Allow barcode card to flip
+                     if(card) {
                          card.classList.toggle('is-flipped');
                      }
                  }
@@ -1876,7 +1981,8 @@
                     if (cards.length === 0) return;
                     const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
                     const activeIndex = cards.indexOf(activeCard);
-                    const targetIndex = Math.max(0, activeIndex - 1); /* MODIFIED: Was 8, now 1 */
+                    // MODIFIED: Changed from 1 to 8
+                    const targetIndex = Math.max(0, activeIndex - 8); 
                     if (activeIndex !== targetIndex) {
                         cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
@@ -1890,7 +1996,8 @@
                     if (cards.length === 0) return;
                     const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
                     const activeIndex = cards.indexOf(activeCard);
-                    const targetIndex = Math.min(cards.length - 1, activeIndex + 1); /* MODIFIED: Was 8, now 1 */
+                    // MODIFIED: Changed from 1 to 8
+                    const targetIndex = Math.min(cards.length - 1, activeIndex + 8); 
                     if (activeIndex !== targetIndex) {
                         cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                     }
