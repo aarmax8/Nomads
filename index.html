@@ -157,7 +157,8 @@
             padding: 0 0.5rem; /* Horizontal padding */
             box-sizing: border-box;
             
-            background-color: rgba(26, 26, 26, 0.7); /* Semi-transparent dark bg */
+            /* MODIFIED: Decreased opacity from 0.7 to 0.5 */
+            background-color: rgba(26, 26, 26, 0.5); /* Semi-transparent dark bg */
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -195,6 +196,14 @@
         }
         #action-bar #action-favorites-btn.is-active i {
             color: #f59e0b; /* Was #ef4444 */
+        }
+        
+        /* --- ADDED: Make top icons amber (except faves) --- */
+        #action-bar .footer-btn:not(#action-favorites-btn) {
+             color: #f59e0b; /* Amber text */
+        }
+        #action-bar .footer-btn:not(#action-favorites-btn) i {
+             color: #f59e0b; /* Amber icon */
         }
         /* --- End Action Bar Styles --- */
         
@@ -745,8 +754,8 @@
             
             /* --- UPDATED: VISIBLE Footer --- */
             /* This creates the iOS-style blurred menu bar */
-            /* MODIFIED: Decreased opacity from 0.8 to 0.7 for more transparency */
-            background-color: rgba(26, 26, 26, 0.7); /* Semi-transparent dark bg */
+            /* MODIFIED: Decreased opacity from 0.7 to 0.5 */
+            background-color: rgba(26, 26, 26, 0.5); /* Semi-transparent dark bg */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -776,6 +785,12 @@
             
             /* UPDATED: Removed background image */
             background-image: none;
+        }
+        
+        /* --- ADDED: Make motorcycle icons turquoise --- */
+        #app-footer #scroll-prev-btn i,
+        #app-footer #scroll-next-btn i {
+            color: #2dd4bf; /* Turquoise */
         }
         
         /* --- Splash Screen --- */
@@ -977,7 +992,7 @@
                 { name: "Blue Lagoon's Ghost", flavorProfile: "Tropical orange and sweet cherry flavors ride on a clean rum backbone.", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice", "Top with Club Soda"], story: "A rival biker fell into the quarry. All they found was his floating, pristine blue helmet. We drink this to honor the helmet. Not the guy, the helmet was cool.", 
                     image: "https://github.com/aarmax8/Nomads/blob/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg?raw=true", 
                     cardHook: "To the losers go the spoils." },
-                { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "Two chapter presidents showed up wearing the same 'one-of-a-kind' leather jacket. They settled the dispute by drinking until one passed out and the other stole his jacket. This is what they drank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/0ac5da1e71c995f58d75335fffabd844.jpg", cardHook: "The official drink of stubborn arguments." },
+                { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "Two chapter presidents showed up wearing the same 'one-of-a-kind' leather jacket. They settled the dispute by drinking until one passed out and the other stole his jacket. This is what they drank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/0ac5da1e71c99f58d75335fffabd844.jpg", cardHook: "The official drink of stubborn arguments." },
                 { name: "Brandy Crusta", flavorProfile: "A sophisticated classic where strong brandy is brightened by citrus, with sweet hints of cherry and spice.", recipe: ["2 oz E&J Brandy", "0.25 oz Blue Curacao", "0.5 oz Lemon Juice", "0.5 oz Simple Syrup", "1 teaspoon Maraschino Liqueur", "1 dash Angostura Bitters"], story: "This one's fancy. 'Crusta' means 'crust,' like the sugar rim it's supposed to have. We skip that part. We call it the Crusta because 'Crusty,' our oldest member, is the only one who orders it. It's old-school, complicated, and surprisingly strong... just like him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "A classic with a complex twist." },
                 { name: "Blacktop Sunset", flavorProfile: "Smooth Irish whiskey and sweet Southern Comfort are brightened by lime and spiced ginger.", recipe: ["1 oz Jameson Irish Whiskey", "1 oz Southern Comfort", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "This is the color of the bruise our prospect got after he mistook a puddle for a pothole and tried to 'bunny hop' it. The sunset that evening was almost as beautiful as his failure.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1f512d08cccf12ad8dc389d42f5fcceb.jpg", cardHook: "To the potholes you can't see." },
                 { name: "Elderflower Nomad", flavorProfile: "Delicate elderflower and botanical gin meet a hint of lavender and rosemary.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.5 oz Lime Juice", "2 dashes Rosemary Lavender Bitters", "Top with Club Soda in a tall glass"], story: "We sent 'Tiny' to get gin. He came back with this flowery stuff and said it would 'expand our horizons.' We expanded his list of chores instead. Turns out, the joke's on us. This stuff is good. Don't tell him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/64c7af61b8476938a0b6bc9e8462ef3f--motorcycle-posters-motorcycle-art.jpg", cardHook: "Even a nomad can be sophisticated." },
@@ -1895,10 +1910,4 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
 
