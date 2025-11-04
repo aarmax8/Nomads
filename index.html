@@ -663,8 +663,8 @@
             border: none;
             /* MODIFIED: iOS-style neutral gray */
             color: #8e8e93; 
-            /* MODIFIED: Reduced vertical padding to 0, horizontal padding to 0.25rem */
-            padding: 0 0.25rem; 
+            /* MODIFIED: Added 0.25rem (4px) of bottom padding */
+            padding: 0 0.25rem 0.25rem 0.25rem; 
             border-radius: 0.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -676,8 +676,8 @@
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons larger (was 1.0rem) */
-            font-size: 1.25rem; /* Icon size */
+            /* MODIFIED: Made icons larger (was 1.5rem) */
+            font-size: 1.8rem; /* Icon size */
             /* MODIFIED: Reduced margin-bottom (was 0.1rem) */
             margin-bottom: 0;
             /* MODIFIED: iOS-style neutral gray */
@@ -693,8 +693,8 @@
             transform: scale(1.1); /* Make it slightly larger */
         }
         #app-footer .footer-btn-middle i {
-            /* MODIFIED: Made middle icon larger (was 1.3rem) */
-            font-size: 1.6rem; /* Larger icon */
+            /* MODIFIED: Made middle icon larger (was 2rem) */
+            font-size: 2.2rem; /* Larger icon */
             /* Color is set by specific classes below */
         }
         
@@ -745,7 +745,8 @@
             
             /* --- UPDATED: VISIBLE Footer --- */
             /* This creates the iOS-style blurred menu bar */
-            background-color: rgba(26, 26, 26, 0.7); /* Semi-transparent dark bg */
+            /* MODIFIED: Decreased opacity from 0.95 to 0.8 for more transparency */
+            background-color: rgba(26, 26, 26, 0.8); /* Semi-transparent dark bg */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -753,7 +754,8 @@
             
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
-            align-items: center;
+            /* MODIFIED: Changed from 'center' to 'flex-end' to push icons to the bottom */
+            align-items: flex-end;
             
             /* ADDED: Center the footer bar to match the main content */
             width: 100%;
@@ -1893,6 +1895,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
