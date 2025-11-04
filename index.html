@@ -1277,7 +1277,8 @@
         
         // This is the updated, more reliable throttle function using timestamps
         let lastToggleTime = 0;
-        const THROTTLE_LIMIT = 750; // Milliseconds, slightly longer than the card flip animation (0.7s)
+        /* UPDATED: Increased throttle limit to 900ms for PWA stability */
+        const THROTTLE_LIMIT = 900; 
 
         function throttle(func, limit) {
              let inThrottle;
@@ -1489,7 +1490,7 @@
                 });
             }
             
-            // NOTE: The forced scroll restoration has been moved to throttledToggle for better control.
+            // NOTE: The forced scroll restoration is handled in throttledToggle
         }
 
         function applyAndRenderFilters() {
@@ -1529,7 +1530,8 @@
             setupLazyLoading(); 
             setCardView(isGlobalTarotView); 
             
-            setTimeout(updateActiveCard, 100); 
+            /* MODIFIED: Initial update to set active card on load */
+            updateActiveCard(); 
             updateFilterMenuButtonState(); 
         }
 
@@ -1610,8 +1612,33 @@
             if (closestCard) {
                 menuGrid.querySelectorAll('.drink-card.is-active').forEach(c => c.classList.remove('is-active'));
                 closestCard.classList.add('is-active');
+                return closestCard; // Return the card element
             }
+            return null;
         }
+
+        // --- NEW UTILITY FUNCTION: More direct way to find the active card ---
+        function getCurrentActiveCard() {
+            const cards = menuGrid.querySelectorAll('.drink-card');
+            const containerRect = menuGrid.getBoundingClientRect();
+            const containerCenter = containerRect.left + containerRect.width / 2;
+            let closestCard = null;
+            let minDistance = Infinity;
+
+            cards.forEach(card => {
+                const cardRect = card.getBoundingClientRect();
+                const cardCenter = cardRect.left + cardRect.width / 2;
+                const distance = Math.abs(containerCenter - cardCenter);
+
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestCard = card;
+                }
+            });
+            return closestCard;
+        }
+        // --- END NEW UTILITY FUNCTION ---
+
 
         function initializeBarStock() {
             const savedStockJSON = localStorage.getItem(STOCK_STORAGE_KEY);
@@ -2006,7 +2033,7 @@
                 scrollPrevBtn.addEventListener('click', () => {
                     const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
                     if (cards.length === 0) return;
-                    const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
+                    const activeCard = getCurrentActiveCard() || cards[0]; // Use helper function
                     const activeIndex = cards.indexOf(activeCard);
                     // MODIFIED: Changed from 1 to 8
                     const targetIndex = Math.max(0, activeIndex - 8); 
@@ -2021,7 +2048,7 @@
                 scrollNextBtn.addEventListener('click', () => {
                     const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
                     if (cards.length === 0) return;
-                    const activeCard = menuGrid.querySelector('.drink-card.is-active') || cards[0];
+                    const activeCard = getCurrentActiveCard() || cards[0]; // Use helper function
                     const activeIndex = cards.indexOf(activeCard);
                     // MODIFIED: Changed from 1 to 8
                     const targetIndex = Math.min(cards.length - 1, activeIndex + 8); 
@@ -2039,8 +2066,11 @@
                  if (isToggleThrottled) return;
 
                  // --- FIX STEP 1: Immediately identify and mark the currently viewed card ---
+                 const cardToRestore = getCurrentActiveCard(); // Use direct check, more robust
+                 if (!cardToRestore) return; // Safety check
+
+                 // Force the active state right before flip to ensure it's the target
                  updateActiveCard(); 
-                 const cardToRestore = menuGrid.querySelector('.drink-card.is-active'); // Save reference to the active card
                  
                  isToggleThrottled = true;
                  setCardView(!isGlobalTarotView);
