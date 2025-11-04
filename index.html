@@ -98,10 +98,12 @@
 
         #header-logo-image {
             width: 100%;
-            height: 100%;
+            /* MODIFIED: Make height cover padding area */
+            height: calc(150px + env(safe-area-inset-top));
             object-fit: fill; /* Stretches to fill the container */
             position: absolute;
-            top: 0;
+            /* MODIFIED: Pull image up to cover padding */
+            top: -env(safe-area-inset-top);
             left: 0;
             z-index: 1;
         }
@@ -1887,4 +1889,5 @@
     </script>
 </body>
 </html>
+
 
