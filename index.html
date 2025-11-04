@@ -409,8 +409,8 @@
             padding: 0 1.25rem;
             flex-grow: 0; 
             display: flex; flex-direction: column;
-            overflow-y: auto;
-            max-height: 50%; 
+            /* REMOVED: overflow-y: auto; */
+            /* REMOVED: max-height: 50%; */
             position: relative;
             z-index: 2;
         }
@@ -423,11 +423,22 @@
             line-height: 1.5;
             color: #e5e7eb; 
             text-shadow: 1px 1px 3px rgba(0,0,0,0.8); 
+
+            /* ADDED: Limit height to ~4.5 lines and make scrollable */
+            max-height: calc(1.15rem * 1.5 * 4.5); /* 4.5 lines to show it's scrollable */
+            overflow-y: auto;
+            padding-right: 0.5rem; /* Space for scrollbar */
         }
 
-        .card-back-content::-webkit-scrollbar { width: 4px; }
-        .card-back-content::-webkit-scrollbar-track { background: transparent; }
-        .card-back-content::-webkit-scrollbar-thumb { background-color: #854d0e; border-radius: 4px; }
+        /* REMOVED: This rule is no longer needed here */
+        /* .card-back-content::-webkit-scrollbar { width: 4px; } */
+        /* .card-back-content::-webkit-scrollbar-track { background: transparent; } */
+        /* .card-back-content::-webkit-scrollbar-thumb { background-color: #854d0e; border-radius: 4px; } */
+        
+        /* ADDED: Apply scrollbar styles to the story-text element */
+        .story-text::-webkit-scrollbar { width: 4px; }
+        .story-text::-webkit-scrollbar-track { background: transparent; }
+        .story-text::-webkit-scrollbar-thumb { background-color: #854d0e; border-radius: 4px; }
         
         .no-image .card-back-content {
             margin-top: 0;
@@ -1051,7 +1062,7 @@
                 { name: "Sex on the Beach", flavorProfile: "A classic, juicy blend of vodka, sweet peach, and tart cranberry and orange.", recipe: ["2 oz Ketel One Vodka", "1 oz Peach Schnapps", "2 oz Orange Juice", "2 oz Cranberry Juice", "Splash of Lemon Juice"], story: "This one's a classic for a reason. We 'appropriated' the recipe from a spring break bar in Florida after our prospect 'accidentally' knocked over their sign. Tastes like sunshine and bad decisions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8294.jpg", cardHook: "The beach, but with more booze." },
                 { name: "Junk Drawer", flavorProfile: "An unapologetically sweet concoction of raspberry, butterscotch, and classic root beer.", recipe: ["0.75 oz Raspberry Schnapps", "0.75 oz Butterscotch Schnapps", "0.75 oz Root Beer Schnapps", "Fill a tall glass with Club Soda"], story: "We told the new guy to make a drink with 'whatever's in the junk drawer.' He took us literally. Found these three dusty bottles behind some old spark plugs. We're as surprised as you are that it's drinkable.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/08030c3d25616df982816261406e2c08.png", cardHook: "Sometimes, genius comes from just mixing stuff." },
                 { name: "Blue Lagoon's Ghost", flavorProfile: "Tropical orange and sweet cherry flavors ride on a clean rum backbone.", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice", "Top with Club Soda"], story: "A rival biker fell into the quarry. All they found was his floating, pristine blue helmet. We drink this to honor the helmet. Not the guy, the helmet was cool.", 
-                    image: "https://github.com/aarmax8/Nomads/blob/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg?raw=true", 
+                    image: "https://github.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg?raw=true", 
                     cardHook: "To the losers go the spoils." },
                 { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "Two chapter presidents showed up wearing the same 'one-of-a-kind' leather jacket. They settled the dispute by drinking until one passed out and the other stole his jacket. This is what they drank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/0ac5da1e71c99f58d75335fffabd844.jpg", cardHook: "The official drink of stubborn arguments." },
                 { name: "Brandy Crusta", flavorProfile: "A sophisticated classic where strong brandy is brightened by citrus, with sweet hints of cherry and spice.", recipe: ["2 oz E&J Brandy", "0.25 oz Blue Curacao", "0.5 oz Lemon Juice", "0.5 oz Simple Syrup", "1 teaspoon Maraschino Liqueur", "1 dash Angostura Bitters"], story: "This one's fancy. 'Crusta' means 'crust,' like the sugar rim it's supposed to have. We skip that part. We call it the Crusta because 'Crusty,' our oldest member, is the only one who orders it. It's old-school, complicated, and surprisingly strong... just like him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "A classic with a complex twist." },
@@ -1071,7 +1082,7 @@
                     cardHook: "A vacation in a glass." },
                 { name: "Gin Rickey", flavorProfile: "A clean and bracing mix of botanical gin and sharp lime, mellowed by club soda.", recipe: ["2 oz Tanqueray Gin", "1 oz Lime Juice", "Fill a tall glass with Club Soda"], story: "Tastes like taking a mountain switchback too fast. It's sharp, it makes your stomach turn, and you feel a moment of pure, blinding panic. Then it's over and you feel like a hero. A stupid, stupid hero.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "For roads that go back and forth." },
                 { name: "Long Haul", flavorProfile: "Crisp gin and tonic gets a complex, herbal twist from rosemary and lavender.", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], story: "This drink is like a 10-hour ride through Nebraska. It starts out fine, then it gets weirdly complex, then it's just... a lot. By the end, you're not sure if you like it, but you respect its commitment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/608bdca2cf73d693c4e80d1723cd59b8.jpg", cardHook: "For when you're in it for the long haul." },
-                { name: "Whiskey Highball", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "We call it the Country and Western because after three of them, everyone thinks they can sing both parts of a Johnny Cash and June Carter duet. They can't. And it's always sad.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/62a04e5b236c0659fec180c5f76651953.jpg", cardHook: "Simple, honest, and a little bit sad." },
+                { name: "Whiskey Highball", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "We call it the Country and Western because after three of them, everyone thinks they can sing both parts of a Johnny Cash and June Carter duet. They can't. And it's always sad.", image: "https://github.com/aarmax8/Nomads/blob/5915ae46af9d547d456ba87aa624286b7aeb729a/aadesertwind.jpg?raw=true", cardHook: "Simple, honest, and a little bit sad." },
                 { name: "Rattlesnake", flavorProfile: "Earthy tequila gets a surprising bite from sweet cherry and sharp lime.", recipe: ["2 oz El Mayor Tequila", "0.5 oz Cherry Schnapps", "0.5 oz Lime Juice", "Top with Club Soda in a tall glass"], story: "Looks harmless, right? Sweet, even. That's what the rattlesnake we found in the ice machine thought. This drink has a bite that sneaks up on you, just like he did. We check the ice more carefully now.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6418051b93b83a2239400213863d22a1.jpg", cardHook: "Sweet, with a venomous bite." },
                 { name: "Paradise", flavorProfile: "A tropical and tangy blend where botanical gin and sweet apricot meet bright citrus.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz Apricot Brandy", "Fill a tall glass with Orange Juice", "0.5 oz Lemon Juice", "Cherry Garnish"], story: "We call this Paradise because it's what 'Wrench' drinks when he's dreaming of retiring to a beach somewhere. One sip and he's gone... still in the garage, but mentally he's on a beach. We let him have it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1bf52dfc1aad553db68333418c40d848.jpg", cardHook: "Your own personal oasis." },
                 { name: "Tequila Sunrise", flavorProfile: "Sweet and vibrant, this is a classic tequila sunrise with an extra bitter orange kick.", recipe: ["2 oz El Mayor Tequila", "Fill a tall glass with Orange Juice", "2 dashes Orange Bitters", "0.5 oz Grenadine"], story: "The only time you should see a desert sunrise is because you've been riding all night. This drink lets you skip the riding part and get straight to the 'seeing pretty colors while your brain feels like sand' part. It's more efficient.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "All the beauty, none of the early morning." },
@@ -2019,4 +2030,5 @@
     </script>
 </body>
 </html>
+
 
