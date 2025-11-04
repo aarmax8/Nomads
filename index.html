@@ -566,10 +566,17 @@
             transform: scale(1.03);
         }
 
-        /* ADDED: Rule to remove bottom margin from prev/next icons */
-        #scroll-prev-btn i,
+        /* UPDATED: Rule to change icons to motorcycles and adjust position */
+        #scroll-prev-btn i {
+            margin-bottom: 0;
+            transform: rotateY(180deg); /* Flip the motorcycle icon to face left */
+            position: relative; /* Allows slight adjustment */
+            left: 2px; /* Move slightly to the right to center visually */
+        }
         #scroll-next-btn i {
             margin-bottom: 0;
+            position: relative; /* Allows slight adjustment */
+            right: 2px; /* Move slightly to the left to center visually */
         }
 
         /* --- Modal Styles --- */
@@ -736,7 +743,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3); /* Shadow above the bar */
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
             
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
