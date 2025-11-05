@@ -2005,8 +2005,10 @@
                          // Force instant scroll restoration to the saved card
                          cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
                          
-                         // Re-enable scroll snapping
-                         menuGrid.style.scrollSnapType = 'x mandatory';
+                         // NESTED TIMEOUT FIX: Wait a beat for the scroll to settle before re-enabling snap
+                         setTimeout(() => {
+                             menuGrid.style.scrollSnapType = 'x mandatory';
+                         }, 50);
                      }
                  }, THROTTLE_LIMIT); 
             };
