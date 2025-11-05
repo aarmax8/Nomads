@@ -817,6 +817,16 @@
             background-color: rgba(0, 0, 0, 0.6);
             transform: scale(1.02);
         }
+        /* ADDED: Style for category headers in the TOC */
+        .toc-category-header {
+            font-family: 'Rye', serif;
+            font-size: 1.4rem;
+            color: #2dd4bf; /* Turquoise */
+            text-align: center;
+            padding: 0.5rem 0;
+            margin-top: 1rem;
+            border-bottom: 2px solid #2dd4bf;
+        }
         /* --- END NEW TOC STYLING --- */
         /* --- END Modal Panel Styling --- */
 
@@ -1023,7 +1033,7 @@
                 { name: "Long Island Iced Tea", flavorProfile: "A potent and deceptive blend of five different spirits with a sour, cola finish.", recipe: ["0.5 oz Grey Goose Vodka", "0.5 oz Tanqueray Gin", "0.5 oz Bacardi Rum", "0.5 oz Jose Cuervo Silver Tequila", "0.5 oz Triple Sec", "1 oz Lemon Juice", "Fill a tall glass with Cola"], story: "This isn't a drink, it's a dare. It's a mix of everything that will get you into trouble, served in a glass. The only 'tea' involved is the 'T-rouble' you'll be in tomorrow.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/ed9d1453cc5561fb3049f8f6d3a7e145.jpg", cardHook: "A beautiful, delicious lie." },
                 { name: "Sazerac", flavorProfile: "A potent, licorice-forward cocktail with the sweetness of Southern Comfort and a classic bitter finish.", recipe: ["2 oz Southern Comfort", "1 teaspoon Pernod", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters"], story: "Our president spent a week in New Orleans and came back with a 'spiritual awakening' and this recipe. The awakening wore off, but the Sazerac stuck around. It's complex, a little dangerous, and demands respect.", image: "httpss://github.com/aarmax8/Nomads/blob/3cdd71f09194cbf21b99337a4fc180c7d71380e5/thumbnail_IMG_8298.jpg?raw=true", cardHook: "Respect the Big Easy." },
                 /* --- FIX: Corrected image path typo --- */
-                { name: "Phantom Shift", flavorProfile: "Sharp anise and botanical gin create a crisp, clean flavor with a bitter, tonic finish.", recipe: ["1oz Pernod", "1 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass"], story: "Tastes like licorice and regret. Named for the 'phantom' expenses that keep appearing on the club's credit card. We know who's doing it. And their time is short.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/f2a6114d2d00087a3f9192fc5cc74614.jpg", cardHook: "For the gears that aren't there." },
+                { name: "Phantom Shift", flavorProfile: "Sharp anise and botanical gin create a crisp, clean flavor with a bitter, tonic finish.", recipe: ["1oz Pernod", "1 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass"], story: "Tastes like licorice and regret. Named for the 'phantom' expenses that keep appearing on the club's credit card. We know who's doing it. And their time is short.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/f2a61114d2d00087a3f9192fc5cc74614.jpg", cardHook: "For the gears that aren't there." },
                 /* --- FIX: Corrected image path typo --- */
                 { name: "Morning Haze", flavorProfile: "A bright and sharp mix of botanical gin and tropical pineapple juice.", recipe: ["2 oz Tanqueray Gin", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "For when you wake up and the world is a blurry, confusing mess. This drink is also a blurry, confusing mess, but it's a delicious one. It helps you ease into your hangover.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1268185178_a000.webp", cardHook: "A helpful lie for a hazy morning." },
                 /* --- FIX: Corrected image path typo --- */
@@ -1087,29 +1097,51 @@
                 if (categories.size === 0) categories.add('Lunch'); 
 
                 let titleColor = '#f59e0b';
+                let primarySpirit = 'Other';
+
+                // --- NEW: Determine Primary Spirit ---
                 const spiritOrder = ['Whiskey & Bourbon', 'Vodka', 'Gin', 'Rum', 'Tequila', 'Brandy'];
                 const liqueurOrder = ['Fruit', 'Herbal & Spiced', 'Cream, Nut & Coffee', 'Other Schnapps'];
+                
                 let mainIngredient = null;
 
+                // 1. Check Spirits
                 for (const spiritType of spiritOrder) {
                     const spirits = ingredientCategories.Spirits[spiritType];
                     const foundSpirit = cocktail.recipe.map(parseIngredientName).find(ing => ing && spirits.includes(ing));
-                    if (foundSpirit) { mainIngredient = foundSpirit; break; }
-                }
-                if (!mainIngredient) {
-                    for (const liqueurType of liqueurOrder) {
-                        const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType]; 
-                        const foundLiqueur = cocktail.recipe.map(parseIngredientName).find(ing => ing && liqueurs.includes(ing));
-                        if (foundLiqueur) { mainIngredient = foundLiqueur; break; }
+                    if (foundSpirit) {
+                        mainIngredient = foundSpirit;
+                        primarySpirit = spiritType;
+                        break;
                     }
                 }
-                if (!mainIngredient && cocktail.recipe.length > 0) {
-                     mainIngredient = parseIngredientName(cocktail.recipe[0]);
+                
+                // 2. Check Liqueurs if no primary spirit found
+                if (!mainIngredient) {
+                    let hasLiqueur = false;
+                    for (const liqueurType of Object.keys(ingredientCategories['Liqueurs & Schnapps'])) {
+                         const liqueurs = ingredientCategories['Liqueurs & Schnapps'][liqueurType];
+                         const foundLiqueur = cocktail.recipe.map(parseIngredientName).find(ing => ing && liqueurs.includes(ing));
+                         if (foundLiqueur) {
+                            hasLiqueur = true;
+                            primarySpirit = 'Liqueur/Schnapps'; // Generic Liqueur category
+                            break;
+                         }
+                    }
+                    if (!hasLiqueur) {
+                        primarySpirit = 'Other'; // Fallback for Shirley Temple etc.
+                    }
+                    
+                    if (primarySpirit === 'Other' && cocktail.recipe.length > 0) {
+                         mainIngredient = parseIngredientName(cocktail.recipe[0]);
+                    }
                 }
+                // --- END NEW: Determine Primary Spirit ---
+
 
                 if (mainIngredient) titleColor = getIngredientInfo(mainIngredient).colorHex;
 
-                return { ...cocktail, category: Array.from(categories), titleColor };
+                return { ...cocktail, category: Array.from(categories), titleColor, primarySpirit };
             });
 
             cocktails = processedCocktails;
@@ -1123,7 +1155,8 @@
                 flavorProfile: "A gateway to the digital road.",
                 cardHook: "Point your camera here.",
                 category: [],
-                titleColor: '#f59e0b'
+                titleColor: '#f59e0b',
+                primarySpirit: 'Barcode'
             };
             cocktails.unshift(barcodeCard);
         }
@@ -1267,24 +1300,48 @@
             itemsToRender.forEach((item, index) => {
                 if (item.isBarcode) {
                     
-                    // ADDED: Generate the Table of Contents HTML
-                    // We must iterate over the full, sorted cocktail list to get the correct indices and fonts.
+                    // --- NEW: Generate TOC grouped by Spirit ---
                     const nonBarcodeCocktails = cocktails.filter(c => !c.isBarcode);
+                    
+                    // 1. Group cocktails by primary spirit
+                    const spiritGroups = {};
+                    nonBarcodeCocktails.forEach(drink => {
+                        if (!spiritGroups[drink.primarySpirit]) {
+                            spiritGroups[drink.primarySpirit] = [];
+                        }
+                        spiritGroups[drink.primarySpirit].push(drink);
+                    });
 
-                    const listHtml = nonBarcodeCocktails.map((drink) => {
-                        // Find the original index of the drink in the 'cocktails' array
-                        const originalIndex = cocktails.findIndex(c => c.name === drink.name); 
-                        // Use the original index (which includes the barcode at 0) to get the correct font
-                        const tocFont = titleFonts[originalIndex % titleFonts.length];
-                        
-                        return `<div class="toc-item" 
-                                    data-name="${drink.name}" 
-                                    style="color: ${drink.titleColor}; 
-                                           border-color: ${drink.titleColor}80;
-                                           font-family: '${tocFont}', sans-serif;">
-                                    ${drink.name}
-                                </div>`;
-                    }).join('');
+                    // 2. Define display order (grouping "Other" and "Liqueur" near the end)
+                    const displayOrder = ['Whiskey & Bourbon', 'Vodka', 'Gin', 'Rum', 'Tequila', 'Brandy', 'Liqueur/Schnapps', 'Other'];
+                    
+                    let listHtml = '';
+                    
+                    displayOrder.forEach(spiritCategory => {
+                        const drinksInGroup = spiritGroups[spiritCategory];
+                        if (drinksInGroup && drinksInGroup.length > 0) {
+                            listHtml += `<div class="toc-category-header">${spiritCategory}</div>`;
+                            
+                            // Sort drinks alphabetically within the group
+                            drinksInGroup.sort((a, b) => a.name.localeCompare(b.name));
+                            
+                            drinksInGroup.forEach(drink => {
+                                // Find the original index of the drink in the 'cocktails' array
+                                const originalIndex = cocktails.findIndex(c => c.name === drink.name); 
+                                // Use the original index (which includes the barcode at 0) to get the correct font
+                                const tocFont = titleFonts[originalIndex % titleFonts.length];
+                                
+                                listHtml += `<div class="toc-item" 
+                                             data-name="${drink.name}" 
+                                             style="color: ${drink.titleColor}; 
+                                                    border-color: ${drink.titleColor}80;
+                                                    font-family: '${tocFont}', sans-serif;">
+                                             ${drink.name}
+                                         </div>`;
+                            });
+                        }
+                    });
+                    // --- END NEW: Generate TOC grouped by Spirit ---
 
 
                     // MODIFIED: This is now a flippable card
