@@ -806,7 +806,6 @@
             background: rgba(0, 0, 0, 0.4); /* Dark background for separation */
             cursor: pointer;
             text-align: center;
-            font-family: 'Cinzel', serif;
             font-size: 1.1rem; /* Slightly larger font */
             font-weight: 700;
             line-height: 1.2;
@@ -1269,9 +1268,23 @@
                 if (item.isBarcode) {
                     
                     // ADDED: Generate the Table of Contents HTML
-                    // MODIFIED: Use titleColor for the list items
-                    const allDrinkNames = cocktails.filter(c => !c.isBarcode).map(c => ({name: c.name, color: c.titleColor}));
-                    const listHtml = allDrinkNames.map(drink => `<div class="toc-item" data-name="${drink.name}" style="color: ${drink.color}; border-color: ${drink.color}80;">${drink.name}</div>`).join('');
+                    // We must iterate over the full, sorted cocktail list to get the correct indices and fonts.
+                    const nonBarcodeCocktails = cocktails.filter(c => !c.isBarcode);
+
+                    const listHtml = nonBarcodeCocktails.map((drink) => {
+                        // Find the original index of the drink in the 'cocktails' array
+                        const originalIndex = cocktails.findIndex(c => c.name === drink.name); 
+                        // Use the original index (which includes the barcode at 0) to get the correct font
+                        const tocFont = titleFonts[originalIndex % titleFonts.length];
+                        
+                        return `<div class="toc-item" 
+                                    data-name="${drink.name}" 
+                                    style="color: ${drink.titleColor}; 
+                                           border-color: ${drink.titleColor}80;
+                                           font-family: '${tocFont}', sans-serif;">
+                                    ${drink.name}
+                                </div>`;
+                    }).join('');
 
 
                     // MODIFIED: This is now a flippable card
