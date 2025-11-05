@@ -1991,27 +1991,22 @@
                  const cardToRestore = getCurrentActiveCard(); 
                  if (!cardToRestore) return; 
 
-                 // 1. Get the current scroll offset BEFORE the flip
-                 const scrollX = menuGrid.scrollLeft;
-
-                 // 2. CRITICAL FIX: Disable scroll snapping during the flip to prevent reset
+                 // 1. CRITICAL: Identify and disable scroll snapping immediately
                  menuGrid.style.scrollSnapType = 'none';
                  
                  isToggleThrottled = true;
                  setCardView(!isGlobalTarotView);
 
-                 // 3. Restore scroll position IMMEDIATELY
-                 menuGrid.scrollLeft = scrollX;
+                 // 2. Restore position INSTANTANEOUSLY by element, which is much more reliable 
+                 // than raw scrollLeft in layout-shifting situations.
+                 cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
                  
-                 // 4. Re-enable throttling and snapping after the animation (700ms) has settled.
+                 // 3. Re-enable snap after a tiny delay (50ms)
                  setTimeout(() => {
                      isToggleThrottled = false;
-                     // Crucial: Restore scroll position one last time in case the flip caused a micro-jump
-                     menuGrid.scrollLeft = scrollX;
-
                      // Re-enable scroll snapping
                      menuGrid.style.scrollSnapType = 'x mandatory';
-                 }, 750); 
+                 }, 50); 
             };
             
             if (toggleViewBtnMain) {
