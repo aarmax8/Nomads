@@ -874,7 +874,8 @@
         <!-- Main application footer (Now for navigation only) -->
         <div id="app-footer">
             <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
-                <i class="fas fa-motorcycle"></i> <!-- UPDATED ICON -->
+                <!-- FIX: Added fa-flip-horizontal to make it face left -->
+                <i class="fas fa-motorcycle fa-flip-horizontal"></i> 
                 <!-- REMOVED: <span class="text-xs">Prev</span> -->
             </button>
             
@@ -1987,30 +1988,30 @@
             const throttledToggle = () => {
                  if (isToggleThrottled) return;
 
-                 // --- FIX STEP 1: Identify and temporarily disable scroll snap ---
                  const cardToRestore = getCurrentActiveCard(); 
                  if (!cardToRestore) return; 
 
-                 // CRITICAL FIX: Disable scroll snapping during the flip to prevent reset
+                 // 1. Get the current scroll offset BEFORE the flip
+                 const scrollX = menuGrid.scrollLeft;
+
+                 // 2. CRITICAL FIX: Disable scroll snapping during the flip to prevent reset
                  menuGrid.style.scrollSnapType = 'none';
                  
                  isToggleThrottled = true;
                  setCardView(!isGlobalTarotView);
 
-                 // Clear the throttle state *and* force scroll restoration
+                 // 3. Restore scroll position IMMEDIATELY
+                 menuGrid.scrollLeft = scrollX;
+                 
+                 // 4. Re-enable throttling and snapping after the animation (700ms) has settled.
                  setTimeout(() => {
                      isToggleThrottled = false;
-                     
-                     if (cardToRestore) {
-                         // Force instant scroll restoration to the saved card
-                         cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
-                         
-                         // NESTED TIMEOUT FIX: Wait a beat for the scroll to settle before re-enabling snap
-                         setTimeout(() => {
-                             menuGrid.style.scrollSnapType = 'x mandatory';
-                         }, 50);
-                     }
-                 }, THROTTLE_LIMIT); 
+                     // Crucial: Restore scroll position one last time in case the flip caused a micro-jump
+                     menuGrid.scrollLeft = scrollX;
+
+                     // Re-enable scroll snapping
+                     menuGrid.style.scrollSnapType = 'x mandatory';
+                 }, 750); 
             };
             
             if (toggleViewBtnMain) {
