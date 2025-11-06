@@ -562,7 +562,7 @@
             border: none;
             /* MODIFIED: iOS-style neutral gray */
             color: #8e8e93; 
-            /* MODIFIED: Removed 0.25rem (4px) of bottom padding */
+            /* MODIFIED: Removed all vertical padding to minimize bar height */
             padding: 0 0.25rem 0 0.25rem; 
             border-radius: 0.5rem;
             cursor: pointer;
@@ -575,8 +575,8 @@
             line-height: 1.2;
         }
         .footer-btn i {
-            /* MODIFIED: Made icons larger (was 1.5rem) */
-            font-size: 1.8rem; /* Icon size */
+            /* MODIFIED: Set to standard icon size */
+            font-size: 1.8rem; 
             /* MODIFIED: Reduced margin-bottom (was 0.1rem) */
             margin-bottom: 0;
             /* MODIFIED: iOS-style neutral gray */
@@ -593,13 +593,13 @@
             transform: none; 
             /* REMOVED: negative margin to pull it down */
             margin-bottom: 0; 
-            /* REMOVED: Pushed the content up a bit to feel centered in the lower area */
+            /* REMOVED: All vertical padding to match .footer-btn */
             padding-bottom: 0; 
             padding-top: 0;
             
         }
         #app-footer .footer-btn-middle i {
-            /* MODIFIED: Set to match side buttons */
+            /* MODIFIED: Set to standard icon size */
             font-size: 1.8rem; 
         }
         
@@ -640,7 +640,7 @@
 
         /* --- Footer --- */
         #app-footer {
-            /* MODIFIED: Reduced top padding (was 0.25rem) */
+            /* MODIFIED: Removed vertical padding */
             padding: 0 0;
             /* MODIFIED: Set explicit height. The padding-bottom will push content up from the notch. */
             height: calc(50px + env(safe-area-inset-bottom));
@@ -659,7 +659,7 @@
             
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
-            /* MODIFIED: Changed from 'center' to 'flex-end' to align items lower */
+            /* MODIFIED: Set to flex-end to push content down and maximize vertical space efficiency */
             align-items: flex-end; 
             
             /* ADDED: Center the footer bar to match the main content */
@@ -833,6 +833,16 @@
         .drink-card[data-name="Morning Haze"] .drink-card-back {
             /* Overrides the third background-position (the image) to 'right' */
             background-position: center, center, right;
+        }
+        
+        /* --- NEW: Left Image Focus --- */
+        .drink-card[data-name="Kraken's Grip"] .drink-card-back,
+        .drink-card[data-name="Mamie Taylor"] .drink-card-back,
+        .drink-card[data-name="Rusty Blade"] .drink-card-back,
+        .drink-card[data-name="Spiced Rum Buck"] .drink-card-back,
+        .drink-card[data-name="Whiskey Highball"] .drink-card-back {
+            /* Sets the third position (the image) to left */
+            background-position: center, center, left;
         }
 
     </style>
