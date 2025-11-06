@@ -305,7 +305,7 @@
 
         /* === CARD FRONT === */
         .drink-card-front {
-            background-image: linear-gradient(145deg, rgba(42, 10, 10, 0.8) 0%, rgba(28, 7, 7, 0.8) 100%), url('https://github.com/aarmax8/Nomads/blob/639ee0ed0a332926ddf78c332e7c114a32af99ab/leather%20background.jpg?raw=true');
+            background-image: linear-gradient(145deg, rgba(42, 10, 10, 0.8) 0%, rgba(28, 7, 7, 0.8) 100%), url('https://raw.githubusercontent.com/aarmax8/Nomads/639ee0ed0a332926ddf78c332e7c114a32af99ab/leather%20background.jpg?raw=true');
             background-size: cover;
             background-position: center;
             box-shadow: none;
@@ -374,13 +374,12 @@
             padding: 0.375rem 1.5rem; 
             font-family: 'Cinzel', serif;
             letter-spacing: 0.03em; 
-            flex-shrink: 0;
+            font-style: normal; 
             background: transparent; 
             border-top: 1px solid rgba(255, 255, 255, 0.1); 
-            font-style: normal; 
         }
         
-        /* === END CARD FRONT === */
+        /* === CARD FRONT === */
 
 
         /* --- Story Card Back --- */
@@ -957,303 +956,98 @@
         let favoriteDrinks = [];
         
         function setupCocktailData() {
-
             const initialCocktails = [
-                // 0: Barcode - Placeholder, will be replaced by barcode object later
-                { name: "Placeholder", recipe: [], isBarcode: true, story: "", flavorProfile: "" },
-
-                // 1: Redheaded Trouble - KEEP
-                { name: "Redheaded Trouble", flavorProfile: "A rebellious blend where dark, herbal notes meet sweet peach, finished with a bright citrus kick.", recipe: ["1 oz Jägermeister", "1 oz Peach Schnapps", "Fill a tall glass with Cranberry Juice"], story: "This is named in honor of the bar fight started by a guy who told our baldest member he liked his 'fiery red hair.' Turns out it was a wig he was sensitive about. The ensuing chaos was beautiful.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8296.jpg", cardHook: "Some ghosts just want to party.", category: ['Brunch', 'Dinner'], titleColor: '#4ade80', primarySpirit: 'Vodka' },
-                
-                // 2: Caramel Apple Cruiser - KEPT/UPDATED PREVIOUSLY
-                { name: "Caramel Apple Cruiser", flavorProfile: "Sweet butterscotch collides with the sharp tang of green apple, balanced by a whisper of spice.", recipe: ["1.5 oz Butterscotch Schnapps", "1.5 oz Apple Pucker", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "Our prospect, Pip, tried to make 'fancy autumn cocktails.' He tripped, dumped a bag of apples and a bottle of butterscotch into a vat of ginger ale. We were about to kick him out, but then we tasted it.", image: "https://github.com/aarmax8/Nomads/blob/ee2148843066eb1cac189de9a02fd80cea868d3b/mannart4.jpg?raw=true", cardHook: "The taste of a glorious failure.", category: ['Dinner', 'Desert'], titleColor: '#c084fc', primarySpirit: 'Liqueur/Schnapps' },
-                
-                // 3: UPDATED: Alchemist's Brew changed to Negroni (Confirmed Final State)
-                { 
-                    name: "Negroni", 
-                    flavorProfile: "A perfect, bittersweet balance of botanical gin, herbal Campari, and sweet vermouth.", 
-                    recipe: ["2 oz Campari", "2 oz Tanqueray Gin", "2 oz Sweet Vermouth"], 
-                    story: "This isn't one of ours. It's an import. We 'borrowed' the recipe from a fancy Italian bar after our President complemented the bartender's jacket... and then 'traded' him for it. It's bitter, it's strong, and it's all class. Or at least, we tell ourselves that.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8033.jpg", // Unique image restored
-                    cardHook: "Bitter, sweet, and perfectly balanced.", 
-                    category: ['Lunch', 'Dinner'], titleColor: '#4ade80', primarySpirit: 'Gin' 
-                },
-                
-                // 4: Mechanic - KEEP
-                { name: "Mechanic", flavorProfile: "A sharp, herbal Jäger base brightened by tart apple and a spicy, citrus kick from ginger and lime.", recipe: ["1.5 oz Jägermeister", "0.5 oz Apple Pucker", "Fill a tall glass with Ginger Soda", "Splash of Lime Juice"], story: "Sal, our mechanic, calls this 'motivation.' He says the color reminds him of brand new antifreeze, which is the only thing that gets him excited. We're worried about Sal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1268185178_a000.webp", cardHook: "Tastes better than degreaser. Probably.", category: ['Dinner'], titleColor: '#c084fc', primarySpirit: 'Liqueur/Schnapps' },
-                
-                // 5: Redline Riot (Updated recipe) - KEEP
-                { name: "Redline Riot", flavorProfile: "Sweet cherry and sharp sweet and sour mix create a vibrant, rebellious flavor.", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sweet and Sour Mix", "Splash of Lime Juice"], "image": "https://github.com/aarmax8/Nomads/blob/main/thumbnail_IMG_8306.jpg?raw=true", "story": "A tribute to the time we tried to see if a cherry-red '78 Sportster could actually hit the redline in first gear without exploding. It could not. This drink is less expensive to clean up.", "cardHook": "Here's to things we can't talk about.", category: ['Brunch', 'Lunch'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 6: Spiced Rum Buck - KEEP
-                { name: "Spiced Rum Buck", flavorProfile: "Warm spiced rum gets a sharp, clean kick from lime and ginger.", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "This drink has all the stages of trying to kickstart a stubborn old Panhead: spicy anger, a sharp kick of frustration, and sweet relief when it roars to life. All that, without the risk of a torn ACL.", image: "https://github.com/aarmax8/Nomads/blob/0dcbab77d90f59f2298642338dfee691353ce70a/frontend/USq6nI.jpg?raw=true", cardHook: "A more reliable way to get started.", category: ['Lunch', 'Dinner'], titleColor: '#f59e0b', primarySpirit: 'Rum' },
-                
-                // 7: Shirley Temple - KEEP
-                { name: "Shirley Temple", flavorProfile: "The classic sweet and spicy ginger soda, kissed with a touch of cherry.", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry on Top"], story: "Our biggest, meanest member, Crusher, orders this. Not for his kid. For himself. He says it 'calms his inner rage.' You WILL NOT make fun of him. You WILL tell him it's a very manly drink. Your safety depends on it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7989.jpg", cardHook: "The toughest drink in the bar.", category: ['Dinner'], titleColor: '#9ca3af', primarySpirit: 'Other' }, 
-                
-                // 8: Dark 'n' Stormy - KEEP
-                { name: "Dark 'n' Stormy", flavorProfile: "Deep, dark spiced rum with a bite of lime and a spicy ginger finish.", recipe: ["2 oz Kraken Black Spiced Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "We dared our prospect to ride through a tornado warning. He came back an hour later, clothes torn, hair standing on end, and holding a bottle of Kraken he 'found.' This drink is our best guess as to what happened.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/19071808632f94b0b81d595f74f700f0.jpg", cardHook: "To making bad weather worse.", category: ['Dinner'], titleColor: '#f59e0b', primarySpirit: 'Rum' },
-                
-                // 9: Kraken's Grip - KEEP
-                { name: "Kraken's Grip", flavorProfile: "Dark rum and sweet almond create a rich, cola-based concoction.", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], story: "After two of these, you'll have a death grip on the bar and the questionable belief that you can arm-wrestle a sea monster. You can't. Ask Fingers, he's got the scars to prove it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/555331b7961b7c0880f3b2842529bcd8.jpg", cardHook: "It'll get a hold on you.", category: ['Dinner'], titleColor: '#f59e0b', primarySpirit: 'Rum' },
-                
-                // 10: Statesman - UPDATED IMAGE
-                { name: "Statesman", flavorProfile: "A sharp, spirited, and surprisingly complex mix of rye, citrus, and herbal notes.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice"], story: "This is 'The Old Man's' drink. He sits in the back, drinks exactly one of these at 7 PM, and leaves. Says it's 'diplomatic.' We think it just reminds him of a time when deals were made with a handshake, not a text.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/71f80d842e362733e8b2f22ea02e7b1fc732f0a9/mannart18.jpg?raw=true", cardHook: "Drink like you own the place.", category: ['Brunch'], titleColor: '#d8b4fe', primarySpirit: 'Brandy' },
-                
-                // 11: Island Hopper - KEEP
-                { name: "Island Hopper", flavorProfile: "A sweet, tropical escape with creamy coconut and bright pineapple.", recipe: ["1 oz Malibu Rum", "1 oz Bacardi Rum", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "This is for the guy who wears a Hawaiian shirt under his leather cut. He talks about riding to the keys, but we all know he's just going to the tourist trap on the pier. We humor him.", image: "https://github.com/aarmax8/Nomads/blob/e7b78721b45c1417e839ceb2df4a358144244771/mannart1.jpg?raw=true", cardHook: "A vacation in a glass.", category: ['Brunch'], titleColor: '#f59e0b', primarySpirit: 'Rum' },
-                
-                // 12: Gin Rickey - KEEP
-                { name: "Gin Rickey", flavorProfile: "A clean and bracing mix of botanical gin and sharp lime, mellowed by club soda.", recipe: ["2 oz Tanqueray Gin", "1 oz Lime Juice", "Fill a tall glass with Club Soda"], story: "Tastes like taking a mountain switchback too fast. It's sharp, it makes your stomach turn, and you feel a moment of pure, blinding panic. Then it's over and you feel like a hero. A stupid, stupid hero.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "For roads that go back and forth.", category: ['Lunch'], titleColor: '#4ade80', primarySpirit: 'Gin' },
-                
-                // 13: Long Haul - KEEP
-                { name: "Long Haul", flavorProfile: "Crisp gin and tonic gets a complex, herbal twist from rosemary and lavender.", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], story: "This drink is like a 10-hour ride through Nebraska. It starts out fine, then it gets weirdly complex, then it's just... a lot. By the end, you're not sure if you like it, but you respect its commitment.", image: "https://github.com/aarmax8/Nomads/blob/cd94ee724b96582e3ef3f50a663b43038b8d2c77/mannart15.jpg?raw=true", cardHook: "For when you're in it for the long haul.", category: ['Lunch'], titleColor: '#4ade80', primarySpirit: 'Gin' },
-                
-                // 14: Whiskey Highball - KEEP
-                { name: "Whiskey Highball", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "We call it the Country and Western because after three of them, everyone thinks they can sing both parts of a Johnny Cash and June Carter duet. They can't. And it's always sad.", image: "https://github.com/aarmax8/Nomads/blob/5915ae46af9d547d456ba87aa624286b7aeb729a/aadesertwind.jpg?raw=true", cardHook: "Simple, honest, and a little bit sad.", category: ['Lunch'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 15: Aperol Spritz (Updated recipe, confirmed final state)
-                { 
-                    name: "Aperol Spritz", 
-                    flavorProfile: "A bright, bubbly, and refreshing spritz with a bittersweet orange glow.", 
-                    recipe: ["1.5 oz Aperol", "2 oz Prosecco", "Splash of Club Soda", "2 dashes Orange Bitters"], 
-                    story: "This is what you drink when you want to feel fancy, even if you're sitting on a rusty oil drum. It's bubbly, it's bright orange, and it's deceptively easy to drink. The official drink of 'just one more.' Famous last words.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8034.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "The quintessential summer sipper.", 
-                    category: ['Lunch'], titleColor: '#c084fc', primarySpirit: 'Liqueur/Schnapps' 
-                },
-                
-                // 16: Paradise - KEEP
-                { name: "Paradise", flavorProfile: "A sweet, fruity, and vibrant gin cocktail with a brandy kick. Tastes like a vacation.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz Apricot Brandy", "Fill with Orange Juice", "0.5 oz Lemon Juice", "Cherry on Top"], story: "This is 'Tiny's' favorite. He's 6'8\", 300 lbs, and rides a bike that sounds like a dragon clearing its throat. He says this drink 'tastes like sunshine and not getting into fights.' We don't argue.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1bf52dfc1aad553db68333418c40d848.jpg", cardHook: "A vacation in a glass.", category: ['Brunch'], titleColor: '#d8b4fe', primarySpirit: 'Brandy' },
-                
-                // 17: Tequila Sunrise - KEEP (was not replaced by high noon)
-                { name: "Tequila Sunrise", flavorProfile: "Sweet and vibrant, this is a classic tequila sunrise with an extra bitter orange kick.", recipe: ["2 oz El Mayor Tequila", "Fill a tall glass with Orange Juice", "2 dashes Orange Bitters", "0.5 oz Grenadine"], story: "The only time you should see a desert sunrise is because you've been riding all night. This drink lets you skip the riding part and get straight to the 'seeing pretty colors while your brain feels like sand' part. It's more efficient.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "All the beauty, none of the early morning.", category: ['Brunch'], titleColor: '#fbbf24', primarySpirit: 'Tequila' },
-                
-                // 18: Gilded Serpent - KEEP
-                { name: "Gilded Serpent", flavorProfile: "A luxurious mix of floral elderflower, bright pineapple, and smooth tequila.", recipe: ["1.5 oz El Mayor Tequila", "0.75 oz St-Germain", "1 oz Pineapple Juice", "0.5 oz Lime Juice"], story: "Looks fancy. Tastes fancy. But it's still tequila. It's like putting a tuxedo on a snake. It might look respectable for a minute, but you know it's gonna bite you eventually.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/67bab4c8460e76ee5bd5fe757150ef26--bike-art-motorcycle-art.jpg", cardHook: "Fancy on the outside, dangerous on the inside.", category: ['Brunch'], titleColor: '#fbbf24', primarySpirit: 'Tequila' },
-                
-                // 19: Drambuie & Ginger - KEEP
-                { name: "Drambuie & Ginger", flavorProfile: "The sweet, herbal notes of Drambuie are lifted by the crisp, spicy kick of ginger soda, creating a refreshing and enduring companion for any journey.", recipe: ["2 oz Drambuie", "Fill a tall glass with Ginger Soda", "Splash of Lime Juice"], story: "You know that last mile before you get home? When your back aches, your ears are ringing, and you'd sell a kidney for a hot shower? This is that feeling in a glass. Pure, unadulterated relief.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/69070319cd6333061bdbb34ed7dee0c1.jpg", cardHook: "For the last mile of a heavy journey.", category: ['Dinner'], titleColor: '#c084fc', primarySpirit: 'Liqueur/Schnapps' },
-                
-                // 20: Switchblade - KEEP
-                { name: "Switchblade", flavorProfile: "Intensely sour lemon is balanced by a clean vodka finish.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Lemon Juice", "0.75 oz Simple Syrup"], story: "It's small, sharp, and will end your night if you're not careful. Named in honor of our shortest member, 'Stubbs,' who is all of those things. He thinks it's a compliment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6a73cec9f46d798d4ba58ec29f5623f2.jpg", cardHook: "Respect the lemon.", category: ['Brunch', 'Lunch'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 21: Old Fashioned - KEEP
-                { name: "Old Fashioned", flavorProfile: "The original. A perfect, spirit-forward balance of strong whiskey, subtle sweetness, and aromatic bitters.", recipe: ["2 oz Bulleit Bourbon", "1 Sugar Cube (or 0.25 oz Simple Syrup)", "2 dashes Angostura Bitters", "Splash of Club Soda"], story: "This isn't just a drink, it's a history lesson. It's what your grandpa drank. It's what his grandpa drank. It's simple, it's strong, and it doesn't need a fancy name or a tiny umbrella. Respect it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8005.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "Respect the original.", category: ['Lunch'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 22: Road Rash - KEEP
-                { name: "Road Rash", flavorProfile: "Sweet and sour collide in this blend of fruity sloe gin and smooth Southern Comfort.", recipe: ["1oz Sloe Gin", "1 oz Southern Comfort", "0.5 oz Lemon Juice", "Fill a tall glass with Club Soda"], story: "It's red, it stings, and it's a story you'll tell for years. The drink, not the injury. The injury justgets you a lame scar and a lecture from Doc.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/David-Mann-Art-2.jpg", cardHook: "Much better than the real thing.", category: ['Brunch', 'Lunch'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 23: Poinsettia (Updated recipe, confirmed final state)
-                { 
-                    name: "Poinsettia", 
-                    flavorProfile: "A festive and elegant bubbly cocktail with sweet orange and tart cranberry.", 
-                    recipe: ["1 oz Cointreau", "3 oz Cranberry Juice", "4 oz Prosecco", "2 dashes Orange Bitters"], 
-                    story: "This one only comes out during the holidays. It's fancy, it's red, and it makes everyone feel a bit more festive, even if they're just arguing about who has to shovel the snow. It's like a Christmas bonus, but in a glass.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/71f80d842e362733e8b2f22ea02e7b1fc732f0a9/mannart10.jpg?raw=true", 
-                    cardHook: "Cheers to the festive season.", 
-                    category: ['Brunch', 'Lunch'], titleColor: '#c084fc', primarySpirit: 'Wine & Other' 
-                },
-                
-                // 24: Cowboy's Hard Root Beer - KEEP
-                { name: "Cowboy's Hard Root Beer", flavorProfile: "A creamy and bold mix of classic root beer and smooth Irish whiskey.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "A cowboy bet us we couldn't make a drink that tasted like 'a rodeo in a bottle.' We made this. It's got the sweet taste of victory and the kick of a pissed-off bull. He paid up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "This drink has spurs.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 25: Knob Creek Kentucky Smash - KEEP
-                { name: "Knob Creek Kentucky Smash", flavorProfile: "A powerful, sour punch of strong bourbon and fresh lemon, with a hint of orange.", recipe: ["2 oz Knob Creek", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This is what happens when you let our Kentucky chapter president make drinks. It's less of a recipe and more of a threat. It hits you hard and leaves you wondering why you let a man named 'Brawler' be your bartender.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8295.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "As subtle as a thunderstorm.", category: ['Brunch', 'Lunch'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 26: Garibaldi (Updated recipe, confirmed final state)
-                { 
-                    name: "Garibaldi", 
-                    flavorProfile: "A simple, vibrant, and bittersweet brunch classic.", 
-                    recipe: ["2.5 oz Orange Juice", "2.5 oz Aperol"], 
-                    story: "Named for an Italian revolutionary, this drink is as simple as it is refreshing. It's what you drink when you want something bright, bitter, and uncomplicated. We call it 'The General's Juice.' He probably would've hated that.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8015.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "Italy's simple, bitter classic.", 
-                    category: ['Brunch'], titleColor: '#c084fc', primarySpirit: 'Liqueur/Schnapps' 
-                },
-                
-                // 27: Boulevardier (Updated recipe, confirmed final state)
-                { 
-                    name: "Boulevardier", 
-                    flavorProfile: "A deep, rich, and bittersweet classic. The whiskey-forward cousin of the Negroni.", 
-                    recipe: ["2 parts Campari", "2 parts Sweet Vermouth", "3 parts Four Roses Whiskey"], 
-                    story: "We used to call this the 'Garibaldi,' until an *actual* Italian guy laughed at us for a solid five minutes. 'Boulevardier' sounds fancier anyway. It's what you drink when you want to look like you read books.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7999.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "Look smart, drink well.", 
-                    category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' 
-                },
-                
-                // 28: Bulleit Frontier Punch - KEEP
-                { name: "Bulleit Frontier Punch", flavorProfile: "A bold and fruity mix of bourbon, orange, and lemon, with a sweet grenadine finish.", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when you try to make 'Jungle Juice' with actual bourbon. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/a401737bafe60d0edc1c1ea7ddb18508.jpg", cardHook: "History, but with more sugar.", category: ['Brunch', 'Lunch'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 29: Buckeye Milk (Updated recipe, confirmed final state)
-                { 
-                    name: "Buckeye Milk", 
-                    flavorProfile: "A creamy, decadent, and nutty delight. Tastes like a boozy peanut butter cup.", 
-                    recipe: ["1 oz Amaretto", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], 
-                    story: "Someone from Ohio kept demanding a 'Buckeye' drink. We don't have peanut butter whiskey, so we gave them this. It's creamy, nutty, and shut them up. We call that a success. Tastes like a candy bar.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8002.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "A decadent, creamy treat.", 
-                    category: ['Desert'], titleColor: '#c084fc', primarySpirit: 'Liqueur/Schnapps' 
-                },
-                
-                // 30: Jim Beam Black Cherry Bomb - KEEP
-                { name: "Jim Beam Black Cherry Bomb", flavorProfile: "Bold bourbon meets its match with sweet black cherry and classic cola.", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], story: "This isn't a drink, it's an escalation. It starts with bourbon, adds some cherry, and ends with you-thinking it's a good idea to see if your bike can do a burnout on the bar. It can't.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5a6b0379f72b6c8fb2751409d48ac8fa.jpg", cardHook: "Tastes like minor property damage.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 31: Southern Crossroads - KEEP
-                { name: "Southern Crossroads", flavorProfile: "Sweet Southern Comfort is paired with the fruity, tart flavor of sloe gin and orange.", recipe: ["1.5 oz Southern Comfort", "0.5 oz Sloe Gin", "Fill a tall glass with Orange Juice"], story: "This is the drink for when you have two bad options. It's sweet enough to make you forget you're making a choice, and strong enough to make you not care about the consequences. Good luck.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8294.jpg", cardHook: "For making the wrong choices.", category: ['Brunch'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 32: Americano (Updated recipe, confirmed final state)
-                { 
-                    name: "Americano", 
-                    flavorProfile: "A refreshing and bittersweet classic with Campari, sweet vermouth, and soda.", 
-                    recipe: ["1.5 oz Campari", "1.5 oz Sweet Vermouth", "Top with Club Soda"], 
-                    story: "This is the Negroni's older, lighter brother. It's what you drink when you want to look sophisticated, but it's 2 PM on a Tuesday. We 'borrowed' this one from the same Italian bar. The bartender was less than thrilled.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8028.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "The civilized start.",
-                    category: ['Lunch'], titleColor: '#c084fc', primarySpirit: 'Liqueur/Schnapps' 
-                },
-                
-                // 33: Mamie Taylor - KEEP
-                { name: "Mamie Taylor", flavorProfile: "A smoky and sharp blend of scotch, lime, and spicy ginger.", recipe: ["2 oz Johnnie Walker Red Label", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "Named for our founder, 'Red,' not because he liked scotch, but because this is the color his face got when a prospect called his prized chopper 'cute.' I'ts a drink of respect and fear. Mostly fear.", image: "https://github.com/aarmax8/Nomads/blob/bc62d5aebb9a232818104ce036e8325a73533520/frontend/206S17.jpg?raw=true", cardHook: "To the legends in the club.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 34: Brandy Thunder - KEEP
-                { name: "Brandy Thunder", flavorProfile: "A powerful clap of strong brandy and bright citrus, softened by a bubbly finish.", recipe: ["2 oz E&J Brandy", "1 oz Triple Sec", "0.75 oz Lemon Juice", "0.25 oz Simple Syrup", "Top with Club Soda"], story: "Named for the sound 'Wrench' made when he dropped a transmission on the shop floor after drinking two of these. It's bright, it's loud, and it'll shake the garage. A perfectly balanced storm in a glass.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd0bc33e2c84ea33e265900701fa8331.jpg", cardHook: "Bring the thunder.", category: ['Brunch', 'Lunch'], titleColor: '#d8b4fe', primarySpirit: 'Brandy' },
-                
-                // 35: Irish Russian - KEEP
-                { name: "Irish Russian", flavorProfile: "Rich coffee and smooth cream, with a clean vodka backbone and a hint of bubbly lift.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream", "0.25 oz Simple Syrup", "Fill a tall glass with Club Soda"], story: "This is what happens when our most stubborn members, an Irishman and a Russian, argue over whose drink is better. It's a creamy, boozy mess that solves nothing, but at least it shuts them up for a while.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd2c7d94ce4111f6235a52c8cf70e89e.jpg", cardHook: "The taste of a weird truce.", category: ['Lunch', 'Desert'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 36: Margarita - KEEP
-                { name: "Margarita", flavorProfile: "The perfect balance of salty, sour, and sweet, with a tequila kick.", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Cointreau", "1 oz Lime Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "We don't know who Rita is. We don't care. All we know is that this combination of tequila and lime is the reason for half the bad tattoos in this club. Drink with caution. And a designated tattoo artist.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3a506b28b91e0e5d031cedbeca489a14.jpg", cardHook: "¡Vámonos!", category: ['Brunch', 'Lunch'], titleColor: '#fbbf24', primarySpirit: 'Tequila' },
-                
-                // 37: Moscow Mule - KEEP
-                { name: "Moscow Mule", flavorProfile: "A crisp and spicy classic, with clean vodka, sharp lime, and fiery ginger.", recipe: ["2 oz Ketel One Vodka", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "It's crisp, it's spicy, and it kicks you right in the teeth when you're not expecting it. Just like our club's lawyer. We prefer the drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/c143359dbf62f9ce9349aa42e3bfe8aa.jpg", cardHook: "It's got a kick.", category: ['Dinner'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 38: Killer Cocktail - KEEP
-                { name: "Killer Cocktail", flavorProfile: "A complex and deadly mix where sweet amaretto and tropical passion fruit battle bitter Campari and sharp gin.", recipe: ["1 oz Amaretto", "1 oz Tanqueray Gin", "0.5 oz Campari", "0.5 oz Passion Fruit Syrup", "0.5 oz Lemon Juice"], story: "This one's called the Killer Cocktail because the first guy who tried it, 'Pops,' claimed it was so good it 'killed' his craving for anything else. He then proceeded to drink four of them and 'killed' a jukebox with a pool cue. The name stuck.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8000.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "Forget the handshake.", category: ['Brunch', 'Lunch'], titleColor: '#4ade80', primarySpirit: 'Gin' },
-                
-                // 39: Screwdriver - KEEP
-                { name: "Screwdriver", flavorProfile: "A straightforward and bright classic, with clean vodka and sweet orange juice.", recipe: ["2 oz Stolichnaya Citros Vodka", "2 dashes Orange Bitters", "Fill a tall glass with Orange Juice"], story: "Our mechanic insists this is a legitimate cocktail. We're pretty sure it's just what he drinks when he runs out of clean glasses and has to mix it in a hubcap. We serve it in a glass. You're welcome.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/cfff51feaf6082d29a37912a44bfedc3.jpg", cardHook: "The second-best use for a screwdriver.", category: ['Brunch'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 40: Rusty Blade - KEEP
-                { name: "Rusty Blade", flavorProfile: "Bold bourbon gets a sophisticated edge from honeyed, herbal Drambuie, sharpened with a dash of bitters.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Drambuie", "2 dashes Angostura Bitters", "Serve on the rocks"], story: "A Rusty Nail is for old men in smoking jackets. A Rusty Blade is what you drink after you've just won a knife fight over a parking spot. It's sharper, meaner, and has a better story.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "The sharpest blade is a sharp mind.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 41: Between The Sheets (Updated recipe, confirmed final state)
-                { 
-                    name: "Between The Sheets", 
-                    flavorProfile: "A sophisticated and potent mix of light rum and rich brandy, brightened with citrus.", 
-                    recipe: ["1 oz E&J Brandy", "1 oz Bacardi Rum", "1 oz Triple Sec", "0.25 oz Lemon Juice", "2 dashes Orange Bitters"], 
-                    story: "This drink is smooth, seductive, and means business. It's not for beginners. It's what you order when your night is about to get a lot more interesting. Or a lot shorter. Handle with care.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8009.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "Potent, sophisticated, and seductive.", 
-                    category: ['Brunch', 'Dinner'], titleColor: '#d8b4fe', primarySpirit: 'Brandy' // Categorized as Brandy
-                },
-                
-                // 42: Cuba Libre - KEEP
-                { name: "Cuba Libre", flavorProfile: "A classic combination of smooth rum, sweet cola, and a sharp lime kick.", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], story: "Means 'Free Cuba.' We drank it to celebrate freeing our club mascot, a grumpy bulldog named Che, from the local dog catcher. It was a whole thing. The dog was not grateful.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d9a9ffbd510d7ea900f31195d5e857f6.jpg", cardHook: "Tastes like a good road trip.", category: ['Dinner'], titleColor: '#f59e0b', primarySpirit: 'Rum' },
-                
-                // 43: Godfather - KEEP
-                { name: "Godfather", flavorProfile: "A simple, powerful duo of bold bourbon and sweet, nutty amaretto.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Amaretto", "Serve on the rocks"], story: "This is what you drink right before you make a very serious, legally questionable promise to a group of men you probably shouldn't trust. It's strong, sweet, and tastes like brotherhood and future bad decisions.", image: "https://github.com/aarmax8/Nomads/blob/3cdd71f09194cbf21b99337a4fc180c7d71380e5/frontend/yWMhLC.jpg?raw=true", cardHook: "To promises you'll try to keep.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 44: White Russian - KEEP
-                { name: "White Russian", flavorProfile: "A rich and creamy classic with vodka and coffee liqueur.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "This drink is for when you just don't want to deal with anything. It's a creamy, alcoholic blanket for your problems. It doesn't solve them, but it makes them quieter.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/e5a7f5bfc3b2c200266b6df05a132e17.jpg", cardHook: "It really ties the room together.", category: ['Desert'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-
-                // 45: Long Island Iced Tea - UPDATED IMAGE
-                { name: "Long Island Iced Tea", flavorProfile: "A potent and deceptive blend of five different spirits with a sour, cola finish.", recipe: ["0.5 oz Grey Goose Vodka", "0.5 oz Tanqueray Gin", "0.5 oz Bacardi Rum", "0.5 oz Jose Cuervo Silver Tequila", "0.5 oz Triple Sec", "1 oz Sweet and Sour Mix", "Fill a tall glass with Cola"], story: "This isn't a drink, it's a dare. It's a mix of everything that will get you into trouble, served in a glass. The only 'tea' involved is the 'T-rouble' you'll be in tomorrow.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/71f80d842e362733e8b2f22ea02e7b1fc732f0a9/frontend/08030c3d25616df982816261406e2c08.png", 
-                    cardHook: "The classic 'bad idea' special.", category: ['Brunch', 'Dinner'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 46: Sazerac - KEEP
-                { name: "Sazerac", flavorProfile: "A potent, licorice-forward cocktail with the sweetness of Southern Comfort and a classic bitter finish.", recipe: ["2 oz Southern Comfort", "1 teaspoon Pernod", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters"], story: "Our president spent a week in New Orleans and came back with a 'spiritual awakening' and this recipe. The awakening wore off, but the Sazerac stuck around. It's complex, a little dangerous, and demands respect.", image: "https://github.com/aarmax8/Nomads/blob/3cdd71f09194cbf21b99337a4fc180c7d71380e5/thumbnail_IMG_8298.jpg?raw=true", cardHook: "Respect the Big Easy.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 47: Phantom Shift (Updated image link) - KEEP
-                { name: "Phantom Shift", flavorProfile: "Sharp anise and botanical gin create a crisp, clean flavor with a bitter, tonic finish.", recipe: ["1oz Pernod", "1 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass"], story: "Tastes like licorice and regret. Named for the 'phantom' expenses that keep appearing on the club's credit card. We know who's doing it. And their time is short.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7994.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "For the gears that aren't there.", category: ['Lunch'], titleColor: '#4ade80', primarySpirit: 'Gin' },
-                
-                // 48: Morning Haze - KEEP
-                { name: "Morning Haze", flavorProfile: "A bright and sharp mix of botanical gin and tropical pineapple juice.", recipe: ["2 oz Tanqueray Gin", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "For when you wake up and the world is a blurry, confusing mess. This drink is also a blurry, confusing mess, but it's a delicious one. It helps you ease into your hangover.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/39cd9a9b372af2c86cb7189c2f929463.png", cardHook: "A helpful lie for a hazy morning.", category: ['Brunch'], titleColor: '#4ade80', primarySpirit: 'Gin' },
-                
-                // 49: Catalyst (Replaced by Campari Spritz, but re-added here) - KEEP
-                { name: "Catalyst", flavorProfile: "An energetic and tart blend of vodka, sweet and sour mix, and lime.", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sweet and Sour Mix", "Splash of Lime Juice"], story: "This drink doesn't cause problems. It's just... present when they happen. It's the catalyst for bar fights, terrible ideas, and waking up with a new tattoo. It's an agent of chaos.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8295.jpg", cardHook: "The start of a great story.", category: ['Brunch', 'Lunch'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 50: Finn's Orchard Kick - KEEP
-                { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn, our resident genius, tried to make 'artisanal applejack' in the clubhouse radiator. The radiator exploded. This drink, made with store-bought ingredients, is a much safer tribute to his ambition.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8004.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "A tribute to spectacular failures.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 51: Crossroads Deal - KEEP
-                { name: "Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 52: Purple Hooter - KEEP
-                { name: "Purple Hooter", flavorProfile: "Bright, sweet raspberry balanced by a floral bitterness and a sharp citrus finish.", recipe: ["1oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash Lime Juice", "Fill a tall glass with Club Soda"], story: "We're not legally allowed to say why it's called this. Just know that it involves our least-favorite rival club, a gallon of purple paint, and a very surprised mascot. This drink is our trophy.", image: "https://github.com/aarmax8/Nomads/blob/b53f3ec4d921fabea10c455c27ae09cee7e30d79/aaalchemistsbrew.jpg?raw=true", cardHook: "To our drunk owl.", category: ['Lunch'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 53: High Noon (Updated recipe, confirmed final state)
-                { 
-                    name: "High Noon", 
-                    flavorProfile: "A bright and complex sipper, balancing bittersweet Aperol, floral elderflower, and sharp tequila.", 
-                    recipe: ["1.5 oz Jose Cuervo Silver Tequila", "1 oz Aperol", "0.5 oz St-Germain", "1 oz Lemon Juice"], 
-                    story: "This one's for when the sun is high and mercy is low. It's sharp, it's bittersweet, and it's got the kick you need to face the rest of the day. We call it the 'Duelist's Drink'.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", 
-                    cardHook: "Bright, complex, and packing a punch.", 
-                    category: ['Brunch', 'Lunch'], titleColor: '#fbbf24', primarySpirit: 'Tequila' 
-                },
-                
-                // 54: Mudslide - KEEP
-                { name: "Mudslide", flavorProfile: "A rich, creamy, and decadent dessert drink with vodka, coffee, and Irish cream.", recipe: ["1oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "We tried to ride through a mudslide. It was a bad idea. This drink is a much better, and cleaner, version of that experience. It's still a bad idea to have five of them, though.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "To the shortcuts that weren't.", category: ['Desert'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 55: Desert Wind - KEEP
-                { name: "Desert Wind", flavorProfile: "A dry and spiced mix of whiskey, ginger soda, and-orange bitters.", recipe: ["2 oz Four Roses Whiskey", "Fill with Ginger Soda", "2 dashes Orange Bitters"], story: "Named for our club secretary, who can talk for three hours without taking a breath. The drink is dry, spicy, and and will leave you speechless. We wish he would try one.", image: "https://github.com/aarmax8/Nomads/blob/c4fb2c246219d2590f58d5805883750a9dc0df86/mannart16.jpg?raw=true", cardHook: "For stories that go on too long.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 56: Oracle's Kiss - KEEP
-                { name: "Oracle's Kiss", flavorProfile: "A sweet and floral blend of citrus vodka, elderflower, and cranberry.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], story: "Some lady at a carnival gave our treasurer a 'kiss for good luck.' He woke up three hours later with his wallet gone and a lingering taste of cranberry. We made this to commemorate his gullibility.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8297.jpg", cardHook: "The future is sweet and flowery.", category: ['Brunch'], titleColor: '#93c5fd', primarySpirit: 'Vodka' },
-                
-                // 57: Twin Spar - KEEP
-                { name: "Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the only two brain cells our prospect has left. They work together, they're surprisingly strong, and they're usually fueled by whiskey. Just like this drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth.", category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon' },
-                
-                // 58: Blue Lagoon - KEEP
+                // Replaced tarotMeaning with story
+                { name: "Redheaded Trouble", flavorProfile: "A rebellious blend where dark, herbal notes meet sweet peach, finished with a bright citrus kick.", recipe: ["1 oz Jägermeister", "1 oz Peach Schnapps", "Fill a tall glass with Cranberry Juice"], story: "This is named in honor of the bar fight started by a guy who told our baldest member he liked his 'fiery red hair.' Turns out it was a wig he was sensitive about. The ensuing chaos was beautiful.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8296.jpg", cardHook: "Some ghosts just want to party." },
+                { name: "Caramel Apple Cruiser", flavorProfile: "Sweet butterscotch collides with the sharp tang of green apple, balanced by a whisper of spice.", recipe: ["1.5 oz Butterscotch Schnapps", "1.5 oz Apple Pucker", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "Our prospect, Pip, tried to make 'fancy autumn cocktails.' He tripped, dumped a bag of apples and a bottle of butterscotch into a vat of ginger ale. We were about to kick him out, but then we tasted it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/5915ae46af9d547d456ba87aa624286b7aeb729a/aadesertwind.jpg", cardHook: "The taste of a glorious failure." }, // SWAPPED
+                { name: "Alchemist's Brew", flavorProfile: "A complex, intellectual blend of herbal Jägermeister and floral St-Germain.", recipe: ["1.5 oz Jägermeister", "0.5 oz St-Germain", "Fill with Tonic Water"], story: "Doc, our mechanic, tried to distill moonshine using his bike's radiator and a bucket. This was the only batch that didn't make us go blind. We call that a success.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7994.jpg", cardHook: "For the genius hiding in the garage." },
+                // FIXED BROKEN LINK
+                { name: "Malibu Sunset", flavorProfile: "A bright and sweet tropical mix of coconut rum and orange juice.", recipe: ["1.5 oz Malibu Rum", "Fill with Orange Juice", "Splash of Grenadine"], story: "Duke came back from Florida bragging about the ' priceless sunstone' he'd stolen. It was a 25-cent gumball machine ring. He traded it for a bottle of Malibu and we've never let him forget he got the better end of that deal.", image: "https://placehold.co/500x300/111/f59e0b?text=Malibu+Sunset", cardHook: "Some treasures are found at the bottom of a glass." },
+                { name: "Bourbon and Coke", flavorProfile: "A bold, uncompromising, and classic mix of bourbon, cola, and bitters.", recipe: ["2 oz Maker's Mark", "Fill with Cola", "2 dashes Angostura Bitters"], story: "'Iron' Joe claimed his bike could run on anything. To prove it, he emptied his flask of bourbon and a can of cola into the tank. The bike did not survive. This drink is its memorial.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8220.jpg", cardHook: "Some legends are harder to stomach than others." },
+                { name: "Old Fashioned", flavorProfile: "The timeless, bold flavor of bourbon, mellowed by sweet sugar and aromatic bitters.", recipe: ["2 oz Bulleit Bourbon", "0.5 oz Simple Syrup", "2 dashes Orange Bitters", "Cherry Garnish", "Top with Club Soda in a tall glass"], story: "This is the only drink the Club President knows how to make. Therefore, it is the 'greatest drink ever made.' You will agree with him. It is in your best interest to agree with him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8005.jpg", cardHook: "A drink worth lying about." },
+                { name: "Sex on the Beach", flavorProfile: "A classic, juicy blend of vodka, sweet peach, and tart cranberry and orange.", recipe: ["2 oz Ketel One Vodka", "1 oz Peach Schnapps", "2 oz Orange Juice", "2 oz Cranberry Juice", "Splash of Lemon Juice"], story: "This one's a classic for a reason. We 'appropriated' the recipe from a spring break bar in Florida after our prospect 'accidentally' knocked over their sign. Tastes like sunshine and bad decisions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8294.jpg", cardHook: "The beach, but with more booze." },
+                { name: "Junk Drawer", flavorProfile: "An unapologetically sweet concoction of raspberry, butterscotch, and classic root beer.", recipe: ["0.75 oz Raspberry Schnapps", "0.75 oz Butterscotch Schnapps", "0.75 oz Root Beer Schnapps", "Fill a tall glass with Club Soda"], story: "We told the new guy to make a drink with 'whatever's in the junk drawer.' He took us literally. Found these three dusty bottles behind some old spark plugs. We're as surprised as you are that it's drinkable.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/08030c3d25616df982816261406e2c08.png", cardHook: "Sometimes, genius comes from just mixing stuff." },
+                { name: "Blue Lagoon's Ghost", flavorProfile: "Tropical orange and sweet cherry flavors ride on a clean rum backbone.", recipe: ["1.5 oz Bacardi Rum", "0.5 oz Blue Curacao", "0.5 oz Maraschino Liqueur", "Splash Lime Juice", "Top with Club Soda"], story: "A rival biker fell into the quarry. All they found was his floating, pristine blue helmet. We drink this to honor the helmet. Not the guy, the helmet was cool.", 
+                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg", 
+                    cardHook: "To the losers go the spoils." },
+                { name: "Two Kings", flavorProfile: "A regal and straightforward pairing of two distinct, smooth whiskeys.", recipe: ["1 oz Knob Creek", "1 oz Crown Royal", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "Two chapter presidents showed up wearing the same 'one-of-a-kind' leather jacket. They settled the dispute by drinking until one passed out and the other stole his jacket. This is what they drank.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "The official drink of stubborn arguments." },
+                { name: "Brandy Crusta", flavorProfile: "A sophisticated classic where strong brandy is brightened by citrus, with sweet hints of cherry and spice.", recipe: ["2 oz E&J Brandy", "0.25 oz Blue Curacao", "0.5 oz Lemon Juice", "0.5 oz Simple Syrup", "1 teaspoon Maraschino Liqueur", "1 dash Angostura Bitters"], story: "This one's fancy. 'Crusta' means 'crust,' like the sugar rim it's supposed to have. We skip that part. We call it the Crusta because 'Crusty,' our oldest member, is the only one who orders it. It's old-school, complicated, and surprisingly strong... just like him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7645bbca2888163b21bf0d193ad3fb21.jpg", cardHook: "A classic with a complex twist." }, // SWAPPED
+                { name: "Blacktop Sunset", flavorProfile: "Smooth Irish whiskey and sweet Southern Comfort are brightened by lime and spiced ginger.", recipe: ["1 oz Jameson Irish Whiskey", "1 oz Southern Comfort", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "This is the color of the bruise our prospect got after he mistook a puddle for a pothole and tried to 'bunny hop' it. The sunset that evening was almost as beautiful as his failure.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1f512d08cccf12ad8dc389d42f5fcceb.jpg", cardHook: "To the potholes you can't see." },
+                { name: "Elderflower Nomad", flavorProfile: "Delicate elderflower and botanical gin meet a hint of lavender and rosemary.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.5 oz Lime Juice", "2 dashes Rosemary Lavender Bitters", "Top with Club Soda in a tall glass"], story: "We sent 'Tiny' to get gin. He came back with this flowery stuff and said it would 'expand our horizons.' We expanded his list of chores instead. Turns out, the joke's on us. This stuff is good. Don't tell him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/64c7af61b8476938a0b6bc9e8462ef3f--motorcycle-posters-motorcycle-art.jpg", cardHook: "Even a nomad can be sophisticated." },
+                { name: "Garibaldi", flavorProfile: "A bold, bittersweet clash of Italian Campari, bright orange, and a hint of sweetness. Deceptively simple.", recipe: ["1.5 oz Campari", "0.25 oz Simple Syrup", "Fill a tall glass with Orange Juice"], story: "Named after an old-world revolutionary. We drink it to honor 'Knuckles,' who tried to start a 'revolution' to get a new pool table. He failed, but his passion... and his bar tab... were revolutionary. This is his drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "A classic with a complex twist." }, // SWAPPED
+                { name: "Apparition", flavorProfile: "Clean vodka and floral St-Germain are lifted by the bright spice of ginger.", recipe: ["2 oz Ketel One Vodka", "0.75 oz St-Germain", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "Gus drinks three of these and claims he can see through walls. All he's ever seen is the inside of the men's room, which is punishment enough for the rest of us who have to hear about it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/206S17.jpg", cardHook: "To the spirits that haunt the bar." },
+                { name: "Rusty Nail", flavorProfile: "A timeless and potent blend of smoky Scotch whisky sweetened by the honeyed, herbal spice of Drambuie.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Drambuie", "Serve on the rocks", "Lemon Twist Garnish"], story: "This is what you drink when you've made a deal you know you'll regret. Like trading your bike for a 'guaranteed' winning lottery ticket. Ask Jimmy how that went. Actually, don't. He's still sensitive about it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7993.jpg", cardHook: "Every deal has its price." },
+                { name: "Mechanic", flavorProfile: "A sharp, herbal Jäger base brightened by tart apple and a spicy, citrus kick from ginger and lime.", recipe: ["1.5 oz Jägermeister", "0.5 oz Apple Pucker", "Fill a tall glass with Ginger Soda", "Splash of Lime Juice"], story: "Sal, our mechanic, calls this 'motivation.' He says the color reminds him of brand new antifreeze, which is the only thing that gets him excited. We're worried about Sal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/39cd9a9b372af2c86cb7189c2f929463.png", cardHook: "Tastes better than degreaser. Probably." },
+                { name: "Redline Riot", flavorProfile: "Sweet cherry and sharp sour mix create a vibrant, rebellious flavor.", recipe: ["1.5 oz Ketel One Vodka", "1 oz Cherry Schnapps", "Fill a tall glass with Sour Mix", "Splash of Lime Juice"], story: "A tribute to the time we tried to see if a cherry-red '78 Sportster could actually hit the redline in first gear without exploding. It could not. This drink is less expensive to clean up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8296.jpg", cardHook: "Here's to things we can't talk about." }, // SWAPPED
+                { name: "Spiced Rum Buck", flavorProfile: "Warm spiced rum gets a sharp, clean kick from lime and ginger.", recipe: ["2 oz Captain Morgan Spiced Rum", "0.5 oz Lime Juice", "Fill a tall glass with Ginger Soda"], story: "This drink has all the stages of trying to kickstart a stubborn old Panhead: spicy anger, a sharp kick of frustration, and sweet relief when it roars to life. All that, without the risk of a torn ACL.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/0dcbab77d90f59f2298642338dfee691353ce70a/frontend/USq6nI.jpg", cardHook: "A more reliable way to get started." },
+                { name: "Shirley Temple", flavorProfile: "The classic sweet and spicy ginger soda, kissed with a touch of cherry.", recipe: ["Fill a tall glass with Ginger Soda", "Splash of Grenadine", "Cherry Garnish"], story: "Our biggest, meanest member, Crusher, orders this. Not for his kid. For himself. He says it 'calms his inner rage.' You WILL NOT make fun of him. You WILL tell him it's a very manly drink. Your safety depends on it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7989.jpg", cardHook: "The toughest drink in the bar." }, 
+                { name: "Dark 'n' Stormy", flavorProfile: "Deep, dark spiced rum with a bite of lime and a spicy ginger finish.", recipe: ["2 oz Kraken Black Spiced Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "We dared our prospect to ride through a tornado warning. He came back an hour later, clothes torn, hair standing on end, and holding a bottle of Kraken he 'found.' This drink is our best guess as to what happened.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/19071808632f94b0b81d595f74f700f0.jpg", cardHook: "To making bad weather worse." },
+                { name: "Kraken's Grip", flavorProfile: "Dark rum and sweet almond create a rich, cola-based concoction.", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], story: "After two of these, you'll have a death grip on the bar and the questionable belief that you can arm-wrestle a sea monster. You can't. Ask Fingers, he's got the scars to prove it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/555331b7961b7c0880f3b2842529bcd8.jpg", cardHook: "It'll get a hold on you." },
+                { name: "Statesman", flavorProfile: "A sophisticated and strong blend of bold bourbon, sweet apricot, and sharp lemon.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice"], story: "This one's for the old-timers. The guys who sit in the back, don't say much, but have seen it all. It's strong, it's classic, and it doesn't need to shout to be heard. Like a true statesman, it commands respect just by being there.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/3cdd71f09194cbf21b99337a4fc180c7d71380e5/frontend/yWMhLC.jpg", cardHook: "Respect your elders." }, // SWAPPED
+                // FIXED BROKEN LINK
+                { name: "Island Hopper", flavorProfile: "A sweet, tropical escape with creamy coconut and bright pineapple.", recipe: ["1 oz Malibu Rum", "1 oz Bacardi Rum", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "This is for the guy who wears a Hawaiian shirt under his leather cut. He talks about riding to the keys, but we all know he's just going to the tourist trap on the pier. We humor him.", image: "https://placehold.co/500x300/111/f59e0b?text=Island+Hopper",
+                    cardHook: "A vacation in a glass." },
+                { name: "Gin Rickey", flavorProfile: "A clean and bracing mix of botanical gin and sharp lime, mellowed by club soda.", recipe: ["2 oz Tanqueray Gin", "1 oz Lime Juice", "Fill a tall glass with Club Soda"], story: "Tastes like taking a mountain switchback too fast. It's sharp, it makes your stomach turn, and you feel a moment of pure, blinding panic. Then it's over and you feel like a hero. A stupid, stupid hero.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "For roads that go back and forth." },
+                { name: "Long Haul", flavorProfile: "Crisp gin and tonic gets a complex, herbal twist from rosemary and lavender.", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], story: "This drink is like a 10-hour ride through Nebraska. It starts out fine, then it gets weirdly complex, then it's just... a lot. By the end, you're not sure if you like it, but you respect its commitment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/608bdca2cf73d693c4e80d1723cd59b8.jpg", cardHook: "For when you're in it for the long haul." },
+                { name: "Whiskey Highball", flavorProfile: "A classic, clean taste of smooth whiskey balanced with a touch of sweetness and a bubbly finish.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "We call it the Country and Western because after three of them, everyone thinks they can sing both parts of a Johnny Cash and June Carter duet. They can't. And it's always sad.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "Simple, honest, and a little bit sad." }, // SWAPPED
+                { name: "Rattlesnake", flavorProfile: "Earthy tequila gets a surprising bite from sweet cherry and sharp lime.", recipe: ["2 oz El Mayor Tequila", "0.5 oz Cherry Schnapps", "0.5 oz Lime Juice", "Top with Club Soda in a tall glass"], story: "Looks harmless, right? Sweet, even. That's what the rattlesnake we found in the ice machine thought. This drink has a bite that sneaks up on you, just like he did. We check the ice more carefully now.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6418051b93b83a2239400213863d22a1.jpg", cardHook: "Sweet, with a venomous bite." },
+                { name: "Paradise", flavorProfile: "A tropical and tangy blend where botanical gin and sweet apricot meet bright citrus.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz Apricot Brandy", "Fill with Orange Juice", "0.5 oz Lemon Juice", "Cherry Garnish"], story: "We call this Paradise because it's what 'Wrench' drinks when he's dreaming of retiring to a beach somewhere. One sip and he's gone... still in the garage, but mentally he's on a beach. We let him have it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/1bf52dfc1aad553db68333418c40d848.jpg", cardHook: "Your own personal oasis." },
+                { name: "Tequila Sunrise", flavorProfile: "Sweet and vibrant, this is a classic tequila sunrise with an extra bitter orange kick.", recipe: ["2 oz El Mayor Tequila", "Fill a tall glass with Orange Juice", "2 dashes Orange Bitters", "0.5 oz Grenadine"], story: "The only time you should see a desert sunrise is because you've been riding all night. This drink lets you skip the riding part and get straight to the 'seeing pretty colors while your brain feels like sand' part. It's more efficient.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/a401737bafe60d0edc1c1ea7ddb18508.jpg", cardHook: "All the beauty, none of the early morning." }, // SWAPPED
+                { name: "Gilded Serpent", flavorProfile: "A luxurious mix of floral elderflower, bright pineapple, and smooth tequila.", recipe: ["1.5 oz El Mayor Tequila", "0.75 oz St-Germain", "1 oz Pineapple Juice", "0.5 oz Lime Juice"], story: "Looks fancy. Tastes fancy. But it's still tequila. It's like putting a tuxedo on a snake. It might look respectable for a minute, but you know it's gonna bite you eventually.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/67bab4c8460e76ee5bd5fe757150ef26--bike-art-motorcycle-art.jpg", cardHook: "Fancy on the outside, dangerous on the inside." },
+                { name: "Drambuie & Ginger", flavorProfile: "The sweet, herbal notes of Drambuie are lifted by the crisp, spicy kick of ginger soda, creating a refreshing and enduring companion for any journey.", recipe: ["2 oz Drambuie", "Fill a tall glass with Ginger Soda", "Lime Wedge Garnish"], story: "You know that last mile before you get home? When your back aches, your ears are ringing, and you'd sell a kidney for a hot shower? This is that feeling in a glass. Pure, unadulterated relief.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/69070319cd6333061bdbb34ed7dee0c1.jpg", cardHook: "For the last mile of a heavy journey." },
+                { name: "Switchblade", flavorProfile: "Intensely sour lemon is balanced by a clean vodka finish.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Lemon Juice", "0.75 oz Simple Syrup"], story: "It's small, sharp, and will end your night if you're not careful. Named in honor of our shortest member, 'Stubbs,' who is all of those things. He thinks it's a compliment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6a73cec9f46d798d4ba58ec29f5623f2.jpg", cardHook: "Respect the lemon." },
+                { name: "Buckeye Cider", flavorProfile: "Sweet and spicy Southern Comfort with a classic bitter backbone, lifted by a crisp soda finish.", recipe: ["2oz Southern Comfort", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "This recipe comes from a long ride through the Hocking Hills. We met a rival club out of Columbus, and instead of the usual staredown, we ended up sharing a fire and a few drinks. Their president, a guy they called 'Buckeye,' made this. It's smooth, strong, and a little unexpected, just like finding friends in rival territory. We stole the recipe, but we left a bottle of our own stuff as a trade. We're not savages.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/1e1c514fd7e07a421ae95d827c230b7fea504fa7/aabuckeyecider.jpg", cardHook: "To the rivals who ain't so bad." },
+                { name: "Sidecar", flavorProfile: "A powerful and classic combination of strong brandy and bright, citrusy orange.", recipe: ["2 oz E&J Brandy", "1 oz Triple Sec", "0.75 oz Lemon Juice"], story: "Our mechanic, 'Wrench,' says this drink has the three essential food groups: strong, sour, and sugar. He also thinks rust is a 'nice patina.' His judgment is questionable, but his drink is solid.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/724b49e9a385815706ed2dbc9d7ca6f3.jpg", cardHook: "Strong enough to strip rust." },
+                { name: "Nicky Finn", flavorProfile: "A complex, citrus-forward drink with a sharp anise bite.", recipe: ["1 oz E&J Brandy", "1 oz Cointreau", "1 oz Lemon Juice", "1 dash Pernod"], story: "Named after a guy who swore his drink was 'spiked.' Turns out, he'd just never had Pernod before. He spent all night accusing the bartender of trying to 'slip him a mickey.' We call it a Nicky Finn to remind him of his 'wild' night.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7645bbca2888163b21bf0d193ad3fb21.jpg", cardHook: "It's got a secret." }, // SWAPPED
+                { name: "Alabama Slammer", flavorProfile: "A famously smooth and fruity classic, blending amaretto, sloe gin, and Southern Comfort with bright orange.", recipe: ["0.75 oz Southern Comfort", "0.75 oz Sloe Gin", "0.75 oz Amaretto", "Fill a tall glass with Orange Juice"], story: "This one's a classic for a reason. It's sweet, fruity, and hits you like a freight train. We call it the 'Slammer' because our Sergeant-at-Arms, 'Slam,' drank five of them and then tried to 'slam' dunk a pool ball into a pint glass. He missed. Badly.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/7f8779686c19c3de763ad13c03fee127.jpg", cardHook: "Sweet, nutty, and dangerous." },
+                { name: "White Liner", flavorProfile: "A sophisticated ride of bright floral notes, sharp citrus, and a clean, bubbly finish.", recipe: ["1.5 oz Tanqueray Gin", "0.75 oz St-Germain", "0.75 oz Lemon Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This is for the guy who follows the rules. The one who actually signals, stays under the speed limit, and calls his mother. We don't understand him, but we make him this drink out of pity.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/95ae7009ba144fc3dd9fc68d14b5f929.jpg", cardHook: "For when you follow the rules too closely." },
+                { name: "Apricot Ambush", flavorProfile: "Sweet apricot brandy gets a tart lemon kick, smoothed out with a bubbly finish.", recipe: ["1.5 oz E&J Brandy", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice", "Top with Club Soda"], story: "We were ambushed by a rival club. They were terrible at it. They dropped a case of this stuff while retreating. We drank it to celebrate their incompetence. The tastiest victory we never had to fight for.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/83c048414249b2ffaf2cef7f5cdc5590.jpg", cardHook: "The tastiest ambush you'll ever face." },
+                { name: "Crimson Guard", flavorProfile: "A sharp and fruity blend of sloe gin and lime with a clean soda finish.", recipe: ["1.5 oz Sloe Gin", "0.5 oz Tanqueray Gin", "Fill a tall glass with Club Soda", "Splash of Lime Juice"], story: "We call it the Crimson Guard because after a few of these, you'll feel invincible enough to guard a gate to hell. You're not. And the resulting hangover will feel like you've been there.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/CuHwaf.jpg", cardHook: "Safer than Dead Man's Curve." },
+                { name: "Road Rash", flavorProfile: "Sweet and sour collide in this blend of fruity sloe gin and smooth Southern Comfort.", recipe: ["1 oz Sloe Gin", "1 oz Southern Comfort", "0.5 oz Lemon Juice", "Fill a tall glass with Club Soda"], story: "It's red, it stings, and it's a story you'll tell for years. The drink, not the injury. The injury justgets you a lame scar and a lecture from Doc.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/David-Mann-Art-2.jpg", cardHook: "Much better than the real thing." },
+                { name: "Ruby Rider", flavorProfile: "Deep, rich sloe gin is perfectly complemented by the spicy kick of ginger soda.", recipe: ["2 oz Sloe Gin", "Fill a tall glass with Ginger Soda"], story: "We keep making this, hoping the legendary Ruby Rider will show up. So far, all we've summoned is her angry ex-boyfriend, three cops, and a very confused pizza delivery guy. Our patience is wearing thin.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/PcZieI.jpg", cardHook: "To the ghosts we haven't met yet." },
+                { name: "Cowboy's Hard Root Beer", flavorProfile: "A creamy and bold mix of classic root beer and smooth Irish whiskey.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "A cowboy bet us we couldn't make a drink that tasted like 'a rodeo in a bottle.' We made this. It's got the sweet taste of victory and the kick of a pissed-off bull. He paid up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "This drink has spurs." },
+                { name: "Knob Creek Kentucky Smash", flavorProfile: "A powerful, sour punch of strong bourbon and fresh lemon, with a hint of orange.", recipe: ["2 oz Knob Creek", "1 oz Lemon Juice", "0.75 oz Simple Syrup", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "This is what happens when you let our Kentucky chapter president make drinks. It's less of a recipe and more of a threat. It hits you hard and leaves you wondering why you let a man named 'Brawler' be your bartender.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/0dcbab77d90f59f2298642338dfee691353ce70a/frontend/USq6nI.jpg", cardHook: "As subtle as a thunderstorm." },
+                { name: "Godfather Highball", flavorProfile: "Rich Canadian whiskey and nutty amaretto create a smooth, sophisticated flavor.", recipe: ["1.5 oz Crown Royal", "0.5 oz Amaretto", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "For the guy who traded his handlebars for a keyboard. It's the taste of a steady paycheck, a 401k, and the soul-crushing despair of rush hour traffic. Welcome to the cage, pal.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/YDZaH0.jpg", cardHook: "The taste of selling out." },
+                { name: "Bulleit Frontier Punch", flavorProfile: "A bold and fruity mix of bourbon, orange, and lemon, with a sweet grenadine finish.", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when you try to make 'Jungle Juice' with actual bourbon. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "History, but with more sugar." }, // SWAPPED
+                { name: "Seagram's 7 Sour", flavorProfile: "A classic, balanced sour with smooth whiskey, tart lemon, and a hint of bitters.", recipe: ["2 oz Seagram's 7", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters", "Top with Club Soda in a tall glass"], story: "Named in honor of our Treasurer's heart. He's as cold as stone and perpetually sour about the bar tab. We drink this to annoy him. It works.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7995.jpg", cardHook: "Better than the memories." }, // SWAPPED
+                { name: "Jim Beam Black Cherry Bomb", flavorProfile: "Bold bourbon meets its match with sweet black cherry and classic cola.", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], story: "This isn't a drink, it's an escalation. It starts with bourbon, adds some cherry, and ends with you-thinking it's a good idea to see if your bike can do a burnout on the bar. It can't.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5a6b0379f72b6c8fb2751409d48ac8fa.jpg", cardHook: "Tastes like minor property damage." },
+                // FIXED BROKEN LINK
+                { name: "Southern Crossroads", flavorProfile: "Sweet Southern Comfort is paired with the fruity, tart flavor of sloe gin and orange.", recipe: ["1.5 oz Southern Comfort", "0.5 oz Sloe Gin", "Fill a tall glass with Orange Juice"], story: "This is the drink for when you have two bad options. It's sweet enough to make you forget you're making a choice, and strong enough to make you not care about the consequences. Good luck.", image: "https://placehold.co/500x300/111/fb923c?text=Southern+Crossroads", cardHook: "For making the wrong choices." },
+                { name: "Mamie Taylor", flavorProfile: "A smoky and sharp blend of scotch, lime, and spicy ginger.", recipe: ["2 oz Johnnie Walker Red Label", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "Named for our founder, 'Red,' not because he liked scotch, but because this is the color his face got when a prospect called his prized chopper 'cute.' It's a drink of respect and fear. Mostly fear.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/bc62d5aebb9a232818104ce036e8325a73533520/frontend/206S17.jpg", cardHook: "To the legends in the club." },
+                { name: "Brandy Thunder", flavorProfile: "A powerful clap of strong brandy and bright citrus, softened by a bubbly finish.", recipe: ["2 oz E&J Brandy", "1 oz Triple Sec", "0.75 oz Lemon Juice", "0.25 oz Simple Syrup", "Top with Club Soda"], story: "Named for the sound 'Wrench' made when he dropped a transmission on the shop floor after drinking two of these. It's bright, it's loud, and it'll shake the garage. A perfectly balanced storm in a glass.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd0bc33e2c84ea33e265900701fa8331.jpg", cardHook: "Bring the thunder." },
+                { name: "Irish Russian", flavorProfile: "Rich coffee and smooth cream, with a clean vodka backbone and a hint of bubbly lift.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileis Irish Cream", "0.25 oz Simple Syrup", "Fill a tall glass with Club Soda"], story: "This is what happens when our most stubborn members, an Irishman and a Russian, argue over whose drink is better. It's a creamy, boozy mess that solves nothing, but at least it shuts them up for a while.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/bd2c7d94ce4111f6235a52c8cf70e89e.jpg", cardHook: "The taste of a weird truce." },
+                { name: "Margarita", flavorProfile: "The perfect balance of salty, sour, and sweet, with a tequila kick.", recipe: ["2 oz Jose Cuervo Silver Tequila", "1 oz Cointreau", "1 oz Lime Juice", "2 dashes Orange Bitters", "Top with Club Soda in a tall glass"], story: "We don't know who Rita is. We don't care. All we know is that this combination of tequila and lime is the reason for half the bad tattoos in this club. Drink with caution. And a designated tattoo artist.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/3a506b28b91e0e5d031cedbeca489a14.jpg", cardHook: "¡Vámonos!" },
+                { name: "Moscow Mule", flavorProfile: "A crisp and spicy classic, with clean vodka, sharp lime, and fiery ginger.", recipe: ["2 oz Ketel One Vodka", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Ginger Soda"], story: "It's crisp, it's spicy, and it kicks you right in the teeth when you're not expecting it. Just like our club's lawyer. We prefer the drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/c143359dbf62f9ce9349aa42e3bfe8aa.jpg", cardHook: "It's got a kick." },
+                { name: "Killer Cocktail", flavorProfile: "A complex and deadly mix where sweet amaretto and tropical passion fruit battle bitter Campari and sharp gin.", recipe: ["1 oz Amaretto", "1 oz Tanqueray Gin", "0.5 oz Campari", "0.5 oz Passion Fruit Syrup", "0.5 oz Lemon Juice"], story: "This one's called the Killer Cocktail because the first guy who tried it, 'Pops,' claimed it was so good it 'killed' his craving for anything else. He then proceeded to drink four of them and 'killed' a jukebox with a pool cue. The name stuck.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5638f66d00401c933df787eb50253fc8.jpg", cardHook: "As complex as your last bad decision." },
+                { name: "Screwdriver", flavorProfile: "A straightforward and bright classic, with clean vodka and sweet orange juice.", recipe: ["2 oz Stolichnaya Citros Vodka", "2 dashes Orange Bitters", "Fill a tall glass with Orange Juice"], story: "Our mechanic insists this is a legitimate cocktail. We're pretty sure it's just what he drinks when he runs out of clean glasses and has to mix it in a hubcap. We serve it in a glass. You're welcome.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/cfff51feaf6082d29a37912a44bfedc3.jpg", cardHook: "The second-best use for a screwdriver." },
+                { name: "Rusty Blade", flavorProfile: "Bold bourbon gets a sophisticated edge from honeyed, herbal Drambuie, sharpened with a dash of bitters.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Drambuie", "2 dashes Angostura Bitters", "Serve on the rocks"], story: "A Rusty Nail is for old men in smoking jackets. A Rusty Blade is what you drink after you've just won a knife fight over a parking spot. It's sharper, meaner, and has a better story.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "The sharpest blade is a sharp mind." },
+                { name: "Whiskey Sour", flavorProfile: "A perfect balance of bold whiskey, tart lemon, and sweet sugar.", recipe: ["2 oz Jim Beam Bourbon", "1 oz Lemon Juice", "0.5 oz Simple Syrup", "2 dashes Angostura Bitters", "Top with Club Soda in a tall glass"], story: "Named for 'Sour' Sam, our Sergeant-at-Arms. He has two moods: sour and asleep. This drink is a tribute to his sunny disposition. He hates it. We love it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d715cf5bec09d118e51d505a225e449d.jpg", cardHook: "To 'Sour' Sam. He'd hate this." }, // SWAPPED
+                { name: "Cuba Libre", flavorProfile: "A classic combination of smooth rum, sweet cola, and a sharp lime kick.", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], story: "Means 'Free Cuba.' We drank it to celebrate freeing our club mascot, a grumpy bulldog named Che, from the local dog catcher. It was a whole thing. The dog was not grateful.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d9a9ffbd510d7ea900f31195d5e857f6.jpg", cardHook: "Tastes like a good road trip." },
+                { name: "Godfather", flavorProfile: "A simple, powerful duo of bold bourbon and sweet, nutty amaretto.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Amaretto", "Serve on the rocks"], story: "This is what you drink right before you make a very serious, legally questionable promise to a group of men you probably shouldn't trust. It's strong, sweet, and tastes like brotherhood and future bad decisions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/b6ad8116d3e685043026ef0113bcc81d--david-mann-motorcycle-posters.jpg", cardHook: "To promises you'll try to keep." }, // SWAPPED
+                { name: "White Russian", flavorProfile: "A rich and creamy classic with vodka and coffee liqueur.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "This drink is for when you just don't want to deal with anything. It's a creamy, alcoholic blanket for your problems. It doesn't solve them, but it makes them quieter.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/e5a7f5bfc3b2c200266b6df05a132e17.jpg", cardHook: "It really ties the room together." },
+                { name: "Long Island Iced Tea", flavorProfile: "A potent and deceptive blend of five different spirits with a sour, cola finish.", recipe: ["0.5 oz Grey Goose Vodka", "0.5 oz Tanqueray Gin", "0.5 oz Bacardi Rum", "0.5 oz Jose Cuervo Silver Tequila", "0.5 oz Triple Sec", "1 oz Lemon Juice", "Fill a tall glass with Cola"], story: "This isn't a drink, it's a dare. It's a mix of everything that will get you into trouble, served in a glass. The only 'tea' involved is the 'T-rouble' you'll be in tomorrow.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/ed9d1453cc5561fb3049d48ac8fa.jpg", cardHook: "A beautiful, delicious lie." },
+                { name: "Sazerac", flavorProfile: "A potent, licorice-forward cocktail with the sweetness of Southern Comfort and a classic bitter finish.", recipe: ["2 oz Southern Comfort", "1 teaspoon Pernod", "0.5 oz Simple Syrup", "2 dashes Peychaud's Bitters"], story: "Our president spent a week in New Orleans and came back with a 'spiritual awakening' and this recipe. The awakening wore off, but the Sazerac stuck around. It's complex, a little dangerous, and demands respect.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/3cdd71f09194cbf21b99337a4fc180c7d71380e5/thumbnail_IMG_8298.jpg", cardHook: "Respect the Big Easy." },
+                { name: "Phantom Shift", flavorProfile: "Sharp anise and botanical gin create a crisp, clean flavor with a bitter, tonic finish.", recipe: ["1oz Pernod", "1 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass"], story: "Tastes like licorice and regret. Named for the 'phantom' expenses that keep appearing on the club's credit card. We know who's doing it. And their time is short.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/f2a6114d2d00087a3f9192fc5cc74614.jpg", cardHook: "For the gears that aren't there." },
+                { name: "Morning Haze", flavorProfile: "A bright and sharp mix of botanical gin and tropical pineapple juice.", recipe: ["2 oz Tanqueray Gin", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "For when you wake up and the world is a blurry, confusing mess. This drink is also a blurry, confusing mess, but it's a delicious one. It helps you ease into your hangover.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1268185178_a000.webp", cardHook: "A helpful lie for a hazy morning." },
+                { name: "Nightcap", flavorProfile: "A rich, smooth, and simple pairing of creamy Baileys and nutty amaretto.", recipe: ["2 oz Baileys Irish Cream", "1 oz Amaretto", "Serve on the rocks"], story: "Don't let the name fool you. This is not a 'one and done' drink. It's a 'one and then you decide it's a good idea to call your ex' drink. You have been warned.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/R.jpg", cardHook: "The perfect end to the day." },
+                { name: "Spiced Rum & Coke", flavorProfile: "A sweet and spicy mix of spiced rum, cola, and a hint of orange.", recipe: ["2 oz Captain Morgan Spiced Rum", "Fill with Cola", "2 dashes Orange Bitters"], story: "The sound of a missed gear is horrifying. The taste of this drink is not. It's what you drink to forget the crime you just committed against your motorcycle. The bike remembers, though. It always remembers.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.850190414_gb43.webp", cardHook: "An apology to our transmissions." },
+                { name: "Catalyst", flavorProfile: "An energetic and tart blend of vodka, sour mix, and lime.", recipe: ["1.5 oz Grey Goose Vodka", "Fill with Sour Mix", "Splash of Lime Juice"], story: "This drink doesn't cause problems. It's just... present when they happen. It's the catalyst for bar fights, terrible ideas, and waking up with a new tattoo. It's an agent of chaos.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7999.jpg", cardHook: "The start of a great story." },
+                { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn, our resident genius, tried to make 'artisanal applejack' in the clubhouse radiator. The radiator exploded. This drink, made with store-bought ingredients, is a much safer tribute to his ambition.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8004.jpg", cardHook: "A tribute to spectacular failures." }, // SWAPPED
+                { name: "Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
+                { name: "Purple Hooter", flavorProfile: "Bright, sweet raspberry balanced by a floral bitterness and a sharp citrus finish.", recipe: ["1oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash Lime Juice", "Fill a tall glass with Club Soda"], story: "We're not legally allowed to say why it's called this. Just know that it involves our least-favorite rival club, a gallon of purple paint, and a very surprised mascot. This drink is our trophy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/b53f3ec4d921fabea10c455c27ae09cee7e30d79/aaalchemistsbrew.jpg", cardHook: "To our drunk owl." },
+                { name: "High Noon", flavorProfile: "A sharp and ready blend of tequila, lime, and bitter tonic.", recipe: ["2 oz El Mayor Tequila", "Fill with Tonic Water", "Splash of Lime Juice"], story: "This is what you drink when you're about to do something stupid, but you want to do it with confidence. It's the official beverage of 'Hold my beer and watch this.'", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/271d97ccf4324f5c3e3d7ec301c4fcc8.jpg", cardHook: "The drink of champions. And losers." },
+                { name: "Mudslide", flavorProfile: "A rich, creamy, and decadent dessert drink with vodka, coffee, and Irish cream.", recipe: ["1oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "We tried to ride through a mudslide. It was a bad idea. This drink is a much better, and cleaner, version of that experience. It's still a bad idea to have five of them, though.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "To the shortcuts that weren't." },
+                { name: "Desert Wind", flavorProfile: "A dry and spiced mix of whiskey, ginger soda, and-orange bitters.", recipe: ["2 oz Four Roses Whiskey", "Fill with Ginger Soda", "2 dashes Orange Bitters"], story: "Named for our club secretary, who can talk for three hours without taking a breath. The drink is dry, spicy, and will leave you speechless. We wish he would try one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/c4fb2c246219d2590f58d5805883750a9dc0df86/mannart16.jpg", cardHook: "For stories that go on too long." },
+                { name: "Oracle's Kiss", flavorProfile: "A sweet and floral blend of citrus vodka, elderflower, and cranberry.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], story: "Some lady at a carnival gave our treasurer a 'kiss for good luck.' He woke up three hours later with his wallet gone and a lingering taste of cranberry. We made this to commemorate his gullibility.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8297.jpg", cardHook: "The future is sweet and flowery." }, 
+                { name: "Twin Spar", flavorProfile: "A simple and strong pairing of smooth Canadian whiskey and spicy ginger soda.", recipe: ["2 oz Crown Royal", "Fill with Ginger Soda"], story: "Named for the only two brain cells our prospect has left. They work together, they're surprisingly strong, and they're usually fueled by whiskey. Just like this drink.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "Simple, strong, and smooth." },
                 { name: "Blue Lagoon", flavorProfile: "A vibrant and refreshing citrus cocktail with a stunning blue hue.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", 
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", 
-                    cardHook: "Find your oasis.", category: ['Brunch', 'Lunch'], titleColor: '#93c5fd', primarySpirit: 'Vodka' 
-                },
-                
-                // 59: Malibu Sunset (Added, UPDATED IMAGE)
-                { 
-                    name: "Malibu Sunset",
-                    flavorProfile: "A bright and sweet tropical mix of coconut rum and orange juice.",
-                    recipe: ["1.5 oz Malibu Rum", "Fill with Orange Juice", "Splash of Grenadine"],
-                    story: "Duke came back from Florida bragging about the 'priceless sunstone' he'd stolen. It was a 25-cent gumball machine ring. He traded it for a bottle of Malibu and we've never let him forget he got the better end of that deal.",
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/71f80d842e362733e8b2f22ea02e7b1fc732f0a9/mannart3.jpg?raw=true", // <--- UPDATED
-                    cardHook: "Some treasures are found at the bottom of a glass.",
-                    category: ['Brunch'], titleColor: '#f59e0b', primarySpirit: 'Rum'
-                },
-                
-                // 60: Brandy Crusta (Added, confirmed final state)
-                { 
-                    name: "Brandy Crusta",
-                    flavorProfile: "A sophisticated classic where strong brandy is brightened by citrus, with sweet hints of cherry and spice.",
-                    recipe: ["2 oz E&J Brandy", "0.25 oz Blue Curacao", "0.5 oz Lemon Juice", "0.5 oz Simple Syrup", "0.25 oz Maraschino Liqueur", "1 dash Angostura Bitters"],
-                    story: "This one's fancy. 'Crusta' means 'crust,' like the sugar rim it's supposed to have. We skip that part. We call it the Crusta because 'Crusty,' our oldest member, is the only one who orders it. It's old-school, complicated, and surprisingly strong... just like him.",
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", // UNIQUE IMAGE (recovered from prior history)
-                    cardHook: "A classic with a complex twist.",
-                    category: ['Brunch', 'Dinner'], titleColor: '#d8b4fe', primarySpirit: 'Brandy'
-                },
-                
-                // 61: Rusty Nail (Added, confirmed final state)
-                { 
-                    name: "Rusty Nail",
-                    flavorProfile: "A timeless and potent blend of smoky Scotch whisky sweetened by the honeyed, herbal spice of Drambuie.",
-                    recipe: ["2 oz Johnnie Walker Red Label", "1 oz Drambuie", "Serve on the rocks", "Splash of Lemon Juice"],
-                    story: "This is what you drink when you've made a deal you know you'll regret. Like trading your bike for a 'guaranteed' winning lottery ticket. Ask Jimmy how that went. Actually, don't. He's still sensitive about it.",
-                    image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7993.jpg",
-                    cardHook: "Every deal has its price.",
-                    category: ['Dinner'], titleColor: '#fb923c', primarySpirit: 'Whiskey & Bourbon'
-                },
-
+                     image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", 
+                     cardHook: "Find your oasis." }
             ];
 
             const processedCocktails = initialCocktails.map((cocktail) => {
-                // Apply global fixes to all image URLs
+                
+                // Fix for broken image links
                 if (cocktail.image) {
                     cocktail.image = cocktail.image
                         .replace(/httpss:\/\//i, "https://")
@@ -1265,7 +1059,6 @@
                         .replace(/https\.raw/i, "https://raw");
                 }
                 
-                // Correctly derive categories, colors, and primary spirit for the new structure
                 const categories = new Set();
                 const recipeString = cocktail.recipe.join(' ').toLowerCase();
                 
@@ -1278,23 +1071,21 @@
                 const hasAnySoda = recipeString.includes('club soda') || recipeString.includes('tonic water') || recipeString.includes('cola') || recipeString.includes('ginger soda');
 
                 if (categories.has('Brunch') && hasOnlyLemonLime && hasAnySoda) categories.delete('Brunch');
-                if (categories.size === 0 && cocktail.recipe.length > 0) categories.add('Lunch'); 
+                if (categories.size === 0) categories.add('Lunch'); 
 
                 let titleColor = '#f59e0b';
                 let primarySpirit = 'Other';
 
+                // --- NEW: Determine Primary Spirit ---
+                // MODIFIED: Reordered to put 'Brandy' before 'Whiskey' and 'Rum' to prioritize it.
                 const spiritOrder = ['Brandy', 'Whiskey & Bourbon', 'Vodka', 'Gin', 'Rum', 'Tequila'];
+                const liqueurOrder = ['Fruit', 'Herbal & Spiced', 'Cream, Nut & Coffee', 'Other Schnapps'];
+                
                 let mainIngredient = null;
 
+                // 1. Check Spirits
                 for (const spiritType of spiritOrder) {
-                    const spirits = ingredientCategories.Spirits[spiritType] || [];
-                    // Handle Sloe Gin mapping to Gin for filtering purposes
-                    if (spiritType === 'Gin' && spirits.includes('Sloe Gin') && recipeString.includes('sloe gin')) {
-                        mainIngredient = 'Sloe Gin';
-                        primarySpirit = spiritType;
-                        break;
-                    }
-
+                    const spirits = ingredientCategories.Spirits[spiritType];
                     const foundSpirit = cocktail.recipe.map(parseIngredientName).find(ing => ing && spirits.includes(ing));
                     if (foundSpirit) {
                         mainIngredient = foundSpirit;
@@ -1303,6 +1094,7 @@
                     }
                 }
                 
+                // 2. Check Liqueurs if no primary spirit found
                 if (!mainIngredient) {
                     let hasLiqueur = false;
                     for (const liqueurType of Object.keys(ingredientCategories['Liqueurs & Schnapps'])) {
@@ -1314,19 +1106,25 @@
                             break;
                          }
                     }
-                    if (!hasLiqueur && cocktail.recipe.map(parseIngredientName).some(ing => ing === 'Prosecco')) {
-                        primarySpirit = 'Wine & Other';
-                    } else if (!hasLiqueur) {
-                        primarySpirit = 'Other';
+                    if (!hasLiqueur) {
+                        primarySpirit = 'Other'; // Fallback for Shirley Temple etc.
+                    }
+                    
+                    if (primarySpirit === 'Other' && cocktail.recipe.length > 0) {
+                         mainIngredient = parseIngredientName(cocktail.recipe[0]);
                     }
                 }
-                
+                // --- END NEW: Determine Primary Spirit ---
+
+
                 if (mainIngredient) titleColor = getIngredientInfo(mainIngredient).colorHex;
 
                 return { ...cocktail, category: Array.from(categories), titleColor, primarySpirit };
             });
 
-            // Remove placeholder and ensure Barcode card is first
+            cocktails = processedCocktails;
+            cocktails.sort((a, b) => a.name.localeCompare(b.name));
+
             const barcodeCard = {
                 name: "Scan to Connect",
                 isBarcode: true,
@@ -1338,12 +1136,8 @@
                 titleColor: '#f59e0b',
                 primarySpirit: 'Barcode'
             };
-
-            cocktails = processedCocktails.filter(c => !c.isBarcode);
-            cocktails.sort((a, b) => a.name.localeCompare(b.name));
             cocktails.unshift(barcodeCard);
         }
-
 
         // --- Config & Global State ---
         let barStock = {};
@@ -1368,15 +1162,18 @@
             'Cinzel', 'Rye', 'Roboto Condensed', 'Black Ops One', 'IM Fell DW Pica', 
             'IM Fell DW Pica', 'Roboto Condensed', 'Cinzel', 'Rye', 'Black Ops One', 
             'Black Ops One', 'IM Fell DW Pica', 'Rye', 'Roboto Condensed', 'Cinzel', 
-            'Rye', 'Cinzel', 'Black Ops One', 'IM Fell DW Pica', 'Roboto Condensed' 
-        ]; 
+            'Rye', 'Cinzel', 'Black Ops One', 'IM Fell DW Pica', 'Roboto Condensed', 
+            'Cinzel', 'Rye', 'Roboto Condensed', 'Black Ops One', 'IM Fell DW Pica', 
+            'IM Fell DW Pica', 'Roboto Condensed', 'Cinzel', 'Rye', 'Black Ops One', 
+            'Black Ops One', 'IM Fell DW Pica', 'Rye', 'Roboto Condensed', 'Cinzel', 
+            'Rye' 
+        ]; // This list has 41 entries, ensuring a unique font face for each card in the deck.
         // --- END UPDATED ---
 
         const ingredientCategories = {
             'Spirits': {
                 'Whiskey & Bourbon': ['Bulleit Bourbon', 'Crown Royal', 'Four Roses Whiskey', 'Jameson Irish Whiskey', 'Jim Beam Bourbon', 'Johnnie Walker Red Label', 'Knob Creek', 'Maker\'s Mark', 'Seagram\'s 7', 'Southern Comfort', 'Travellers Whiskey'],
-                'Vodka': ['Grey Goose Vodka', 'Ketel One Vodka', 'Stolichnaya Citros Vodka'], 
-                'Gin': ['Tanqueray Gin', 'Sloe Gin'],
+                'Vodka': ['Grey Goose Vodka', 'Ketel One Vodka', 'Stolichnaya Citros Vodka'], 'Gin': ['Tanqueray Gin', 'Sloe Gin'],
                 'Rum': ['Bacardi Rum', 'Captain Morgan Spiced Rum', 'Kraken Black Spiced Rum', 'Malibu Rum'],
                 'Tequila': ['El Mayor Tequila', 'Jose Cuervo Silver Tequila'], 
                 /* Brandy already contained E&J Brandy and Apricot Brandy */
@@ -1390,12 +1187,13 @@
                 'Cream, Nut & Coffee': ['Amaretto', 'Baileys Irish Cream', 'Kahlúa'],
                 'Other Schnapps': ['Butterscotch Schnapps', 'Root Beer Schnapps']
             },
-            'Mixers & Bitters': {
-                /* --- UPDATED: Removed 'Sour Mix' --- */
-                'Sodas & Juices': ['Club Soda', 'Cola', 'Cranberry Juice', 'Ginger Soda', 'Lemon Juice', 'Lime Juice', 'Orange Juice', 'Pineapple Juice', 'Tonic Water', 'Sweet and Sour Mix'],
-                'Bitters': ['Angostura Bitters', 'Orange Bitters', 'Peychaud\'s Bitters', 'Rosemary Lavender Bitters'],
-                'Syrups': ['Grenadine', 'Simple Syrup', 'Passion Fruit Syrup'],
-            },
+                'Mixers & Bitters': {
+                    /* --- UPDATED: Removed 'Sour Mix' --- */
+                    'Sodas & Juices': ['Club Soda', 'Cola', 'Cranberry Juice', 'Ginger Soda', 'Lemon Juice', 'Lime Juice', 'Orange Juice', 'Pineapple Juice', 'Tonic Water', 'Sweet and Sour Mix'],
+                    'Bitters': ['Angostura Bitters', 'Orange Bitters', 'Peychaud\'s Bitters', 'Rosemary Lavender Bitters'],
+                    'Syrups': ['Grenadine', 'Simple Syrup', 'Passion Fruit Syrup'],
+                },
+                /* REMOVED 'Other' category */
         };
 
         // --- DOM Elements ---
@@ -1426,7 +1224,7 @@
                      setTimeout(() => inThrottle = false, limit);
                  }
              }
-           }
+        }
 
 
         function parseIngredientName(ingStr) {
@@ -1453,10 +1251,10 @@
             const lowerIng = ingredientName.toLowerCase();
             const defaultInfo = { icon: 'fa-cube', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
 
-            if (['whiskey', 'bourbon', 'southern comfort', 'maker\'s mark', 'seagram\'s 7', 'knob creek', 'crown royal', 'bulleit', 'jim beam', 'johnnie walker', 'four roses', 'travellers whiskey', 'scotch'].some(s => lowerIng.includes(s))) return { icon: 'fa-whiskey-glass', colorClass: 'text-orange-400', colorHex: '#fb923c' };
+            if (['whiskey', 'bourbon', 'southern comfort', 'maker\'s mark', 'seagram\'s 7', 'knob creek', 'crown royal', 'bulleit', 'jim beam', 'johnnie walker', 'four roses', 'travellers whiskey'].some(s => lowerIng.includes(s))) return { icon: 'fa-whiskey-glass', colorClass: 'text-orange-400', colorHex: '#fb923c' };
             if (['vodka'].some(s => lowerIng.includes(s))) return { icon: 'fa-skull-crossbones', colorClass: 'text-blue-300', colorHex: '#93c5fd' };
-            if (['gin', 'sloe gin'].some(s => lowerIng.includes(s))) return { icon: 'fa-leaf', colorClass: 'text-green-400', colorHex: '#4ade80' };
-            if (['rum', 'malibu', 'kraken'].some(s => lowerIng.includes(s))) return { icon: 'fa-anchor', colorClass: 'text-amber-500', colorHex: '#f59e0b' };
+            if (['gin'].some(s => lowerIng.includes(s))) return { icon: 'fa-leaf', colorClass: 'text-green-400', colorHex: '#4ade80' };
+            if (['rum', 'malibu'].some(s => lowerIng.includes(s))) return { icon: 'fa-anchor', colorClass: 'text-amber-500', colorHex: '#f59e0b' };
             if (['tequila'].some(s => lowerIng.includes(s))) return { icon: 'fa-hat-cowboy-side', colorClass: 'text-amber-400', colorHex: '#fbbf24' };
             if (['brandy'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-wine-glass', colorClass: 'text-purple-400', colorHex: '#d8b4fe' };
             if (['prosecco'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-champagne-glasses', colorClass: 'text-yellow-200', colorHex: '#fef08a' }; /* ADDED */
@@ -1472,7 +1270,7 @@
             /* ADDED: Specific icon for "on the rocks" */
             if (lowerIng.includes('serve on the rocks')) return { icon: 'fa-solid fa-snowflake', colorClass: 'text-cyan-300', colorHex: '#67e8f9' };
             
-            if (lowerIng.includes('cherry on top')) return { icon: 'fa-solid fa-circle', colorClass: 'text-red-500', colorHex: '#ef4444' };
+            if (lowerIng.includes('cherry on top') || lowerIng.includes('cherry garnish')) return { icon: 'fa-solid fa-circle', colorClass: 'text-red-500', colorHex: '#ef4444' };
             if (lowerIng.includes('rim')) return { icon: 'fa-solid fa-circle-notch', colorClass: 'text-gray-300', colorHex: '#d1d5db' };
             /* REMOVED: Generic 'garnish' rule */
             
@@ -1503,7 +1301,7 @@
                     });
 
                     // 2. Define display order (grouping "Other" and "Liqueur" near the end)
-                    const displayOrder = ['Brandy', 'Whiskey & Bourbon', 'Vodka', 'Gin', 'Rum', 'Tequila', 'Liqueur/Schnapps', 'Wine & Other', 'Other'];
+                    const displayOrder = ['Brandy', 'Whiskey & Bourbon', 'Vodka', 'Gin', 'Rum', 'Tequila', 'Liqueur/Schnapps', 'Other'];
                     
                     let listHtml = '';
                     
@@ -1522,12 +1320,12 @@
                                 const tocFont = titleFonts[originalIndex % titleFonts.length];
                                 
                                 listHtml += `<div class="toc-item" 
-                                             data-name="${drink.name}" 
-                                             style="color: ${drink.titleColor}; 
-                                                      border-color: ${drink.titleColor}80;
-                                                      font-family: '${tocFont}', sans-serif;">
-                                             ${drink.name}
-                                           </div>`;
+                                            data-name="${drink.name}" 
+                                            style="color: ${drink.titleColor}; 
+                                                    border-color: ${drink.titleColor}80;
+                                                    font-family: '${tocFont}', sans-serif;">
+                                            ${drink.name}
+                                          </div>`;
                             });
                         }
                     });
@@ -1584,18 +1382,18 @@
                         <div class="drink-card-inner">
                             <div class="drink-card-front">
                                  <div class="card-header-front">
-                                    <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
-                                    <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
-                                </div>
-                                <!-- MODIFIED: Reduced padding (pt-3) and font size (text-base) -->
-                                <div class="px-6 pt-3 text-center flex-shrink-0">
-                                    <p class="text-base mb-2 font-cinzel text-gray-300">${item.flavorProfile}</p>
-                                </div>
-                                <div class="recipe-content">
-                                    <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
-                                </div>
-                                <div class="card-hook-tagline">${item.cardHook}</div>
-                                <div class="card-footer"></div>
+                                     <h3 class="drink-card-title" style="font-family: '${titleFont}', cursive; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
+                                     <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
+                                 </div>
+                                 <!-- MODIFIED: Reduced padding (pt-3) and font size (text-base) -->
+                                 <div class="px-6 pt-3 text-center flex-shrink-0">
+                                     <p class="text-base mb-2 font-cinzel text-gray-300">${item.flavorProfile}</p>
+                                 </div>
+                                 <div class="recipe-content">
+                                     <ul class="recipe-list-front">${item.recipe.map(r => { const ingName = parseIngredientName(r) || r; const ingInfo = getIngredientInfo(ingName); return `<li><i class="fas ${ingInfo.icon} ${ingInfo.colorClass}"></i><span>${r}</span></li>`; }).join('')}</ul>
+                                 </div>
+                                 <div class="card-hook-tagline">${item.cardHook}</div>
+                                 <div class="card-footer"></div>
                             </div>
                             <div class="drink-card-back lazy-bg ${!item.image ? 'no-image' : ''}" ${item.image ? `data-bg="url('${item.image}')"` : ''}>
                                <div class="card-back-content">
@@ -1686,17 +1484,13 @@
             }
 
             if (activeFilters.spirit) {
-                // Modified filter logic to check both Spirits and Wine/Other
-                const isWineOtherFilter = activeFilters.spirit === 'Wine & Other';
                 const spiritsInFamily = ingredientCategories.Spirits[activeFilters.spirit] || [];
-
-                drinkableCocktails = drinkableCocktails.filter(drink => {
-                    if (isWineOtherFilter) {
-                        return drink.primarySpirit === 'Wine & Other';
-                    }
-                    // For other spirits, check primary spirit category
-                    return drink.primarySpirit === activeFilters.spirit;
-                });
+                drinkableCocktails = drinkableCocktails.filter(drink =>
+                    drink.recipe.some(recipeLine => {
+                        const ingredientName = parseIngredientName(recipeLine);
+                        return ingredientName && spiritsInFamily.includes(ingredientName);
+                    })
+                );
             }
 
             if (activeFilters.ingredient) {
@@ -1877,7 +1671,7 @@
                         }
                     });
                     if (hasContentInMainCategory) {
-                         html += `<div class="mb-6"><h4 class="text-xl font-rye text-amber-500 mb-3 border-b-2 border-gray-600 pb-2">${mainCategoryName}</h4>${mainCategoryHtml}</div>`;
+                          html += `<div class="mb-6"><h4 class="text-xl font-rye text-amber-500 mb-3 border-b-2 border-gray-600 pb-2">${mainCategoryName}</h4>${mainCategoryHtml}</div>`;
                     }
                 });
                    if (!hasAnyContent) { html += `<p class="text-gray-500 italic">Nothing to show here.</p>`; }
@@ -1904,7 +1698,7 @@
             if (barStock.hasOwnProperty(ingredient)) {
                  barStock[ingredient] = !barStock[ingredient];
             } else {
-                 // If somehow it doesn't exist, assume it was out and now it's in
+                // If somehow it doesn't exist, assume it was out and now it's in
                  barStock[ingredient] = true;
             }
             localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(barStock));
@@ -1929,11 +1723,11 @@
                  <div>
                      <h3 class="text-lg text-amber-500 mb-2 font-rye tracking-wider">Food Pairing</h3>
                      <div id="filter-group-category" class="flex flex-wrap gap-3">
-                         <button data-category="all" class="filter-pill">The Full Deck</button>
-                         <button data-category="Brunch" class="filter-pill">Brunch</button>
-                         <button data-category="Lunch" class="filter-pill">Lunch</button>
-                         <button data-category="Dinner" class="filter-pill">Dinner</button>
-                         <button data-category="Desert" class="filter-pill">Desert</button>
+                          <button data-category="all" class="filter-pill">The Full Deck</button>
+                          <button data-category="Brunch" class="filter-pill">Brunch</button>
+                          <button data-category="Lunch" class="filter-pill">Lunch</button>
+                          <button data-category="Dinner" class="filter-pill">Dinner</button>
+                          <button data-category="Desert" class="filter-pill">Desert</button>
                      </div>
                  </div>`;
             
@@ -1942,7 +1736,7 @@
                  <div>
                      <h3 class="text-lg text-amber-500 mb-2 font-rye tracking-wider">Spirit</h3>
                      <div id="filter-group-spirit" class="flex flex-wrap gap-3">
-                         ${spiritCategories.map(spirit => `<button data-spirit="${spirit}" class="filter-pill">${spirit}</button>`).join('')}
+                          ${spiritCategories.map(spirit => `<button data-spirit="${spirit}" class="filter-pill">${spirit}</button>`).join('')}
                      </div>
                  </div>`;
 
@@ -1954,19 +1748,19 @@
                  <div>
                      <h3 class="text-lg text-amber-500 mb-2 font-rye tracking-wider">Contains Ingredient</h3>
                      <select id="ingredient-filter-select" class="w-full bg-gray-800 border border-gray-600 rounded-lg p-2 text-white focus:outline-none focus:ring-2 focus:ring-amber-500">
-                         <option value="">Any Ingredient</option>
-                         ${allIngredients.map(ing => `<option value="${ing}">${ing}</option>`).join('')}
+                          <option value="">Any Ingredient</option>
+                          ${allIngredients.map(ing => `<option value="${ing}">${ing}</option>`).join('')}
                      </select>
                  </div>
             `;
 
             filterModalContent.innerHTML = `
                  <div class="space-y-4">
-                     ${favoritesFilter}
-                     <div class="filter-separator"></div>
-                     ${categoryFilters}
-                     ${spiritFilters}
-                     ${ingredientFilter}
+                      ${favoritesFilter}
+                      <div class="filter-separator"></div>
+                      ${categoryFilters}
+                      ${spiritFilters}
+                      ${ingredientFilter}
                  </div>`;
             
             updatePillsFromState();
@@ -2001,10 +1795,10 @@
             if (!filtersBtn) return;
 
             const isFilterActive = activeFilters.category !== 'all' || 
-                                       activeFilters.spirit !== null || 
-                                       activeFilters.ingredient !== null || 
-                                       activeFilters.showFavoritesOnly;
-                                           
+                                   activeFilters.spirit !== null || 
+                                   activeFilters.ingredient !== null || 
+                                   activeFilters.showFavoritesOnly;
+                                   
             if (isFilterActive) {
                 filtersBtn.classList.add('is-active-filter');
             } else {
@@ -2117,6 +1911,7 @@
                 scrollTimeout = setTimeout(updateActiveCard, 150);
             });
             
+
             // --- Modals ---
             function closeModal(modalElement) {
                 if (!modalElement) return;
