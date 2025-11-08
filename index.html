@@ -1163,8 +1163,8 @@
                 // 50: Finn's Orchard Kick
                 { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey gets a sharp kick from tart apple and a spicy ginger finish.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn, our resident genius, tried to make 'artisanal applejack' in the clubhouse radiator. The radiator exploded. This drink, made with store-bought ingredients, is a much safer tribute to his ambition.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/8152e3c111a698e2a7f072b33b5662906e08d17d/mannart12.jpg", cardHook: "A tribute to spectacular failures." },
                 
-                // 51: Crossroads Deal
-                { name: "Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Johnnie Walker Red Label", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
+                // 51: Crossroads Deal - *** UPDATED RECIPE ***
+                { name: "Crossroads Deal", flavorProfile: "A smoky and sweet deal between scotch, amaretto, and cola.", recipe: ["2 oz Dewar's Scotch Whisky", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
                 
                 // 52: Purple Hooter
                 { name: "Purple Hooter", flavorProfile: "Bright, sweet raspberry balanced by a floral bitterness and a sharp citrus finish.", recipe: ["1oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash of Lime Juice", "Fill a tall glass with Club Soda"], story: "We're not legally allowed to say why it's called this. Just know that it involves our least-favorite rival club, a gallon of purple paint, and a very surprised mascot. This drink is our trophy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/b53f3ec4d921fabea10c455c27ae09cee7e30d79/aaalchemistsbrew.jpg", cardHook: "To our drunk owl." },
@@ -1195,16 +1195,17 @@
         function getIngredientCategories() {
             return {
                 'Spirits': {
-                    'Whiskey & Bourbon': ['Bulleit Bourbon', 'Crown Royal', 'Four Roses Whiskey', 'Jameson Irish Whiskey', 'Jim Beam Bourbon', 'Johnnie Walker Red Label', 'Knob Creek', 'Maker\'s Mark', 'Seagram\'s 7', 'Southern Comfort', 'Travellers Whiskey'],
+                    'Whiskey & Bourbon': ['Bulleit Bourbon', 'Crown Royal', 'Four Roses Whiskey', 'Jameson Irish Whiskey', 'Jim Beam Bourbon', 'Knob Creek', 'Maker\'s Mark', 'Seagram\'s 7', 'Southern Comfort', 'Travellers Whiskey'],
+                    'Scotch': ['Drambuie', 'Johnnie Walker Red Label', 'Dewar\'s Scotch Whisky'],
                     'Vodka': ['Grey Goose Vodka', 'Ketel One Vodka', 'Stolichnaya Citros Vodka'], 'Gin': ['Tanqueray Gin', 'Sloe Gin'],
                     'Rum': ['Bacardi Rum', 'Captain Morgan Spiced Rum', 'Kraken Black Spiced Rum', 'Malibu Rum'],
-                    'Tequila': ['El Mayor Tequila', 'Jose Cuervo Silver Tequila'], 
+                    'Tequila': ['El Mayor Tequila', 'Jose Cuervo Silver Tequila', 'Jose Cuervo Tequila'], 
                     'Brandy': ['E&J Brandy', 'Apricot Brandy'], 
                     'Wine & Other': ['Prosecco']
                 },
                 'Liqueurs & Schnapps': {
                     'Fruit': ['Apple Pucker', 'Blue Curacao', 'Cherry Schnapps', 'Cointreau', 'Maraschino Liqueur', 'Peach Schnapps', 'Raspberry Schnapps', 'Triple Sec'], 
-                    'Herbal & Spiced': ['Aperol', 'Campari', 'Drambuie', 'Jägermeister', 'Pernod', 'St-Germain', 'Sweet Vermouth'],
+                    'Herbal & Spiced': ['Aperol', 'Campari', 'Jägermeister', 'Pernod', 'St-Germain', 'Sweet Vermouth'],
                     'Cream, Nut & Coffee': ['Amaretto', 'Baileys Irish Cream', 'Kahlúa'],
                     'Other Schnapps': ['Butterscotch Schnapps', 'Root Beer Schnapps']
                 },
@@ -1283,7 +1284,7 @@
                 let primarySpirit = 'Other';
 
                 // Determine Primary Spirit
-                const spiritOrder = ['Brandy', 'Whiskey & Bourbon', 'Vodka', 'Gin', 'Rum', 'Tequila'];
+                const spiritOrder = ['Brandy', 'Whiskey & Bourbon', 'Scotch', 'Vodka', 'Gin', 'Rum', 'Tequila'];
                 let mainIngredient = null;
 
                 // 1. Check Spirits
@@ -1319,6 +1320,12 @@
                 }
 
                 if (mainIngredient) titleColor = getIngredientInfo(mainIngredient).colorHex;
+
+                // Override for Long Island Iced Tea to be in Tequila category
+                if (cocktail.name === "Long Island Iced Tea") {
+                    primarySpirit = 'Tequila';
+                    titleColor = getIngredientInfo('Jose Cuervo Silver Tequila').colorHex; // Set color explicitly
+                }
 
                 // Force title color based on primary spirit category
                 if (primarySpirit === 'Liqueur/Schnapps') {
@@ -1385,14 +1392,14 @@
             const lowerIng = ingredientName.toLowerCase();
             const defaultInfo = { icon: 'fa-cube', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
 
-            if (['whiskey', 'bourbon', 'southern comfort', 'maker\'s mark', 'seagram\'s 7', 'knob creek', 'crown royal', 'bulleit', 'jim beam', 'johnnie walker', 'four roses', 'travellers whiskey'].some(s => lowerIng.includes(s))) return { icon: 'fa-whiskey-glass', colorClass: 'text-orange-500', colorHex: '#FF4500' };
+            if (['whiskey', 'bourbon', 'scotch', 'dewar\'s', 'drambuie', 'southern comfort', 'maker\'s mark', 'seagram\'s 7', 'knob creek', 'crown royal', 'bulleit', 'jim beam', 'johnnie walker', 'four roses', 'travellers whiskey'].some(s => lowerIng.includes(s))) return { icon: 'fa-whiskey-glass', colorClass: 'text-orange-500', colorHex: '#FF4500' };
             if (['vodka'].some(s => lowerIng.includes(s))) return { icon: 'fa-skull-crossbones', colorClass: 'text-blue-300', colorHex: '#93c5fd' };
             if (['gin'].some(s => lowerIng.includes(s))) return { icon: 'fa-leaf', colorClass: 'text-green-400', colorHex: '#4ade80' };
             if (['rum', 'malibu'].some(s => lowerIng.includes(s))) return { icon: 'fa-anchor', colorClass: 'text-amber-500', colorHex: '#f59e0b' };
             if (['tequila'].some(s => lowerIng.includes(s))) return { icon: 'fa-hat-cowboy-side', colorClass: 'text-amber-400', colorHex: '#fbbf24' };
             if (['brandy'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-wine-glass', colorClass: 'text-purple-400', colorHex: '#d8b4fe' };
             if (['prosecco'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-champagne-glasses', colorClass: 'text-yellow-200', colorHex: '#fef08a' };
-            if (['schnapps', 'pucker', 'drambuie', 'jägermeister', 'liqueur', 'baileys', 'pernod', 'kahlúa', 'st-germain', 'cointreau', 'amaretto', 'campari', 'blue curacao', 'aperol', 'sweet vermouth', 'apple pucker'].some(l => lowerIng.includes(l))) return { icon: 'fa-mortar-pestle', colorClass: 'text-pink-500', colorHex: '#f472b6' };
+            if (['schnapps', 'pucker', 'jägermeister', 'liqueur', 'baileys', 'pernod', 'kahlúa', 'st-germain', 'cointreau', 'amaretto', 'campari', 'blue curacao', 'aperol', 'sweet vermouth', 'apple pucker'].some(l => lowerIng.includes(l))) return { icon: 'fa-mortar-pestle', colorClass: 'text-pink-500', colorHex: '#f472b6' };
             if (lowerIng.includes('bitters')) return { icon: 'fa-eye-dropper', colorClass: 'text-red-500', colorHex: '#ef4444' };
             if (['juice', 'sour mix'].some(j => lowerIng.includes(j))) return { icon: 'fa-lemon', colorClass: 'text-yellow-400', colorHex: '#facc15' };
             if (['syrup', 'grenadine'].some(s => lowerIng.includes(s))) return { icon: 'fa-prescription-bottle', colorClass: 'text-pink-400', colorHex: '#f472b6' };
