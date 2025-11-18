@@ -618,41 +618,48 @@
 
         /* --- Footer --- */
         #app-footer {
-            /* MODIFIED: Removed vertical padding */
-            padding: 0 0;
-            /* MODIFIED: Set explicit height. The padding-bottom will push content up from the notch. */
-            height: calc(50px + env(safe-area-inset-bottom));
-            padding-bottom: env(safe-area-inset-bottom);
-            /* ADDED: box-sizing is required when using height + padding */
+            /* UPDATED: REVERTED fixed positioning to fix overlap */
+            position: relative; 
+            flex-shrink: 0; 
+            z-index: 50;
+
+            /* MODIFIED: Slightly relax padding to center buttons better vertically */
+            /* Reduced from full safe-area to 60% of safe-area + some breathing room */
+            padding-bottom: calc(env(safe-area-inset-bottom) * 0.6);
+            
+            /* ADDED: Top padding to push icons down into the vertical center */
+            padding-top: 8px;
+            
+            /* MODIFIED: Ensure minimum height to cover safe area */
+            min-height: calc(50px + 8px + (env(safe-area-inset-bottom) * 0.6));
+            
             box-sizing: border-box; 
             
-            /* --- UPDATED: VISIBLE Footer --- */
-            /* This creates the iOS-style blurred menu bar */
-            /* MODIFIED: Decreased opacity from 0.4 to 0.3 */
+            /* --- VISIBLE Footer --- */
             background-color: rgba(26, 26, 26, 0.3); /* Semi-transparent dark bg */
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
             
+            /* Layout for the inner content container */
             display: flex;
-            justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
-            
-            /* MODIFIED: Changed from flex-end to center for consistent button alignment within the 50px height area */
+            justify-content: center;
             align-items: center; 
-            /* Note: padding-bottom pushes the content area up, so 'center' aligns within the 50px available space */
             
-            /* ADDED: Center the footer bar to match the main content */
+            /* UPDATED: Ensure full width */
+            width: 100%;
+            margin: 0;
+        }
+
+        /* NEW: Inner container to keep buttons centered and spaced correctly */
+        #footer-content {
             width: 100%;
             max-width: 1024px;
-            margin-left: auto;
-            margin-right: auto;
-            
-            /* ADDED: Make footer a non-shrinking flex item */
-            flex-shrink: 0;
-            
-            /* UPDATED: Removed background image */
-            background-image: none;
+            height: 50px; /* Fixed height for content */
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
         }
         
         /* --- ADDED: Make motorcycle icons turquoise --- */
@@ -895,28 +902,31 @@
 
         
         <!-- Main application footer (Now for navigation only) -->
+        <!-- UPDATED: Wrapped contents in #footer-content for layout control -->
         <div id="app-footer">
-            <button id="scroll-home-btn" class="footer-btn" title="Back to Index">
-                <i class="fas fa-home"></i>
-                <span class="text-xs">Home</span>
-            </button>
+            <div id="footer-content">
+                <button id="scroll-home-btn" class="footer-btn" title="Back to Index">
+                    <i class="fas fa-home"></i>
+                    <span class="text-xs">Home</span>
+                </button>
 
-            <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
-                <i class="fas fa-motorcycle fa-flip-horizontal"></i> 
-                <span class="text-xs">Rewind</span>
-            </button>
-            
-            <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
-                <i class="fas fa-book-open icon-stories"></i>
-                <i class="fas fa-scroll icon-recipe"></i>
-                <span class="text-xs label-stories">Story</span>
-                <span class="text-xs label-recipe">Recipe</span>
-            </button>
+                <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
+                    <i class="fas fa-motorcycle fa-flip-horizontal"></i> 
+                    <span class="text-xs">Rewind</span>
+                </button>
+                
+                <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
+                    <i class="fas fa-book-open icon-stories"></i>
+                    <i class="fas fa-scroll icon-recipe"></i>
+                    <span class="text-xs label-stories">Story</span>
+                    <span class="text-xs label-recipe">Recipe</span>
+                </button>
 
-            <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
-                <i class="fas fa-motorcycle"></i>
-                <span class="text-xs">Skip</span>
-            </button>
+                <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
+                    <i class="fas fa-motorcycle"></i>
+                    <span class="text-xs">Skip</span>
+                </button>
+            </div>
         </div>
     </div>
 
