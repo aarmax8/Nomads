@@ -170,17 +170,34 @@
             /* --- End New Styles --- */
         }
 
-        /* Override footer-btn styles when inside action-bar */
-        #action-bar .footer-btn {
-            font-size: 0.75rem; /* 12px */
-            color: #b0b0b5; 
-            padding-top: 0.25rem; /* Add a bit of top padding */
+        /* --- UNIFIED FOOTER BUTTON STYLES --- */
+        /* Applied globally to .footer-btn so both top and bottom bars match size */
+        .footer-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            color: #b0b0b5; /* Default grey */
+            padding: 0.25rem 0.25rem 0 0.25rem; /* Matches top bar padding */
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            gap: 0.1rem;
+            font-size: 0.75rem; /* 12px - Matches top bar */
+            width: 60px; 
+            line-height: 1.2;
         }
-        #action-bar .footer-btn i {
-            font-size: 1.25rem; /* 20px */
+        .footer-btn i {
+            font-size: 1.25rem; /* 20px - Matches top bar */
             margin-bottom: 0.2rem;
             color: #b0b0b5;
         }
+        .footer-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        /* --- END UNIFIED STYLES --- */
 
         /* Override active states for action-bar */
         #action-bar .footer-btn.is-active-filter {
@@ -552,55 +569,15 @@
         }
 
         
-        /* --- New Footer Button Styles (Base) --- */
-        .footer-btn {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            /* MODIFIED: iOS-style neutral gray */
-            color: #8e8e93; 
-            /* MODIFIED: Removed all vertical padding to minimize bar height */
-            padding: 0 0.25rem 0 0.25rem; 
-            border-radius: 0.5rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            /* ADDED: Add a small gap between icon and text */
-            gap: 0.1rem;
-            /* MODIFIED: Reduced font size from 0.75rem to 0.65rem (approx 10px) */
-            font-size: 0.65rem; 
-            width: 60px; /* Give them a consistent width */
-            line-height: 1.2;
-        }
-        .footer-btn i {
-            /* MODIFIED: Set to standard icon size */
-            font-size: 1.8rem; 
-            /* MODIFIED: Reduced margin-bottom (was 0.1rem) */
-            margin-bottom: 0;
-            /* MODIFIED: iOS-style neutral gray */
-            color: #8e8e93; 
-        }
-        .footer-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
         /* Special style for middle button (in footer) */
         #app-footer .footer-btn-middle {
-            color: #f59e0b; /* Amber */
             /* REMOVED: scale effect */
             transform: none; 
             /* REMOVED: negative margin to pull it down */
             margin-bottom: 0; 
-            /* REMOVED: All vertical padding to match .footer-btn */
-            padding-bottom: 0; 
-            padding-top: 0;
-            
         }
         #app-footer .footer-btn-middle i {
-            /* MODIFIED: Set to standard icon size */
-            font-size: 1.8rem; 
+             /* Inherits 1.25rem from new default */
         }
         
         /* REMOVED: Old .footer-btn.is-active-filter and #footer-favorites-btn.is-active */
@@ -610,15 +587,16 @@
         #toggle-view-btn-main .icon-recipe { display: none; }
         #toggle-view-btn-main .icon-stories { 
             display: inline-block; 
-            /* MODIFIED: Set default icon to amber */
-            color: #f59e0b;
+            /* MODIFIED: Set default icon to TURQUOISE as requested */
+            color: #2dd4bf;
         }
 
         /* ADDED: Styles for the new text labels */
         #toggle-view-btn-main .label-recipe { display: none; }
         #toggle-view-btn-main .label-stories { 
             display: inline-block; 
-            /* Inherits amber color from .footer-btn-middle */
+            /* MATCH TURQUOISE COLOR */
+            color: #2dd4bf;
         }
 
 
@@ -659,8 +637,10 @@
             
             display: flex;
             justify-content: space-evenly; /* MODIFIED: Evenly space all buttons */
-            /* MODIFIED: Set to flex-end to push content down and maximize vertical space efficiency */
-            align-items: flex-end; 
+            
+            /* MODIFIED: Changed from flex-end to center for consistent button alignment within the 50px height area */
+            align-items: center; 
+            /* Note: padding-bottom pushes the content area up, so 'center' aligns within the 50px available space */
             
             /* ADDED: Center the footer bar to match the main content */
             width: 100%;
@@ -679,6 +659,14 @@
         #app-footer #scroll-prev-btn i,
         #app-footer #scroll-next-btn i {
             color: #2dd4bf; /* Turquoise */
+        }
+        
+        /* --- ADDED: Make home icon turquoise as requested --- */
+        #app-footer #scroll-home-btn {
+            color: #2dd4bf;
+        }
+        #app-footer #scroll-home-btn i {
+            color: #2dd4bf;
         }
         
         /* --- Splash Screen --- */
@@ -908,24 +896,26 @@
         
         <!-- Main application footer (Now for navigation only) -->
         <div id="app-footer">
+            <button id="scroll-home-btn" class="footer-btn" title="Back to Index">
+                <i class="fas fa-home"></i>
+                <span class="text-xs">Home</span>
+            </button>
+
             <button id="scroll-prev-btn" class="footer-btn" title="Scroll Left">
-                <!-- FIX: Added fa-flip-horizontal to make it face left -->
                 <i class="fas fa-motorcycle fa-flip-horizontal"></i> 
-                <!-- REMOVED: <span class="text-xs">Prev</span> -->
+                <span class="text-xs">Rewind</span>
             </button>
             
             <button id="toggle-view-btn-main" class="footer-btn footer-btn-middle" title="Toggle Recipe/Story">
                 <i class="fas fa-book-open icon-stories"></i>
                 <i class="fas fa-scroll icon-recipe"></i>
-                <!-- Text will be hidden by icons, but good for accessibility -->
-                <!-- UPDATED: Replaced sr-only span with dynamic labels -->
                 <span class="text-xs label-stories">Story</span>
                 <span class="text-xs label-recipe">Recipe</span>
             </button>
 
             <button id="scroll-next-btn" class="footer-btn" title="Scroll Right">
-                <i class="fas fa-motorcycle"></i> <!-- UPDATED ICON -->
-                <!-- REMOVED: <span class="text-xs">Next</span> -->
+                <i class="fas fa-motorcycle"></i>
+                <span class="text-xs">Skip</span>
             </button>
         </div>
     </div>
@@ -2215,6 +2205,11 @@
         }
 
         function addFooterEventListeners() {
+            document.getElementById('scroll-home-btn')?.addEventListener('click', () => {
+                menuGrid.scrollTo({ left: 0, behavior: 'smooth' });
+                setTimeout(updateActiveCard, 600);
+            });
+
             document.getElementById('scroll-prev-btn')?.addEventListener('click', () => {
                 const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
                 if (cards.length === 0) return;
