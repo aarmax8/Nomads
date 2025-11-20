@@ -36,7 +36,9 @@
             /* MODIFIED: Removed the linear-gradient overlay */
             background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
-            background-position: center;
+            
+            /* UPDATED: Move image down to show bridge deck/people */
+            background-position: center 85%;
 
             /* ADDED: This fills the "white bars" at top/bottom */
             background-color: #000;
@@ -159,8 +161,8 @@
             padding: 0 0.25rem; /* Horizontal padding */
             box-sizing: border-box;
             
-            /* MODIFIED: Decreased opacity from 0.4 to 0.3 */
-            background-color: rgba(26, 26, 26, 0.3); /* Semi-transparent dark bg */
+            /* UPDATED: Increased opacity to 0.6 for better button visibility */
+            background-color: rgba(0, 0, 0, 0.6); /* Darker semi-transparent bg */
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -181,7 +183,8 @@
             justify-content: center;
             background: transparent;
             border: none;
-            color: #b0b0b5; /* Default grey */
+            /* UPDATED: Brighter default text color */
+            color: #d1d5db; 
             padding: 0.25rem 0.25rem 0 0.25rem; /* Matches top bar padding */
             border-radius: 0.5rem;
             cursor: pointer;
@@ -194,7 +197,7 @@
         .footer-btn i {
             font-size: 1.25rem; /* 20px - Matches top bar */
             margin-bottom: 0.2rem;
-            color: #b0b0b5;
+            color: #d1d5db;
         }
         .footer-btn:hover {
             background-color: rgba(255, 255, 255, 0.1);
