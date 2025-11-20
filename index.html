@@ -73,12 +73,12 @@
             position: relative; /* For z-index and pseudo-elements */
             
             /* MODIFIED: Base height adjusted for visual balance */
-            /* Removed padding-top to let content flow to the very top edge */
+            /* NOTE: Removed padding-top so image goes to physical top edge */
             height: calc(130px + env(safe-area-inset-top));
             
             z-index: 10; /* Keep header above main content */
             width: 100%; /* ADDED: Ensure header is full width */
-
+            
             box-sizing: border-box;
         }
         
@@ -103,7 +103,8 @@
             width: 100%;
             /* MODIFIED: Height matches the header container exactly */
             height: 100%;
-            object-fit: cover; /* Ensures image covers area but can be positioned */
+            /* UPDATED: Switched to 'fill' to ensure NOMADS text is always visible and image stretches to edges */
+            object-fit: fill; 
             position: absolute;
             /* MODIFIED: Start at 0 to cover the very top (including safe area) */
             top: 0;
@@ -111,10 +112,6 @@
             bottom: 0;
             left: 0;
             z-index: 1;
-
-            /* UPDATED: Positions the image to show the people/motorcycle better */
-            /* 15% moves the focal point up the image, pushing the content down into view */
-            object-position: center 15%;
         }
 
         /* ADDED: Center the header logo container to match the main content */
