@@ -73,13 +73,12 @@
             position: relative; /* For z-index and pseudo-elements */
             
             /* MODIFIED: Base height adjusted for visual balance */
+            /* Removed padding-top to let content flow to the very top edge */
             height: calc(130px + env(safe-area-inset-top));
             
             z-index: 10; /* Keep header above main content */
             width: 100%; /* ADDED: Ensure header is full width */
 
-            /* ADDED: Apply safe-area padding here */
-            padding-top: env(safe-area-inset-top); 
             box-sizing: border-box;
         }
         
@@ -102,20 +101,20 @@
 
         #header-logo-image {
             width: 100%;
-            /* MODIFIED: Removed explicit height */
-            /* height: calc(150px + env(safe-area-inset-top)); */
+            /* MODIFIED: Height matches the header container exactly */
+            height: 100%;
             object-fit: cover; /* Ensures image covers area but can be positioned */
             position: absolute;
-            /* MODIFIED: Pull image up to cover padding */
-            top: -env(safe-area-inset-top);
+            /* MODIFIED: Start at 0 to cover the very top (including safe area) */
+            top: 0;
             /* ADDED: Stretch image to bottom of container */
             bottom: 0;
             left: 0;
             z-index: 1;
 
             /* UPDATED: Positions the image to show the people/motorcycle better */
-            /* 35% moves the focal point slightly down from center */
-            object-position: center 35%;
+            /* 15% moves the focal point up the image, pushing the content down into view */
+            object-position: center 15%;
         }
 
         /* ADDED: Center the header logo container to match the main content */
