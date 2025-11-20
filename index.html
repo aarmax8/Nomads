@@ -72,8 +72,8 @@
             flex-shrink: 0; /* Header should not shrink */
             position: relative; /* For z-index and pseudo-elements */
             
-            /* MODIFIED: Reduced base height from 150px to 110px to move top higher */
-            height: calc(110px + env(safe-area-inset-top));
+            /* MODIFIED: Base height adjusted for visual balance */
+            height: calc(130px + env(safe-area-inset-top));
             
             z-index: 10; /* Keep header above main content */
             width: 100%; /* ADDED: Ensure header is full width */
@@ -104,7 +104,7 @@
             width: 100%;
             /* MODIFIED: Removed explicit height */
             /* height: calc(150px + env(safe-area-inset-top)); */
-            object-fit: fill; /* Stretches to fill the container */
+            object-fit: cover; /* Ensures image covers area but can be positioned */
             position: absolute;
             /* MODIFIED: Pull image up to cover padding */
             top: -env(safe-area-inset-top);
@@ -112,6 +112,10 @@
             bottom: 0;
             left: 0;
             z-index: 1;
+
+            /* UPDATED: Positions the image to show the people/motorcycle better */
+            /* 35% moves the focal point slightly down from center */
+            object-position: center 35%;
         }
 
         /* ADDED: Center the header logo container to match the main content */
@@ -161,9 +165,9 @@
             padding: 0 0.25rem; /* Horizontal padding */
             box-sizing: border-box;
             
-            /* UPDATED: Increased opacity to 0.6 for better button visibility */
-            background-color: rgba(0, 0, 0, 0.6); /* Darker semi-transparent bg */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            /* UPDATED: Decreased opacity to 0.35 for more transparency */
+            background-color: rgba(0, 0, 0, 0.35); 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Shadow below the bar */
@@ -183,8 +187,8 @@
             justify-content: center;
             background: transparent;
             border: none;
-            /* UPDATED: Brighter default text color */
-            color: #d1d5db; 
+            /* UPDATED: Brighter white text for better contrast on transparent bg */
+            color: #ffffff; 
             padding: 0.25rem 0.25rem 0 0.25rem; /* Matches top bar padding */
             border-radius: 0.5rem;
             cursor: pointer;
@@ -193,11 +197,15 @@
             font-size: 0.75rem; /* 12px - Matches top bar */
             width: 60px; 
             line-height: 1.2;
+            /* ADDED: Text shadow to help readability against busy backgrounds */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
         .footer-btn i {
             font-size: 1.25rem; /* 20px - Matches top bar */
             margin-bottom: 0.2rem;
-            color: #d1d5db;
+            color: #ffffff;
+            /* ADDED: Drop shadow for icons */
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
         }
         .footer-btn:hover {
             background-color: rgba(255, 255, 255, 0.1);
