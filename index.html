@@ -69,8 +69,10 @@
         header {
             flex-shrink: 0; /* Header should not shrink */
             position: relative; /* For z-index and pseudo-elements */
-            /* MODIFIED: Height now accounts for safe area */
-            height: calc(150px + env(safe-area-inset-top));
+            
+            /* MODIFIED: Reduced base height from 150px to 110px to move top higher */
+            height: calc(110px + env(safe-area-inset-top));
+            
             z-index: 10; /* Keep header above main content */
             width: 100%; /* ADDED: Ensure header is full width */
 
@@ -238,6 +240,12 @@
             min-height: 0; 
 
             box-sizing: border-box; 
+        }
+        
+        /* --- NEW: Crash Fix --- */
+        /* Disables animations when the grid has this class to prevent GPU overload */
+        #menu-grid.disable-animation .drink-card-inner {
+            transition: none !important;
         }
         
         /* --- Amber Scrollbar for Menu Grid --- */
@@ -2020,17 +2028,22 @@
              // 1. CRITICAL: Identify and disable scroll snapping immediately
              menuGrid.style.scrollSnapType = 'none';
              
+             // --- NEW: Prevent Crash Fix ---
+             // Disable CSS transitions temporarily to stop GPU overload
+             menuGrid.classList.add('disable-animation');
+             
              isToggleThrottled = true;
              setCardView(!isGlobalTarotView);
 
              // 2. Restore position INSTANTANEOUSLY
              cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
              
-             // 3. Re-enable snap after a short delay
+             // 3. Re-enable snap and animations after a short delay
              setTimeout(() => {
+                 menuGrid.classList.remove('disable-animation'); // Re-enable animations for individual flips
                  isToggleThrottled = false;
                  menuGrid.style.scrollSnapType = 'x mandatory';
-             }, 50); 
+             }, 100); // Increased slight delay to ensure DOM has settled
         }
 
         
