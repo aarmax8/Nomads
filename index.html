@@ -161,8 +161,8 @@
             padding: 0 0.25rem; /* Horizontal padding */
             box-sizing: border-box;
             
-            /* UPDATED: Decreased opacity to 0.35 for more transparency */
-            background-color: rgba(0, 0, 0, 0.35); 
+            /* UPDATED: Decreased opacity to 0.2 for more transparency */
+            background-color: rgba(0, 0, 0, 0.2); 
             border-bottom: 1px solid rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -677,9 +677,11 @@
             align-items: center;
         }
         
-        /* --- ADDED: Make motorcycle icons turquoise --- */
+        /* --- ADDED: Make motorcycle icons AND text turquoise --- */
         #app-footer #scroll-prev-btn i,
-        #app-footer #scroll-next-btn i {
+        #app-footer #scroll-prev-btn span,
+        #app-footer #scroll-next-btn i,
+        #app-footer #scroll-next-btn span {
             color: #2dd4bf; /* Turquoise */
         }
         
