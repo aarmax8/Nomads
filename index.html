@@ -157,12 +157,14 @@
 
             /* --- NEW STYLES --- */
             /* Copied from #app-footer to create a matching iOS-style top bar */
-            height: 50px;
+            /* UPDATED: Increased height to accommodate bigger buttons */
+            height: 70px;
             padding: 0 0.25rem; /* Horizontal padding */
             box-sizing: border-box;
             
             /* UPDATED: Gradient background for seamless blending */
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 100%);
+            /* Changed direction to get darker at the bottom for text readability */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.9) 100%);
             
             /* Removed border for cleaner look */
             border-bottom: none;
@@ -214,6 +216,20 @@
             background-color: rgba(255, 255, 255, 0.1);
         }
         /* --- END UNIFIED STYLES --- */
+
+        /* --- ACTION BAR SPECIFIC OVERRIDES (Bigger Icons) --- */
+        #action-bar .footer-btn {
+            width: 75px; /* Wider for bigger targets */
+        }
+        #action-bar .footer-btn i {
+            font-size: 1.75rem; /* Significantly larger icons (approx 28px) */
+            margin-bottom: 0.3rem;
+        }
+        #action-bar .footer-btn span {
+            font-size: 0.85rem; /* Larger text */
+            font-weight: 700;   /* Bolder text */
+        }
+        /* --- END OVERRIDES --- */
 
         /* Override active states for action-bar */
         #action-bar .footer-btn.is-active-filter {
@@ -1199,8 +1215,8 @@
                 // 54: Mudslide
                 { name: "Mudslide", flavorProfile: "It's a vodka-spiked coffee milkshake. This is not a drink, it's a dessert that will get you arrested.", recipe: ["1oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "We tried to ride through a mudslide. It was a bad idea. This drink is a much better, and cleaner, version of that experience. It's still a bad idea to have five of them, though.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "To the shortcuts that weren't." },
                 
-                // 55: Dust Devil (Renamed from Desert Wind)
-                { name: "Dust Devil", flavorProfile: "A dry, spicy, and slightly bitter mix of whiskey and ginger. Tastes like a long story you can't escape.", recipe: ["2 oz Wild Turkey 101", "Fill with Ginger Soda", "2 dashes Orange Bitters"], story: "Named for our club secretary, who can talk for three hours without taking a breath. The drink is dry, spicy, and will leave you speechless. We wish he would try one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "For stories that go on too long." },
+                // 55: Turkey Buck (Renamed from Dust Devil)
+                { name: "Turkey Buck", flavorProfile: "A dry, spicy, and slightly bitter mix of whiskey and ginger. Tastes like a long story you can't escape.", recipe: ["2 oz Wild Turkey 101", "0.75 oz Lime Juice", "0.5 oz Apricot Brandy", "Top with Ginger Soda", "2 dashes Orange Bitters"], story: "Named for our club secretary, who can talk for three hours without taking a breath. The drink is dry, spicy, and will leave you speechless. We wish he would try one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "For stories that go on too long." },
                 
                 // 56: Oracle's Kiss
                 { name: "Oracle's Kiss", flavorProfile: "A sweet, floral, and slightly tart mix of citrus vodka and cranberry. Tastes like a beautiful, expensive mistake.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], story: "Some lady at a carnival gave our treasurer a 'kiss for good luck.' He woke up three hours later with his wallet gone and a lingering taste of cranberry. We made this to commemorate his gullibility.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8297.jpg", cardHook: "The future is sweet and flowery." }, 
