@@ -241,8 +241,9 @@
             contain-intrinsic-size: 300px 500px; 
             contain: layout style;
             
-            /* Transitions for spotlight effect - UPDATED: Sped up from 0.15s to 0.1s for immediate feel */
-            transition: opacity 0.1s ease-out, transform 0.1s ease-out, filter 0.1s ease-out;
+            /* UPDATED: Extremely fast transition (50ms) + GPU hints */
+            transition: opacity 0.05s ease-out, transform 0.05s ease-out, filter 0.05s ease-out;
+            will-change: opacity, transform, filter;
         }
 
         /* Dim non-active cards */
