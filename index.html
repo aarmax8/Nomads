@@ -322,12 +322,13 @@
 
         .card-header-front {
             position: relative; 
-            padding: 0.75rem 4rem 0.75rem 1.25rem; 
+            padding: 0.75rem 4rem 0.5rem 1.25rem; /* Reduced bottom padding */
             background: transparent; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: none; 
             flex-shrink: 0;
         }
+        
         .recipe-content { 
             flex-grow: 1; 
             overflow-y: auto; 
@@ -336,12 +337,31 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            position: relative; /* For absolute positioning of watermark */
         }
         .recipe-content::-webkit-scrollbar { width: 4px; }
         .recipe-content::-webkit-scrollbar-track { background: transparent; }
         .recipe-content::-webkit-scrollbar-thumb { background-color: #2dd4bf; border-radius: 4px; }
 
-        .recipe-list-front { list-style: none; padding: 0; }
+        /* --- NEW: Watermark Styling --- */
+        .recipe-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 10rem; /* Very large icon */
+            opacity: 0.07; /* Very faint */
+            color: #ffffff;
+            pointer-events: none; /* Let clicks pass through */
+            z-index: 0;
+        }
+
+        .recipe-list-front { 
+            list-style: none; 
+            padding: 0; 
+            position: relative; 
+            z-index: 1; /* Ensure text sits above watermark */
+        }
         .recipe-list-front li {
             display: flex; align-items: center; font-family: 'Roboto Condensed', sans-serif;
             font-size: 1rem; 
@@ -349,12 +369,41 @@
             letter-spacing: 0.02em; 
             margin-bottom: 0.375rem; 
             color: #e5e7eb; 
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8); /* Added shadow for readability over watermark */
         }
         .recipe-list-front li i { 
             width: 24px; text-align: center; 
             margin-right: 1rem; 
             font-size: 1.125rem; 
         }
+
+        /* --- NEW: Octane Meter Styling --- */
+        .octane-meter {
+            display: flex;
+            justify-content: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .octane-icon {
+            font-size: 0.8rem;
+            color: #4b5563; /* Dim gray for empty */
+        }
+        .octane-icon.filled {
+            color: #ef4444; /* Red for filled */
+            text-shadow: 0 0 5px rgba(239, 68, 68, 0.5);
+        }
+        .octane-label {
+            width: 100%;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #9ca3af;
+            font-family: 'Black Ops One', cursive;
+            margin-bottom: 0.5rem;
+            opacity: 0.7;
+        }
+
         .card-footer {
             padding: 0;
             flex-shrink: 0;
@@ -372,7 +421,7 @@
             font-family: 'Cinzel', serif;
             letter-spacing: 0.03em; 
             font-style: normal; 
-            border-top: 1px solid rgba(255, 255, 255, 0.1); 
+            /* border-top: 1px solid rgba(255, 255, 255, 0.1); Removed to merge with octane */
         }
 
         /* --- Story Card Back --- */
@@ -880,6 +929,14 @@
         let isToggleThrottled = false; 
 
         let menuGrid, barStockModal, filterModal, favoritesModal, randomDrinkBtn;
+        
+        const titleFonts = [
+            'Rye', 
+            'Cinzel', 
+            'Black Ops One', 
+            'IM Fell DW Pica', 
+            'Roboto Condensed'
+        ];
 
         function getInitialCocktailData() {
             return [
@@ -910,7 +967,7 @@
                 { name: "Cowboy's Hard Root Beer", flavorProfile: "Tastes exactly like a root beer float, if the ice cream was replaced with bourbon. Which it was.", recipe: ["1.5 oz Jim Beam Bourbon", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "A cowboy bet us we couldn't make a drink that tasted like 'a rodeo in a bottle.' We made this with Jim Beam. It's got the sweet taste of victory and the kick of a pissed-off bull. He paid up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "This drink has spurs." },
                 { name: "Wolf Ticket", flavorProfile: "High-proof bourbon meets sweet peach and sour lemon. A smooth talker with a mean right hook.", recipe: ["1.5 oz Wild Turkey 101", "0.5 oz Peach Liqueur", "0.5 oz Simple Syrup", "0.75 oz Lemon Juice", "Dash of Bitters"], story: "A 'Wolf Ticket' is a threat you don't intend to carry out. This drink? It makes promises it definitely keeps. The peach draws you in, the 101 proof bourbon takes you out. Don't say we didn't warn you.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/c7fd6a017b5f1a4a26d81720d989dd1cccfca51c/mannart22.jpg", cardHook: "Don't write checks you can't cash." },
                 { name: "Garibaldi", flavorProfile: "Bitter, sweet, and bright orange. Tastes like a simple, refreshing, revolutionary idea.", recipe: ["2.5 oz Orange Juice", "2.5 oz Aperol"], story: "Named for an Italian revolutionary, this drink is as simple as it is refreshing. It's what you drink when you want something bright, bitter, and uncomplicated. We call it 'The General's Juice.' He probably would've hated that.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "Italy's simple, bitter classic." },
-                { name: "Ward Eight", flavorProfile: "This is Jungle Juice for people who own motorcycles. Fruity, strong, and a terrible idea.", recipe: ["2 oz Crown Royal", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when you try to make 'Jungle Juice' with actual whiskey. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "History, but with more sugar." },
+                { name: "Ward Eight", flavorProfile: "This is Jungle Juice for people who own motorcycles. Fruity, strong, and a terrible idea.", recipe: ["2 oz Crown Royal", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when our most stubborn members, an Irishman and a Russian, argue over whose drink is better. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "History, but with more sugar." },
                 { name: "Boulevardier", flavorProfile: "A Negroni, but with whiskey. It's the sophisticated choice for the discerning, leather-clad degenerate.", recipe: ["2 oz Aperol", "2 oz Sweet Vermouth", "3 oz Four Roses Whiskey"], story: "Named after a famous Parisian magazine, this is the drink of the 'man about town.' Our version is for the man about the chop shop—it’s sophisticated, strong, and guaranteed to loosen the tongue. Don't sign anything after the second one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/8152e3c111a698e2a7f072b33b5662906e08d17d/mannart24.jpg", cardHook: "The official drink of the well-dressed nomad." },
                 { name: "Americano", flavorProfile: "Like a Negroni that's trying to take it easy. Bubbly, bittersweet, and not as strong as it looks.", recipe: ["1.5 oz Aperol", "1.5 oz Sweet Vermouth", "Top with Club Soda"], story: "This is the Negroni's older, lighter brother. It's what you drink when you want to look sophisticated, but it's 2 PM on a Tuesday. We 'borrowed' this one from the same Italian bar. The bartender was less than thrilled.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/e7b78721b45c1417e839ceb2df4a358144244771/mannart1.jpg", cardHook: "Italy's favorite sipper." },
                 { name: "Jim Beam Black Cherry Bomb", flavorProfile: "A boozy, bubbly, black cherry cola. It's the drink version of a cherry-red muscle car.", recipe: ["2 oz Jim Beam Bourbon", "0.5 oz Cherry Schnapps", "Fill a tall glass with Cola"], story: "This isn't a drink, it's an escalation. It starts with bourbon, adds some cherry, and ends with you-thinking it's a good idea to see if your bike can do a burnout on the bar. It can't.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5a6b0379f72b6c8fb2751409d48ac8fa.jpg", cardHook: "Tastes like minor property damage." },
@@ -972,7 +1029,65 @@
             };
         }
 
-        const titleFonts = ['Rye', 'Cinzel', 'Black Ops One', 'IM Fell DW Pica', 'Roboto Condensed'];
+        function parseIngredientName(ingStr) {
+            if (typeof ingStr !== 'string') return null; 
+            let name = ingStr.replace(/^[\d./\s-]+(oz|dashes|dash|garnish)\s*/i, '');
+            const instructionalPhrases = [ 'Fill a tall glass with ', 'Fill with ', 'Top with ', 'Splash of ', 'Splash ', '1 teaspoon ', 'Rinse of '];
+            for (const phrase of instructionalPhrases) {
+                if (name.toLowerCase().startsWith(phrase.toLowerCase())) {
+                    name = name.substring(phrase.length);
+                    const inIndex = name.toLowerCase().indexOf(' in a');
+                    if (inIndex > -1) name = name.substring(0, inIndex);
+                    break;
+                }
+            }
+            const pureInstructions = ['serve on the rocks'];
+            if(pureInstructions.includes(name.toLowerCase().trim())) return null;
+            return name.trim();
+        }
+
+        function getIngredientInfo(ingredientName) {
+            if (!ingredientName) {
+                return { icon: 'fa-cube', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
+            }
+            const lowerIng = ingredientName.toLowerCase();
+            const defaultInfo = { icon: 'fa-cube', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
+
+            if (['whiskey', 'bourbon', 'scotch', 'dewar\'s', 'drambuie', 'southern comfort', 'maker\'s mark', 'old grand-dad', 'wild turkey', 'crown royal', 'bulleit', 'jim beam', 'johnnie walker', 'four roses', 'travellers whiskey'].some(s => lowerIng.includes(s))) return { icon: 'fa-whiskey-glass', colorClass: 'text-orange-500', colorHex: '#FF4500' };
+            if (['vodka'].some(s => lowerIng.includes(s))) return { icon: 'fa-skull-crossbones', colorClass: 'text-blue-300', colorHex: '#93c5fd' };
+            if (['gin'].some(s => lowerIng.includes(s))) return { icon: 'fa-leaf', colorClass: 'text-green-400', colorHex: '#4ade80' };
+            if (['rum', 'malibu'].some(s => lowerIng.includes(s))) return { icon: 'fa-anchor', colorClass: 'text-amber-500', colorHex: '#f59e0b' };
+            if (['tequila'].some(s => lowerIng.includes(s))) return { icon: 'fa-hat-cowboy-side', colorClass: 'text-amber-400', colorHex: '#fbbf24' };
+            if (['brandy'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-wine-glass', colorClass: 'text-purple-400', colorHex: '#d8b4fe' };
+            if (['prosecco'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-champagne-glasses', colorClass: 'text-yellow-200', colorHex: '#fef08a' };
+            if (['schnapps', 'pucker', 'jägermeister', 'liqueur', 'baileys', 'pernod', 'kahlúa', 'st-germain', 'cointreau', 'amaretto', 'campari', 'blue curacao', 'aperol', 'sweet vermouth', 'apple pucker'].some(l => lowerIng.includes(l))) return { icon: 'fa-mortar-pestle', colorClass: 'text-pink-500', colorHex: '#f472b6' };
+            if (lowerIng.includes('bitters')) return { icon: 'fa-eye-dropper', colorClass: 'text-red-500', colorHex: '#ef4444' };
+            if (['juice', 'sour mix'].some(j => lowerIng.includes(j))) return { icon: 'fa-lemon', colorClass: 'text-yellow-400', colorHex: '#facc15' };
+            if (['syrup', 'grenadine'].some(s => lowerIng.includes(s))) return { icon: 'fa-prescription-bottle', colorClass: 'text-pink-400', colorHex: '#f472b6' };
+            if (lowerIng.includes('serve on the rocks')) return { icon: 'fa-solid fa-snowflake', colorClass: 'text-cyan-300', colorHex: '#67e8f9' };
+            if (lowerIng.includes('dirty martini mix')) return { icon: 'fa-glass-water', colorClass: 'text-green-500', colorHex: '#22c55e' };
+            if (lowerIng.includes('green olives')) return { icon: 'fa-olive', colorClass: 'text-green-600', colorHex: '#16a34a' };
+            if (lowerIng.includes('cherry on top') || lowerIng.includes('cherry garnish')) return { icon: 'fa-solid fa-circle', colorClass: 'text-red-500', colorHex: '#ef4444' };
+            if (lowerIng.includes('rim')) return { icon: 'fa-solid fa-circle-notch', colorClass: 'text-gray-300', colorHex: '#d1d5db' };
+            
+            return defaultInfo;
+        }
+
+        function calculateOctane(recipe) {
+             let alcoholCount = 0;
+             recipe.forEach(line => {
+                 const lower = line.toLowerCase();
+                 if (['vodka', 'gin', 'rum', 'tequila', 'whiskey', 'bourbon', 'scotch', 'brandy', 'cognac', 'liqueur', 'schnapps', 'amaretto', 'vermouth', 'aperol', 'campari', 'kahlúa', 'baileys', 'cointreau', 'triple sec', 'prosecco', 'jager', 'jäger'].some(spirit => lower.includes(spirit))) {
+                     alcoholCount++;
+                 }
+             });
+             if (alcoholCount === 0) return 1; 
+             if (alcoholCount === 1) return 2;
+             if (alcoholCount === 2) return 3;
+             if (alcoholCount >= 3) return 4;
+             if (alcoholCount >= 5) return 5; 
+             return 3; 
+        }
 
         function setupCocktailData() {
             const initialCocktails = getInitialCocktailData();
@@ -1034,6 +1149,7 @@
                     if (!hasLiqueur) {
                         primarySpirit = 'Other'; 
                     }
+                    
                     if (primarySpirit === 'Other' && cocktail.recipe.length > 0) {
                          mainIngredient = parseIngredientName(cocktail.recipe[0]);
                     }
@@ -1074,57 +1190,6 @@
             cocktails.unshift(barcodeCard);
         }
 
-        function parseIngredientName(ingStr) {
-            if (typeof ingStr !== 'string') return null; 
-            let name = ingStr.replace(/^[\d./\s-]+(oz|dashes|dash|garnish)\s*/i, '');
-            const instructionalPhrases = [ 'Fill a tall glass with ', 'Fill with ', 'Top with ', 'Splash of ', 'Splash ', '1 teaspoon ', 'Rinse of '];
-            for (const phrase of instructionalPhrases) {
-                if (name.toLowerCase().startsWith(phrase.toLowerCase())) {
-                    name = name.substring(phrase.length);
-                    const inIndex = name.toLowerCase().indexOf(' in a');
-                    if (inIndex > -1) name = name.substring(0, inIndex);
-                    break;
-                }
-            }
-            const pureInstructions = ['serve on the rocks'];
-            if(pureInstructions.includes(name.toLowerCase().trim())) return null;
-            return name.trim();
-        }
-        
-        function getIngredientInfo(ingredientName) {
-            if (!ingredientName) {
-                return { icon: 'fa-cube', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
-            }
-            const lowerIng = ingredientName.toLowerCase();
-            const defaultInfo = { icon: 'fa-cube', colorClass: 'text-gray-400', colorHex: '#9ca3af' };
-
-            if (['whiskey', 'bourbon', 'scotch', 'dewar\'s', 'drambuie', 'southern comfort', 'maker\'s mark', 'old grand-dad', 'wild turkey', 'crown royal', 'bulleit', 'jim beam', 'johnnie walker', 'four roses', 'travellers whiskey'].some(s => lowerIng.includes(s))) return { icon: 'fa-whiskey-glass', colorClass: 'text-orange-500', colorHex: '#FF4500' };
-            if (['vodka'].some(s => lowerIng.includes(s))) return { icon: 'fa-skull-crossbones', colorClass: 'text-blue-300', colorHex: '#93c5fd' };
-            if (['gin'].some(s => lowerIng.includes(s))) return { icon: 'fa-leaf', colorClass: 'text-green-400', colorHex: '#4ade80' };
-            if (['rum', 'malibu'].some(s => lowerIng.includes(s))) return { icon: 'fa-anchor', colorClass: 'text-amber-500', colorHex: '#f59e0b' };
-            if (['tequila'].some(s => lowerIng.includes(s))) return { icon: 'fa-hat-cowboy-side', colorClass: 'text-amber-400', colorHex: '#fbbf24' };
-            if (['brandy'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-wine-glass', colorClass: 'text-purple-400', colorHex: '#d8b4fe' };
-            if (['prosecco'].some(s => lowerIng.includes(s))) return { icon: 'fa-solid fa-champagne-glasses', colorClass: 'text-yellow-200', colorHex: '#fef08a' };
-            if (['schnapps', 'pucker', 'jägermeister', 'liqueur', 'baileys', 'pernod', 'kahlúa', 'st-germain', 'cointreau', 'amaretto', 'campari', 'blue curacao', 'aperol', 'sweet vermouth', 'apple pucker'].some(l => lowerIng.includes(l))) return { icon: 'fa-mortar-pestle', colorClass: 'text-pink-500', colorHex: '#f472b6' };
-            if (lowerIng.includes('bitters')) return { icon: 'fa-eye-dropper', colorClass: 'text-red-500', colorHex: '#ef4444' };
-            if (['juice', 'sour mix'].some(j => lowerIng.includes(j))) return { icon: 'fa-lemon', colorClass: 'text-yellow-400', colorHex: '#facc15' };
-            if (['syrup', 'grenadine'].some(s => lowerIng.includes(s))) return { icon: 'fa-prescription-bottle', colorClass: 'text-pink-400', colorHex: '#f472b6' };
-            if (lowerIng.includes('serve on the rocks')) return { icon: 'fa-solid fa-snowflake', colorClass: 'text-cyan-300', colorHex: '#67e8f9' };
-            if (lowerIng.includes('dirty martini mix')) return { icon: 'fa-glass-water', colorClass: 'text-green-500', colorHex: '#22c55e' };
-            if (lowerIng.includes('green olives')) return { icon: 'fa-olive', colorClass: 'text-green-600', colorHex: '#16a34a' };
-            if (lowerIng.includes('cherry on top') || lowerIng.includes('cherry garnish')) return { icon: 'fa-solid fa-circle', colorClass: 'text-red-500', colorHex: '#ef4444' };
-            if (lowerIng.includes('rim')) return { icon: 'fa-solid fa-circle-notch', colorClass: 'text-gray-300', colorHex: '#d1d5db' };
-            
-            return defaultInfo;
-        }
-
-        function isDrinkMakeable(drink) {
-            return drink.recipe.every(ingStr => {
-                const ingName = parseIngredientName(ingStr);
-                return ingName === null || barStock[ingName] !== false;
-            });
-        }
-
         function renderMenu(itemsToRender) {
             menuGrid.innerHTML = '';
             if (itemsToRender.length === 0) {
@@ -1143,6 +1208,7 @@
 
         function renderBarcodeCard(item, index) {
             const nonBarcodeCocktails = cocktails.filter(c => !c.isBarcode);
+            
             const spiritGroups = {};
             nonBarcodeCocktails.forEach(drink => {
                 if (!spiritGroups[drink.primarySpirit]) {
@@ -1152,16 +1218,20 @@
             });
 
             const displayOrder = ['Brandy', 'Whiskey & Bourbon', 'Vodka', 'Gin', 'Rum', 'Tequila', 'Liqueur/Schnapps', 'Other'];
+            
             let listHtml = '';
             
             displayOrder.forEach(spiritCategory => {
                 const drinksInGroup = spiritGroups[spiritCategory];
                 if (drinksInGroup && drinksInGroup.length > 0) {
                     listHtml += `<div class="toc-category-header">${spiritCategory}</div>`;
+                    
                     drinksInGroup.sort((a, b) => a.name.localeCompare(b.name));
+                    
                     drinksInGroup.forEach(drink => {
                         const originalIndex = cocktails.findIndex(c => c.name === drink.name); 
                         const tocFont = titleFonts[originalIndex % titleFonts.length];
+                        
                         listHtml += `<div class="toc-item" 
                                     data-name="${drink.name}" 
                                     style="color: ${drink.titleColor}; 
@@ -1212,6 +1282,15 @@
             const titleFont = titleFonts[index % titleFonts.length];
             const drinkFavoriteClass = favoriteDrinks.includes(item.name) ? 'is-favorite' : '';
 
+            const primaryIngName = parseIngredientName(item.recipe[0]) || 'vodka';
+            const watermarkInfo = getIngredientInfo(primaryIngName);
+
+            const octaneLevel = calculateOctane(item.recipe);
+            let octaneHtml = '';
+            for(let i=0; i<5; i++) {
+                octaneHtml += `<i class="fas fa-skull octane-icon ${i < octaneLevel ? 'filled' : ''}"></i>`;
+            }
+
             const recipeHtml = item.recipe.map(r => {
                 const ingName = parseIngredientName(r) || r;
                 const ingInfo = getIngredientInfo(ingName);
@@ -1226,12 +1305,24 @@
                                  <h3 class="drink-card-title" style="font-family: '${titleFont}', sans-serif; line-height: 1.1; color: ${item.titleColor};">${item.name}</h3>
                                  <button class="favorite-btn ${drinkFavoriteClass}" data-type="drink"><i class="fas fa-heart"></i></button>
                              </div>
-                             <div class="px-6 pt-3 text-center flex-shrink-0">
-                                 <p class="text-base mb-2 font-cinzel text-gray-300">${item.flavorProfile}</p>
+                             
+                             <div class="px-6 pt-2 pb-1 text-center flex-shrink-0 relative">
+                                 <p class="text-base mb-1 font-cinzel text-gray-300 leading-tight">${item.flavorProfile}</p>
+                                 <div class="w-24 h-0.5 bg-gradient-to-r from-transparent via-amber-600 to-transparent mx-auto mt-2"></div>
                              </div>
+
                              <div class="recipe-content">
+                                 <i class="fas ${watermarkInfo.icon} recipe-watermark"></i>
                                  <ul class="recipe-list-front">${recipeHtml}</ul>
                              </div>
+                             
+                             <div class="px-6">
+                                 <div class="octane-meter">
+                                    ${octaneHtml}
+                                 </div>
+                                 <div class="octane-label">OCTANE RATING</div>
+                             </div>
+
                              <div class="card-hook-tagline">${item.cardHook}</div>
                              <div class="card-footer"></div>
                         </div>
@@ -1245,14 +1336,23 @@
                 </div>`;
             menuGrid.insertAdjacentHTML('beforeend', cardHtml);
         }
-        
+
+        function isDrinkMakeable(drink) {
+            return drink.recipe.every(ingStr => {
+                const ingName = parseIngredientName(ingStr);
+                return ingName === null || barStock[ingName] !== false;
+            });
+        }
+
         function setupLazyLoading() {
             if ("IntersectionObserver" in window) {
                 const imageObserver = new IntersectionObserver((entries) => {
                     entries.forEach(entry => {
                         const card = entry.target;
                         const imageContainer = card.querySelector('.lazy-bg');
+                        
                         if (!imageContainer) return;
+
                         if (entry.isIntersecting) {
                             const imageUrl = imageContainer.dataset.bg;
                             if (imageUrl) {
@@ -1262,9 +1362,14 @@
                             imageContainer.style.removeProperty('--bg-image');
                         }
                     });
-                }, { root: menuGrid, rootMargin: "500px 0px" }); 
+                }, { 
+                    root: menuGrid, 
+                    rootMargin: "500px 0px"
+                }); 
+                
                 const lazyCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
                 lazyCards.forEach(card => imageObserver.observe(card));
+
             } else {
                 document.querySelectorAll('.lazy-bg').forEach(img => {
                     const imageUrl = img.dataset.bg;
@@ -1280,10 +1385,12 @@
         function renderFavoritesModal() {
             const container = document.getElementById('favorites-list-container');
             if (!container) return;
+            
             if (favoriteDrinks.length === 0) {
                 container.innerHTML = `<p class="text-gray-400 italic text-center">You haven't selected any favorite recipes yet. Tap the heart icon on a card to add it here.</p>`;
                 return;
             }
+
             const itemsHtml = favoriteDrinks.map(name => {
                 const cardData = cocktails.find(c => c.name === name);
                 if (!cardData) return '';
@@ -1297,6 +1404,7 @@
                         </div>
                     </div>`;
             }).join('<div class="h-3"></div>');
+
             container.innerHTML = itemsHtml;
         }
 
@@ -1304,7 +1412,9 @@
             const contentContainer = document.getElementById('bar-stock-content');
             if (!contentContainer) return;
             contentContainer.innerHTML = ''; 
+            
             const ingredientCategories = getIngredientCategories();
+
             const renderButtonsForStatus = (status) => {
                 let html = `<h3 class="text-xl ${status ? 'text-green-400' : 'text-red-400'} mb-4 font-black-ops">${status ? 'IN STOCK' : 'OUT OF STOCK'}</h3>`;
                 let hasAnyContent = false;
@@ -1313,7 +1423,7 @@
                     let hasContentInMainCategory = false;
                     Object.keys(ingredientCategories[mainCategoryName]).forEach(subCategoryName => {
                         const subCategoryIngredients = ingredientCategories[mainCategoryName][subCategoryName]
-                            .filter(ing => barStock[ing] === status)
+                            .filter(ing => barStock[ing] === status) 
                             .map(ing => `<button data-ingredient="${ing}" class="ingredient-btn text-sm text-white py-1 px-4 transition-colors">${ing}</button>`)
                             .join('');
                         
@@ -1330,7 +1440,9 @@
                    if (!hasAnyContent) { html += `<p class="text-gray-500 italic">Nothing to show here.</p>`; }
                 return html;
             };
+            
             contentContainer.innerHTML = renderButtonsForStatus(true) + '<div class="border-t-2 border-dashed border-gray-600 my-6"></div>' + renderButtonsForStatus(false);
+            
             contentContainer.querySelectorAll('.ingredient-btn').forEach(btn => {
                 btn.addEventListener('click', () => toggleStock(btn.dataset.ingredient));
             });
@@ -1339,7 +1451,9 @@
         function initializeFilterModal() {
             const filterModalContent = document.getElementById('filter-modal-content');
             if (!filterModalContent) return;
+
             const ingredientCategories = getIngredientCategories();
+            
             const favoritesFilter = `
                 <div class="flex items-center justify-between bg-black/20 p-3 rounded-lg">
                     <h3 class="text-lg text-amber-500 font-rye tracking-wider">Show Favorites Only</h3>
@@ -1349,6 +1463,7 @@
                     </label>
                 </div>
             `;
+
              const categoryFilters = `
                  <div>
                      <h3 class="text-lg text-amber-500 mb-2 font-rye tracking-wider">Food Pairing</h3>
@@ -1360,6 +1475,7 @@
                           <button data-category="Desert" class="filter-pill">Desert</button>
                      </div>
                  </div>`;
+            
             const spiritCategories = Object.keys(ingredientCategories.Spirits);
             const spiritFilters = `
                  <div>
@@ -1368,9 +1484,11 @@
                           ${spiritCategories.map(spirit => `<button data-spirit="${spirit}" class="filter-pill">${spirit}</button>`).join('')}
                      </div>
                  </div>`;
+
             const allIngredients = Object.values(ingredientCategories)
                 .flatMap(mainCat => Object.values(mainCat).flat())
                 .sort();
+            
             const ingredientFilter = `
                  <div>
                      <h3 class="text-lg text-amber-500 mb-2 font-rye tracking-wider">Contains Ingredient</h3>
@@ -1380,6 +1498,7 @@
                      </select>
                  </div>
             `;
+
             filterModalContent.innerHTML = `
                  <div class="space-y-4">
                       ${favoritesFilter}
@@ -1388,6 +1507,7 @@
                       ${spiritFilters}
                       ${ingredientFilter}
                  </div>`;
+            
             updatePillsFromState();
         }
 
@@ -1429,6 +1549,7 @@
                 starButton.classList.add('is-favorite');
             }
             localStorage.setItem(DRINKS_FAVORITES_KEY, JSON.stringify(favoriteDrinks));
+            
             updateFilterMenuButtonState();
         }
         
@@ -1436,6 +1557,7 @@
             const savedStockJSON = localStorage.getItem(STOCK_STORAGE_KEY);
             const allIngredients = Object.values(getIngredientCategories())
                 .flatMap(mainCat => Object.values(mainCat).flat());
+            
             let savedStock = {};
             if (savedStockJSON) {
                 try {
@@ -1445,10 +1567,12 @@
                     savedStock = {};
                 }
             }
+
             const newStock = {};
             allIngredients.forEach(ing => {
                 newStock[ing] = savedStock.hasOwnProperty(ing) ? savedStock[ing] : true;
             });
+            
             barStock = newStock;
             localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(barStock));
         }
@@ -1457,20 +1581,22 @@
             if (barStock.hasOwnProperty(ingredient)) {
                  barStock[ingredient] = !barStock[ingredient];
             } else {
-                 barStock[ingredient] = true;
+                 barStock[ingredient] = true; 
             }
             localStorage.setItem(STOCK_STORAGE_KEY, JSON.stringify(barStock));
-            renderBarStockModal();
-            applyAndRenderFilters();
+            renderBarStockModal(); 
+            applyAndRenderFilters(); 
         }
 
         function applyAndRenderFilters() {
             const barcodeCard = cocktails.find(c => c.isBarcode);
             let drinkableCocktails = cocktails.filter(c => !c.isBarcode);
-            const ingredientCategories = getIngredientCategories();
+            const ingredientCategories = getIngredientCategories(); 
+
             if (activeFilters.category && activeFilters.category !== 'all') {
                 drinkableCocktails = drinkableCocktails.filter(item => item.category.includes(activeFilters.category));
             }
+
             if (activeFilters.spirit) {
                 const spiritsInFamily = ingredientCategories.Spirits[activeFilters.spirit] || [];
                 drinkableCocktails = drinkableCocktails.filter(drink =>
@@ -1480,6 +1606,7 @@
                     })
                 );
             }
+
             if (activeFilters.ingredient) {
                  drinkableCocktails = drinkableCocktails.filter(drink =>
                      drink.recipe.some(recipeLine => {
@@ -1488,10 +1615,13 @@
                      })
                  );
             }
+            
             if (activeFilters.showFavoritesOnly) {
                 drinkableCocktails = drinkableCocktails.filter(drink => favoriteDrinks.includes(drink.name));
             }
+
             const itemsToRender = barcodeCard ? [barcodeCard, ...drinkableCocktails] : drinkableCocktails;
+
             renderMenu(itemsToRender);
             setupLazyLoading(); 
             setCardView(isGlobalTarotView); 
@@ -1502,10 +1632,13 @@
         function setCardView(isStoryView) {
             const cards = document.querySelectorAll('#menu-grid .drink-card');
             const toggleBtn = document.getElementById('toggle-view-btn-main'); 
+            
             isGlobalTarotView = isStoryView; 
+
             if (toggleBtn) { 
                 toggleBtn.classList.toggle('is-story-view', isGlobalTarotView);
             }
+
             cards.forEach(card => {
                 if (card.dataset && !card.dataset.isBarcode) {
                     card.classList.toggle('is-flipped', isGlobalTarotView);
@@ -1518,15 +1651,18 @@
             const containerCenter = containerRect.left + containerRect.width / 2;
             let closestCard = null;
             let minDistance = Infinity;
+
             menuGrid.querySelectorAll('.drink-card').forEach(card => {
                 const cardRect = card.getBoundingClientRect();
                 const cardCenter = cardRect.left + cardRect.width / 2;
                 const distance = Math.abs(containerCenter - cardCenter);
+
                 if (distance < minDistance) {
                     minDistance = distance;
                     closestCard = card;
                 }
             });
+            
             if (closestCard) {
                 menuGrid.querySelectorAll('.drink-card.is-active').forEach(c => c.classList.remove('is-active'));
                 closestCard.classList.add('is-active');
@@ -1541,10 +1677,12 @@
             const containerCenter = containerRect.left + containerRect.width / 2;
             let closestCard = null;
             let minDistance = Infinity;
+
             cards.forEach(card => {
                 const cardRect = card.getBoundingClientRect();
                 const cardCenter = cardRect.left + cardRect.width / 2;
                 const distance = Math.abs(containerCenter - cardCenter);
+
                 if (distance < minDistance) {
                     minDistance = distance;
                     closestCard = card;
@@ -1569,6 +1707,7 @@
                                        activeFilters.showFavoritesOnly;
                 filtersBtn.classList.toggle('is-active-filter', isFilterActive);
             }
+            
             const favoritesBtn = document.getElementById('action-favorites-btn');
             if (favoritesBtn) {
                 favoritesBtn.classList.toggle('is-active', favoriteDrinks.length > 0);
@@ -1585,23 +1724,30 @@
         
         function handleToggleViewClick() {
              if (isToggleThrottled) return;
+
              const cardToRestore = getCurrentActiveCard(); 
              if (!cardToRestore) return; 
+
              menuGrid.style.scrollSnapType = 'none';
+             
              menuGrid.classList.add('disable-animation');
+             
              isToggleThrottled = true;
              setCardView(!isGlobalTarotView);
+
              cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
+             
              setTimeout(() => {
-                 menuGrid.classList.remove('disable-animation');
+                 menuGrid.classList.remove('disable-animation'); 
                  isToggleThrottled = false;
                  menuGrid.style.scrollSnapType = 'x mandatory';
              }, 100); 
         }
-        
+
         function addSplashEventListeners() {
             const splashScreen = document.getElementById('splash-screen');
             const splashSeenKey = 'nomads_splash_seen_v1';
+            
             if (splashScreen) {
                 if (sessionStorage.getItem(splashSeenKey) === 'true') {
                     splashScreen.style.transition = 'none'; 
@@ -1653,7 +1799,6 @@
                  }
             });
 
-            // UPDATED: Removed timeout completely. Uses requestAnimationFrame for immediate updates during scroll.
             let ticking = false;
             menuGrid.addEventListener('scroll', () => {
                 if (!ticking) {
@@ -1674,6 +1819,7 @@
                     }
                 });
             });
+
             document.getElementById('close-favorites-btn')?.addEventListener('click', () => closeModal(favoritesModal));
             document.getElementById('favorites-list-container').addEventListener('click', (e) => {
                  const favoriteItem = e.target.closest('.favorite-item');
@@ -1689,7 +1835,9 @@
                      closeModal(favoritesModal);
                  }
             });
+
             document.getElementById('close-stock-btn')?.addEventListener('click', () => closeModal(barStockModal));
+
             document.getElementById('close-filter-btn')?.addEventListener('click', () => closeModal(filterModal));
             document.getElementById('apply-filters-btn')?.addEventListener('click', () => {
                 applyAndRenderFilters();
@@ -1700,6 +1848,7 @@
                 updatePillsFromState();
                 applyAndRenderFilters();
             });
+            
             const filterContent = document.getElementById('filter-modal-content');
             if (filterContent) {
                 filterContent.addEventListener('click', (e) => {
@@ -1739,16 +1888,19 @@
                 filterModal.classList.remove('hidden');
                 setTimeout(() => filterModal.classList.remove('opacity-0'), 10);
             });
+            
             document.getElementById('action-favorites-btn')?.addEventListener('click', () => {
                 renderFavoritesModal(); 
                 favoritesModal.classList.remove('hidden');
                 setTimeout(() => favoritesModal.classList.remove('opacity-0'), 10);
             });
+            
             document.getElementById('action-stock-btn')?.addEventListener('click', () => {
                 renderBarStockModal();
                 barStockModal.classList.remove('hidden');
                 setTimeout(() => barStockModal.classList.remove('opacity-0'), 10);
             });
+
             randomDrinkBtn?.addEventListener('click', () => {
                 const allDrinkCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
                 if (allDrinkCards.length === 0) return; 
@@ -1764,6 +1916,7 @@
                 menuGrid.scrollTo({ left: 0, behavior: 'smooth' });
                 setTimeout(updateActiveCard, 600);
             });
+
             document.getElementById('scroll-prev-btn')?.addEventListener('click', () => {
                 const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
                 if (cards.length === 0) return;
@@ -1774,6 +1927,7 @@
                     cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }
             });
+
             document.getElementById('scroll-next-btn')?.addEventListener('click', () => {
                 const cards = Array.from(menuGrid.querySelectorAll('.drink-card'));
                 if (cards.length === 0) return;
@@ -1784,6 +1938,7 @@
                     cards[targetIndex].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
                 }
             });
+            
             document.getElementById('toggle-view-btn-main')?.addEventListener('click', handleToggleViewClick);
         }
 
