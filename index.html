@@ -933,7 +933,7 @@
 
         let menuGrid, barStockModal, filterModal, favoritesModal, randomDrinkBtn;
         
-        // 14 Unique Fonts for variety
+        // THEMATIC FONTS - 14 Unique Styles
         const titleFonts = [
             'Rye', 
             'Cinzel', 
@@ -944,7 +944,7 @@
             'Sancreek',
             'Pirata One',
             'New Rocker',
-            'Faster One',
+            'Faster One', // RACING FONT
             'UnifrakturMaguntia',
             'Wallpoet',
             'Grenze Gotisch',
@@ -1248,13 +1248,25 @@
             cocktails = processedCocktails;
             cocktails.sort((a, b) => a.name.localeCompare(b.name));
 
-            // Assign unique fonts per spirit category
-            const categoryCounts = {};
+            // --- FONT ASSIGNMENT LOGIC UPDATE ---
+            // 1. Isolate Racing Font
+            const racingFont = 'Faster One';
+            const generalFonts = titleFonts.filter(font => font !== racingFont);
+
+            // 2. Assign Fonts
             cocktails.forEach(drink => {
-                const spirit = drink.primarySpirit;
-                if (!categoryCounts[spirit]) categoryCounts[spirit] = 0;
-                drink.fontFamily = titleFonts[categoryCounts[spirit] % titleFonts.length];
-                categoryCounts[spirit]++;
+                if (drink.name === "Redline Riot") {
+                    // Exclusive use for the most "racing" themed drink
+                    drink.fontFamily = racingFont;
+                } else {
+                    // Generate a pseudo-random index based on the drink name
+                    let nameHash = 0;
+                    for (let i = 0; i < drink.name.length; i++) {
+                        nameHash = drink.name.charCodeAt(i) + ((nameHash << 5) - nameHash);
+                    }
+                    const fontIndex = Math.abs(nameHash) % generalFonts.length;
+                    drink.fontFamily = generalFonts[fontIndex];
+                }
             });
 
             const barcodeCard = {
