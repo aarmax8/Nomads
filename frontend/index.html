@@ -36,7 +36,9 @@
             /* MODIFIED: Removed the linear-gradient overlay */
             background-image: url('https://raw.githubusercontent.com/aarmax8/Nomads/c81556a569470611da64fb23e311817602720d95/pittsburghbridge.jpg');
             background-size: cover;
-            background-position: center;
+            
+            /* UPDATED: Move image down to show bridge deck/people */
+            background-position: center 85%;
 
             /* ADDED: This fills the "white bars" at top/bottom */
             background-color: #000;
@@ -69,13 +71,14 @@
         header {
             flex-shrink: 0; /* Header should not shrink */
             position: relative; /* For z-index and pseudo-elements */
-            /* MODIFIED: Height now accounts for safe area */
-            height: calc(150px + env(safe-area-inset-top));
+            
+            /* MODIFIED: Base height adjusted for visual balance */
+            /* NOTE: Removed padding-top so image goes to physical top edge */
+            height: calc(130px + env(safe-area-inset-top));
+            
             z-index: 10; /* Keep header above main content */
             width: 100%; /* ADDED: Ensure header is full width */
-
-            /* ADDED: Apply safe-area padding here */
-            padding-top: env(safe-area-inset-top); 
+            
             box-sizing: border-box;
         }
         
@@ -98,12 +101,13 @@
 
         #header-logo-image {
             width: 100%;
-            /* MODIFIED: Removed explicit height */
-            /* height: calc(150px + env(safe-area-inset-top)); */
-            object-fit: fill; /* Stretches to fill the container */
+            /* MODIFIED: Height matches the header container exactly */
+            height: 100%;
+            /* UPDATED: Switched to 'fill' to ensure NOMADS text is always visible and image stretches to edges */
+            object-fit: fill; 
             position: absolute;
-            /* MODIFIED: Pull image up to cover padding */
-            top: -env(safe-area-inset-top);
+            /* MODIFIED: Start at 0 to cover the very top (including safe area) */
+            top: 0;
             /* ADDED: Stretch image to bottom of container */
             bottom: 0;
             left: 0;
@@ -153,21 +157,30 @@
 
             /* --- NEW STYLES --- */
             /* Copied from #app-footer to create a matching iOS-style top bar */
-            height: 50px;
+            /* UPDATED: Increased height to accommodate bigger buttons */
+            height: 70px;
             padding: 0 0.25rem; /* Horizontal padding */
             box-sizing: border-box;
             
-            /* MODIFIED: Decreased opacity from 0.4 to 0.3 */
-            background-color: rgba(26, 26, 26, 0.3); /* Semi-transparent dark bg */
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* Shadow below the bar */
+            /* UPDATED: Gradient background for seamless blending */
+            /* Changed direction to get darker at the bottom for text readability */
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4) 0%, rgba(0, 0, 0, 0.9) 100%);
+            
+            /* Removed border for cleaner look */
+            border-bottom: none;
+            
+            backdrop-filter: blur(5px); /* Slightly reduced blur */
+            -webkit-backdrop-filter: blur(5px);
+            
+            /* UPDATED: Softer shadow */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
 
             display: flex;
             justify-content: space-evenly; /* Evenly space all buttons */
             align-items: center;
-            /* --- End New Styles --- */
+            
+            /* Ensure it sits nicely */
+            z-index: 20; 
         }
 
         /* --- UNIFIED FOOTER BUTTON STYLES --- */
@@ -179,7 +192,8 @@
             justify-content: center;
             background: transparent;
             border: none;
-            color: #b0b0b5; /* Default grey */
+            /* UPDATED: Brighter white text for better contrast on transparent bg */
+            color: #ffffff; 
             padding: 0.25rem 0.25rem 0 0.25rem; /* Matches top bar padding */
             border-radius: 0.5rem;
             cursor: pointer;
@@ -188,16 +202,34 @@
             font-size: 0.75rem; /* 12px - Matches top bar */
             width: 60px; 
             line-height: 1.2;
+            /* ADDED: Text shadow to help readability against busy backgrounds */
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
         }
         .footer-btn i {
             font-size: 1.25rem; /* 20px - Matches top bar */
             margin-bottom: 0.2rem;
-            color: #b0b0b5;
+            color: #ffffff;
+            /* ADDED: Drop shadow for icons */
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8));
         }
         .footer-btn:hover {
             background-color: rgba(255, 255, 255, 0.1);
         }
         /* --- END UNIFIED STYLES --- */
+
+        /* --- ACTION BAR SPECIFIC OVERRIDES (Bigger Icons) --- */
+        #action-bar .footer-btn {
+            width: 75px; /* Wider for bigger targets */
+        }
+        #action-bar .footer-btn i {
+            font-size: 1.75rem; /* Significantly larger icons (approx 28px) */
+            margin-bottom: 0.3rem;
+        }
+        #action-bar .footer-btn span {
+            font-size: 0.85rem; /* Larger text */
+            font-weight: 700;   /* Bolder text */
+        }
+        /* --- END OVERRIDES --- */
 
         /* Override active states for action-bar */
         #action-bar .footer-btn.is-active-filter {
@@ -240,6 +272,12 @@
             box-sizing: border-box; 
         }
         
+        /* --- NEW: Crash Fix --- */
+        /* Disables animations when the grid has this class to prevent GPU overload */
+        #menu-grid.disable-animation .drink-card-inner {
+            transition: none !important;
+        }
+        
         /* --- Amber Scrollbar for Menu Grid --- */
         #menu-grid::-webkit-scrollbar { 
             width: 8px; 
@@ -275,6 +313,11 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
+            
+            /* PERFORMANCE FIX: Improves rendering performance for long lists */
+            content-visibility: auto; 
+            contain-intrinsic-size: 300px 500px; 
+            contain: layout style;
         }
         #menu-grid > .drink-card:first-child {
              /* MODIFIED: Was 84% */
@@ -299,7 +342,9 @@
             position: relative; width: 100%; height: 100%;
             transition: transform 0.7s, box-shadow 0.4s ease-in-out, opacity 0.5s;
             transform-style: preserve-3d;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7); border-radius: 0.5rem;
+            /* PERFORMANCE FIX: Reduced shadow complexity for non-active cards */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+            border-radius: 0.5rem;
         }
         .drink-card.is-flipped .drink-card-inner { transform: rotateY(180deg); }
         
@@ -662,9 +707,11 @@
             align-items: center;
         }
         
-        /* --- ADDED: Make motorcycle icons turquoise --- */
+        /* --- ADDED: Make motorcycle icons AND text turquoise --- */
         #app-footer #scroll-prev-btn i,
-        #app-footer #scroll-next-btn i {
+        #app-footer #scroll-prev-btn span,
+        #app-footer #scroll-next-btn i,
+        #app-footer #scroll-next-btn span {
             color: #2dd4bf; /* Turquoise */
         }
         
@@ -1040,8 +1087,8 @@
                 // 9: Kraken's Grip
                 { name: "Kraken's Grip", flavorProfile: "A dangerously smooth mix of dark rum, sweet amaretto, and cola. It's the velvet glove on an iron fist.", recipe: ["1.5 oz Kraken Black Spiced Rum", "1 oz Amaretto", "Fill a tall glass with Cola"], story: "After two of these, you'll have a death grip on the bar and the questionable belief that you can arm-wrestle a sea monster. You can't. Ask Fingers, he's got the scars to prove it.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/c7fd6a017b5f1a4a26d81720d989dd1cccfca51c/mannart14.jpg", cardHook: "It'll get a hold on you." },
                 
-                // 10: Statesman
-                { name: "Statesman", flavorProfile: "Strong bourbon, sweet apricot, and a sharp lemon twist. Tastes like a decision you're confident about. For now.", recipe: ["2 oz Bulleit Bourbon", "0.75 oz Apricot Brandy", "0.5 oz Lemon Juice"], story: "This one's for the old-timers. The guys who sit in the back, don't say much, but have seen it all. It's strong, it's classic, and it's doesn't need to shout to be heard. Like a true statesman, it commands respect just by being there.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/71f80d842e362733e8b2f22ea02e7b1fc732f0a9/mannart18.jpg", cardHook: "Respect your elders." },
+                // 10: Blood and Sand (REPLACED Statesman)
+                { name: "Blood and Sand", flavorProfile: "A classic smoky sweetness. Scotch meets sweet vermouth, orange, and cherry in a smooth, cinematic glass.", recipe: ["0.75 oz Dewars Scotch", "0.75 oz Sweet Vermouth", "0.75 oz Orange juice", "0.75 oz Heering Cherry liqueur", "2 dashes Orange Bitters"], story: "Named after the 1922 bullfighter movie, this drink captures the sand of the arena and the blood of the... well, you get it. It's complex, fruity, and packs a smoky punch. A star is born.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/71f80d842e362733e8b2f22ea02e7b1fc732f0a9/mannart18.jpg", cardHook: "Sand, blood, and glory." },
                 
                 // 11: Island Hopper
                 { name: "Island Hopper", flavorProfile: "It's coconut rum and pineapple. Tastes like a vacation you can't afford, in a bar you probably shouldn't be in.", recipe: ["1 oz Malibu Rum", "1 oz Bacardi Rum", "Fill with Pineapple Juice", "Splash of Lime Juice"], story: "This is for the guy who wears a Hawaiian shirt under his leather cut. He talks about riding to the keys, but we all know he's just going to the tourist trap on the pier. We humor him.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/c3832f3a3d3d7a73ddff445c272953dc90cb5c4d/mannart21.jpg", cardHook: "A vacation in a glass." },
@@ -1052,8 +1099,8 @@
                 // 13: Long Haul
                 { name: "Long Haul", flavorProfile: "A Gin & Tonic that got weird. It's herbal, complex, and tastes like you're drinking a fancy garden.", recipe: ["2 oz Tanqueray Gin", "0.5 oz Lime Juice", "Top with Tonic Water in a tall glass", "2 dashes Rosemary Lavender Bitters"], story: "This drink is like a 10-hour ride through Nebraska. It starts out fine, then it gets weirdly complex, then it's just... a lot. By the end, you're not sure if you like it, but you respect its commitment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/cd94ee724b96582e3ef3f50a663b43038b8d2c77/mannart15.jpg", cardHook: "For when you're in it for the long haul." },
                 
-                // 14: Whiskey Highball
-                { name: "Whiskey Highball", flavorProfile: "It's just whiskey and soda. Tastes like a good, simple idea, which is rare around here.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Simple Syrup", "Top with Club Soda"], story: "We call it the Country and Western because after three of them, everyone thinks they can sing both parts of a Johnny Cash and June Carter duet. They can't. And it's always sad.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/c8d1eb3f9af90ec4f55951765f680513fe3bf164/frontend/b3ca1c20f8245c41dabb7020eb5794f7.jpg", cardHook: "Simple, honest, and a little bit sad." },
+                // 14: Green Tea (Replaced Whiskey Highball)
+                { name: "Green Tea", flavorProfile: "Sweet, citrusy, and dangerous. Tastes exactly like peach iced tea, but with a hefty Jameson kick.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Peach Schnapps", "Fill with Sweet and Sour Mix", "Splash of Ginger Soda"], story: "Doc told us to drink more tea. We complied. This contains absolutely no actual tea, but after three of them, you won't care about antioxidants. It's the healthiest bad decision you'll make all night.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/c8d1eb3f9af90ec4f55951765f680513fe3bf164/frontend/b3ca1c20f8245c41dabb7020eb5794f7.jpg", cardHook: "A healthy dose of trouble." },
                 
                 // 15: Aperol Spritz
                 { name: "Aperol Spritz", flavorProfile: "Bubbly, bright orange, and bittersweet. Tastes like you should be on a patio in Italy, not on a barstool in this dump.", recipe: ["1.5 oz Aperol", "2 oz Prosecco", "Splash of Club Soda", "2 dashes Orange Bitters"], story: "This is what you drink when you want to feel fancy, even if you're sitting on a rusty oil drum. It's bubbly, it's bright orange, and it's deceptively easy to drink. The official drink of 'just one more.' Famous last words.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/8152e3c111a698e2a7f072b33b5662906e08d17d/mannart23.jpg", cardHook: "The quintessential summer sipper." },
@@ -1073,8 +1120,8 @@
                 // 20: Switchblade
                 { name: "Switchblade", flavorProfile: "A small, sharp, citrus-vodka kick to the teeth. It's surprisingly effective.", recipe: ["2 oz Stolichnaya Citros Vodka", "1 oz Lemon Juice", "0.75 oz Simple Syrup"], story: "It's small, sharp, and will end your night if you're not careful. Named in honor of our shortest member, 'Stubbs,' who is all of those things. He thinks it's a compliment.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/6a73cec9f46d798d4ba58ec29f5623f2.jpg", cardHook: "Respect the lemon." },
                 
-                // 21: Buckeye Milk
-                { name: "Buckeye Milk", flavorProfile: "A boozy, floral, peanut butter cup in a glass. Don't ask how. Just drink it.", recipe: ["1 oz Amaretto", "1 oz Kahlúa", "1 oz Baileys Irish Cream", "1 oz St-Germain"], story: "Someone from Ohio kept demanding a 'Buckeye' drink. We don't have peanut butter whiskey, so we gave them this. It's creamy, nutty, and shut them up. We call that a success. Tastes like a candy bar.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "A decadent, creamy treat." },
+                // 21: Buckeye Juice (Reverted Image)
+                { name: "Buckeye Juice", flavorProfile: "Sweet, tart, and refreshing with a fizzy kick. Tastes like a scarlet-red victory.", recipe: ["2 oz Southern Comfort", "2 oz Cranberry Juice", "Top with Club Soda"], story: "Named for the state nut, but there's nothing nutty about it. It's scarlet red, fizzy, and hits with the force of a linebacker. A true fan favorite.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/5fdd2d485722e.jpg", cardHook: "Scarlet, fizzy, and strong." },
                 
                 // 22: Road Rash
                 { name: "Road Rash", flavorProfile: "Fruity, sour, and a little bit sweet. Tastes infinitely better than actual road rash feels. We checked.", recipe: ["1 oz Sloe Gin", "1 oz Southern Comfort", "0.5 oz Lemon Juice", "Fill a tall glass with Club Soda"], story: "It's red, it stings, and it's a story you'll tell for years. The drink, not the injury. The injury justgets you a lame scar and a lecture from Doc.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/David-Mann-Art-2.jpg", cardHook: "Much better than the real thing." },
@@ -1083,7 +1130,7 @@
                 { name: "Poinsettia", flavorProfile: "Bubbly, festive, and dangerously drinkable. Tastes like you're about to enjoy the office holiday party.", recipe: ["1 oz Cointreau", "3 oz Cranberry Juice", "4 oz Prosecco", "2 dashes Orange Bitters"], story: "This one only comes out during the holidays. It's fancy, it's red, and it makes everyone feel a bit more festive, even if they're just arguing about who has to shovel the snow. It's like a Christmas bonus, but in a glass.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/ea2380beff602a5a9070cc310b2a37e4b444246c/frontend/0ac5da1e71c995f58d75335fffabd844.jpg", cardHook: "Cheers to the festive season." },
                 
                 // 24: Cowboy's Hard Root Beer
-                { name: "Cowboy's Hard Root Beer", flavorProfile: "Tastes exactly like a root beer float, if the ice cream was replaced with whiskey. Which it was.", recipe: ["1.5 oz Jameson Irish Whiskey", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "A cowboy bet us we couldn't make a drink that tasted like 'a rodeo in a bottle.' We made this. It's got the sweet taste of victory and the kick of a pissed-off bull. He paid up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "This drink has spurs." },
+                { name: "Cowboy's Hard Root Beer", flavorProfile: "Tastes exactly like a root beer float, if the ice cream was replaced with bourbon. Which it was.", recipe: ["1.5 oz Jim Beam Bourbon", "1 oz Root Beer Schnapps", "0.5 oz Simple Syrup", "Top with Ginger Soda in a tall glass"], story: "A cowboy bet us we couldn't make a drink that tasted like 'a rodeo in a bottle.' We made this with Jim Beam. It's got the sweet taste of victory and the kick of a pissed-off bull. He paid up.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/il_fullxfull.1315813799_ayvc.webp", cardHook: "This drink has spurs." },
                 
                 // 25: Wolf Ticket - *** REPLACED KNOB CREEK KENTUCKY SMASH ***
                 { name: "Wolf Ticket", flavorProfile: "High-proof bourbon meets sweet peach and sour lemon. A smooth talker with a mean right hook.", recipe: ["1.5 oz Wild Turkey 101", "0.5 oz Peach Liqueur", "0.5 oz Simple Syrup", "0.75 oz Lemon Juice", "Dash of Bitters"], story: "A 'Wolf Ticket' is a threat you don't intend to carry out. This drink? It makes promises it definitely keeps. The peach draws you in, the 101 proof bourbon takes you out. Don't say we didn't warn you.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/c7fd6a017b5f1a4a26d81720d989dd1cccfca51c/mannart22.jpg", cardHook: "Don't write checks you can't cash." },
@@ -1091,8 +1138,8 @@
                 // 26: Garibaldi
                 { name: "Garibaldi", flavorProfile: "Bitter, sweet, and bright orange. Tastes like a simple, refreshing, revolutionary idea.", recipe: ["2.5 oz Orange Juice", "2.5 oz Aperol"], story: "Named for an Italian revolutionary, this drink is as simple as it is refreshing. It's what you drink when you want something bright, bitter, and uncomplicated. We call it 'The General's Juice.' He probably would've hated that.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/672ca23068e35c6481458f0911d99ceb.jpg", cardHook: "Italy's simple, bitter classic." },
                 
-                // 27: Ward Eight
-                { name: "Ward Eight", flavorProfile: "This is Jungle Juice for people who own motorcycles. Fruity, strong, and a terrible idea.", recipe: ["2 oz Bulleit Bourbon", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when you try to make 'Jungle Juice' with actual bourbon. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "History, but with more sugar." },
+                // 27: Ward Eight (Swapped Bulleit for Crown Royal)
+                { name: "Ward Eight", flavorProfile: "This is Jungle Juice for people who own motorcycles. Fruity, strong, and a terrible idea.", recipe: ["2 oz Crown Royal", "2 oz Orange Juice", "0.5 oz Lemon Juice", "Splash of Grenadine", "Top with Club Soda in a tall glass"], story: "This is what happens when you try to make 'Jungle Juice' with actual whiskey. It's dangerously drinkable. A frontier of bad decisions awaits.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/4ef937229693734b1be907cc24f322eb.jpg", cardHook: "History, but with more sugar." },
                 
                 // 28: Boulevardier
                 { name: "Boulevardier", flavorProfile: "A Negroni, but with whiskey. It's the sophisticated choice for the discerning, leather-clad degenerate.", recipe: ["2 oz Aperol", "2 oz Sweet Vermouth", "3 oz Four Roses Whiskey"], story: "Named after a famous Parisian magazine, this is the drink of the 'man about town.' Our version is for the man about the chop shop—it’s sophisticated, strong, and guaranteed to loosen the tongue. Don't sign anything after the second one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/8152e3c111a698e2a7f072b33b5662906e08d17d/mannart24.jpg", cardHook: "The official drink of the well-dressed nomad." },
@@ -1139,8 +1186,8 @@
                 // 42: Cuba Libre
                 { name: "Cuba Libre", flavorProfile: "It's a Rum & Coke with lime. Tastes like freedom, or at least our questionable interpretation of it.", recipe: ["2 oz Bacardi Rum", "0.5 oz Lime Juice", "2 dashes Angostura Bitters", "Fill a tall glass with Cola"], story: "Means 'Free Cuba.' We drank it to celebrate freeing our club mascot, a grumpy bulldog named Che, from the local dog catcher. It was a whole thing. The dog was not grateful.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/d9a9ffbd510d7ea900f31195d5e857f6.jpg", cardHook: "Tastes like a good road trip." },
                 
-                // 43: Godfather
-                { name: "Godfather", flavorProfile: "Bold bourbon and sweet, nutty amaretto. Tastes like an offer you can't refuse.", recipe: ["2 oz Old Grand-Dad Whiskey", "0.75 oz Amaretto", "Serve on the rocks"], story: "This is what you drink right before you make a very serious, legally questionable promise to a group of men you probably shouldn't trust. It's strong, sweet, and tastes like brotherhood and future bad decisions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/3cdd71f09194cbf21b99337a4fc180c7d71380e5/frontend/yWMhLC.jpg", cardHook: "To promises you'll try to keep." },
+                // 43: Godfather (Swapped Old Grand-Dad for Maker's Mark)
+                { name: "Godfather", flavorProfile: "Bold bourbon and sweet, nutty amaretto. Tastes like an offer you can't refuse.", recipe: ["2 oz Maker's Mark", "0.75 oz Amaretto", "Serve on the rocks"], story: "This is what you drink right before you make a very serious, legally questionable promise to a group of men you probably shouldn't trust. It's strong, sweet, and tastes like brotherhood and future bad decisions.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/3cdd71f09194cbf21b99337a4fc180c7d71380e5/frontend/yWMhLC.jpg", cardHook: "To promises you'll try to keep." },
                 
                 // 44: White Russian
                 { name: "White Russian", flavorProfile: "A rich, creamy, and dangerously simple mix of vodka, coffee, and cream. Tastes like a liquid bathrobe.", recipe: ["2 oz Grey Goose Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "This drink is for when you just don't want to deal with anything. It's a creamy, alcoholic blanket for your problems. It doesn't solve them, but it makes them quieter.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/e5a7f5bfc3b2c200266b6df05a132e17.jpg", cardHook: "It really ties the room together." },
@@ -1164,7 +1211,7 @@
                 { name: "Finn's Orchard Kick", flavorProfile: "Smooth Irish whiskey, sour apple, and spicy ginger. Tastes like an apple pie that knows how to fight.", recipe: ["2 oz Jameson Irish Whiskey", "1 oz Apple Pucker", "2 dashes Angostura Bitters", "Top with Ginger Soda in a tall glass"], story: "Finn, our resident genius, tried to make 'artisanal applejack' in the clubhouse radiator. The radiator exploded. This drink, made with store-bought ingredients, is a much safer tribute to his ambition.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/8152e3c111a698e2a7f072b33b5662906e08d17d/mannart12.jpg", cardHook: "A tribute to spectacular failures." },
                 
                 // 51: Crossroads Deal
-                { name: "Crossroads Deal", flavorProfile: "Smoky scotch, sweet amaretto, and cola. Tastes like a bad deal that's still somehow delicious.", recipe: ["2 oz Dewar\'s Scotch Whisky", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
+                { name: "Crossroads Deal", flavorProfile: "Smoky scotch, sweet amaretto, and cola. Tastes like a bad deal that's still somehow delicious.", recipe: ["2 oz Dewars Scotch", "1 oz Amaretto", "Fill with Cola"], story: "At the crossroads, you can sell your soul for talent. Or, if you're like Mike, you can accidentally trade it for a half-empty bottle of amaretto and some stale chips. This drink commemorates his poor negotiating skills.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7992.jpg", cardHook: "To making good deals." },
                 
                 // 52: Purple Hooter
                 { name: "Purple Hooter", flavorProfile: "Sweet raspberry and sharp citrus with a floral, bitter finish. It's a trophy in a glass.", recipe: ["1oz Ketel One Vodka", "1 oz Raspberry Schnapps", "2 dashes Peychaud's Bitters", "Splash of Lime Juice", "Fill a tall glass with Club Soda"], story: "We're not legally allowed to say why it's called this. Just know that it involves our least-favorite rival club, a gallon of purple paint, and a very surprised mascot. This drink is our trophy.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/b53f3ec4d921fabea10c455c27ae09cee7e30d79/aaalchemistsbrew.jpg", cardHook: "To our drunk owl." },
@@ -1175,8 +1222,8 @@
                 // 54: Mudslide
                 { name: "Mudslide", flavorProfile: "It's a vodka-spiked coffee milkshake. This is not a drink, it's a dessert that will get you arrested.", recipe: ["1oz Ketel One Vodka", "1 oz Kahlúa", "1 oz Baileys Irish Cream"], story: "We tried to ride through a mudslide. It was a bad idea. This drink is a much better, and cleaner, version of that experience. It's still a bad idea to have five of them, though.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7997.jpg", cardHook: "To the shortcuts that weren't." },
                 
-                // 55: Desert Wind (Image swapped from 57/Twin Spar's original image)
-                { name: "Desert Wind", flavorProfile: "A dry, spicy, and slightly bitter mix of whiskey and ginger. Tastes like a long story you can't escape.", recipe: ["2 oz Four Roses Whiskey", "Fill with Ginger Soda", "2 dashes Orange Bitters"], story: "Named for our club secretary, who can talk for three hours without taking a breath. The drink is dry, spicy, and will leave you speechless. We wish he would try one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "For stories that go on too long." },
+                // 55: Turkey Buck (Renamed from Dust Devil)
+                { name: "Turkey Buck", flavorProfile: "A dry, spicy, and slightly bitter mix of whiskey and ginger. Tastes like a long story you can't escape.", recipe: ["2 oz Wild Turkey 101", "0.75 oz Lime Juice", "0.5 oz Apricot Brandy", "Top with Ginger Soda", "2 dashes Orange Bitters"], story: "Named for our club secretary, who can talk for three hours without taking a breath. The drink is dry, spicy, and will leave you speechless. We wish he would try one.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_7998.jpg", cardHook: "For stories that go on too long." },
                 
                 // 56: Oracle's Kiss
                 { name: "Oracle's Kiss", flavorProfile: "A sweet, floral, and slightly tart mix of citrus vodka and cranberry. Tastes like a beautiful, expensive mistake.", recipe: ["1.5 oz Stolichnaya Citros Vodka", "0.5 oz St-Germain", "Fill with Cranberry Juice"], story: "Some lady at a carnival gave our treasurer a 'kiss for good luck.' He woke up three hours later with his wallet gone and a lingering taste of cranberry. We made this to commemorate his gullibility.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/90ba0d71f42b567f7e9a417fbd74cedfc805201e/thumbnail_IMG_8297.jpg", cardHook: "The future is sweet and flowery." }, 
@@ -1187,8 +1234,8 @@
                 // 58: Blue Lagoon
                 { name: "Blue Lagoon", flavorProfile: "It's bright blue, citrusy, and tastes like a weekend in 1985. Don't think about it too hard.", recipe: ["1oz Stolichnaya Citros Vodka", "1 oz Blue Curacao", "Top with Sweet and Sour Mix"], story: "We saw this in a fancy magazine and decided to make it our own. Our version is stronger, more questionable, and is best consumed in a garage, not a poolside cabana. It's about authenticity.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/146cb26058c450290759bf6a90ecaf84a18fc47b/frontend/09df49098aac18eadeeb826a6e5a1f2d.jpg", cardHook: "Find your oasis." },
 
-                // 59: New York - *** UPDATED RECIPE ***
-                { name: "New York", flavorProfile: "Sweet, tart, and spicy. Like a city that never sleeps and occasionally robs you.", recipe: ["2 oz Four Roses Whiskey", "0.75 oz Lime Juice", "0.75 oz Grenadine"], story: "Named after the city, but probably invented in a basement in Jersey. It's bourbon trying to be a fruit punch, and surprisingly, it pulls it off. Respect the hustle.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/39a5b0f2968c010f345e51cecd3ad4f3b6f40692/mannart10.jpg", cardHook: "Start spreading the news." }
+                // 59: New York - (Swapped Four Roses for Travellers Whiskey)
+                { name: "New York", flavorProfile: "Sweet, tart, and spicy. Like a city that never sleeps and occasionally robs you.", recipe: ["2 oz Travellers Whiskey", "0.75 oz Lime Juice", "0.75 oz Grenadine"], story: "Named after the city, but probably invented in a basement in Jersey. It's whiskey trying to be a fruit punch, and surprisingly, it pulls it off. Respect the hustle.", image: "https://raw.githubusercontent.com/aarmax8/Nomads/39a5b0f2968c010f345e51cecd3ad4f3b6f40692/mannart10.jpg", cardHook: "Start spreading the news." }
             ];
         }
 
@@ -1199,7 +1246,7 @@
             return {
                 'Spirits': {
                     'Whiskey & Bourbon': ['Bulleit Bourbon', 'Crown Royal', 'Four Roses Whiskey', 'Jameson Irish Whiskey', 'Jim Beam Bourbon', 'Maker\'s Mark', 'Old Grand-Dad Whiskey', 'Southern Comfort', 'Travellers Whiskey', 'Wild Turkey 101'], // REMOVED Wild Turkey Rye
-                    'Scotch': ['Drambuie', 'Johnnie Walker Red Label', 'Dewar\'s Scotch Whisky'],
+                    'Scotch': ['Drambuie', 'Johnnie Walker Red Label', 'Dewars Scotch'],
                     'Vodka': ['Grey Goose Vodka', 'Ketel One Vodka', 'Stolichnaya Citros Vodka'], 'Gin': ['Tanqueray Gin', 'Sloe Gin'],
                     'Rum': ['Bacardi Rum', 'Captain Morgan Spiced Rum', 'Kraken Black Spiced Rum', 'Malibu Rum'],
                     'Tequila': ['El Mayor Tequila', 'Jose Cuervo Silver Tequila'], 
@@ -1207,7 +1254,7 @@
                     'Wine & Other': ['Prosecco']
                 },
                 'Liqueurs & Schnapps': {
-                    'Fruit': ['Apple Pucker', 'Blue Curacao', 'Cherry Schnapps', 'Cointreau', 'Maraschino Liqueur', 'Peach Liqueur', 'Peach Schnapps', 'Raspberry Schnapps', 'Triple Sec'], 
+                    'Fruit': ['Apple Pucker', 'Blue Curacao', 'Cherry Schnapps', 'Cointreau', 'Heering Cherry liqueur', 'Peach Schnapps', 'Raspberry Schnapps', 'Triple Sec'], 
                     'Herbal & Spiced': ['Aperol', 'Jägermeister', 'Pernod', 'St-Germain', 'Sweet Vermouth'],
                     'Cream, Nut & Coffee': ['Amaretto', 'Baileys Irish Cream', 'Kahlúa'],
                     'Other Schnapps': ['Butterscotch Schnapps', 'Root Beer Schnapps']
@@ -1570,33 +1617,39 @@
          * Sets up IntersectionObserver for lazy-loading card background images.
          */
         function setupLazyLoading() {
-            const lazyCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
+            // UPDATED: Strict Memory Management
+            // Unloads images that are far off-screen to prevent crashes
             
             if ("IntersectionObserver" in window) {
-                const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const card = entry.target; 
-                        const imageContainer = card.querySelector('.lazy-bg'); 
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const card = entry.target;
+                        const imageContainer = card.querySelector('.lazy-bg');
                         
-                        if (imageContainer) {
+                        if (!imageContainer) return;
+
+                        if (entry.isIntersecting) {
+                            // LOAD IMAGE: When card is near viewport
                             const imageUrl = imageContainer.dataset.bg;
                             if (imageUrl) {
                                 imageContainer.style.setProperty('--bg-image', imageUrl);
                             }
+                        } else {
+                            // UNLOAD IMAGE: When card leaves viewport (plus buffer)
+                            // This frees up GPU memory and prevents crashes on long lists
+                            imageContainer.style.removeProperty('--bg-image');
                         }
-                        imageObserver.unobserve(card);
-                    }
-                });
+                    });
                 }, { 
                     root: menuGrid, 
-                    rootMargin: "200px" 
+                    rootMargin: "500px 0px" // Buffer: Load images 500px before they appear
                 }); 
                 
+                const lazyCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
                 lazyCards.forEach(card => imageObserver.observe(card));
 
             } else {
-                // Fallback for older browsers
+                // Fallback for older browsers (loads all at once)
                 document.querySelectorAll('.lazy-bg').forEach(img => {
                     const imageUrl = img.dataset.bg;
                     if (imageUrl) {
@@ -2020,17 +2073,22 @@
              // 1. CRITICAL: Identify and disable scroll snapping immediately
              menuGrid.style.scrollSnapType = 'none';
              
+             // --- NEW: Prevent Crash Fix ---
+             // Disable CSS transitions temporarily to stop GPU overload
+             menuGrid.classList.add('disable-animation');
+             
              isToggleThrottled = true;
              setCardView(!isGlobalTarotView);
 
              // 2. Restore position INSTANTANEOUSLY
              cardToRestore.scrollIntoView({ behavior: 'instant', block: 'nearest', inline: 'center' });
              
-             // 3. Re-enable snap after a short delay
+             // 3. Re-enable snap and animations after a short delay
              setTimeout(() => {
+                 menuGrid.classList.remove('disable-animation'); // Re-enable animations for individual flips
                  isToggleThrottled = false;
                  menuGrid.style.scrollSnapType = 'x mandatory';
-             }, 50); 
+             }, 100); // Increased slight delay to ensure DOM has settled
         }
 
         
