@@ -241,8 +241,8 @@
             contain-intrinsic-size: 300px 500px; 
             contain: layout style;
             
-            /* Transitions for spotlight effect - UPDATED: Sped up from 0.3s to 0.15s */
-            transition: opacity 0.15s ease-out, transform 0.15s ease-out, filter 0.15s ease-out;
+            /* Transitions for spotlight effect - UPDATED: Sped up from 0.15s to 0.1s for immediate feel */
+            transition: opacity 0.1s ease-out, transform 0.1s ease-out, filter 0.1s ease-out;
         }
 
         /* Dim non-active cards */
@@ -1652,11 +1652,16 @@
                  }
             });
 
-            let scrollTimeout;
+            // UPDATED: Removed timeout completely. Uses requestAnimationFrame for immediate updates during scroll.
+            let ticking = false;
             menuGrid.addEventListener('scroll', () => {
-                clearTimeout(scrollTimeout);
-                // UPDATED: Reduced delay from 150ms to 50ms for faster highlighting
-                scrollTimeout = setTimeout(updateActiveCard, 50);
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        updateActiveCard();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
             });
         }
 
