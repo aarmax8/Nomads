@@ -313,6 +313,11 @@
             margin-left: auto;
             margin-right: auto;
             position: relative; 
+            
+            /* PERFORMANCE FIX: Improves rendering performance for long lists */
+            content-visibility: auto; 
+            contain-intrinsic-size: 300px 500px; 
+            contain: layout style;
         }
         #menu-grid > .drink-card:first-child {
              /* MODIFIED: Was 84% */
@@ -337,7 +342,9 @@
             position: relative; width: 100%; height: 100%;
             transition: transform 0.7s, box-shadow 0.4s ease-in-out, opacity 0.5s;
             transform-style: preserve-3d;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.7); border-radius: 0.5rem;
+            /* PERFORMANCE FIX: Reduced shadow complexity for non-active cards */
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3); 
+            border-radius: 0.5rem;
         }
         .drink-card.is-flipped .drink-card-inner { transform: rotateY(180deg); }
         
@@ -1610,33 +1617,39 @@
          * Sets up IntersectionObserver for lazy-loading card background images.
          */
         function setupLazyLoading() {
-            const lazyCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
+            // UPDATED: Strict Memory Management
+            // Unloads images that are far off-screen to prevent crashes
             
             if ("IntersectionObserver" in window) {
-                const imageObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const card = entry.target; 
-                        const imageContainer = card.querySelector('.lazy-bg'); 
+                const imageObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        const card = entry.target;
+                        const imageContainer = card.querySelector('.lazy-bg');
                         
-                        if (imageContainer) {
+                        if (!imageContainer) return;
+
+                        if (entry.isIntersecting) {
+                            // LOAD IMAGE: When card is near viewport
                             const imageUrl = imageContainer.dataset.bg;
                             if (imageUrl) {
                                 imageContainer.style.setProperty('--bg-image', imageUrl);
                             }
+                        } else {
+                            // UNLOAD IMAGE: When card leaves viewport (plus buffer)
+                            // This frees up GPU memory and prevents crashes on long lists
+                            imageContainer.style.removeProperty('--bg-image');
                         }
-                        imageObserver.unobserve(card);
-                    }
-                });
+                    });
                 }, { 
                     root: menuGrid, 
-                    rootMargin: "200px" 
+                    rootMargin: "500px 0px" // Buffer: Load images 500px before they appear
                 }); 
                 
+                const lazyCards = document.querySelectorAll('.drink-card:not([data-is-barcode="true"])');
                 lazyCards.forEach(card => imageObserver.observe(card));
 
             } else {
-                // Fallback for older browsers
+                // Fallback for older browsers (loads all at once)
                 document.querySelectorAll('.lazy-bg').forEach(img => {
                     const imageUrl = img.dataset.bg;
                     if (imageUrl) {
